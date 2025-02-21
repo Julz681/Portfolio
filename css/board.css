@@ -73,12 +73,44 @@ body {
   padding: 8px 16px;
 }
 
-.input-wrapper input {
+.search {
   width: 312px;
-  height: 48px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
   border-radius: 10px;
+}
+
+.search input {
+  height: 48px;
   border: 1px solid #a8a8a8;
+  border-right: 0;
+  border-radius: 10px 0px 0px 10px;
+  line-height: 24px;
   font-size: 20px;
+}
+
+.search input:focus {
+  outline: 0;
+  border: 1px solid #29abe2;
+  border-right: 0;
+}
+
+.search input::-webkit-input-placeholder {
+  color: #d1d1d1;
+  font-size: 20px;
+  line-height: 24px !important;
+  font-weight: 400;
+}
+
+.search-icon {
+  background: url(../assets/img/icons/search.png);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 18px;
+  height: 48px;
+  width: 32px;
 }
 
 .add-task-button {
@@ -90,9 +122,4 @@ body {
   background-color: #2a3647;
   height: 48px;
   color: #ffffff;
-}
-
-.search-icon {
-  background: url(../assets/img/icons/search.png) no-repeat right;
-  background-size: 18px;
 }
