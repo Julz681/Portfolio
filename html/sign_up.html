@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="icon" href="/assets/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Join</title>
+</head>
+<body>
+
+    <div class="start" id="start">
+        <img class="start-logo" src="/assets/img/logo.png" alt="logo">
+    </div>
+    
+    <div id="signup-form-container">
+        <div class="sign-up-frame">
+            <div class="signup-header">
+                <a href="/index.html" class="back-arrow">&#8592;</a>
+                <h1>Sign up</h1>
+                <hr>
+            </div>
+
+            <form id="signup-form">
+                <div class="signup-data">
+                    <label for="name">
+                        <input class="input-field" id="name" type="text" placeholder="Name" onclick="autoFillFieldsSignUp()" required>
+                        <img class="imgs-input" src="/assets/img/user.png" alt="user">
+                    </label>
+                    <label for="email">
+                        <input class="input-field" id="email" type="email" placeholder="E-Mail" required>
+                        <img class="imgs-input" src="/assets/img/mail.png" alt="email">
+                    </label>
+                    <label for="password">
+                        <input class="input-field" id="password" type="password" placeholder="Password" required>
+                        <img class="imgs-input" src="/assets/img/lock.png" alt="lock">
+                    </label>
+                    <label for="confirm-password">
+                        <input class="input-field" id="confirm-password" type="password" placeholder="Confirm Password" required>
+                        <img class="imgs-input" src="/assets/img/lock.png" alt="lock">
+                    </label>
+                </div>
+
+                <div class="privacy-policy">
+                    <input type="checkbox" id="privacy-policy" required>
+                    <label for="privacy-policy">I accept the <a href="privacy_policy.html">Privacy Policy</a></label>
+                </div>
+
+                <div class="btn_center">
+                    <button type="submit" class="signup-btn">Sign up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer-start">
+        <a href="./html/privacy_policy.html">Privacy Policy</a>
+        <a href="./html/legal_notice.html">Legal notice</a>
+    </footer>
+
+    
+    <script src="/js/sign_up.js" defer></script>
+
+</body>
+</html>

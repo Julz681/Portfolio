@@ -14,38 +14,42 @@
 
     
     <div class="start" id="start">
-        <img class="start-logo" src="./assets/img/logo.png" alt="logo" >
-        <div class="top-right">
+        <img class="start-logo" src="./assets/img/logo.png" alt="logo">
+        <div class="top-right" id="top-right">
             <p>Not a Join user?</p>
-            <button class="signup-btn">Sign up</button>
+            <button class="signup-btn" onclick="location.href='./html/sign_up.html'">Sign up</button>
         </div>
     </div>
     
+   
 
     <div class="login-frame-alignment">
-    <div class="login-frame">
-        <div class="h1-container">
-            <h1>Log in</h1>
-            <hr>
-        </div>
-        <form class="input-container">
-            <div class="login-data">
-                <label for="email">
-                    <input class="input-mail" type="email" placeholder="Email" required>
-                    <img class="imgs-input" src="./assets/img/mail.png" alt="letter">
-                </label>
-                <label for="password">
-                    <input class="input-password" type="password" placeholder="Password" required>
-                    <img class="imgs-input" src="./assets/img/lock.png" alt="lock">
-                </label>
+        <div class="login-frame">
+            <div class="h1-container">
+                <h1>Log in</h1>
+                <hr>
             </div>
-        </form>
-
-        <div class="login-btn-container">
-            <button class="login-btn">Log in</button>
-            <button class="guest-login-btn">Guest Log in</button>
+          
+            <form class="input-container" id="loginForm" action="./html/summary.html" method="GET">
+                <div class="login-data">
+                    <label for="email">
+                        <input class="input-mail" id="email" type="email" placeholder="Email" onclick="autoFillFields()" required>
+                        <img class="imgs-input" src="./assets/img/mail.png" alt="letter">
+                    </label>
+                    <label for="password">
+                        <input class="input-password" id="password" type="password" placeholder="Password" required>
+                        <img class="imgs-input" src="./assets/img/lock.png" alt="lock">
+                    </label>
+                </div>
+            </form>
+    
+            
+            <div class="login-btn-container">
+                <button type="submit" form="loginForm" class="login-btn">Log in</button> 
+                <button type="button" class="guest-login-btn" onclick="location.href='./html/summary.html'">Guest Log In</button>
+            </div>
+    
         </div>
-    </div>
     </div>
 
     <footer class="footer-start">
@@ -54,15 +58,14 @@
     </footer>
     
 
-    <html src="./html/add_task.html"></html>
-    <html src="./html/board.html"></html>
-    <html src="./html/contacts.html"></html>
-    <html src="./html/summary.html"></html>
+
 
     <script src="./js/add_task.js"></script>
     <script src="./js/board.js"></script>
     <script src="./js/contacts.js"></script>
     <script src="./js/script.js"></script>
     <script src="./js/summary.js"></script>
+    <script src="./js/log_in.js"></script>
+    
 </body>
 </html>
