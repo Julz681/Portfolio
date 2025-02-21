@@ -20,10 +20,65 @@ body {
   height: 100vh;
   background-color: #f6f7f8;
   overflow: hidden;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 #sidebar {
   width: 232px;
   background-color: #2a3647;
   height: 1024px;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: calc(1440px - 232px);
+  height: 100vh;
+}
+
+#header {
+  top: 0;
+  height: 96px;
+  background-color: #ffffff;
+}
+
+.board-header-wrapper {
+  height: 208px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.board-title {
+  font-size: 74px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.pdg-8-16 {
+  padding: 8px 16px;
+}
+
+.input-wrapper input {
+  width: 312px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px;
+}
+
+.add-task-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 10px;
+  border: 1px;
+  background-color: #2a3647;
+  height: 48px;
+  color: #ffffff;
 }
