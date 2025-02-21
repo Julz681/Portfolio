@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Figtree", serif;
+  src: url(../assets/font/Figtree-Oxanium-Ubuntu/Figtree/Figtree-Italic-VariableFont_wght.ttf);
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+}
+
+body {
+  font-family: "Figtree", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  background-color: #f6f7f8;
+  overflow: hidden;
+}
+
+#sidebar {
+  width: 232px;
+  background-color: #2a3647;
+  height: 1024px;
+}
