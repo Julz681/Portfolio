@@ -46,9 +46,16 @@ body {
 .board-header-wrapper {
   height: 208px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1056px;
+}
 .board-title {
   font-size: 74px;
   font-weight: 700;
@@ -58,7 +65,8 @@ body {
 .input-wrapper {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  align-items: center;
+  gap: 32px;
 }
 
 .pdg-8-16 {
@@ -69,7 +77,8 @@ body {
   width: 312px;
   height: 48px;
   border-radius: 10px;
-  border: 1px;
+  border: 1px solid #a8a8a8;
+  font-size: 20px;
 }
 
 .add-task-button {
@@ -81,4 +90,9 @@ body {
   background-color: #2a3647;
   height: 48px;
   color: #ffffff;
+}
+
+.search-icon {
+  background: url(../assets/img/icons/search.png) no-repeat right;
+  background-size: 18px;
 }
