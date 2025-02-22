@@ -19,40 +19,56 @@
     <div id="signup-form-container">
         <div class="sign-up-frame">
             <div class="signup-header">
-                <a href="/index.html" class="back-arrow">&#8592;</a>
-                <h1>Sign up</h1>
+                <div class="header-row">
+                    <a href="/index.html">
+                        <img class="back-arrow" src="/assets/img/arrow-left-line.png" alt="Back to Log-In">
+                    </a>
+                    <div class="spacer"></div> 
+                    <h1>Sign up</h1>
+                    <div class="spacer"></div> 
+                </div>
                 <hr>
             </div>
+            
 
             <form id="signup-form">
                 <div class="signup-data">
                     <label for="name">
                         <input class="input-field" id="name" type="text" placeholder="Name" onclick="autoFillFieldsSignUp()" required>
-                        <img class="imgs-input" src="/assets/img/user.png" alt="user">
+                        <img class="imgs-input_signup" src="/assets/img/user.png" alt="user">
                     </label>
+            
                     <label for="email">
                         <input class="input-field" id="email" type="email" placeholder="E-Mail" required>
-                        <img class="imgs-input" src="/assets/img/mail.png" alt="email">
+                        <img class="imgs-input_signup" src="/assets/img/mail.png" alt="email">
                     </label>
+            
                     <label for="password">
-                        <input class="input-field" id="password" type="password" placeholder="Password" required>
-                        <img class="imgs-input" src="/assets/img/lock.png" alt="lock">
+                        <input class="input-field" id="password" type="password" placeholder="Password" required 
+                               oninput="updatePasswordIcon('password', this.nextElementSibling)">
+                        <img class="imgs-input_signup toggle-password" src="/assets/img/lock.png" alt="Toggle Password Visibility" 
+                             onclick="togglePasswordVisibility('password', this)">
                     </label>
+                    
                     <label for="confirm-password">
-                        <input class="input-field" id="confirm-password" type="password" placeholder="Confirm Password" required>
-                        <img class="imgs-input" src="/assets/img/lock.png" alt="lock">
+                        <input class="input-field" id="confirm-password" type="password" placeholder="Confirm Password" required 
+                               oninput="updatePasswordIcon('confirm-password', this.nextElementSibling)">
+                        <img class="imgs-input_signup toggle-password" src="/assets/img/lock.png" alt="Toggle Password Visibility" 
+                             onclick="togglePasswordVisibility('confirm-password', this)">
                     </label>
+                    
                 </div>
-
+            
                 <div class="privacy-policy">
                     <input type="checkbox" id="privacy-policy" required>
                     <label for="privacy-policy">I accept the <a href="privacy_policy.html">Privacy Policy</a></label>
                 </div>
-
+            
                 <div class="btn_center">
                     <button type="submit" class="signup-btn">Sign up</button>
                 </div>
             </form>
+            
         </div>
     </div>
 
@@ -63,6 +79,8 @@
 
     
     <script src="/js/sign_up.js" defer></script>
+
+
 
 </body>
 </html>

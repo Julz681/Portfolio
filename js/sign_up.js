@@ -25,10 +25,35 @@ document.getElementById('signup-form').addEventListener('submit', function(event
     
     setTimeout(() => {
         successMessage.classList.remove('show');
-    }, 3000);
+    }, 4000);
 
     
     window.location.href = '/index.html';
 });
+
+
+function togglePasswordVisibility(inputId, imgElement) {
+    const inputField = document.getElementById(inputId);
+    const isPasswordVisible = inputField.type === 'text';
+
+    if (isPasswordVisible) {
+        inputField.type = 'password';
+        imgElement.src = '/assets/img/eye_closed.png'; 
+    } else {
+        inputField.type = 'text';
+        imgElement.src = '/assets/img/eye.jpg'; 
+    }
+}
+
+function updatePasswordIcon(inputId, imgElement) {
+    const inputField = document.getElementById(inputId);
+    if (inputField.value.length > 0) {
+        imgElement.src = '/assets/img/eye_closed.png'; 
+    } else {
+        imgElement.src = '/assets/img/lock.png'; 
+    }
+}
+
+
 
 document.getElementById('start').style.display = 'none';

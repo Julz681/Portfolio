@@ -32,16 +32,23 @@
           
             <form class="input-container" id="loginForm" action="./html/summary.html" method="GET">
                 <div class="login-data">
-                    <label for="email">
-                        <input class="input-mail" id="email" type="email" placeholder="Email" onclick="autoFillFields()" required>
-                        <img class="imgs-input" src="./assets/img/mail.png" alt="letter">
+                    <label for="email" style="position: relative;">
+                        <input class="input-field" id="email" type="email" placeholder="Email" onclick="autoFillFields()" required>
+                        <img class="imgs-input_login" src="./assets/img/mail.png" alt="letter">
                     </label>
-                    <label for="password">
-                        <input class="input-password" id="password" type="password" placeholder="Password" required>
-                        <img class="imgs-input" src="./assets/img/lock.png" alt="lock">
+                    
+                    <label for="password" style="position: relative;">
+                        <input class="input-field" id="password" type="password" placeholder="Password" required 
+                               oninput="updatePasswordIcon('password', this.nextElementSibling)">
+                        <img class="imgs-input_login toggle-password" src="/assets/img/lock.png" 
+                             alt="Toggle Password Visibility" 
+                             onclick="togglePasswordVisibility('password', this)">
                     </label>
                 </div>
             </form>
+            
+            
+            
     
             
             <div class="login-btn-container">
