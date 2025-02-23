@@ -13,7 +13,7 @@ function togglePasswordVisibility(inputId, imgElement) {
         imgElement.src = '/assets/img/eye_closed.png'; 
     } else {
         inputField.type = 'text';
-        imgElement.src = '/assets/img/eye.jpg'; 
+        imgElement.src = '/assets/img/eye.png'; 
     }
 }
 
