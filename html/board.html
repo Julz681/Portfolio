@@ -5,15 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/board.css">
+    <link rel="stylesheet" href="../css/desktop_template.css">
+    <script src="../js/board.js" defer></script>
     <title>Board</title>
 </head>
 
-<body>
+<body onload="init()">
 
-    
-    <div id="sidebar"></div>
+    <div id="sidebarRef" w3-include-html="../assets/templates/sidebar.html"></div>
+    <header id="headerRef" w3-include-html="../assets/templates/header.html"></header>
     <main class="content-wrapper">
-        <header id="header"></header>
+
         <div class="board-header-wrapper">
             <div class="board-header">
                 <h1 class="board-title">Board</h1>
@@ -29,6 +31,7 @@
         </div>
         <div class="board-wrapper"></div>
     </main>
+
 </body>
 
 </html>
