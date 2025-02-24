@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="icon" href="./assets/img/favicon.png">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/sign_up.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
@@ -32,16 +33,23 @@
           
             <form class="input-container" id="loginForm" action="./html/summary.html" method="GET">
                 <div class="login-data">
-                    <label for="email">
-                        <input class="input-mail" id="email" type="email" placeholder="Email" onclick="autoFillFields()" required>
-                        <img class="imgs-input" src="./assets/img/mail.png" alt="letter">
+                    <label for="email" style="position: relative;">
+                        <input class="input-field" id="email" type="email" placeholder="Email" onclick="autoFillFields()" required>
+                        <img class="imgs-input_login" src="./assets/img/mail.png" alt="letter">
                     </label>
-                    <label for="password">
-                        <input class="input-password" id="password" type="password" placeholder="Password" required>
-                        <img class="imgs-input" src="./assets/img/lock.png" alt="lock">
+                    
+                    <label for="password" style="position: relative;">
+                        <input class="input-field" id="password" type="password" placeholder="Password" required 
+                               oninput="updatePasswordIcon('password', this.nextElementSibling)">
+                        <img class="imgs-input_login toggle-password" src="/assets/img/lock.png" 
+                             alt="Toggle Password Visibility" 
+                             onclick="togglePasswordVisibility('password', this)">
                     </label>
                 </div>
             </form>
+            
+            
+            
     
             
             <div class="login-btn-container">
@@ -54,7 +62,7 @@
 
     <footer class="footer-start">
         <a href="./html/privacy_policy.html">Privacy Policy</a>
-        <a href="./html/legal_notice.html">Legal notice</a>
+        <a href="./html/legal_notice_unlogged.html">Legal notice</a>
     </footer>
     
 
