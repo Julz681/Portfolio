@@ -16,21 +16,60 @@
     <header id="headerRef" w3-include-html="../assets/templates/header.html"></header>
     <main class="content-wrapper">
 
-        <div class="board-header-wrapper">
-            <div class="board-header">
+        <section class="board-header-wrapper">
+            <div class="board-header pd-l-r-64">
                 <h1 class="board-title">Board</h1>
                 <div class="input-wrapper">
-                    <div class="search pdg-8-16">
+                    <div class="search pd-8-16">
                         <input type="text" placeholder="Find Task">
                         <div class="search-icon">
                         </div>
                     </div>
-
                     <div class="add-task-button"><span>Add Task</span><span class="plus"></span></div>
                 </div>
             </div>
-        </div>
-        <div class="board-wrapper"></div>
+        </section>
+
+        <section class="board-wrapper">
+            <div class="board pd-l-r-64">
+                <div class="board-columns to-do-wrapper">
+                    <div class="column-title">
+                        <h3>To do</h3>
+                        <div class="add-task-icon"></div>
+                    </div>
+
+                    <div class="column-content-wrapper">
+                        <div class="no-tasks-feedback">No tasks To do</div>
+                    </div>
+                </div>
+                <div class="board-columns in-progress-wrapper">
+                    <div class="column-title">
+                        <h3>In progress</h3>
+                        <div class="add-task-icon"></div>
+                    </div>
+                    <div class="column-content-wrapper">
+                        <div class="no-tasks-feedback">No tasks In Progress</div>
+                    </div>
+                </div>
+                <div class="board-columns await-feedback-wrapper">
+                    <div class="column-title">
+                        <h3>Await feedback</h3>
+                        <div class="add-task-icon"></div>
+                    </div>
+                    <div class="column-content-wrapper">
+                        <div class="no-tasks-feedback">No tasks Await feedback</div>
+                    </div>
+                </div>
+                <div class="board-columns done-wrapper">
+                    <div class="column-title">
+                        <h3>Done</h3>
+                    </div>
+                    <div class="column-content-wrapper">
+                        <div class="no-tasks-feedback">No tasks Done</div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
 </body>
