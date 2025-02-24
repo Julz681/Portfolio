@@ -122,10 +122,15 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  background-image: url(../assets/img/icons/search.png);
+  background-repeat: no-repeat;
+  background-position: 80% 50%;
 }
 
-.search-icon img:hover {
-  box-shadow: 4px 4px 0px 16px rgba(0, 0, 0, 0.2);
+.search-icon:hover {
+  background-image: url(../assets/img/icons/search-hover.png);
+  background-repeat: no-repeat;
+  background-position: 100% 50%;
 }
 
 .search:focus-within {
@@ -148,7 +153,7 @@ body {
 
 .add-task-button span:nth-child(1) {
   font-weight: 700;
-  width: 92px;
+  width: 100px;
 }
 
 .plus {
