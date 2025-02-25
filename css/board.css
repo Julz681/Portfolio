@@ -14,6 +14,34 @@
   margin: 0;
 }
 
+.d-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.d_none {
+  display: none;
+}
+
+.pd-8-16 {
+  padding: 8px 16px;
+}
+
+.pd-l-r-64 {
+  padding-left: 64px;
+  padding-right: 64px;
+}
+
+.br-10 {
+  border-radius: 10px;
+}
+
 body {
   font-family: "Figtree", serif;
   font-optical-sizing: auto;
@@ -45,20 +73,9 @@ body {
   position: relative !important;
 }
 
-.pd-8-16 {
-  padding: 8px 16px;
-}
-
-.pd-l-r-64 {
-  padding-left: 64px;
-  padding-right: 64px;
-}
-
 /* board styling */
 
 .content-wrapper {
-  display: flex;
-  flex-direction: column;
   height: 100vh;
   width: 100%;
   position: relative;
@@ -69,9 +86,6 @@ body {
 
 .board-header-wrapper {
   height: 208px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
   max-width: 1920px;
 }
@@ -103,7 +117,6 @@ body {
   justify-content: flex-start;
   align-items: center;
   background-color: #ffffff;
-  border-radius: 10px;
   border: 1px solid #a8a8a8;
   height: 48px;
 }
@@ -158,7 +171,6 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  border-radius: 10px;
   background-color: #2a3647;
   height: 48px;
   width: 160px;
@@ -206,8 +218,6 @@ body {
 }
 
 .board-columns {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   width: 246px;
   gap: 10px;
@@ -240,14 +250,78 @@ body {
 }
 
 .no-tasks-feedback {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 48px;
   background-color: #e7e7e7;
   border: 1px dotted #a8a8a8;
   width: 252px;
-  border-radius: 10px;
   font-size: 16px;
   color: #a8a8a8;
+}
+
+/* board cards styling */
+
+.board-card-L {
+  width: 252px;
+  height: 225px;
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+  font-weight: 400;
+}
+
+.board-card-content {
+  width: 220px;
+  height: 193px;
+  gap: 24px;
+}
+
+.board-card-label {
+  width: 113px;
+  height: 27px;
+  border-radius: 8px;
+  background-color: #0038ff;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.board-card-text {
+  height: 46px;
+  width: 100%;
+  gap: 6px;
+}
+
+.board-card-title {
+  font-weight: 700;
+  color: #2a3647;
+}
+
+.board-card-description {
+  color: #a8a8a8;
+}
+
+.status {
+  width: 100%;
+  height: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.progress {
+  height: 8px;
+  width: 128px;
+  border-radius: 16px;
+  background-color: #f4f4f4;
+}
+
+.progress-bar {
+  background-color: #4589ff;
+  max-width: 100%;
+  border-radius: 16px;
+  height: 8px;
+}
+
+.subtasks {
+  width: 75px;
+  font-size: 12px;
 }
