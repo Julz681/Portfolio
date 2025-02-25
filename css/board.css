@@ -24,7 +24,7 @@ body {
   align-items: center;
   height: 100vh;
   background-color: #f6f7f8;
-  max-width: 1440px;
+  max-width: 1920px;
   margin: 0 auto;
   position: relative;
 }
@@ -73,7 +73,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  max-width: 1440px;
+  max-width: 1920px;
 }
 
 .board-header {
@@ -83,7 +83,6 @@ body {
   width: calc(100% - 232px);
   left: 232px;
   position: absolute;
-  max-width: 1440px;
 }
 .board-title {
   font-size: 74px;
@@ -190,7 +189,7 @@ body {
 /* board body */
 
 .board-wrapper {
-  max-width: 1440px;
+  max-width: 1920px;
   width: 100%;
   position: relative;
 }
@@ -198,12 +197,11 @@ body {
 .board {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: flex-start;
   width: calc(100% - 232px);
   left: 232px;
   position: absolute;
-  max-width: 1440px;
   gap: 24px;
 }
 
