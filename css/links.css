@@ -3,7 +3,7 @@ body {
     padding-left: 340px; 
     max-width: 100%; 
     box-sizing: border-box;
-    font-family: "Figtree", serif;
+    font-family: sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     scroll-behavior: smooth;

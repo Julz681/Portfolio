@@ -297,3 +297,28 @@ a:hover {
   transform: translateY(-50%);
   z-index: 10;
 }
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin: 10px 0;
+  color: black;
+  gap: 2px;
+  border: none;
+  outline: none;
+}
+
+.remember-me input {
+  margin-right: 8px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+
+.remember-me input:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
