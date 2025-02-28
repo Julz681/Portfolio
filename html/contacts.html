@@ -1,78 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="icon" href="../assets/img/favicon.png">
-    <link rel="stylesheet" href="/css/desktop_template.css">
-    <link rel="stylesheet" href="/css/contact.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="icon" href="../assets/img/favicon.png" />
+    <link rel="stylesheet" href="/css/desktop_template.css" />
+    <link rel="stylesheet" href="/css/contact.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
     <title>Contacts</title>
-</head>
-<body>
-    
+  </head>
 
-<header class="header">
-  <span class="headline">Kanban Project Management Tool</span>
-  
-  <div class="nav-right">
-    <a href="/html/help.html" class="help-btn" title="Help">
-      <img src="../assets/img/help.png" alt="Help"/>
-    </a>
-    <div class="user-profile">
-      <img src="../assets/img/ellipse.png" alt="Profile">
-      <span>SM</span>
-    </div>
-  </div>
-</header>
+  <body>
+    <header class="header">
+      <span class="headline">Kanban Project Management Tool</span>
 
-<aside class="sidebar">
-    <div class="sidebar-logo">
-        <a href="/index.html" class="start"> 
-          <img src="../assets/img/logo_sidemenu.png" alt="logo"> 
+      <div class="nav-right">
+        <a href="/html/help.html" class="help-btn" title="Help">
+          <img src="../assets/img/help.png" alt="Help" />
+        </a>
+        <div class="user-profile">
+          <img src="../assets/img/ellipse.png" alt="Profile" />
+          <span>SM</span>
+        </div>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <a href="/index.html" class="start">
+          <img src="../assets/img/logo_sidemenu.png" alt="logo" />
         </a>
       </div>
-  
+
       <nav class="main-nav">
         <ul>
           <li class="main-nav-size">
             <a href="/html/summary.html">
-              <img class="img-main-nav" src="../assets/img/summary.png" alt="Summary Icon">
+              <img
+                class="img-main-nav"
+                src="../assets/img/summary.png"
+                alt="Summary Icon"
+              />
               <span>Summary</span>
             </a>
           </li>
           <li class="main-nav-size">
             <a href="/html/add_task.html">
-              <img class="img-main-nav" src="../assets/img/addtask.png" alt="Add Task Icon">
+              <img
+                class="img-main-nav"
+                src="../assets/img/addtask.png"
+                alt="Add Task Icon"
+              />
               <span>Add Task</span>
             </a>
           </li>
           <li class="main-nav-size">
             <a href="/html/board.html">
-              <img class="img-main-nav" src="../assets/img/board.png" alt="Board Icon">
+              <img
+                class="img-main-nav"
+                src="../assets/img/board.png"
+                alt="Board Icon"
+              />
               <span>Board</span>
             </a>
           </li>
           <li class="main-nav-size">
             <a href="/html/contacts.html">
-              <img class="img-main-nav" src="../assets/img/contacts.png" alt="Contacts Icon">
+              <img
+                class="img-main-nav"
+                src="../assets/img/contacts.png"
+                alt="Contacts Icon"
+              />
               <span>Contacts</span>
             </a>
           </li>
         </ul>
       </nav>
 
-    <nav class="bottom-nav">
-      <ul>
-        <li><a class="bottom-nav-a" href="/html/privacy_policy.html">Privacy Policy</a></li>
-        <li><a class="bottom-nav-a" href="/html/legal_notice.html">Legal Notice</a></li>
-      </ul>
-    </nav>
-</aside>
+      <nav class="bottom-nav">
+        <ul>
+          <li>
+            <a class="bottom-nav-a" href="/html/privacy_policy.html"
+              >Privacy Policy</a
+            >
+          </li>
+          <li>
+            <a class="bottom-nav-a" href="/html/legal_notice.html"
+              >Legal Notice</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </aside>
 
+    <div class="contact-content">
+      <div class="contacts-container">
+        <div class="contacts-left">
+          <button class="add-contact-btn">
+            Add new contact
+            <img
+              class="add-contact-img"
+              src="/assets/img/addperson.png"
+              alt="add new contact"
+            />
+          </button>
 
+          <div class="contacts-list">
+            <div class="contact-group">
+              <div class="contact-group-letter">A</div>
 
-<script src="/js/contacts.js"></script>
-</body>
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Ada Lovelace">AL</div>
+                <div class="contact-details">
+                  <div class="contact-name">Ada Lovelace</div>
+                  <div class="contact-email">ada.lovelace@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">B</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Bernadette Pöltl">
+                  BP
+                </div>
+                <div class="contact-details">
+                  <div class="contact-name">Bernadette Pöltl</div>
+                  <div class="contact-email">bernadette.poeltl99@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">C</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Claude Shannon">CS</div>
+                <div class="contact-details">
+                  <div class="contact-name">Claude Shannon</div>
+                  <div class="contact-email">claude.shannon@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">D</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Dennis Ritchie">DR</div>
+                <div class="contact-details">
+                  <div class="contact-name">Dennis Ritchie</div>
+                  <div class="contact-email">dennis.ritchie@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">E</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Edsger Dijkstra">ED</div>
+                <div class="contact-details">
+                  <div class="contact-name">Edsger Dijkstra</div>
+                  <div class="contact-email">edsger.dijkstra@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">F</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Frances Allen">FA</div>
+                <div class="contact-details">
+                  <div class="contact-name">Frances Allen</div>
+                  <div class="contact-email">frances.allen@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">J</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Judith Lütke">JL</div>
+                <div class="contact-details">
+                  <div class="contact-name">Judith Lütke</div>
+                  <div class="contact-email">judithlachtrup@yahoo.de</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">M</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Margaret Hamilton">
+                  MH
+                </div>
+                <div class="contact-details">
+                  <div class="contact-name">Margaret Hamilton</div>
+                  <div class="contact-email">margaret.hamilton@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">R</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Reshma Saujani">RS</div>
+                <div class="contact-details">
+                  <div class="contact-name">Reshma Saujani</div>
+                  <div class="contact-email">reshma.saujani@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">S</div>
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Shafi Goldwasser">
+                  SG
+                </div>
+                <div class="contact-details">
+                  <div class="contact-name">Shafi Goldwasser</div>
+                  <div class="contact-email">shafi.goldwasser@gmail.com</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <div class="contact-group-letter">T</div>
+
+              <div class="contact-item">
+                <div class="contact-avatar" data-name="Tobias Fröhler">TF</div>
+                <div class="contact-details">
+                  <div class="contact-name">Tobias Fröhler</div>
+                  <div class="contact-email">tobias.froehler24@gmail.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacts-right">
+          <div class="contacts-right-top">
+            <h2 class="contacts-title">Contacts</h2>
+            <div class="vertical-line"></div>
+            <p class="contacts-subtitle">Better with a team</p>
+          </div>
+          <div class="contacts-right-bottom"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/contacts.js"></script>
+  </body>
+</html>
