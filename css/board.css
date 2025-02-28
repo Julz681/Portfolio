@@ -325,3 +325,30 @@ body {
   width: 75px;
   font-size: 12px;
 }
+
+.board-card-footer {
+  justify-content: space-between !important;
+  width: 100%;
+  height: 32px;
+}
+
+.user-icons-wrapper {
+  max-width: 50%;
+  justify-content: unset !important;
+}
+
+.user-icons {
+  width: 32px;
+  height: 32px;
+  border-radius: 45px;
+  background-color: #1fd7c1;
+  color: #f4f4f4;
+  border: 1px solid #f4f4f4;
+  margin-right: -8px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.priority {
+  width: 17px;
+}
