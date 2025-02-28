@@ -18,15 +18,15 @@
     <main class="content-wrapper d-flex-column">
 
         <section class="board-header-wrapper d-flex-center">
-            <div class="board-header pd-l-r-64">
+            <div class="board-header d-flex-space-between pd-l-r-64">
                 <h1 class="board-title">Board</h1>
-                <div class="input-wrapper">
+                <div class="input-wrapper d-flex-space-between">
                     <div class="search br-10 pd-8-16">
                         <input type="text" placeholder="Find Task">
                         <div class="search-icon">
                         </div>
                     </div>
-                    <div class="add-task-button br-10"><span>Add Task</span><span class="plus"></span></div>
+                    <div class="add-task-button d-flex-space-between br-10"><span>Add Task</span><span class="plus"></span></div>
                 </div>
             </div>
         </section>
@@ -34,7 +34,7 @@
         <section class="board-wrapper">
             <div class="board pd-l-r-64">
                 <div class="board-columns d-flex-column to-do-wrapper">
-                    <div class="column-title">
+                    <div class="column-title d-flex-space-between">
                         <h3>To do</h3>
                         <div class="add-task-icon"></div>
                     </div>
@@ -43,7 +43,7 @@
                         <div class="no-tasks-feedback d-flex-center br-10 d_none">No tasks To do</div>
                         <div class="board-card d-flex-center">
                             <div class="board-card-content d-flex-column">
-                                <label class="board-card-label d-flex-center">User Story</label>
+                                <label class="board-card-label br-8 d-flex-center">User Story</label>
                                 <div class="board-card-text d-flex-column br-10">
                                     <h4 class="board-card-title">Kochwelt Page & Recipe Recommender</h4>
                                     <p class="board-card-description">Build start page with recipe recommendation...</p>
@@ -60,7 +60,7 @@
                                         <span>Subtasks</span>
                                     </div>
                                 </div>
-                                <div class="d-flex-center board-card-footer">
+                                <div class="d-flex-space-between board-card-footer">
                                     <div class="user-icons-wrapper d-flex-center">
                                         <span class="user-icons d-flex-center">US</span>
                                         <span class="user-icons d-flex-center">US</span>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="board-columns d-flex-column in-progress-wrapper">
-                    <div class="column-title">
+                    <div class="column-title d-flex-space-between">
                         <h3>In progress</h3>
                         <div class="add-task-icon"></div>
                     </div>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="board-columns d-flex-column await-feedback-wrapper">
-                    <div class="column-title">
+                    <div class="column-title d-flex-space-between">
                         <h3>Await feedback</h3>
                         <div class="add-task-icon"></div>
                     </div>
@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="board-columns d-flex-column done-wrapper">
-                    <div class="column-title">
+                    <div class="column-title d-flex-space-between">
                         <h3>Done</h3>
                     </div>
                     <div class="column-content-wrapper">
@@ -101,8 +101,25 @@
             </div>
         </section>
         <section class="board-card-modal-wrapper d-flex-center">
-            <div class="modal-card-wrapper d-flex-center br-30">
-                <div class="modal-card-content"></div>
+            <div class="modal-card-wrapper br-30">
+                <div class="modal-card-content size-20 d-flex-column">
+                    <div class="modal-label d-flex-center">
+                        <label class="modal-card-label br-8 d-flex-center">User Story</label>
+                        <span id="modal-close-button">X</span>
+                    </div>
+                    <h3 class="modal-card-title">Kochwelt Page & Recipe Recommender</h3>
+                    <p>Build start page with recipe recommendation.</p>
+                    <div class="d-flex-space-between date-line">
+                        <span>Due date:</span>
+                        <span>10/05/2023</span>
+                    </div>
+                    <div class="assignments d-flex-column">
+                        <span>Assigned to:</span>
+                        <div class="user-line d-flex-space-between"><span class="user-icons d-flex-center">US</span><span>Default User</span></div>
+                        <div class="user-line d-flex-space-between"><span class="user-icons d-flex-center">US</span><span>Default User</span></div>
+                        <div class="user-line d-flex-space-between"><span class="user-icons d-flex-center">US</span><span>Default User</span></div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
