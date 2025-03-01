@@ -61,6 +61,14 @@
   font-size: 20px;
 }
 
+.w-50 {
+  width: 50%;
+}
+
+.gap-16 {
+  gap: 16px;
+}
+
 body {
   font-family: "Figtree", serif;
   font-optical-sizing: auto;
@@ -412,19 +420,33 @@ body {
 
 .date-line {
   gap: 25px;
-  width: 50%;
 }
 
 .assignments {
   gap: 8px;
-  width: 50%;
 }
 
 .user-line {
   padding: 4px 16px;
-  width: 90%;
 }
 
 .user-line span:nth-child(1) {
   margin: 0;
+}
+
+.subtask-section {
+  gap: 8px;
+}
+
+.subtask-line {
+  padding: 6px 16px;
+  font-size: 16px;
+  position: relative;
+}
+
+.modal-card-checkbox {
+  cursor: pointer;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
 }
