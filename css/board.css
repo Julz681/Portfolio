@@ -366,7 +366,9 @@ body {
   width: 17px;
 }
 
-/* board card modal styling */
+/* modal + modal card styling */
+
+/* modal */
 
 .board-card-modal-wrapper {
   position: fixed;
@@ -377,6 +379,8 @@ body {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1100;
 }
+
+/* modal card */
 
 .modal-card-wrapper {
   padding: 48px 40px;
@@ -499,4 +503,54 @@ body {
   border-width: 0 2px 2px 0;
   transform: rotate(40deg);
   z-index: 1200;
+}
+
+/* modal card footer */
+
+.modal-card-footer {
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-area {
+  gap: 8px;
+}
+
+.edit-area div {
+  gap: 8px;
+  transition: transform 0.3s;
+}
+
+.delete-icon {
+  background: url(../assets/img/icons/delete.png);
+  width: 16px;
+  height: 18px;
+  background-repeat: no-repeat;
+  transition: transform 0.3s;
+}
+
+.edit-icon {
+  background: url(../assets/img/icons/edit.png);
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  transition: transform 0.3s;
+}
+
+.edit-area div:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  color: #29ABE2;
+  font-weight: 700;
+}
+
+.edit-area div:hover .delete-icon {
+  background: url(../assets/img/icons/delete-hover.png);
+  transform:scale(1.02);
+}
+
+.edit-area div:hover .edit-icon {
+  background: url(../assets/img/icons/edit-hover.png);
+  transform: scale(1.02);
 }
