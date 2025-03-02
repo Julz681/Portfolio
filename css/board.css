@@ -438,7 +438,6 @@ body {
 
 .subtask-section {
   gap: 8px;
-  width: 100%;
 }
 
 .subtask-line {
@@ -457,7 +456,6 @@ body {
   user-select: none;
   cursor: pointer;
   height: 32px;
-  width: 344px;
   padding: 6px 24px;
   gap: 16px;
   justify-content: flex-start;
@@ -481,6 +479,10 @@ body {
   background-color: #ffffff;
   border: 2px solid #2a3647;
   border-radius: 3px;
+}
+
+.checkmark:hover {
+  background-color: #EDF2FA;
 }
 
 /* checkmark hidden/inactive */
