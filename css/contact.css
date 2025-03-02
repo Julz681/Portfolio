@@ -36,6 +36,7 @@ header {
   background-color: #fff;
   border-right: 1px solid #eee;
   min-height: 0;
+  padding: 8px;
 }
 
 .add-contact-btn {
@@ -44,6 +45,7 @@ header {
   font-size: 18px;
   font-weight: 700;
   width: 352px;
+  height: 56px;
   border: none;
   border-radius: 10px;
   background-color: rgba(42, 54, 71, 1);
@@ -74,6 +76,7 @@ header {
 
 .contacts-list::-webkit-scrollbar {
   width: 8px;
+  height: 20px;
 }
 
 .contacts-list::-webkit-scrollbar-thumb {
@@ -170,7 +173,9 @@ header {
 
 .contacts-right-top {
   height: 73px;
-  padding: 110px 40px;
+  padding-top: 100px;
+  padding-bottom: 32px;
+  padding-left: 40px;
   background-color: #f6f7f8;
   display: flex;
   align-items: center;
@@ -211,6 +216,12 @@ header {
   gap: 15px;
 }
 
+.contact-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .contact-avatar-large {
   width: 120px;
   height: 120px;
@@ -224,40 +235,22 @@ header {
   border: 3px solid white;
 }
 
+.name-action-alignment {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 .details-name {
   font-size: 47px;
   font-weight: 500;
-}
-
-.details-label {
-  font-size: 20px;
-  font-weight: 400;
-  margin: 5px 0 0;
-  color: rgba(0, 0, 0, 1);
-}
-
-.details-info {
-  font-size: 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.details-info div {
-  margin-bottom: 15px;
-}
-
-.details-info strong {
-  margin-right: 5px;
-}
-
-.email-address {
-  color: #29abe2;
-  cursor: pointer;
+  margin: 0;
 }
 
 .contact-details-actions-containter {
   display: flex;
-  width: 20px;
+  gap: 10px;
+  margin-top: 8px;
 }
 
 .contact-details-actions {
@@ -266,6 +259,7 @@ header {
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  position: fixed;
 }
 
 .contact-details-actions-1 button {
@@ -278,6 +272,7 @@ header {
   background-color: #f6f7f8;
   display: flex;
   text-align: center;
+  align-items: center;
 }
 
 .contact-details-actions-2 button {
@@ -290,6 +285,7 @@ header {
   background-color: #f6f7f8;
   display: flex;
   text-align: center;
+  align-items: center;
   margin-left: 8px;
 }
 
@@ -318,4 +314,32 @@ header {
 .contact-details-actions-2 button:hover .actions-img {
   filter: invert(48%) sepia(73%) saturate(2032%) hue-rotate(181deg)
     brightness(98%) contrast(95%);
+}
+
+.details-label {
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 32px;
+  margin-bottom: 28px;
+  color: rgba(0, 0, 0, 1);
+}
+
+.details-info {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-info div {
+  margin-bottom: 15px;
+}
+
+.details-info strong {
+  margin-right: 5px;
+}
+
+.email-address {
+  color: #29abe2;
+  cursor: pointer;
+  text-decoration: none;
 }

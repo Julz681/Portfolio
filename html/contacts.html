@@ -107,7 +107,7 @@
       <div class="contacts-container">
      
         <div class="contacts-left">
-          <button class="add-contact-btn">
+          <button id="openAddContact" class="add-contact-btn">
             Add new contact
             <img
               class="add-contact-img"
@@ -140,7 +140,7 @@
                 class="contact-item"
                 data-name="Bernadette Pöltl"
                 data-email="bernadette.poeltl99@gmail.com"
-                data-phone="+49 222 222 22 22"
+                data-phone="+43 650 88 00 963"
               >
                 <div class="contact-avatar" data-name="Bernadette Pöltl">BP</div>
                 <div class="contact-details">
@@ -305,33 +305,35 @@
           </div>
         
           <div class="contacts-right-bottom">
-           
             <div class="contact-details-card">
-     
-              <div class="contact-avatar-large" style="background-color: #D32F2F;">
-                AL
+              <div class="contact-header">
+                <div class="contact-avatar-large" style="background-color: #D32F2F;">
+                  AL
+                </div>
+                <div class="name-action-alignment">
+                  <h3 class="details-name">Ada Lovelace</h3>
+                  <div class="contact-details-actions-containter">
+                    <div class="contact-details-actions-1">
+                      <button>
+                        <img class="actions-img" src="/assets/img/edit.png" alt="edit">
+                        Edit
+                      </button>
+                    </div>
+                    <div class="contact-details-actions-2">
+                      <button>
+                        <img class="actions-img" src="/assets/img/delete.png" alt="delete">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-        
-
-              <h3 class="details-name">Ada Lovelace</h3>
-              <div class="contact-details-actions-containter">
-              <div class="contact-details-actions-1">
-                <button> <img class="actions-img" src="/assets/img/edit.png" alt="edit">Edit</button>
-             </div>
-             <div class="contact-details-actions-2">
-                <button> <img class="actions-img" src="/assets/img/delete.png" alt="delete">Delete</button>
-              </div>
-            </div>
-         
-        
               <div class="details-label">Contact Information</div>
-        
-     
               <div class="details-info">
                 <div>
                   <strong>Email</strong>
                   <br><br>
-                  <span class="email-address">ada.lovelace@gmail.com</span>
+                  <a class="email-address" href="mailto:ada.lovelace@gmail.com">ada.lovelace@gmail.com</a>
                 </div>
                 <div>
                   <strong>Phone</strong>
@@ -339,16 +341,11 @@
                   +49 111 111 11 11
                 </div>
               </div>
-              
-        
-              
             </div>
           </div>
         </div>
-        
-        
-
-    <script src="/js/contacts.js"></script>
+      
+      <script src="/js/contacts.js"></script>
     <script src="../js/dropwdown.js"></script>
   </body>
 </html>

@@ -67,36 +67,45 @@ function displayContactDetails(name, email, phone) {
 
   const detailsHtml = `
     <div class="contact-details-card">
-      <div class="contact-avatar-large" style="background-color:${avatarColor}">
-        ${initial}${getSecondInitial(name)}
-      </div>
-      <h3 class="details-name">${name}</h3>
-              <div class="contact-details-actions-containter">
-              <div class="contact-details-actions-1">
-                <button> <img class="actions-img" src="/assets/img/edit.png" alt="edit">Edit</button>
-             </div>
-             <div class="contact-details-actions-2">
-                <button> <img class="actions-img" src="/assets/img/delete.png" alt="delete">Delete</button>
-              </div>
+      <div class="contact-header">
+        <div class="contact-avatar-large" style="background-color:${avatarColor};">
+          ${initial}${getSecondInitial(name)}
+        </div>
+        <div class="name-action-alignment">
+          <h3 class="details-name">${name}</h3>
+          <div class="contact-details-actions-containter">
+            <div class="contact-details-actions-1">
+              <button>
+                <img class="actions-img" src="/assets/img/edit.png" alt="edit">
+                Edit
+              </button>
             </div>
+            <div class="contact-details-actions-2">
+              <button>
+                <img class="actions-img" src="/assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="details-label">Contact Information</div>
       <div class="details-info">
-  <div>
-    <strong>Email</strong>
-    <br><br>
-    <span class="email-address">${email}</span>
-  </div>
-  <div>
-    <strong>Phone</strong>
-    <br><br>
-    ${phone}
-  </div>
-</div>
-
+        <div>
+          <strong>Email</strong>
+          <br><br>
+          <!-- E-Mail wird zum mailto:-Link -->
+          <a class="email-address" href="mailto:${email}">${email}</a>
+        </div>
+        <div>
+          <strong>Phone</strong>
+          <br><br>
+          ${phone}
+        </div>
+      </div>
+    </div>
   `;
-
-  const rightBottom = document.querySelector(".contacts-right-bottom");
-  rightBottom.innerHTML = detailsHtml;
+  document.querySelector(".contacts-right-bottom").innerHTML = detailsHtml;
 }
 
 function getSecondInitial(fullName) {
