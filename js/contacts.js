@@ -115,3 +115,30 @@ function getSecondInitial(fullName) {
   }
   return "";
 }
+
+const openBtn = document.getElementById("openAddContact");
+const overlay = document.getElementById("addContactOverlay");
+const cancelBtn = document.getElementById("cancelAddContact");
+const createBtn = document.getElementById("createContact");
+
+openBtn.addEventListener("click", () => {
+  overlay.classList.add("open");
+});
+
+cancelBtn.addEventListener("click", () => {
+  overlay.classList.remove("open");
+});
+
+createBtn.addEventListener("click", () => {
+  overlay.classList.remove("open");
+});
+
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) {
+    overlay.classList.remove("open");
+  }
+});
+
+closeOverlayBtn.addEventListener("click", () => {
+  overlay.classList.remove("open");
+});
