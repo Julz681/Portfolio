@@ -386,7 +386,6 @@ body {
   padding: 48px 40px;
   background-color: #ffffff;
   width: 525px;
-  height: 840px;
 }
 
 .modal-card-content {
@@ -422,6 +421,7 @@ body {
 
 .date-line {
   gap: 25px;
+  justify-content: flex-start !important;
 }
 
 .assignments {
@@ -430,6 +430,7 @@ body {
 
 .user-line {
   padding: 4px 16px;
+  justify-content: flex-start;
 }
 
 .user-line span:nth-child(1) {
@@ -438,6 +439,10 @@ body {
 
 .subtask-section {
   gap: 8px;
+}
+
+.subtask-wrapper {
+  gap: 4px;
 }
 
 .subtask-line {
@@ -450,18 +455,29 @@ body {
 
 /* custom checkbox */
 
-.modal-card-checkbox {
+.modal-card-subtask-wrapper {
   position: relative;
   font-size: 16px;
   user-select: none;
   cursor: pointer;
   height: 32px;
-  padding: 6px 24px;
   gap: 16px;
   justify-content: flex-start;
 }
 
-.modal-card-checkbox input {
+.modal-card-subtask {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+}
+
+.modal-card-subtask:hover {
+  background-color: #edf2fa;
+  border-radius: 51px;
+  padding: 6px 16px;
+}
+
+.modal-card-subtask input {
   height: 0;
   width: 0;
   opacity: 0;
@@ -481,10 +497,6 @@ body {
   border-radius: 3px;
 }
 
-.checkmark:hover {
-  background-color: #EDF2FA;
-}
-
 /* checkmark hidden/inactive */
 
 .checkmark:after {
@@ -495,7 +507,7 @@ body {
 
 /*show checkmark */
 
-.modal-card-checkbox input:checked + .checkmark:after {
+.modal-card-subtask input:checked + .checkmark:after {
   display: block;
   left: 4px;
   top: -4.5px;
@@ -543,13 +555,13 @@ body {
 .edit-area div:hover {
   cursor: pointer;
   transform: scale(1.01);
-  color: #29ABE2;
+  color: #29abe2;
   font-weight: 700;
 }
 
 .edit-area div:hover .delete-icon {
   background: url(../assets/img/icons/delete-hover.png);
-  transform:scale(1.02);
+  transform: scale(1.02);
 }
 
 .edit-area div:hover .edit-icon {
