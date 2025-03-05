@@ -374,21 +374,20 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  transform: translateX(100%);
+  background: rgba(0, 0, 0, 0);
   opacity: 0;
   visibility: hidden;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: opacity 0.3s ease, background 0.3s ease;
   z-index: 9999;
-}
-
-.overlay.open {
-  transform: translateX(0);
-  opacity: 1;
-  visibility: visible;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.overlay.open {
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  visibility: visible;
 }
 
 .add-contact-modal {
@@ -402,6 +401,12 @@ header {
   width: 100%;
   height: 592px;
   position: relative;
+  transform: translateX(100%);
+  transition: transform 0.8s ease;
+}
+
+.overlay.open .add-contact-modal {
+  transform: translateX(0);
 }
 
 .overlay-close-btn {
