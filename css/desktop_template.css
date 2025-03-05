@@ -1,45 +1,45 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    user-select: none;
-  }
-  
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  user-select: none;
+}
+
 .header {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    background: #FFFFFF;
-    height: 96px !important;
-    padding: 0 32px;
-    box-shadow: 0px 0px 14px 4px #0000000A;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  height: 96px !important;
+  padding: 0 32px;
+  box-shadow: 0px 0px 14px 4px #0000000a;
 }
 
 .headline {
-    font-size: 20px;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 1);
-    flex: 1; 
-    margin-left: 300px;
-}
-
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  flex: 1;
+  margin-left: 300px;
 }
 
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 16px; 
+  gap: 16px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .help-btn img {
@@ -53,13 +53,13 @@ body {
 }
 
 .user-profile {
-  position: relative;  
-  width: 56px;        
+  position: relative;
+  width: 56px;
   height: 56px;
 }
 
 .user-profile img {
-  position: absolute; 
+  position: absolute;
   top: 0;
   left: 0;
   width: 56px;
@@ -73,39 +73,39 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #29ABE2;      
+  color: #29abe2;
   font-weight: bold;
-  font-size: 16px;     
+  font-size: 16px;
 }
 
 .user-profile:hover {
   cursor: pointer;
-  background-color: #E2E6EC;
+  background-color: #e2e6ec;
   border-radius: 50%;
 }
 
 .sidebar {
-    background: #2A3647;
-    width: 232px;
-    min-height: 100vh;
-    color: #fff;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
+  background: #2a3647;
+  width: 232px;
+  min-height: 100vh;
+  color: #fff;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-logo {
-    width: 100%;
-    margin-bottom: 64px;
-    text-align: center;
-    margin-top: 64px;
+  width: 100%;
+  margin-bottom: 64px;
+  text-align: center;
+  margin-top: 64px;
 }
 
 .img-main-nav {
-    width: 25px;
+  width: 25px;
 }
 
 .main-nav {
@@ -118,39 +118,39 @@ body {
   padding-top: 8px;
   margin-left: 53px;
 }
-  
+
 .main-nav ul {
-    list-style: none;
-    margin-top: 64px;
-    gap: 15px;
+  list-style: none;
+  margin-top: 64px;
+  gap: 15px;
 }
 
 .main-nav li {
-    list-style: none;
-    width: 232px;   
-    height: 46px;   
-    margin: 0;      
-    padding: 0;
-    gap: 20px;
+  list-style: none;
+  width: 232px;
+  height: 46px;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
 }
 
 .main-nav li:hover {
-    background-color: #2A3D59;
+  background-color: #2a3d59;
 }
 
 .main-nav a {
-  display: flex; 
+  display: flex;
   align-items: center;
-  width: 100%;             
-  padding: 0.5rem 0;    
-  padding-left: 53px;      
+  width: 100%;
+  padding: 0.5rem 0;
+  padding-left: 53px;
   color: rgba(205, 205, 205, 1);
   text-decoration: none;
   font-size: 16px;
   font-weight: 400;
-  gap: 15px                
+  gap: 15px;
 }
-  
+
 .bottom-nav {
   margin-left: 53px;
   margin-bottom: 64px !important;
@@ -158,33 +158,32 @@ body {
 }
 
 .bottom-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    margin-top: 10%; 
-    max-height: 243px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 10%;
+  max-height: 243px;
 }
-   
+
 .bottom-nav-a {
-    color: rgba(168, 168, 168, 1);
-    text-decoration: none;
-    display: block;
-    padding: 0.5rem 0; 
+  color: rgba(168, 168, 168, 1);
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
 }
-  
+
 .bottom-nav-a:hover {
-    font-weight: bold;
-    color: #29ABE2;
+  font-weight: bold;
+  color: #29abe2;
 }
-  
 
 .dropdown-menu {
   display: none;
   position: absolute;
   top: 96px;
   right: 20px;
-  background: #2A3647;
-  color: #CDCDCD;
+  background: #2a3647;
+  color: #cdcdcd;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   border-top-left-radius: 20px;
@@ -197,7 +196,7 @@ body {
 
 .dropdown-menu a {
   display: block;
-  color: #CDCDCD;
+  color: #cdcdcd;
   text-decoration: none;
   padding: 16px;
   font-family: "Figtree", sans-serif;

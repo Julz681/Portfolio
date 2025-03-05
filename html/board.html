@@ -1,184 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/board.css" />
+    <link rel="stylesheet" href="../css/desktop_template.css" />
+    <link rel="icon" type="icon" href="../assets/img/favicon.png" />
+    <script src="../js/board.js" defer></script>
+    <title>Board</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../css/board.css" />
-  <link rel="stylesheet" href="../css/desktop_template.css" />
-  <link rel="icon" type="icon" href="../assets/img/favicon.png" />
-  <script src="../js/board.js" defer></script>
-  <title>Board</title>
-</head>
-
-<body onload="init()">
-  <div id="sidebarRef" w3-include-html="../assets/templates/sidebar.html"></div>
-  <header id="headerRef" w3-include-html="../assets/templates/header.html"></header>
-  <main class="content-wrapper d-flex-column">
-    <section class="board-header-wrapper d-flex-center">
-      <div class="board-header d-flex-space-between pd-l-r-64">
-        <h1 class="board-title">Board</h1>
-        <div class="input-wrapper d-flex-space-between">
-          <div class="search br-10 pd-8-16">
-            <input type="text" placeholder="Find Task" />
-            <div class="search-icon"></div>
-          </div>
-          <div class="add-task-button d-flex-space-between br-10">
-            <span>Add Task</span><span class="plus"></span>
+  <body onload="init()">
+    <div
+      id="sidebarRef"
+      w3-include-html="../assets/templates/sidebar.html"
+    ></div>
+    <header
+      id="headerRef"
+      w3-include-html="../assets/templates/header.html"
+    ></header>
+    <main class="content-wrapper d-flex-column">
+      <section class="board-header-wrapper d-flex-center">
+        <div class="board-header d-flex-space-between pd-l-r-64">
+          <h1 class="board-title">Board</h1>
+          <div class="input-wrapper d-flex-space-between">
+            <div class="search br-10 pd-8-16">
+              <input type="text" placeholder="Find Task" />
+              <div class="search-icon"></div>
+            </div>
+            <div class="add-task-button d-flex-space-between br-10">
+              <span>Add Task</span><span class="plus"></span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="board-wrapper">
-      <div class="board pd-l-r-64">
-        <div class="board-columns d-flex-column to-do-wrapper">
-          <div class="column-title d-flex-space-between">
-            <h3>To do</h3>
-            <div class="add-task-icon"></div>
-          </div>
-
-          <div class="column-content-wrapper">
-            <div class="no-tasks-feedback d-flex-center br-10 d_none">
-              No tasks To do
+      <section class="board-wrapper">
+        <div class="board pd-l-r-64">
+          <div class="board-columns d-flex-column to-do-wrapper">
+            <div class="column-title d-flex-space-between">
+              <h3>To do</h3>
+              <div class="add-task-icon"></div>
             </div>
-            <div class="board-card d-flex-center">
-              <div class="board-card-content d-flex-column">
-                <label class="board-card-label br-8 d-flex-center">User Story</label>
-                <div class="board-card-text d-flex-column br-10">
-                  <h4 class="board-card-title">
-                    Kochwelt Page & Recipe Recommender
-                  </h4>
-                  <p class="board-card-description">
-                    Build start page with recipe recommendation...
-                  </p>
-                </div>
-                <div class="status d-flex-center">
-                  <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25"
-                    aria-valuemin="0" aria-valuemax="100">
-                    <div id="progress-bar" class="progress-bar" style="width: 60%"></div>
+
+            <div class="column-content-wrapper">
+              <div class="no-tasks-feedback d-flex-center br-10 d_none">
+                No tasks To do
+              </div>
+              <div class="board-card d-flex-center">
+                <div class="board-card-content d-flex-column">
+                  <label class="board-card-label br-8 d-flex-center"
+                    >User Story</label
+                  >
+                  <div class="board-card-text d-flex-column br-10">
+                    <h4 class="board-card-title">
+                      Kochwelt Page & Recipe Recommender
+                    </h4>
+                    <p class="board-card-description">
+                      Build start page with recipe recommendation...
+                    </p>
                   </div>
-                  <div class="d-flex-center subtasks">
-                    <span id="current-subtask-number">0</span>
-                    <span>/</span>
-                    <span id="total-subtask-number">3</span>
-                    <span>Subtasks</span>
+                  <div class="status d-flex-center">
+                    <div
+                      class="progress"
+                      role="progressbar"
+                      aria-label="Example with label"
+                      aria-valuenow="25"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    >
+                      <div
+                        id="progress-bar"
+                        class="progress-bar"
+                        style="width: 60%"
+                      ></div>
+                    </div>
+                    <div class="d-flex-center subtasks">
+                      <span id="current-subtask-number">0</span>
+                      <span>/</span>
+                      <span id="total-subtask-number">3</span>
+                      <span>Subtasks</span>
+                    </div>
+                  </div>
+                  <div class="d-flex-space-between board-card-footer">
+                    <div class="user-icons-wrapper d-flex-center">
+                      <span class="user-icons d-flex-center">US</span>
+                      <span class="user-icons d-flex-center">US</span>
+                      <span class="user-icons d-flex-center">US</span>
+                    </div>
+                    <img
+                      src="../assets/img/icons/low-icon.png"
+                      alt="medium priority"
+                      class="priority"
+                    />
                   </div>
                 </div>
-                <div class="d-flex-space-between board-card-footer">
-                  <div class="user-icons-wrapper d-flex-center">
-                    <span class="user-icons d-flex-center">US</span>
-                    <span class="user-icons d-flex-center">US</span>
-                    <span class="user-icons d-flex-center">US</span>
-                  </div>
-                  <img src="../assets/img/icons/low-icon.png" alt="medium priority" class="priority" />
+              </div>
+            </div>
+          </div>
+          <div class="board-columns d-flex-column in-progress-wrapper">
+            <div class="column-title d-flex-space-between">
+              <h3>In progress</h3>
+              <div class="add-task-icon"></div>
+            </div>
+            <div class="column-content-wrapper">
+              <div class="no-tasks-feedback d-flex-center br-10">
+                No tasks In Progress
+              </div>
+            </div>
+          </div>
+          <div class="board-columns d-flex-column await-feedback-wrapper">
+            <div class="column-title d-flex-space-between">
+              <h3>Await feedback</h3>
+              <div class="add-task-icon"></div>
+            </div>
+            <div class="column-content-wrapper">
+              <div class="no-tasks-feedback d-flex-center br-10">
+                No tasks Await feedback
+              </div>
+            </div>
+          </div>
+          <div class="board-columns d-flex-column done-wrapper">
+            <div class="column-title d-flex-space-between">
+              <h3>Done</h3>
+            </div>
+            <div class="column-content-wrapper">
+              <div class="no-tasks-feedback d-flex-center br-10">
+                No tasks Done
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="board-card-modal-wrapper d-flex-center">
+        <div class="modal-card-wrapper br-30">
+          <div class="modal-card-content size-20 d-flex-column">
+            <div class="modal-label d-flex-center">
+              <label class="modal-card-label br-8 d-flex-center"
+                >User Story</label
+              >
+              <span id="modal-close-button">X</span>
+            </div>
+            <h3 class="modal-card-title">Kochwelt Page & Recipe Recommender</h3>
+            <p>Build start page with recipe recommendation.</p>
+            <div class="d-flex-space-between date-line">
+              <span>Due date:</span>
+              <span>10/05/2023</span>
+            </div>
+            <div class="assignments d-flex-column">
+              <span>Assigned to:</span>
+              <div class="user-line gap-16 d-flex-space-between">
+                <span class="user-icons d-flex-center">US</span
+                ><span>Default User</span>
+              </div>
+              <div class="user-line gap-16 d-flex-space-between">
+                <span class="user-icons d-flex-center">US</span
+                ><span>Default User</span>
+              </div>
+              <div class="user-line gap-16 d-flex-space-between">
+                <span class="user-icons d-flex-center">US</span
+                ><span>Default User</span>
+              </div>
+            </div>
+            <div class="subtask-section d-flex-column">
+              <span>Subtasks:</span>
+              <div class="subtasks-wrapper d-flex-column">
+                <div class="modal-card-subtask-wrapper d-flex-center">
+                  <label class="modal-card-subtask gap-16">
+                    <input type="checkbox" id="subtask-1" />
+                    <span class="checkmark"></span>
+                    <span>Subtask 1</span>
+                  </label>
+                </div>
+                <div class="modal-card-subtask-wrapper d-flex-center">
+                  <label class="modal-card-subtask gap-16">
+                    <input type="checkbox" id="subtask-1" />
+                    <span class="checkmark"></span>
+                    <span>Subtask 1</span>
+                  </label>
+                </div>
+                <div class="modal-card-subtask-wrapper d-flex-center">
+                  <label class="modal-card-subtask gap-16">
+                    <input type="checkbox" id="subtask-1" />
+                    <span class="checkmark"></span>
+                    <span>Subtask 1</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-card-footer">
+              <div class="edit-area d-flex-space-between">
+                <div class="d-flex-space-between">
+                  <span class="delete-icon"></span><span>Delete</span>
+                </div>
+                <div class="d-flex-space-between">
+                  <span class="edit-icon"></span><span>Edit</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="board-columns d-flex-column in-progress-wrapper">
-          <div class="column-title d-flex-space-between">
-            <h3>In progress</h3>
-            <div class="add-task-icon"></div>
-          </div>
-          <div class="column-content-wrapper">
-            <div class="no-tasks-feedback d-flex-center br-10">
-              No tasks In Progress
-            </div>
-          </div>
-        </div>
-        <div class="board-columns d-flex-column await-feedback-wrapper">
-          <div class="column-title d-flex-space-between">
-            <h3>Await feedback</h3>
-            <div class="add-task-icon"></div>
-          </div>
-          <div class="column-content-wrapper">
-            <div class="no-tasks-feedback d-flex-center br-10">
-              No tasks Await feedback
-            </div>
-          </div>
-        </div>
-        <div class="board-columns d-flex-column done-wrapper">
-          <div class="column-title d-flex-space-between">
-            <h3>Done</h3>
-          </div>
-          <div class="column-content-wrapper">
-            <div class="no-tasks-feedback d-flex-center br-10">
-              No tasks Done
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="board-card-modal-wrapper d-flex-center">
-      <div class="modal-card-wrapper br-30">
-        <div class="modal-card-content size-20 d-flex-column">
-          <div class="modal-label d-flex-center">
-            <label class="modal-card-label br-8 d-flex-center">User Story</label>
-            <span id="modal-close-button">X</span>
-          </div>
-          <h3 class="modal-card-title">Kochwelt Page & Recipe Recommender</h3>
-          <p>Build start page with recipe recommendation.</p>
-          <div class="d-flex-space-between date-line">
-            <span>Due date:</span>
-            <span>10/05/2023</span>
-          </div>
-          <div class="assignments d-flex-column">
-            <span>Assigned to:</span>
-            <div class="user-line gap-16 d-flex-space-between">
-              <span class="user-icons d-flex-center">US</span><span>Default User</span>
-            </div>
-            <div class="user-line gap-16 d-flex-space-between">
-              <span class="user-icons d-flex-center">US</span><span>Default User</span>
-            </div>
-            <div class="user-line gap-16 d-flex-space-between">
-              <span class="user-icons d-flex-center">US</span><span>Default User</span>
-            </div>
-          </div>
-          <div class="subtask-section d-flex-column">
-            <span>Subtasks:</span>
-            <div class="subtasks-wrapper d-flex-column">
-              <div class="modal-card-subtask-wrapper d-flex-center">
-                <label class="modal-card-subtask gap-16">
-                  <input type="checkbox" id="subtask-1" />
-                  <span class="checkmark"></span>
-                  <span>Subtask 1</span>
-                </label>
-              </div>
-              <div class="modal-card-subtask-wrapper d-flex-center">
-                <label class="modal-card-subtask gap-16">
-                  <input type="checkbox" id="subtask-1" />
-                  <span class="checkmark"></span>
-                  <span>Subtask 1</span>
-                </label>
-              </div>
-              <div class="modal-card-subtask-wrapper d-flex-center">
-                <label class="modal-card-subtask gap-16">
-                  <input type="checkbox" id="subtask-1" />
-                  <span class="checkmark"></span>
-                  <span>Subtask 1</span>
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="modal-card-footer">
-            <div class="edit-area d-flex-space-between">
-              <div class="d-flex-space-between">
-                <span class="delete-icon"></span><span>Delete</span>
-              </div>
-              <div class="d-flex-space-between">
-                <span class="edit-icon"></span><span>Edit</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="board-card-modal-wrapper d-flex-center d_none">
-      <div class="modal-card-content size-20 d-flex-column"></div>
-    </section>
-  </main>
-</body>
-
+      </section>
+      <section class="board-card-modal-wrapper d-flex-center d_none">
+        <div class="modal-card-content size-20 d-flex-column"></div>
+      </section>
+    </main>
+  </body>
 </html>
