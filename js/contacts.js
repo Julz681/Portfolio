@@ -48,14 +48,13 @@ function initContactClickEvents() {
     item.addEventListener("click", () => {
       document
         .querySelectorAll(".contact-item.selected")
-        .forEach((selected) => selected.classList.remove("selected"));
-
+        .forEach((selected) => {
+          selected.classList.remove("selected");
+        });
       item.classList.add("selected");
-
       const name = item.dataset.name;
       const email = item.dataset.email;
       const phone = item.dataset.phone;
-
       displayContactDetails(name, email, phone);
     });
   });
@@ -64,7 +63,6 @@ function initContactClickEvents() {
 function displayContactDetails(name, email, phone) {
   const initial = name.trim().charAt(0).toUpperCase();
   const avatarColor = letterColors[initial] || "#999";
-
   const detailsHtml = `
     <div class="contact-details-card">
       <div class="contact-header">
@@ -94,7 +92,6 @@ function displayContactDetails(name, email, phone) {
         <div>
           <strong>Email</strong>
           <br><br>
-          <!-- E-Mail wird zum mailto:-Link -->
           <a class="email-address" href="mailto:${email}">${email}</a>
         </div>
         <div>
@@ -105,7 +102,11 @@ function displayContactDetails(name, email, phone) {
       </div>
     </div>
   `;
-  document.querySelector(".contacts-right-bottom").innerHTML = detailsHtml;
+  const container = document.querySelector(".contacts-right-bottom");
+  container.innerHTML = detailsHtml;
+  container.classList.remove("slide-in");
+  void container.offsetWidth;
+  container.classList.add("slide-in");
 }
 
 function getSecondInitial(fullName) {
@@ -120,6 +121,7 @@ const openBtn = document.getElementById("openAddContact");
 const overlay = document.getElementById("addContactOverlay");
 const cancelBtn = document.getElementById("cancelAddContact");
 const createBtn = document.getElementById("createContact");
+const closeOverlayBtn = document.getElementById("closeOverlayBtn");
 
 openBtn.addEventListener("click", () => {
   overlay.classList.add("open");

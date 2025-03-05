@@ -201,12 +201,36 @@ header {
   text-align: center;
 }
 
+.background-color-contacts {
+    background-color: #f6f7f8;
+    height: 100vh; 
+}
+
 .contacts-right-bottom {
   flex: 1;
   padding: 40px;
-  background-color: #f6f7f8;
   display: flex;
   flex-direction: column;
+  transform: translateX(100%);
+  opacity: 0;
+  background-color: #f6f7f8;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+    background-color: #f6f7f8;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+    background-color: #f6f7f8;
+  }
+}
+
+.contacts-right-bottom.slide-in {
+  animation: slideInFromRight 0.4s ease-out forwards;
 }
 
 .contact-details-card {
