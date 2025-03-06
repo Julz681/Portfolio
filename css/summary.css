@@ -17,10 +17,38 @@ body {
   right: 0;
 }
 
+.headline_2 {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding-top: 180px;
+}
+  
+.headline_2 h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+}
+  
+  .bold {
+    color: #000;
+}
+  
+.title {
+    font-size: 28px;
+    font-weight: 400;
+    color: #6c757d;
+    border-left: 2px solid #29abe2;
+    padding-left: 32px;
+}
+
 .container {
   display: flex;
   width: 100%;
 }
+
+/*Wrapper*/
 
 .wrapper_content_greeting {
   display: flex;
@@ -40,31 +68,16 @@ body {
   justify-content: space-between;
   width: 560px;
 }
-.headline_2 {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  padding-top: 180px;
+
+.wrapper_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.headline_2 h1 {
-  font-size: 48px;
-  font-weight: 700;
-  color: #000;
-  margin: 0;
-}
 
-.bold {
-  color: #000;
-}
-
-.title {
-  font-size: 28px;
-  font-weight: 400;
-  color: #6c757d;
-  border-left: 2px solid #29abe2;
-  padding-left: 32px;
-}
+/*Boxes*/
 
 .metrics {
   display: flex;
@@ -87,12 +100,27 @@ body {
   margin-bottom: 26px;
 }
 
-.wrapper_box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
+.metric-box img {
+    width: 69px;
+    height: 69px;
+    margin-bottom: 10px;
 }
+  
+.metric-box h2 {
+      font-size: 48px;
+    font-weight: 600;
+    color:  black;
+    margin: 10px 0;
+}
+  
+.metric-box p {
+    font-size: 18px;
+    font-weight: 400;
+    color:  black;
+}
+
+/*Box tasks*/ 
 
 .metric-box-tasks {
   background: #ffff;
@@ -107,43 +135,24 @@ body {
   text-align: center;
   margin-top: 26px;
 }
+
 .metric-box-tasks h2 {
   font-size: 48px;
   font-weight: 600;
-  color: #2a3647;
+  color:  black;
   margin: 10px 0;
 }
 
 .metric-box-tasks p {
   font-size: 18px;
   font-weight: 400;
-  color: #6c757d;
+  color:  black;
 }
 
-.metric-box img {
-  width: 69px;
-  height: 69px;
-  margin-bottom: 10px;
-}
 
-.metric-box h2 {
-  font-size: 36px;
-  font-weight: 600;
-  color: #2a3647;
-  margin: 10px 0;
-}
 
-.metric-box p {
-  font-size: 18px;
-  font-weight: 400;
-  color: #6c757d;
-}
+/*Box urgent*/ 
 
-.metric-box-urgent p {
-  font-size: 18px;
-  font-weight: 400;
-  color: #6c757d;
-}
 .metric-box-urgent {
   background: #ffff;
   border-radius: 30px;
@@ -158,11 +167,17 @@ body {
 }
 
 .metric-box-urgent h2 {
-  font-size: 36px;
-  font-weight: 600;
-  color: #2a3647;
-  margin: 0;
+    font-size: 48px;
+    font-weight: 600;
+    color:  black;
+    margin: 10px 0;
 }
+
+.metric-box-urgent p {
+    font-size: 18px;
+    font-weight: 400;
+    color:  black;
+  }
 
 .deadline-info {
   border-left: 2px solid #ccc;
@@ -171,7 +186,16 @@ body {
 
 .deadline-info p {
   margin: 5px 0;
+  padding-top: 8px;
 }
+
+.deadline-info p:first-child {
+    color:  black;
+    font-weight: bold; 
+}
+
+
+/*Greeting*/
 
 .greeting {
   margin-top: 40px;
@@ -188,3 +212,41 @@ body {
   font-weight: 700;
   font-size: 56px;
 }
+
+/*Hover*/
+
+
+.metric-box:hover,
+.metric-box-urgent:hover,
+.metric-box-tasks:hover {
+    background-color: #2A3647;
+    color: white; 
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1.05);
+}
+
+
+.metric-box:hover h2,
+.metric-box:hover p,
+.metric-box-urgent:hover h2,
+.metric-box-urgent:hover p,
+.metric-box-tasks:hover h2,
+.metric-box-tasks:hover p {
+    color: white !important; 
+}
+
+
+.metric-box:hover img[alt="Pen"] {
+    content: url("../assets/img/pen_white.png");
+}
+
+.metric-box:hover img[alt="Check"] {
+    content: url("../assets/img/check_white.png");
+}
+
+
+.metric-box-urgent:hover img {
+    filter: none;
+    background-color: transparent;
+}
+
