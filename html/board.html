@@ -111,7 +111,7 @@
         </div>
       </div>
     </section>
-    <section class="board-card-modal-wrapper d-flex-center">
+    <section id="task-card-modal" class="board-card-modal-wrapper d-flex-center d_none">
       <div class="modal-card-wrapper br-30">
         <div class="modal-card-content size-20 d-flex-column">
           <div class="modal-label d-flex-center">
@@ -180,8 +180,14 @@
         </div>
       </div>
     </section>
-    <section class="board-card-modal-wrapper d-flex-center d_none">
-      <div class="modal-card-content size-20 d-flex-column"></div>
+    <section class="board-card-modal-wrapper d-flex-center">
+      <div class="modal-add-task-wrapper d-flex-column size-20 br-30">
+        <div class="modal-add-task-header">
+          <h3>Add Task</h3>
+          <span id="modal-add-task-close-button">X</span>
+        </div>
+      </div>
+
     </section>
   </main>
 </body>
