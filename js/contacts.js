@@ -30,7 +30,6 @@ const letterColors = {
 document.addEventListener("DOMContentLoaded", () => {
   setAvatarColorsByInitials();
   initContactClickEvents();
- 
 });
 
 function setAvatarColorsByInitials() {
@@ -191,7 +190,7 @@ function sortContacts() {
 document
   .getElementById("createContact")
   .addEventListener("click", function (e) {
-    e.preventDefault();  
+    e.preventDefault();
 
     const name = document.getElementById("contactName").value.trim();
     const email = document.getElementById("contactEmail").value.trim();
@@ -199,22 +198,19 @@ document
 
     const errorMessage = document.getElementById("error-message");
     const createBtn = document.getElementById("createContact");
-    const overlay = document.getElementById("addContactOverlay");  
+    const overlay = document.getElementById("addContactOverlay");
 
-   
     if (!name || !email || !phone) {
-      createBtn.disabled = true; 
-      errorMessage.style.display = "block"; 
-      
-      return;  
+      createBtn.disabled = true;
+      errorMessage.style.display = "block";
+
+      return;
     } else {
-      errorMessage.style.display = "none";  
-      createBtn.disabled = false;  
+      errorMessage.style.display = "none";
+      createBtn.disabled = false;
     }
 
-    // Hier wird der Kontakt nur erstellt, wenn alle Felder ausgefüllt sind
     if (name && email && phone) {
-      // Code für die Erstellung des Kontakts
       const groupLetter = name.charAt(0).toUpperCase();
       let initials = name
         .split(" ")
@@ -289,9 +285,6 @@ document
       }, 200);
     }
   });
-
- 
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const nameField = document.getElementById("contactName");
