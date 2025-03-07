@@ -424,6 +424,15 @@ body {
   justify-content: flex-start !important;
 }
 
+.priority {
+  gap: 25px;
+}
+
+.prio-label {
+  padding: 4px 18px;
+  gap: 10px;
+}
+
 .assignments {
   gap: 8px;
 }
