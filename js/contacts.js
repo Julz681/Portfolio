@@ -30,6 +30,7 @@ const letterColors = {
 document.addEventListener("DOMContentLoaded", () => {
   setAvatarColorsByInitials();
   initContactClickEvents();
+ 
 });
 
 function setAvatarColorsByInitials() {
@@ -63,6 +64,7 @@ function initContactClickEvents() {
 function displayContactDetails(name, email, phone) {
   const initial = name.trim().charAt(0).toUpperCase();
   const avatarColor = letterColors[initial] || "#999";
+
   const detailsHtml = `
     <div class="contact-details-card">
       <div class="contact-header">
@@ -102,10 +104,12 @@ function displayContactDetails(name, email, phone) {
       </div>
     </div>
   `;
+
   const container = document.querySelector(".contacts-right-bottom");
-  container.innerHTML = detailsHtml;
+
   container.classList.remove("slide-in");
   void container.offsetWidth;
+  container.innerHTML = detailsHtml;
   container.classList.add("slide-in");
 }
 
@@ -143,4 +147,174 @@ overlay.addEventListener("click", (e) => {
 
 closeOverlayBtn.addEventListener("click", () => {
   overlay.classList.remove("open");
+});
+
+function sortContacts() {
+  const contactList = document.getElementById("contactList");
+
+  const groups = Array.from(
+    contactList.getElementsByClassName("contact-group")
+  );
+
+  groups.forEach((group) => {
+    const contacts = Array.from(group.getElementsByClassName("contact-item"));
+    contacts.sort((a, b) => {
+      const nameA = a.getAttribute("data-name").toUpperCase();
+      const nameB = b.getAttribute("data-name").toUpperCase();
+      return nameA.localeCompare(nameB);
+    });
+
+    contacts.forEach((contact) => {
+      group.removeChild(contact);
+      group.appendChild(contact);
+    });
+  });
+
+  groups.sort((a, b) => {
+    const letterA = a
+      .querySelector(".contact-group-letter")
+      .textContent.trim()
+      .toUpperCase();
+    const letterB = b
+      .querySelector(".contact-group-letter")
+      .textContent.trim()
+      .toUpperCase();
+    return letterA.localeCompare(letterB);
+  });
+
+  groups.forEach((group) => {
+    contactList.removeChild(group);
+    contactList.appendChild(group);
+  });
+}
+
+document
+  .getElementById("createContact")
+  .addEventListener("click", function (e) {
+    e.preventDefault();  
+
+    const name = document.getElementById("contactName").value.trim();
+    const email = document.getElementById("contactEmail").value.trim();
+    const phone = document.getElementById("contactPhone").value.trim();
+
+    const errorMessage = document.getElementById("error-message");
+    const createBtn = document.getElementById("createContact");
+    const overlay = document.getElementById("addContactOverlay");  
+
+   
+    if (!name || !email || !phone) {
+      createBtn.disabled = true; 
+      errorMessage.style.display = "block"; 
+      
+      return;  
+    } else {
+      errorMessage.style.display = "none";  
+      createBtn.disabled = false;  
+    }
+
+    // Hier wird der Kontakt nur erstellt, wenn alle Felder ausgefüllt sind
+    if (name && email && phone) {
+      // Code für die Erstellung des Kontakts
+      const groupLetter = name.charAt(0).toUpperCase();
+      let initials = name
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase())
+        .join("");
+      initials = initials.length > 2 ? initials.slice(0, 2) : initials;
+
+      const contactItem = document.createElement("div");
+      contactItem.classList.add("contact-item");
+      contactItem.setAttribute("data-name", name);
+      contactItem.setAttribute("data-email", email);
+      contactItem.setAttribute("data-phone", phone);
+
+      const contactAvatar = document.createElement("div");
+      contactAvatar.classList.add("contact-avatar");
+      contactAvatar.setAttribute("data-name", name);
+      contactAvatar.textContent = initials;
+      contactAvatar.style.backgroundColor = letterColors[groupLetter] || "#000";
+
+      const contactDetails = document.createElement("div");
+      contactDetails.classList.add("contact-details");
+
+      const contactNameDiv = document.createElement("div");
+      contactNameDiv.classList.add("contact-name");
+      contactNameDiv.textContent = name;
+
+      const contactEmailDiv = document.createElement("div");
+      contactEmailDiv.classList.add("contact-email");
+      contactEmailDiv.textContent = email;
+
+      contactDetails.appendChild(contactNameDiv);
+      contactDetails.appendChild(contactEmailDiv);
+      contactItem.appendChild(contactAvatar);
+      contactItem.appendChild(contactDetails);
+
+      const contactList = document.getElementById("contactList");
+
+      let groupElement = null;
+      const groups = contactList.getElementsByClassName("contact-group");
+      for (let i = 0; i < groups.length; i++) {
+        const letterDiv = groups[i].querySelector(".contact-group-letter");
+        if (letterDiv && letterDiv.textContent.trim() === groupLetter) {
+          groupElement = groups[i];
+          break;
+        }
+      }
+
+      if (!groupElement) {
+        groupElement = document.createElement("div");
+        groupElement.classList.add("contact-group");
+
+        const groupLetterDiv = document.createElement("div");
+        groupLetterDiv.classList.add("contact-group-letter");
+        groupLetterDiv.textContent = groupLetter;
+
+        groupElement.appendChild(groupLetterDiv);
+        contactList.appendChild(groupElement);
+      }
+
+      groupElement.appendChild(contactItem);
+
+      sortContacts();
+
+      document.getElementById("contactName").value = "";
+      document.getElementById("contactEmail").value = "";
+      document.getElementById("contactPhone").value = "";
+
+      initContactClickEvents();
+
+      setTimeout(() => {
+        contactItem.click();
+      }, 200);
+    }
+  });
+
+ 
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const nameField = document.getElementById("contactName");
+  const emailField = document.getElementById("contactEmail");
+  const phoneField = document.getElementById("contactPhone");
+
+  function autofillAllFields() {
+    if (
+      !nameField.value.trim() &&
+      !emailField.value.trim() &&
+      !phoneField.value.trim()
+    ) {
+      nameField.value = "Mark Zuckerberg";
+      emailField.value = "mark@facebook.com";
+      phoneField.value = "+1 650-543-4800";
+    }
+
+    nameField.removeEventListener("focus", autofillAllFields);
+    emailField.removeEventListener("focus", autofillAllFields);
+    phoneField.removeEventListener("focus", autofillAllFields);
+  }
+
+  nameField.addEventListener("focus", autofillAllFields);
+  emailField.addEventListener("focus", autofillAllFields);
+  phoneField.addEventListener("focus", autofillAllFields);
 });

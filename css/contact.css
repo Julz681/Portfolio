@@ -384,6 +384,13 @@ header {
   align-items: center;
 }
 
+#error-message {
+  color: red;
+  display: none;
+  margin-left: 50px;
+  margin-bottom: 16px;
+}
+
 .overlay.open {
   background: rgba(0, 0, 0, 0.3);
   opacity: 1;
@@ -483,13 +490,13 @@ header {
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid #fff;
-  margin-right: 100px;
+  margin-right: 85px;
   margin-top: 30px;
 }
 
 .add-contact-avatar img {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   object-fit: cover;
 }
 
@@ -554,7 +561,7 @@ header {
 #cancelAddContact:hover {
   box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
   color: #29abe2;
-  border: 2px solid #29abe2;
+  border: 1px solid #29abe2;
 }
 
 #createContact {

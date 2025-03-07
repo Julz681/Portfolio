@@ -93,11 +93,13 @@
         </label>
       </div>
 
+      <p id="error-message" style="color: red; display: none;">Please fill in all fields!</p>
           <div class="add-contact-buttons">
           <button type="button" id="cancelAddContact">Cancel &#10006;</button>
           <button type="submit" id="createContact">Create contact &#10004;</button>
         </div>
       </form>
+
     </div>
   </div>
 </div>
@@ -202,7 +204,7 @@
             />
           </button>
 
-          <div class="contacts-list">
+          <div class="contacts-list" id="contactList">
            
             <div class="contact-group">
               <div class="contact-group-letter">A</div>
