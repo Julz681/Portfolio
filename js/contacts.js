@@ -1,3 +1,4 @@
+//colors for the avatars depending on the letter
 const letterColors = {
   A: "#D32F2F",
   B: "#C2185B",
