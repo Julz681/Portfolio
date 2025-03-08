@@ -80,7 +80,7 @@ function displayContactDetails(name, email, phone) {
               </button>
             </div>
             <div class="contact-details-actions-2">
-              <button>
+              <button id="deleteBtn">
                 <img class="actions-img" src="/assets/img/delete.png" alt="delete">
                 Delete
               </button>
@@ -314,5 +314,42 @@ document.addEventListener("DOMContentLoaded", function () {
     if (contactItem) {
       contactItem.remove();
     }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const detailsContainer = document.querySelector(".contacts-right-bottom");
+
+  detailsContainer.addEventListener("click", function (e) {
+    const deleteButton = e.target.closest("button#deleteBtn");
+    if (!deleteButton) {
+      return;
+    }
+
+    e.preventDefault();
+
+    const detailsNameElement = detailsContainer.querySelector(".details-name");
+    if (!detailsNameElement) {
+      console.error("Kein Kontakt in der Detailansicht gefunden.");
+      return;
+    }
+    const contactName = detailsNameElement.textContent.trim();
+
+    const contactList = document.getElementById("contactList");
+    const contactItems = contactList.querySelectorAll(".contact-item");
+    contactItems.forEach(function (item) {
+      if (item.getAttribute("data-name") === contactName) {
+        item.remove();
+      }
+    });
+
+    const groups = contactList.querySelectorAll(".contact-group");
+    groups.forEach(function (group) {
+      if (group.querySelectorAll(".contact-item").length === 0) {
+        group.remove();
+      }
+    });
+
+    detailsContainer.innerHTML = "";
   });
 });

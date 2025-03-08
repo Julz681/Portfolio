@@ -384,10 +384,9 @@ header {
   align-items: center;
 }
 
-
 .overlay.hidden {
-    pointer-events: none; /* Deaktiviert Interaktionen, wenn das Overlay unsichtbar bleiben soll */
-  }
+  pointer-events: none;
+}
 
 #error-message {
   color: red;
@@ -581,5 +580,5 @@ header {
 }
 
 .delete-btn-contact {
-    display: none;
+  display: none;
 }
