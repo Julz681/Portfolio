@@ -100,6 +100,7 @@ function displayContactDetails(name, email, phone) {
           <br><br>
           ${phone}
         </div>
+        
       </div>
     </div>
   `;
@@ -131,10 +132,6 @@ openBtn.addEventListener("click", () => {
 });
 
 cancelBtn.addEventListener("click", () => {
-  overlay.classList.remove("open");
-});
-
-createBtn.addEventListener("click", () => {
   overlay.classList.remove("open");
 });
 
@@ -197,93 +194,89 @@ document
     const phone = document.getElementById("contactPhone").value.trim();
 
     const errorMessage = document.getElementById("error-message");
-    const createBtn = document.getElementById("createContact");
     const overlay = document.getElementById("addContactOverlay");
 
     if (!name || !email || !phone) {
-      createBtn.disabled = true;
       errorMessage.style.display = "block";
-
       return;
     } else {
       errorMessage.style.display = "none";
-      createBtn.disabled = false;
     }
 
-    if (name && email && phone) {
-      const groupLetter = name.charAt(0).toUpperCase();
-      let initials = name
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase())
-        .join("");
-      initials = initials.length > 2 ? initials.slice(0, 2) : initials;
+    const groupLetter = name.charAt(0).toUpperCase();
+    let initials = name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase())
+      .join("");
+    initials = initials.length > 2 ? initials.slice(0, 2) : initials;
 
-      const contactItem = document.createElement("div");
-      contactItem.classList.add("contact-item");
-      contactItem.setAttribute("data-name", name);
-      contactItem.setAttribute("data-email", email);
-      contactItem.setAttribute("data-phone", phone);
+    const contactItem = document.createElement("div");
+    contactItem.classList.add("contact-item");
+    contactItem.setAttribute("data-name", name);
+    contactItem.setAttribute("data-email", email);
+    contactItem.setAttribute("data-phone", phone);
 
-      const contactAvatar = document.createElement("div");
-      contactAvatar.classList.add("contact-avatar");
-      contactAvatar.setAttribute("data-name", name);
-      contactAvatar.textContent = initials;
-      contactAvatar.style.backgroundColor = letterColors[groupLetter] || "#000";
+    const contactAvatar = document.createElement("div");
+    contactAvatar.classList.add("contact-avatar");
+    contactAvatar.setAttribute("data-name", name);
+    contactAvatar.textContent = initials;
+    contactAvatar.style.backgroundColor = letterColors[groupLetter] || "#000";
 
-      const contactDetails = document.createElement("div");
-      contactDetails.classList.add("contact-details");
+    const contactDetails = document.createElement("div");
+    contactDetails.classList.add("contact-details");
 
-      const contactNameDiv = document.createElement("div");
-      contactNameDiv.classList.add("contact-name");
-      contactNameDiv.textContent = name;
+    const contactNameDiv = document.createElement("div");
+    contactNameDiv.classList.add("contact-name");
+    contactNameDiv.textContent = name;
 
-      const contactEmailDiv = document.createElement("div");
-      contactEmailDiv.classList.add("contact-email");
-      contactEmailDiv.textContent = email;
+    const contactEmailDiv = document.createElement("div");
+    contactEmailDiv.classList.add("contact-email");
+    contactEmailDiv.textContent = email;
 
-      contactDetails.appendChild(contactNameDiv);
-      contactDetails.appendChild(contactEmailDiv);
-      contactItem.appendChild(contactAvatar);
-      contactItem.appendChild(contactDetails);
+    contactDetails.appendChild(contactNameDiv);
+    contactDetails.appendChild(contactEmailDiv);
+    contactItem.appendChild(contactAvatar);
+    contactItem.appendChild(contactDetails);
 
-      const contactList = document.getElementById("contactList");
+    const contactList = document.getElementById("contactList");
 
-      let groupElement = null;
-      const groups = contactList.getElementsByClassName("contact-group");
-      for (let i = 0; i < groups.length; i++) {
-        const letterDiv = groups[i].querySelector(".contact-group-letter");
-        if (letterDiv && letterDiv.textContent.trim() === groupLetter) {
-          groupElement = groups[i];
-          break;
-        }
+    let groupElement = null;
+    const groups = contactList.getElementsByClassName("contact-group");
+    for (let i = 0; i < groups.length; i++) {
+      const letterDiv = groups[i].querySelector(".contact-group-letter");
+      if (letterDiv && letterDiv.textContent.trim() === groupLetter) {
+        groupElement = groups[i];
+        break;
       }
-
-      if (!groupElement) {
-        groupElement = document.createElement("div");
-        groupElement.classList.add("contact-group");
-
-        const groupLetterDiv = document.createElement("div");
-        groupLetterDiv.classList.add("contact-group-letter");
-        groupLetterDiv.textContent = groupLetter;
-
-        groupElement.appendChild(groupLetterDiv);
-        contactList.appendChild(groupElement);
-      }
-
-      groupElement.appendChild(contactItem);
-
-      sortContacts();
-
-      document.getElementById("contactName").value = "";
-      document.getElementById("contactEmail").value = "";
-      document.getElementById("contactPhone").value = "";
-
-      initContactClickEvents();
-
-      setTimeout(() => {
-        contactItem.click();
-      }, 200);
     }
+
+    if (!groupElement) {
+      groupElement = document.createElement("div");
+      groupElement.classList.add("contact-group");
+
+      const groupLetterDiv = document.createElement("div");
+      groupLetterDiv.classList.add("contact-group-letter");
+      groupLetterDiv.textContent = groupLetter;
+
+      groupElement.appendChild(groupLetterDiv);
+      contactList.appendChild(groupElement);
+    }
+
+    groupElement.appendChild(contactItem);
+
+    sortContacts();
+
+    document.getElementById("contactName").value = "";
+    document.getElementById("contactEmail").value = "";
+    document.getElementById("contactPhone").value = "";
+
+    initContactClickEvents();
+
+    setTimeout(() => {
+      contactItem.click();
+    }, 200);
+
+    overlay.classList.remove("open");
   });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -299,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       nameField.value = "Mark Zuckerberg";
       emailField.value = "mark@facebook.com";
-      phoneField.value = "+1 650-543-4800";
+      phoneField.value = "+1 650 550 450 ";
     }
 
     nameField.removeEventListener("focus", autofillAllFields);
@@ -310,4 +303,16 @@ document.addEventListener("DOMContentLoaded", () => {
   nameField.addEventListener("focus", autofillAllFields);
   emailField.addEventListener("focus", autofillAllFields);
   phoneField.addEventListener("focus", autofillAllFields);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  button.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const contactItem = button.parentElement;
+    if (contactItem) {
+      contactItem.remove();
+    }
+  });
 });
