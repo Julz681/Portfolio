@@ -75,7 +75,7 @@ function displayContactDetails(name, email, phone) {
           <h3 class="details-name">${name}</h3>
           <div class="contact-details-actions-containter">
             <div class="contact-details-actions-1">
-              <button>
+              <button id="edit">
                 <img class="actions-img" src="/assets/img/edit.png" alt="edit">
                 Edit
               </button>
@@ -185,100 +185,147 @@ function sortContacts() {
   });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("error-message").style.display = "none";
+});
+
 document
   .getElementById("createContact")
   .addEventListener("click", function (e) {
     e.preventDefault();
 
-    const name = document.getElementById("contactName").value.trim();
-    const email = document.getElementById("contactEmail").value.trim();
-    const phone = document.getElementById("contactPhone").value.trim();
-
-    const errorMessage = document.getElementById("error-message");
+    const nameField = document.getElementById("contactName");
+    const emailField = document.getElementById("contactEmail");
+    const phoneField = document.getElementById("contactPhone");
     const overlay = document.getElementById("addContactOverlay");
+    const errorMessage = document.getElementById("error-message");
 
-    if (!name || !email || !phone) {
+    const updatedName = nameField.value.trim();
+    const updatedEmail = emailField.value.trim();
+    const updatedPhone = phoneField.value.trim();
+
+    if (!updatedName || !updatedEmail || !updatedPhone) {
       errorMessage.style.display = "block";
+      overlay.classList.add("open");
       return;
-    } else {
-      errorMessage.style.display = "none";
     }
 
-    const groupLetter = name.charAt(0).toUpperCase();
-    let initials = name
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase())
-      .join("");
-    initials = initials.length > 2 ? initials.slice(0, 2) : initials;
-
-    const contactItem = document.createElement("div");
-    contactItem.classList.add("contact-item");
-    contactItem.setAttribute("data-name", name);
-    contactItem.setAttribute("data-email", email);
-    contactItem.setAttribute("data-phone", phone);
-
-    const contactAvatar = document.createElement("div");
-    contactAvatar.classList.add("contact-avatar");
-    contactAvatar.setAttribute("data-name", name);
-    contactAvatar.textContent = initials;
-    contactAvatar.style.backgroundColor = letterColors[groupLetter] || "#000";
-
-    const contactDetails = document.createElement("div");
-    contactDetails.classList.add("contact-details");
-
-    const contactNameDiv = document.createElement("div");
-    contactNameDiv.classList.add("contact-name");
-    contactNameDiv.textContent = name;
-
-    const contactEmailDiv = document.createElement("div");
-    contactEmailDiv.classList.add("contact-email");
-    contactEmailDiv.textContent = email;
-
-    contactDetails.appendChild(contactNameDiv);
-    contactDetails.appendChild(contactEmailDiv);
-    contactItem.appendChild(contactAvatar);
-    contactItem.appendChild(contactDetails);
+    errorMessage.style.display = "none";
 
     const contactList = document.getElementById("contactList");
 
-    let groupElement = null;
-    const groups = contactList.getElementsByClassName("contact-group");
-    for (let i = 0; i < groups.length; i++) {
-      const letterDiv = groups[i].querySelector(".contact-group-letter");
-      if (letterDiv && letterDiv.textContent.trim() === groupLetter) {
-        groupElement = groups[i];
-        break;
+    if (isEditing && currentEditingContact) {
+      const oldName = currentEditingContact.getAttribute("data-name");
+      if (oldName !== updatedName) {
+        const parentGroup = currentEditingContact.closest(".contact-group");
+        parentGroup.removeChild(currentEditingContact);
+
+        if (parentGroup.querySelectorAll(".contact-item").length === 0) {
+          contactList.removeChild(parentGroup);
+        }
       }
+
+      createContactElement(
+        updatedName,
+        updatedEmail,
+        updatedPhone,
+        contactList
+      );
+
+      sortContacts();
+
+      isEditing = false;
+      currentEditingContact = null;
+    } else {
+      createContactElement(
+        updatedName,
+        updatedEmail,
+        updatedPhone,
+        contactList
+      );
+
+      sortContacts();
+      initContactClickEvents();
     }
 
-    if (!groupElement) {
-      groupElement = document.createElement("div");
-      groupElement.classList.add("contact-group");
-
-      const groupLetterDiv = document.createElement("div");
-      groupLetterDiv.classList.add("contact-group-letter");
-      groupLetterDiv.textContent = groupLetter;
-
-      groupElement.appendChild(groupLetterDiv);
-      contactList.appendChild(groupElement);
-    }
-
-    groupElement.appendChild(contactItem);
-
-    sortContacts();
-
-    document.getElementById("contactName").value = "";
-    document.getElementById("contactEmail").value = "";
-    document.getElementById("contactPhone").value = "";
-
-    initContactClickEvents();
-
-    setTimeout(() => {
-      contactItem.click();
-    }, 200);
+    nameField.value = "";
+    emailField.value = "";
+    phoneField.value = "";
 
     overlay.classList.remove("open");
   });
+
+function createContactElement(name, email, phone, contactList) {
+  const groupLetter = name.charAt(0).toUpperCase();
+  let initials = name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("")
+    .slice(0, 2);
+
+  const contactItem = document.createElement("div");
+  contactItem.classList.add("contact-item");
+  contactItem.setAttribute("data-name", name);
+  contactItem.setAttribute("data-email", email);
+  contactItem.setAttribute("data-phone", phone);
+
+  const contactAvatar = document.createElement("div");
+  contactAvatar.classList.add("contact-avatar");
+  contactAvatar.setAttribute("data-name", name);
+  contactAvatar.textContent = initials;
+  contactAvatar.style.backgroundColor = letterColors[groupLetter] || "#000";
+
+  const contactDetails = document.createElement("div");
+  contactDetails.classList.add("contact-details");
+
+  const contactNameDiv = document.createElement("div");
+  contactNameDiv.classList.add("contact-name");
+  contactNameDiv.textContent = name;
+
+  const contactEmailDiv = document.createElement("div");
+  contactEmailDiv.classList.add("contact-email");
+  contactEmailDiv.textContent = email;
+
+  contactDetails.appendChild(contactNameDiv);
+  contactDetails.appendChild(contactEmailDiv);
+  contactItem.appendChild(contactAvatar);
+  contactItem.appendChild(contactDetails);
+
+  let groupElement = null;
+  const groups = contactList.getElementsByClassName("contact-group");
+
+  for (let i = 0; i < groups.length; i++) {
+    const letterDiv = groups[i].querySelector(".contact-group-letter");
+    if (letterDiv && letterDiv.textContent.trim() === groupLetter) {
+      groupElement = groups[i];
+      break;
+    }
+  }
+
+  if (!groupElement) {
+    groupElement = document.createElement("div");
+    groupElement.classList.add("contact-group");
+
+    const groupLetterDiv = document.createElement("div");
+    groupLetterDiv.classList.add("contact-group-letter");
+    groupLetterDiv.textContent = groupLetter;
+
+    groupElement.appendChild(groupLetterDiv);
+    contactList.appendChild(groupElement);
+  }
+
+  groupElement.appendChild(contactItem);
+
+  document.querySelectorAll(".contact-item.selected").forEach((selected) => {
+    selected.classList.remove("selected");
+  });
+
+  contactItem.classList.add("selected");
+
+  displayContactDetails(name, email, phone);
+
+  initContactClickEvents();
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const nameField = document.getElementById("contactName");
@@ -306,16 +353,25 @@ document.addEventListener("DOMContentLoaded", () => {
   phoneField.addEventListener("focus", autofillAllFields);
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  button.addEventListener("click", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+document.addEventListener("DOMContentLoaded", () => {
+  const nameField = document.getElementById("contactName");
+  const emailField = document.getElementById("contactEmail");
+  const phoneField = document.getElementById("contactPhone");
+  const errorMessage = document.getElementById("error-message");
 
-    const contactItem = button.parentElement;
-    if (contactItem) {
-      contactItem.remove();
+  function checkInputs() {
+    if (
+      nameField.value.trim() &&
+      emailField.value.trim() &&
+      phoneField.value.trim()
+    ) {
+      errorMessage.style.display = "none";
     }
-  });
+  }
+
+  nameField.addEventListener("input", checkInputs);
+  emailField.addEventListener("input", checkInputs);
+  phoneField.addEventListener("input", checkInputs);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -331,7 +387,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const detailsNameElement = detailsContainer.querySelector(".details-name");
     if (!detailsNameElement) {
-      console.error("Kein Kontakt in der Detailansicht gefunden.");
       return;
     }
     const contactName = detailsNameElement.textContent.trim();
@@ -352,5 +407,113 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     detailsContainer.innerHTML = "";
+  });
+});
+
+let isEditing = false;
+let currentEditingContact = null;
+
+document.addEventListener("click", function (e) {
+  const editBtn = e.target.closest("#edit");
+  if (!editBtn) return;
+
+  e.preventDefault();
+
+  const selectedContact = document.querySelector(".contact-item.selected");
+  if (!selectedContact) {
+    console.error("Kein Kontakt ausgewählt!");
+    return;
+  }
+
+  const detailsContainer = document.querySelector(".contacts-right-bottom");
+  if (!detailsContainer) return;
+
+  const detailsNameEl = detailsContainer.querySelector(".details-name");
+  const emailEl = detailsContainer.querySelector(".email-address");
+  if (!detailsNameEl || !emailEl) return;
+
+  const contactName = detailsNameEl.textContent.trim();
+  const contactEmail = emailEl.textContent.trim();
+
+  const infoDivs = detailsContainer.querySelectorAll(".details-info > div");
+  let phoneText = "";
+  if (infoDivs.length > 1) {
+    phoneText = infoDivs[1].textContent.trim();
+  }
+
+  const overlay = document.getElementById("addContactOverlay");
+  if (!overlay) {
+    return;
+  }
+  overlay.classList.add("open");
+
+  document.getElementById("contactName").value = contactName;
+  document.getElementById("contactEmail").value = contactEmail;
+  document.getElementById("contactPhone").value =
+    phoneText.match(/\+?\d[\d ]+/g)?.[0] || "";
+
+  const overlayTitle = document.getElementById("overlayTitle");
+  const overlayDescription = document.getElementById("overlayDescription");
+
+  if (overlayTitle) {
+    overlayTitle.textContent = "Edit Contact";
+  }
+
+  if (overlayDescription) {
+    overlayDescription.style.display = "none";
+  }
+
+  const submitBtn = document.getElementById("createContact");
+  const cancelBtn = document.getElementById("cancelAddContact");
+
+  if (submitBtn) {
+    submitBtn.textContent = "Save \u2714";
+  }
+
+  if (cancelBtn) {
+    cancelBtn.offsetWidth;
+    setTimeout(() => {
+      cancelBtn.style.marginLeft = "-75px";
+    }, 50);
+  }
+
+  isEditing = true;
+  currentEditingContact = selectedContact;
+
+  function resetOverlay() {
+    if (overlayTitle) {
+      overlayTitle.textContent = "Add Contact";
+    }
+
+    if (overlayDescription) {
+      overlayDescription.style.display = "block";
+    }
+
+    if (submitBtn) {
+      submitBtn.textContent = "Create Contact \u2714";
+    }
+
+    if (cancelBtn) {
+      cancelBtn.style.marginLeft = "0px";
+    }
+
+    document.getElementById("contactName").value = "";
+    document.getElementById("contactEmail").value = "";
+    document.getElementById("contactPhone").value = "";
+
+    isEditing = false;
+    currentEditingContact = null;
+  }
+
+  document
+    .getElementById("createContact")
+    .addEventListener("click", function () {
+      setTimeout(() => {
+        resetOverlay();
+      }, 200);
+    });
+
+  cancelBtn.addEventListener("click", function () {
+    resetOverlay();
   });
 });

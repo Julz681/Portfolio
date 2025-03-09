@@ -17,7 +17,7 @@
 
 <body>
 
-<div class="overlay" id="addContactOverlay">
+<div class="overlay overlay-hidden" id="addContactOverlay">
 
   <div class="add-contact-modal">
 
@@ -28,8 +28,8 @@
       <div class="add-contact-logo">
         <img src="../assets/img/logo_sidemenu.png" alt="logo">
       </div>
-      <h2 class="add-contact-title">Add contact</h2>
-      <p class="add-contact-subtitle">Tasks are better with a team!</p>
+      <h2 id="overlayTitle" class="add-contact-title">Add contact</h2>
+      <p id="overlayDescription" class="add-contact-subtitle">Tasks are better with a team!</p>
       <img src="../assets/img/addcontactvector.png" alt="vector">
     </div>
 
@@ -37,7 +37,7 @@
     <div class="add-contact-drawer-right">
 
       <div class="alignment-right">
-      <div class="add-contact-avatar">
+      <div id="overlayAvatar" class="add-contact-avatar">
         <img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar">
       </div>
 
@@ -446,7 +446,7 @@
                   <h3 class="details-name">Ada Lovelace</h3>
                   <div class="contact-details-actions-containter">
                     <div class="contact-details-actions-1">
-                      <button>
+                      <button id="edit">
                         <img class="actions-img" src="../assets/img/edit.png" alt="edit">
                         Edit
                       </button>
