@@ -7,13 +7,14 @@
   <link rel="stylesheet" href="../css/board.css" />
   <link rel="stylesheet" href="../css/desktop_template.css" />
   <link rel="icon" type="icon" href="../assets/img/favicon.png" />
-  <script src="../js/board.js" defer></script>
+  <script src="../js/add_task.js" defer></script>
   <title>Board</title>
 </head>
 
 <body onload="init()">
-  <div id="sidebarRef" w3-include-html="../assets/templates/sidebar.html"></div>
-  <header id="headerRef" w3-include-html="../assets/templates/header.html"></header>
+  <!-- <div id="sidebarRef" w3-include-html="../assets/templates/sidebar.html"></div>
+  <header id="headerRef" w3-include-html="../assets/templates/header.html"></header> -->
+  <aside id="general-frame" w3-include-html="../assets/templates/desktop_template.html"></aside>
   <main class="content-wrapper d-flex-column">
     <section class="board-header-wrapper d-flex-center">
       <div class="board-header d-flex-space-between pd-l-r-64">
@@ -179,15 +180,6 @@
           </div>
         </div>
       </div>
-    </section>
-    <section class="board-card-modal-wrapper d-flex-center">
-      <div class="modal-add-task-wrapper d-flex-column size-20 br-30">
-        <div class="modal-add-task-header">
-          <h3>Add Task</h3>
-          <span id="modal-add-task-close-button">X</span>
-        </div>
-      </div>
-
     </section>
   </main>
 </body>

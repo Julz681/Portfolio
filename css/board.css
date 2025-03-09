@@ -64,12 +64,29 @@
   width: 50%;
 }
 
+.gap-8 {
+  gap: 8px;
+}
+
 .gap-16 {
   gap: 16px;
 }
 
+.gap-24 {
+  gap: 24px;
+}
+
+.abs-l-328 {
+  position: absolute;
+  left: 328px;
+}
+
+.red {
+  color: #ff3d00;
+}
+
 body {
-  font-family: "Figtree", serif;
+  font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   display: flex;
@@ -85,18 +102,18 @@ body {
 
 /* generic templates styling */
 
-#sidebarRef {
+.sidebar {
+  left: unset !important;
+}
+
+/* general frame */
+
+#general-frame {
   position: absolute;
   top: 0;
   left: 0;
-}
-
-#headerRef {
-  width: 100%;
-}
-
-.sidebar {
-  position: relative !important;
+  right: 0;
+  max-width: 1920px;
 }
 
 /* board styling */
@@ -106,6 +123,7 @@ body {
   width: 100%;
   position: relative;
   font-family: "Inter", sans-serif !important;
+  margin-top: 96px;
 }
 
 /* board header */

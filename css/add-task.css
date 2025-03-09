@@ -1,0 +1,46 @@
+.add-task-header-wrapper {
+  margin-top: 96px;
+  position: relative;
+  max-width: 1920px;
+}
+
+.add-task-form {
+  position: absolute;
+  top: 231px;
+  font-weight: 400px;
+}
+
+.add-task-title {
+  font-size: 74px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.form-inputs {
+  width: 440px;
+}
+
+.task-input-fields {
+  border: 1px solid #d1d1d1;
+  padding: 12px 21px;
+}
+
+.task-input-fields::-webkit-input-placeholder {
+  color: #d1d1d1;
+  font-size: 20px;
+  line-height: 24px !important;
+  font-weight: 400;
+}
+
+.task-input-fields:focus {
+  outline: 0;
+  border-right: 0;
+}
+
+.task-input-fields:valid {
+  border: 1px solid #29abe2;
+}
+
+/* .task-input-fields:invalid {
+  border: 1px solid #ff8190;
+} */
