@@ -20,6 +20,8 @@
   width: 440px;
 }
 
+/* general styling input fields */
+
 .task-input-fields {
   border: 1px solid #d1d1d1;
   padding: 12px 21px;
@@ -45,6 +47,8 @@
   border: 1px solid #ff8190;
 } */
 
+/* general styling description */
+
 .task-description-text {
   border: 1px solid #d1d1d1;
   padding: 18px 16px;
@@ -54,9 +58,37 @@
   outline: 0;
 }
 
-.task-description-text::placeholder {
+.task-description-text::-webkit-input-placeholder {
   color: #d1d1d1;
   font-size: 20px;
   line-height: 24px !important;
   font-weight: 400;
+  font-family: "Inter", sans-serif !important;
+}
+
+.task-description-text:focus {
+  border: 1px solid #29abe2;
+}
+
+.task-description-text::-webkit-resizer {
+  display: none;
+}
+
+/* general styling date picker */
+
+.date-picker::-webkit-calendar-picker-indicator {
+  background: transparent
+}
+
+.date-picker {
+  background: url(../assets/img/icons/date-picker.png) no-repeat 95% 50%;
+  background-size: 20px;
+}
+
+.date-picker::-webkit-datetime-edit {
+  color: #d1d1d1;
+  font-size: 20px;
+  line-height: 24px !important;
+  font-weight: 400;
+  font-family: "Inter", sans-serif !important;
 }
