@@ -30,11 +30,11 @@
   font-size: 20px;
   line-height: 24px !important;
   font-weight: 400;
+  font-family: "Inter", sans-serif !important;
 }
 
 .task-input-fields:focus {
   outline: 0;
-  border-right: 0;
 }
 
 .task-input-fields:valid {
@@ -44,3 +44,19 @@
 /* .task-input-fields:invalid {
   border: 1px solid #ff8190;
 } */
+
+.task-description-text {
+  border: 1px solid #d1d1d1;
+  padding: 18px 16px;
+}
+
+.task-description-text:focus {
+  outline: 0;
+}
+
+.task-description-text::placeholder {
+  color: #d1d1d1;
+  font-size: 20px;
+  line-height: 24px !important;
+  font-weight: 400;
+}
