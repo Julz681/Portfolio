@@ -1,41 +1,32 @@
 /**
- * This function waits until the DOM is fully loaded and then adds event listeners
- * for a user profile dropdown menu.
+ * This function shows and hides the menu when the user profile is clicked.
  */
-document.addEventListener("DOMContentLoaded", function () {
-  /**
-   * The user profile element that is clicked to toggle the dropdown menu.
-   * @type {HTMLElement}
-   */
-  const userProfile = document.getElementById("userProfile");
-
-  /**
-   * The dropdown menu that is shown or hidden.
-   * @type {HTMLElement}
-   */
-  const dropdownMenu = document.getElementById("dropdownMenu");
-
-  /**
-   * Event listener for the user profile. Clicking toggles the dropdown menu.
-   * @param {MouseEvent} event - The click event.
-   */
-  userProfile.addEventListener("click", function (event) {
-    event.stopPropagation(); // Prevents the document click event from closing the dropdown immediately
-    dropdownMenu.style.display =
-      dropdownMenu.style.display === "block" ? "none" : "block";
-  });
-
-  /**
-   * Event listener for the document to hide the dropdown menu when clicking outside the user profile
-   *
-   * @param {MouseEvent} event - The click event.
-   */
-  document.addEventListener("click", function (event) {
-    if (
-      !userProfile.contains(event.target) &&
-      !dropdownMenu.contains(event.target)
-    ) {
-      dropdownMenu.style.display = "none";
+function toggleDropdown() {
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    if (dropdownMenu.style.display === "block") {
+        dropdownMenu.style.display = "none";
+    } else {
+        dropdownMenu.style.display = "block";
     }
-  });
-});
+}
+
+/**
+ * Hides the dropdown menu if the user clicks outside of it or the profile.
+ * @param {MouseEvent} event - The click event.
+ */
+function closeDropdown(event) {
+    // This function gets the menu and user profile elements
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    var userProfile = document.getElementById("userProfile");
+
+    //  Check if the click occurred outside the dropdown menu and the user profile
+    var clickedOutsideMenu = !dropdownMenu.contains(event.target);
+    var clickedOutsideProfile = !userProfile.contains(event.target);
+
+    if (clickedOutsideMenu && clickedOutsideProfile) {
+        dropdownMenu.style.display = "none";
+    }
+}
+
+// This function closes the drop down menu
+document.onclick = closeDropdown;

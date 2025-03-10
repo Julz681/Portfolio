@@ -6,13 +6,9 @@
     <link rel="icon" type="icon" href="../assets/img/favicon.png" />
     <link rel="stylesheet" href="../css/sign_up.css" />
     <link rel="stylesheet" href="../css/style.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <title>Join</title>
   </head>
   <body>
@@ -78,10 +74,12 @@
                 type="password"
                 placeholder="Password"
                 required
+                onfocus="handlePasswordFocus('password', this.nextElementSibling)"
                 oninput="updatePasswordIcon('password', this.nextElementSibling)"
               />
               <img
                 class="imgs-input_signup toggle-password"
+                id="eye-icon-password"
                 src="../assets/img/lock.png"
                 alt="Toggle Password Visibility"
                 onclick="togglePasswordVisibility('password', this)"
@@ -95,10 +93,12 @@
                 type="password"
                 placeholder="Confirm Password"
                 required
+                onfocus="handlePasswordFocus('confirm-password', this.nextElementSibling)"
                 oninput="updatePasswordIcon('confirm-password', this.nextElementSibling)"
               />
               <img
                 class="imgs-input_signup toggle-password"
+                id="eye-icon-confirm-password"
                 src="../assets/img/lock.png"
                 alt="Toggle Password Visibility"
                 onclick="togglePasswordVisibility('confirm-password', this)"
