@@ -28,43 +28,74 @@ const letterColors = {
   Z: "#5D4037",
 };
 
+//is called as soon as the HTML page has been completely loaded
 document.addEventListener("DOMContentLoaded", () => {
+  //...to set the avatar colors.
   setAvatarColorsByInitials();
+  //...to enable click events for contacts.
   initContactClickEvents();
 });
 
+// Set avatar background color based on the first letter of the name
 function setAvatarColorsByInitials() {
+  // Select all avatar elements
   const avatars = document.querySelectorAll(".contact-avatar");
+
+  // Loop through each avatar
   avatars.forEach((avatar) => {
+    // Get the contact name from the data attribute
     const name = avatar.dataset.name;
+
+    // Extract the first letter and convert to uppercase
     const initial = name.trim().charAt(0).toUpperCase();
+
+    // Get the corresponding color or default to gray
     const color = letterColors[initial] || "#999";
+
+    // Apply the background color to the avatar
     avatar.style.backgroundColor = color;
   });
 }
 
+// Initialize click events for contact items
 function initContactClickEvents() {
+  // Select all contact items
   const contactItems = document.querySelectorAll(".contact-item");
+
+  // Loop through each contact item
   contactItems.forEach((item) => {
+    // Add click event listener
     item.addEventListener("click", () => {
+      // Remove "selected" class from all previously selected contacts
       document
         .querySelectorAll(".contact-item.selected")
         .forEach((selected) => {
           selected.classList.remove("selected");
         });
+
+      // Add "selected" class to the clicked contact item
       item.classList.add("selected");
+
+      // Get contact details from data attributes
       const name = item.dataset.name;
       const email = item.dataset.email;
       const phone = item.dataset.phone;
+
+      // Display the contact details in the UI
       displayContactDetails(name, email, phone);
     });
   });
 }
 
+// Display contact details in the details panel
 function displayContactDetails(name, email, phone) {
+  // Get the first initial and convert to uppercase
   const initial = name.trim().charAt(0).toUpperCase();
+
+  // Get the avatar color based on the initial or use default gray
   const avatarColor = letterColors[initial] || "#999";
 
+  // Generate the HTML structure for contact details
   const detailsHtml = `
     <div class="contact-details-card">
       <div class="contact-header">
@@ -101,72 +132,93 @@ function displayContactDetails(name, email, phone) {
           <br><br>
           ${phone}
         </div>
-        
       </div>
     </div>
   `;
 
+  // Select the container where the contact details will be displayed
   const container = document.querySelector(".contacts-right-bottom");
 
+  // Remove and re-trigger the animation for smooth transition
   container.classList.remove("slide-in");
-  void container.offsetWidth;
+  void container.offsetWidth; // Force reflow for animation reset
   container.innerHTML = detailsHtml;
   container.classList.add("slide-in");
 }
 
+// Get the second initial from a full name
 function getSecondInitial(fullName) {
+  // Split the name into parts by spaces
   const parts = fullName.trim().split(" ");
+
+  // If there is more than one word, return the first letter of the second word
   if (parts.length > 1) {
     return parts[1].charAt(0).toUpperCase();
   }
+
+  // Return an empty string if there is no second word
   return "";
 }
 
+// Select elements for opening and closing the contact overlay
 const openBtn = document.getElementById("openAddContact");
 const overlay = document.getElementById("addContactOverlay");
 const cancelBtn = document.getElementById("cancelAddContact");
 const createBtn = document.getElementById("createContact");
 const closeOverlayBtn = document.getElementById("closeOverlayBtn");
 
+// Open the contact overlay when the "Add Contact" button is clicked
 openBtn.addEventListener("click", () => {
   overlay.classList.add("open");
 });
 
+// Close the overlay when the "Cancel" button is clicked
 cancelBtn.addEventListener("click", () => {
   overlay.classList.remove("open");
 });
 
+// Close the overlay when clicking outside of it
 overlay.addEventListener("click", (e) => {
   if (e.target === overlay) {
     overlay.classList.remove("open");
   }
 });
 
+// Close the overlay when clicking the close button
 closeOverlayBtn.addEventListener("click", () => {
   overlay.classList.remove("open");
 });
 
+// Sort contacts alphabetically within their respective groups and reorder groups
 function sortContacts() {
+  // Select the main contact list container
   const contactList = document.getElementById("contactList");
 
+  // Get all contact groups (each representing a letter section)
   const groups = Array.from(
     contactList.getElementsByClassName("contact-group")
   );
 
+  // Loop through each group to sort the contacts inside
   groups.forEach((group) => {
+    // Get all contacts within the current group
     const contacts = Array.from(group.getElementsByClassName("contact-item"));
+
+    // Sort contacts alphabetically by their "data-name" attribute
     contacts.sort((a, b) => {
       const nameA = a.getAttribute("data-name").toUpperCase();
       const nameB = b.getAttribute("data-name").toUpperCase();
       return nameA.localeCompare(nameB);
     });
 
+    // Reorder contacts inside the group
     contacts.forEach((contact) => {
       group.removeChild(contact);
       group.appendChild(contact);
     });
   });
 
+  // Sort groups alphabetically by their letter header
   groups.sort((a, b) => {
     const letterA = a
       .querySelector(".contact-group-letter")
@@ -179,6 +231,7 @@ function sortContacts() {
     return letterA.localeCompare(letterB);
   });
 
+  // Reorder the groups inside the contact list
   groups.forEach((group) => {
     contactList.removeChild(group);
     contactList.appendChild(group);
@@ -410,6 +463,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+let contacts = [];
 let isEditing = false;
 let currentEditingContact = null;
 
@@ -421,7 +475,6 @@ document.addEventListener("click", function (e) {
 
   const selectedContact = document.querySelector(".contact-item.selected");
   if (!selectedContact) {
-    console.error("Kein Kontakt ausgewählt!");
     return;
   }
 
