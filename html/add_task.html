@@ -24,7 +24,7 @@
     </section>
 
     <section class="add-task-content">
-      <form action="#" method="POST" class="add-task-form d-flex-space-between size-20">
+      <form action="#" method="POST" class="add-task-form d-flex-space-between size-20 gap-24">
         <div class="form-inputs d-flex-column gap-24">
           <div class="task-title-input wrapper d-flex-column gap-8">
             <label for="task-title"><span>Title</span><span class="red">*</span></label>
@@ -38,10 +38,36 @@
           </div>
           <div class="date-picker-wrapper d-flex-column gap-8">
             <label for="date"><span>Due date</span><span class="red">*</span></label>
-            <input type="date" name="date" id="due-date" class="task-input-fields date-picker size-20 br-10" required />
+            <input placeholder="dd/mm/yyyy" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" type="text" name="date" id="due-date"
+              class="task-input-fields date-picker size-20 br-10" required />
           </div>
-          <div class="separator"></div>
-          <div class="form-inputs d-flex-column gap-24"></div>
+        </div>
+        <div class="separator"></div>
+        <div class="form-inputs d-flex-column gap-24">
+          <div class="priority-wrapper d-flex-column gap-8">
+            <label for="priority">Priority</label>
+            <div class="d-flex-space-between">
+              <div class="priority-labels" id="urgent"><span>Urgent</span></div>
+              <div class="priority-labels" id="medium"><span>Medium</span></div>
+              <div class="priority-labels" id="low"><span>Low</span></div>
+            </div>
+            <div class="assigned-to-wrapper d-flex-column gap-8">
+              <label for="assigned-to">Assigned To</label>
+              <input class="task-input-fields size-20 br-10" type="text" id="task-title" name="assigned-to"
+                placeholder="Select contacts to assign" />
+            </div>
+            <div class="category-wrapper d-flex-column gap-8">
+              <label for="category"><span>Category</span><span class="red">*</span></label>
+              <input type="text" name="category" id="category" class="task-input-fields size-20 br-10"
+                placeholder="Select task category" required />
+            </div>
+            <div class="subtasks-wrapper d-flex-column gap-8">
+              <label for="subtasks">Subtasks</label>
+              <input type="text" name="subtasks" id="subtasks" class="task-input-fields size-20 br-10"
+                placeholder="Add new Subtask" />
+            </div>
+          </div>
+        </div>
       </form>
     </section>
   </main>

@@ -52,6 +52,8 @@
 .task-description-text {
   border: 1px solid #d1d1d1;
   padding: 18px 16px;
+  font-weight: 400;
+  font-family: "Inter", sans-serif !important;
 }
 
 .task-description-text:focus {
@@ -77,12 +79,14 @@
 /* general styling date picker */
 
 .date-picker::-webkit-calendar-picker-indicator {
-  background: transparent
+  background: transparent;
 }
 
 .date-picker {
   background: url(../assets/img/icons/date-picker.png) no-repeat 95% 50%;
   background-size: 20px;
+  background-color: #ffff;
+  color: #000000;
 }
 
 .date-picker::-webkit-datetime-edit {
@@ -91,4 +95,15 @@
   line-height: 24px !important;
   font-weight: 400;
   font-family: "Inter", sans-serif !important;
+}
+
+.date-picker:valid {
+  color: #000000;
+}
+
+/* styling seperator */
+.separator {
+  width: 1px;
+  background-color: #d1d1d1;
+  height: 100%;
 }
