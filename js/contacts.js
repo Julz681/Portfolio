@@ -238,46 +238,58 @@ function sortContacts() {
   });
 }
 
+// Hide the error message when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("error-message").style.display = "none";
 });
 
+// Add event listener to the "Create Contact" button
 document
   .getElementById("createContact")
   .addEventListener("click", function (e) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
 
+    // Get form fields
     const nameField = document.getElementById("contactName");
     const emailField = document.getElementById("contactEmail");
     const phoneField = document.getElementById("contactPhone");
     const overlay = document.getElementById("addContactOverlay");
     const errorMessage = document.getElementById("error-message");
 
+    // Get trimmed input values
     const updatedName = nameField.value.trim();
     const updatedEmail = emailField.value.trim();
     const updatedPhone = phoneField.value.trim();
 
+    // Show error message if any field is empty
     if (!updatedName || !updatedEmail || !updatedPhone) {
       errorMessage.style.display = "block";
       overlay.classList.add("open");
       return;
     }
 
+    // Hide error message if validation passes
     errorMessage.style.display = "none";
 
+    // Get the contact list container
     const contactList = document.getElementById("contactList");
 
     if (isEditing && currentEditingContact) {
+      // Get the old name before editing
       const oldName = currentEditingContact.getAttribute("data-name");
+
+      // If the name has changed, remove the old contact from the group
       if (oldName !== updatedName) {
         const parentGroup = currentEditingContact.closest(".contact-group");
         parentGroup.removeChild(currentEditingContact);
 
+        // If the group is empty, remove it from the contact list
         if (parentGroup.querySelectorAll(".contact-item").length === 0) {
           contactList.removeChild(parentGroup);
         }
       }
 
+      // Create and add the updated contact element
       createContactElement(
         updatedName,
         updatedEmail,
@@ -285,11 +297,14 @@ document
         contactList
       );
 
+      // Sort contacts after updating
       sortContacts();
 
+      // Reset editing mode
       isEditing = false;
       currentEditingContact = null;
     } else {
+      // Create and add a new contact element if not editing
       createContactElement(
         updatedName,
         updatedEmail,
@@ -297,56 +312,72 @@ document
         contactList
       );
 
+      // Sort and initialize event listeners for new contacts
       sortContacts();
       initContactClickEvents();
     }
 
+    // Clear input fields after saving
     nameField.value = "";
     emailField.value = "";
     phoneField.value = "";
 
+    // Close the contact overlay
     overlay.classList.remove("open");
   });
 
+// Create a contact element and add it to the contact list
 function createContactElement(name, email, phone, contactList) {
+  // Get the first letter of the name (used for grouping)
   const groupLetter = name.charAt(0).toUpperCase();
+
+  // Generate initials from the name (max 2 characters)
   let initials = name
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase())
     .join("")
     .slice(0, 2);
 
+  // Create the contact item container
   const contactItem = document.createElement("div");
   contactItem.classList.add("contact-item");
   contactItem.setAttribute("data-name", name);
   contactItem.setAttribute("data-email", email);
   contactItem.setAttribute("data-phone", phone);
 
+  // Create the avatar element with initials
   const contactAvatar = document.createElement("div");
   contactAvatar.classList.add("contact-avatar");
   contactAvatar.setAttribute("data-name", name);
   contactAvatar.textContent = initials;
   contactAvatar.style.backgroundColor = letterColors[groupLetter] || "#000";
 
+  // Create the contact details container
   const contactDetails = document.createElement("div");
   contactDetails.classList.add("contact-details");
 
+  // Create and add the contact name
   const contactNameDiv = document.createElement("div");
   contactNameDiv.classList.add("contact-name");
   contactNameDiv.textContent = name;
 
+  // Create and add the contact email
   const contactEmailDiv = document.createElement("div");
   contactEmailDiv.classList.add("contact-email");
   contactEmailDiv.textContent = email;
 
+  // Append name and email to the details container
   contactDetails.appendChild(contactNameDiv);
   contactDetails.appendChild(contactEmailDiv);
+
+  // Append avatar and details to the contact item
   contactItem.appendChild(contactAvatar);
   contactItem.appendChild(contactDetails);
 
   let groupElement = null;
   const groups = contactList.getElementsByClassName("contact-group");
 
+  // Check if a group for the first letter already exists
   for (let i = 0; i < groups.length; i++) {
     const letterDiv = groups[i].querySelector(".contact-group-letter");
     if (letterDiv && letterDiv.textContent.trim() === groupLetter) {
@@ -355,37 +386,49 @@ function createContactElement(name, email, phone, contactList) {
     }
   }
 
+  // If no group exists, create a new one
   if (!groupElement) {
     groupElement = document.createElement("div");
     groupElement.classList.add("contact-group");
 
+    // Create group letter header
     const groupLetterDiv = document.createElement("div");
     groupLetterDiv.classList.add("contact-group-letter");
     groupLetterDiv.textContent = groupLetter;
 
+    // Append letter header to the group
     groupElement.appendChild(groupLetterDiv);
+
+    // Append the group to the contact list
     contactList.appendChild(groupElement);
   }
 
+  // Append the contact item to the corresponding group
   groupElement.appendChild(contactItem);
 
+  // Deselect all previously selected contacts
   document.querySelectorAll(".contact-item.selected").forEach((selected) => {
     selected.classList.remove("selected");
   });
 
+  // Mark the new contact as selected
   contactItem.classList.add("selected");
 
+  // Display contact details in the details panel
   displayContactDetails(name, email, phone);
 
+  // Reinitialize click events for contact items
   initContactClickEvents();
 }
 
+// Autofill contact form fields when focused (only if all fields are empty)
 document.addEventListener("DOMContentLoaded", () => {
   const nameField = document.getElementById("contactName");
   const emailField = document.getElementById("contactEmail");
   const phoneField = document.getElementById("contactPhone");
 
   function autofillAllFields() {
+    // Check if all fields are empty before autofilling
     if (
       !nameField.value.trim() &&
       !emailField.value.trim() &&
@@ -396,16 +439,19 @@ document.addEventListener("DOMContentLoaded", () => {
       phoneField.value = "+1 650 550 450 ";
     }
 
+    // Remove event listeners to prevent repeated autofill
     nameField.removeEventListener("focus", autofillAllFields);
     emailField.removeEventListener("focus", autofillAllFields);
     phoneField.removeEventListener("focus", autofillAllFields);
   }
 
+  // Add event listeners to form fields
   nameField.addEventListener("focus", autofillAllFields);
   emailField.addEventListener("focus", autofillAllFields);
   phoneField.addEventListener("focus", autofillAllFields);
 });
 
+// Hide error message when all input fields are filled
 document.addEventListener("DOMContentLoaded", () => {
   const nameField = document.getElementById("contactName");
   const emailField = document.getElementById("contactEmail");
@@ -413,6 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorMessage = document.getElementById("error-message");
 
   function checkInputs() {
+    // If all fields contain values, hide the error message
     if (
       nameField.value.trim() &&
       emailField.value.trim() &&
@@ -422,15 +469,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Add event listeners to input fields to check for changes
   nameField.addEventListener("input", checkInputs);
   emailField.addEventListener("input", checkInputs);
   phoneField.addEventListener("input", checkInputs);
 });
 
+// Delete a contact when clicking the delete button in the details panel
 document.addEventListener("DOMContentLoaded", function () {
   const detailsContainer = document.querySelector(".contacts-right-bottom");
 
   detailsContainer.addEventListener("click", function (e) {
+    // Check if the clicked element is the delete button
     const deleteButton = e.target.closest("button#deleteBtn");
     if (!deleteButton) {
       return;
@@ -438,12 +488,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     e.preventDefault();
 
+    // Get the contact name from the details panel
     const detailsNameElement = detailsContainer.querySelector(".details-name");
     if (!detailsNameElement) {
       return;
     }
     const contactName = detailsNameElement.textContent.trim();
 
+    // Remove the contact from the contact list
     const contactList = document.getElementById("contactList");
     const contactItems = contactList.querySelectorAll(".contact-item");
     contactItems.forEach(function (item) {
@@ -452,6 +504,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+    // Remove the contact group if empty
     const groups = contactList.querySelectorAll(".contact-group");
     groups.forEach(function (group) {
       if (group.querySelectorAll(".contact-item").length === 0) {
@@ -459,28 +512,35 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+    // Clear the details panel after deletion
     detailsContainer.innerHTML = "";
   });
 });
 
+// Global variables for managing contacts and editing state
 let contacts = [];
 let isEditing = false;
 let currentEditingContact = null;
 
+// Listen for click events on the document
 document.addEventListener("click", function (e) {
+  // Check if the clicked element is the edit button
   const editBtn = e.target.closest("#edit");
   if (!editBtn) return;
 
   e.preventDefault();
 
+  // Get the currently selected contact
   const selectedContact = document.querySelector(".contact-item.selected");
   if (!selectedContact) {
     return;
   }
 
+  // Get the details container
   const detailsContainer = document.querySelector(".contacts-right-bottom");
   if (!detailsContainer) return;
 
+  // Get the contact's name and email from the details section
   const detailsNameEl = detailsContainer.querySelector(".details-name");
   const emailEl = detailsContainer.querySelector(".email-address");
   if (!detailsNameEl || !emailEl) return;
@@ -488,76 +548,85 @@ document.addEventListener("click", function (e) {
   const contactName = detailsNameEl.textContent.trim();
   const contactEmail = emailEl.textContent.trim();
 
+  // Get the phone number from the details section
   const infoDivs = detailsContainer.querySelectorAll(".details-info > div");
   let phoneText = "";
   if (infoDivs.length > 1) {
     phoneText = infoDivs[1].textContent.trim();
   }
 
+  // Get the contact overlay element
   const overlay = document.getElementById("addContactOverlay");
   if (!overlay) {
     return;
   }
   overlay.classList.add("open");
 
+  // Populate the overlay fields with the contact details
   document.getElementById("contactName").value = contactName;
   document.getElementById("contactEmail").value = contactEmail;
   document.getElementById("contactPhone").value =
     phoneText.match(/\+?\d[\d ]+/g)?.[0] || "";
 
+  // Get overlay title and description elements
   const overlayTitle = document.getElementById("overlayTitle");
   const overlayDescription = document.getElementById("overlayDescription");
 
+  // Update overlay title and hide description
   if (overlayTitle) {
     overlayTitle.textContent = "Edit Contact";
   }
-
   if (overlayDescription) {
     overlayDescription.style.display = "none";
   }
 
+  // Get buttons inside the overlay
   const submitBtn = document.getElementById("createContact");
   const cancelBtn = document.getElementById("cancelAddContact");
 
+  // Change submit button text to indicate edit mode
   if (submitBtn) {
     submitBtn.textContent = "Save \u2714";
   }
 
+  // Adjust cancel button position slightly (animation effect)
   if (cancelBtn) {
-    cancelBtn.offsetWidth;
+    cancelBtn.offsetWidth; // Force reflow for animation
     setTimeout(() => {
       cancelBtn.style.marginLeft = "-75px";
     }, 50);
   }
 
+  // Set editing mode and store the current contact being edited
   isEditing = true;
   currentEditingContact = selectedContact;
 
+  // Function to reset the overlay to its default state
   function resetOverlay() {
     if (overlayTitle) {
       overlayTitle.textContent = "Add Contact";
     }
-
     if (overlayDescription) {
       overlayDescription.style.display = "block";
     }
-
     if (submitBtn) {
       submitBtn.textContent = "Create Contact \u2714";
     }
-
     if (cancelBtn) {
       cancelBtn.style.marginLeft = "0px";
     }
 
+    // Clear input fields
     document.getElementById("contactName").value = "";
     document.getElementById("contactEmail").value = "";
     document.getElementById("contactPhone").value = "";
 
+    // Reset editing mode
     isEditing = false;
     currentEditingContact = null;
   }
 
+  // Event listener to reset overlay when submitting changes
   document
     .getElementById("createContact")
     .addEventListener("click", function () {
@@ -566,6 +635,7 @@ document.addEventListener("click", function (e) {
       }, 200);
     });
 
+  // Event listener to reset overlay when canceling
   cancelBtn.addEventListener("click", function () {
     resetOverlay();
   });
