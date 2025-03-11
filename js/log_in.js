@@ -19,10 +19,10 @@ function togglePasswordVisibility(inputId, imgElement) {
 
   if (isPasswordVisible) {
     inputField.type = "password";
-    imgElement.src = "/assets/img/eye_closed.png";
+    imgElement.src = "../assets/img/eye_closed.png";
   } else {
     inputField.type = "text";
-    imgElement.src = "/assets/img/eye.png";
+    imgElement.src = "../assets/img/eye.png";
   }
 }
 
@@ -36,9 +36,9 @@ function togglePasswordVisibility(inputId, imgElement) {
 function updatePasswordIcon(inputId, imgElement) {
   const inputField = document.getElementById(inputId);
   if (inputField.value.length > 0) {
-    imgElement.src = "/assets/img/eye_closed.png";
+    imgElement.src = "../assets/img/eye_closed.png";
   } else {
-    imgElement.src = "/assets/img/lock.png";
+    imgElement.src = "../assets/img/lock.png";
   }
 }
 
@@ -47,12 +47,31 @@ function updatePasswordIcon(inputId, imgElement) {
  * This function automatically fills the email and password fields if saved data exists.
  */
 window.onload = function () {
-  if (localStorage.getItem("rememberMe") === "true") {
-    document.getElementById("email").value =
-      localStorage.getItem("email") || "";
-    document.getElementById("password").value =
-      localStorage.getItem("password") || "";
-    document.getElementById("rememberMe").checked = true;
+  // Check if the "Remember Me" checkbox is checked
+  const rememberMe = localStorage.getItem("rememberMe") === "true";
+  document.getElementById("rememberMe").checked = rememberMe;
+
+  // Load credentials only if "Remember Me" is checked
+  if (rememberMe) {
+    document.getElementById("email").value = localStorage.getItem("email") || "";
+    document.getElementById("password").value = localStorage.getItem("password") || "";
+  } else {
+    // Clear credentials in fields if "Remember Me" is not checked
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+  }
+
+  // Clear saved credentials from localStorage if "Remember Me" is unchecked
+  if (!rememberMe) {
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
+    localStorage.setItem("rememberMe", "false");
+  }
+
+  // Check if the user has registered and set the data from sessionStorage
+  if (sessionStorage.getItem("registeredEmail") && sessionStorage.getItem("registeredPassword")) {
+    document.getElementById("email").value = sessionStorage.getItem("registeredEmail");
+    document.getElementById("password").value = sessionStorage.getItem("registeredPassword");
   }
 };
 
@@ -71,7 +90,7 @@ document.getElementById("loginForm").addEventListener("submit", function () {
     localStorage.setItem("password", password);
     localStorage.setItem("rememberMe", "true");
   } else {
-    // Remove stored credentials
+    // Remove credentials from localStorage if "Remember Me" is not checked
     localStorage.removeItem("email");
     localStorage.removeItem("password");
     localStorage.setItem("rememberMe", "false");

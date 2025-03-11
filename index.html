@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="icon" href="./assets/img/favicon.png">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/sign_up.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sign_up.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
@@ -13,16 +13,13 @@
 </head>
 <body>
 
-    
     <div class="start" id="start">
-        <img class="start-logo" src="./assets/img/logo.png" alt="logo">
+        <img class="start-logo" src="../assets/img/logo.png" alt="logo">
         <div class="top-right" id="top-right">
             <p>Not a Join user?</p>
-            <button class="signup-btn" onclick="location.href='./html/sign_up.html'">Sign up</button>
+            <button class="signup-btn" onclick="location.href='../html/sign_up.html'">Sign up</button>
         </div>
     </div>
-    
-   
 
     <div class="login-frame-alignment">
         <div class="login-frame">
@@ -30,51 +27,49 @@
                 <h1>Log in</h1>
                 <hr>
             </div>
-          
-            <form class="input-container" id="loginForm" action="./html/summary.html" method="GET">
+
+            <form class="input-container" id="loginForm" action="../html/summary.html" method="GET" onsubmit="return handleLoginSubmit()">
                 <div class="login-data">
                     <label for="email" style="position: relative;">
                         <input class="input-field" id="email" type="email" placeholder="Email" onclick="autoFillFields()" required>
-                        <img class="imgs-input_login" src="./assets/img/mail.png" alt="letter">
+                        <img class="imgs-input_login" src="../assets/img/mail.png" alt="letter">
                     </label>
-                    
+
                     <label for="password" style="position: relative;">
-                        <input class="input-field" id="password" type="password" placeholder="Password" required 
-                               oninput="updatePasswordIcon('password', this.nextElementSibling)">
-                        <img class="imgs-input_login toggle-password" src="/assets/img/lock.png" 
+                        <input class="input-field" id="password" type="password" placeholder="Password" 
+                               onfocus="handlePasswordFocus(this.nextElementSibling)" 
+                               onblur="handlePasswordBlur(this.nextElementSibling)" 
+                               oninput="updatePasswordIcon('password', this.nextElementSibling)" required>
+                        <img class="imgs-input_login toggle-password" src="../assets/img/lock.png" 
                              alt="Toggle Password Visibility" 
                              onclick="togglePasswordVisibility('password', this)">
                     </label>
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        Remember Me
+                    </label>
                 </div>
             </form>
-            
-            
-            
-    
-            
+
             <div class="login-btn-container">
                 <button type="submit" form="loginForm" class="login-btn">Log in</button> 
-                <button type="button" class="guest-login-btn" onclick="location.href='./html/summary.html'">Guest Log In</button>
+                <button type="button" class="guest-login-btn" onclick="location.href='../html/summary.html'">Guest Log In</button>
             </div>
-    
+
         </div>
     </div>
 
     <footer class="footer-start">
-        <a href="./html/privacy_policy_logged_out.html">Privacy Policy</a>
-        <a href="./html/legal_notice_logged_out.html">Legal notice</a>
+        <a href="../html/privacy_policy_logged_out.html">Privacy Policy</a>
+        <a href="../html/legal_notice_logged_out.html">Legal notice</a>
     </footer>
-    
 
-
-
-    <script src="./js/add_task.js"></script>
-    <script src="./js/board.js"></script>
-    <script src="./js/contacts.js"></script>
-    <script src="./js/script.js"></script>
-    <script src="./js/summary.js"></script>
-    <script src="./js/log_in.js"></script>
+    <script src="../js/add_task.js"></script>
+    <script src="../js/board.js"></script>
+    <script src="../js/contacts.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/summary.js"></script>
+    <script src="../js/log_in.js"></script>
     
 </body>
 </html>
-
