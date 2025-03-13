@@ -4,10 +4,15 @@
   max-width: 1920px;
 }
 
-.add-task-form {
+.add-task-content {
   position: absolute;
   top: 231px;
   font-weight: 400;
+  height: 424px;
+}
+
+.add-task-form {
+  height: 100%;
 }
 
 .add-task-title {
@@ -18,6 +23,8 @@
 
 .form-inputs {
   width: 440px;
+  height: 100%;
+  justify-content: flex-start;
 }
 
 /* general styling input fields */
@@ -40,7 +47,6 @@
   border: 1px solid #29abe2;
 }
 
-
 /* .task-input-fields:invalid {
   border: 1px solid #ff8190;
 } */
@@ -52,6 +58,8 @@
   padding: 18px 16px;
   font-weight: 400;
   font-family: "Inter", sans-serif !important;
+  height: 120px;
+  width: 440px;
 }
 
 .task-description-text:focus {
@@ -68,6 +76,11 @@
 
 .task-description-text:focus {
   border: 1px solid #29abe2;
+}
+
+.task-description-text::-webkit-resizer {
+  background: url(../assets/img/icons/resizer.png) no-repeat 100% 100%;
+  background-size: 18px;
 }
 
 /* general styling date picker */
@@ -91,14 +104,21 @@
   font-family: "Inter", sans-serif !important;
 }
 
-.date-picker:focus::-webkit-datetime-edit{
+.date-picker:focus::-webkit-datetime-edit {
   color: #000000;
 }
-
 
 /* styling seperator */
 .separator {
   width: 1px;
   background-color: #d1d1d1;
-  height: 424px
+  height: 424px;
+}
+
+/* priorities styling */
+
+.priority-labels {
+  padding: 16px 10px;
+  background-color: #ffffff;
+  text-align: center;
 }
