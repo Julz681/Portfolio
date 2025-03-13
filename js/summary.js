@@ -1,5 +1,5 @@
 /**
- * This funtion updates the greeting message based on the current time of day.
+ * This function updates the greeting message based on the current time of day.
  * It displays "Good morning", "Good afternoon", or "Good evening" 
  * depending on the hour and updates the content of the greeting element.
  */
@@ -20,26 +20,24 @@ function updateGreeting() {
         greetingText = "Good evening";
     }
 
+    // Get the user name from localStorage or use "Guest"
+    const isGuest = localStorage.getItem("isGuest") === "true";
+    const userName = isGuest ? "Guest" : "Sofia Müller";
+
     // Update the greeting message in the DOM
-    greetingElement.innerHTML = greetingText + ", <br> <span class='highlight'>Sofia Müller</span>";
+    greetingElement.innerHTML = `${greetingText}, <br> <span class='highlight'>${userName}</span>`;
 }
 
-// This funtion updates the greeting when the page loads
-updateGreeting();
-
-
-
-
-// This function counts the tasks 
+/**
+ * This function counts the tasks and updates the task metrics.
+ */
 function updateTaskMetrics() {
-    // This function counts the tasks in each column
     const todoCount = document.querySelectorAll(".to-do-wrapper .board-card").length;
     const inProgressCount = document.querySelectorAll(".in-progress-wrapper .board-card").length;
     const awaitFeedbackCount = document.querySelectorAll(".await-feedback-wrapper .board-card").length;
     const doneCount = document.querySelectorAll(".done-wrapper .board-card").length;
     const totalCount = todoCount + inProgressCount + awaitFeedbackCount + doneCount;
 
-    // This function updates the tasks
     document.querySelector(".metrics .metric-box:nth-of-type(1) h2").textContent = todoCount;
     document.querySelector(".metrics .metric-box:nth-of-type(2) h2").textContent = doneCount;
     document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(1) h2").textContent = totalCount;
@@ -47,5 +45,24 @@ function updateTaskMetrics() {
     document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(3) h2").textContent = awaitFeedbackCount;
 }
 
-// This function updates the metrics when the page loads
+/**
+ * This function updates the user profile icon and initials in the summary.
+ * It sets the profile initials to "G" for guests and "SM" for logged-in users.
+ */
+function updateUserProfile() {
+    const userProfile = document.querySelector(".user-profile span");
+
+    // Check if the user is logged in as a guest
+    const isGuest = localStorage.getItem("isGuest") === "true";
+
+    // Set profile initials
+    const profileInitials = isGuest ? "G" : "SM";
+
+    // Update the profile icon text
+    userProfile.textContent = profileInitials;
+}
+
+// Call the functions when the page loads
+updateGreeting();
 updateTaskMetrics();
+updateUserProfile();

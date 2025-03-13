@@ -37,7 +37,6 @@
 
                     <label for="password" style="position: relative;">
                         <input class="input-field" id="password" type="password" placeholder="Password" 
-                               onfocus="handlePasswordFocus(this.nextElementSibling)" 
                                onblur="handlePasswordBlur(this.nextElementSibling)" 
                                oninput="updatePasswordIcon('password', this.nextElementSibling)" required>
                         <img class="imgs-input_login toggle-password" src="../assets/img/lock.png" 
@@ -52,8 +51,8 @@
             </form>
 
             <div class="login-btn-container">
-                <button type="submit" form="loginForm" class="login-btn">Log in</button> 
-                <button type="button" class="guest-login-btn" onclick="location.href='../html/summary.html'">Guest Log In</button>
+                <button type="submit" class="login-btn" onclick="normalLogin()">Log in</button>
+                <button type="button" class="guest-login-btn" onclick="guestLogin()">Guest Log In</button>
             </div>
 
         </div>
