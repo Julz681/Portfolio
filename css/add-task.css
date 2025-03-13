@@ -32,6 +32,7 @@
 .task-input-fields {
   border: 1px solid #d1d1d1;
   padding: 12px 21px;
+  background-color: #ffffff;
 }
 
 .task-input-fields::-webkit-input-placeholder {
@@ -46,10 +47,6 @@
   outline: 0;
   border: 1px solid #29abe2;
 }
-
-/* .task-input-fields:invalid {
-  border: 1px solid #ff8190;
-} */
 
 /* general styling description */
 
@@ -109,6 +106,7 @@
 }
 
 /* styling seperator */
+
 .separator {
   width: 1px;
   background-color: #d1d1d1;
@@ -126,4 +124,85 @@
 
 .priority-labels:hover {
   cursor: pointer;
+}
+
+/* assigned to */
+
+.contacts-dropdown-input-wrapper {
+  width: 100%;
+  justify-content: space-between;
+  border: 1px solid #d1d1d1;
+  background-color: #ffffff;
+  padding-right: 16px;
+}
+
+.contacts-dropdown-input-wrapper:focus-within {
+  border: 1px solid #29abe2;
+}
+
+.assigned-to-input {
+  padding-left: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  width: 100%;
+  border-radius: 10px 0 0 10px;
+  border: none;
+}
+
+.assigned-to-input:focus {
+  outline: 0;
+  border-right: 0;
+}
+
+.assigned-to-input::-webkit-input-placeholder {
+  color: #d1d1d1;
+  font-size: 20px;
+  line-height: 24px !important;
+  font-weight: 400;
+  font-family: "Inter", sans-serif !important;
+}
+
+.dropdown-icon {
+  background: url(../assets/img/icons/arrow_drop_down.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+  background-color: #ffffff;
+  border: 1px solid #d1d1d1;
+  border-left: 0;
+  border-radius: 0px 10px 10px 0px;
+  border: none;
+}
+
+.dropdown-icon:hover {
+  background: url(../assets/img/icons/arrow_drop_down_hover.png) no-repeat 50%
+    50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.contacts-dropdown-wrapper {
+  background-color: #ffffff;
+  border-radius: 0 0 10px 10px;
+}
+
+.single-contact-wrapper {
+  background-color: #ffffff;
+  list-style: none;
+  padding: 7px 16px;
+}
+
+/* .single-contact {
+  display: flex;
+} */
+
+.single-contact-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 45px;
+  background-color: #1fd7c1;
+  color: #f4f4f4;
+  border: 1px solid #f4f4f4;
+  font-size: 12px;
+  font-weight: 400;
 }

@@ -89,9 +89,22 @@
           </div>
           <div class="assigned-to-wrapper d-flex-column gap-8">
             <label for="assigned-to">Assigned To</label>
-            <!-- <input class="task-input-fields size-20 br-10" type="text" id="task-title" name="assigned-to"
-              placeholder="Select contacts to assign" /> -->
-            <select name="Select contacts to assign" id="#"></select>
+            <div class="d-flex-column">
+              <div class="contacts-dropdown-input-wrapper br-10 d-flex-center">
+                <input class="assigned-to-input size-20" type="text" id="#" name="assigned-to"
+                  placeholder="Select contacts to assign" />
+                <span class="dropdown-icon"></span>
+              </div>
+              <ul class="contacts-dropdown-wrapper d-flex-column br-10">
+                <li class="single-contact-wrapper d-flex-space-between">
+                  <div class="d-flex-space-between">
+                    <span class="single-contact-icon d-flex-center gap-16">US</span>
+                    <span>Default User</span>
+                  </div>
+                  <span class="single-contact-checkbox"></span>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="category-wrapper d-flex-column gap-8">
             <label for="category"><span>Category</span><span class="red">*</span></label>
