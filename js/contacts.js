@@ -261,16 +261,22 @@ document
     const updatedEmail = emailField.value.trim();
     const updatedPhone = phoneField.value.trim();
 
-    // Show error message if any field is empty
+    // Show error message if any field is empty and do not clear fields
     if (!updatedName || !updatedEmail || !updatedPhone) {
       errorMessage.style.display = "block";
       overlay.classList.add("open");
-      return; // Stop execution to prevent clearing the fields
+      return; 
     }
 
     // Hide error message if validation passes
     errorMessage.style.display = "none";
 
+    // Only clear input fields if contact was successfully created or edited
+    if (!isEditing) {
+      nameField.value = "";
+      emailField.value = "";
+      phoneField.value = "";
+    }
     // Get the contact list container
     const contactList = document.getElementById("contactList");
 
