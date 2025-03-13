@@ -121,4 +121,9 @@
   padding: 16px 10px;
   background-color: #ffffff;
   text-align: center;
+  width: 136px;
+}
+
+.priority-labels:hover {
+  cursor: pointer;
 }
