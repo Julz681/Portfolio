@@ -265,7 +265,7 @@ document
     if (!updatedName || !updatedEmail || !updatedPhone) {
       errorMessage.style.display = "block";
       overlay.classList.add("open");
-      return;
+      return; // Stop execution to prevent clearing the fields
     }
 
     // Hide error message if validation passes
@@ -278,18 +278,16 @@ document
       // Get the old name before editing
       const oldName = currentEditingContact.getAttribute("data-name");
 
-      // If the name has changed, remove the old contact from the group
-      if (oldName !== updatedName) {
-        const parentGroup = currentEditingContact.closest(".contact-group");
-        parentGroup.removeChild(currentEditingContact);
+      // Remove the current contact from the list
+      const parentGroup = currentEditingContact.closest(".contact-group");
+      parentGroup.removeChild(currentEditingContact);
 
-        // If the group is empty, remove it from the contact list
-        if (parentGroup.querySelectorAll(".contact-item").length === 0) {
-          contactList.removeChild(parentGroup);
-        }
+      // If the group is empty, remove it from the contact list
+      if (parentGroup.querySelectorAll(".contact-item").length === 0) {
+        contactList.removeChild(parentGroup);
       }
 
-      // Create and add the updated contact element
+      // Create the contact again with the updated values
       createContactElement(
         updatedName,
         updatedEmail,
@@ -297,12 +295,15 @@ document
         contactList
       );
 
-      // Sort contacts after updating
+      // Sort contacts to ensure the updated contact is in the correct position
       sortContacts();
 
-      // Reset editing mode
+      // Reset editing variables
       isEditing = false;
       currentEditingContact = null;
+
+      // Reinitialize click events for contacts
+      initContactClickEvents();
     } else {
       // Create and add a new contact element if not editing
       createContactElement(
@@ -421,22 +422,30 @@ function createContactElement(name, email, phone, contactList) {
   initContactClickEvents();
 }
 
-// Autofill contact form fields when focused (only if all fields are empty)
+// Autofill contact form fields when they are focused (only if all fields are empty)
 document.addEventListener("DOMContentLoaded", () => {
   const nameField = document.getElementById("contactName");
   const emailField = document.getElementById("contactEmail");
   const phoneField = document.getElementById("contactPhone");
 
+  let autofillUsed = false; // Variable to track if autofill was used
+
   function autofillAllFields() {
+    // Check if autofill has already been used
+    if (autofillUsed) return;
+
     // Check if all fields are empty before autofilling
     if (
       !nameField.value.trim() &&
       !emailField.value.trim() &&
       !phoneField.value.trim()
     ) {
+      // Autofill with example contact details
       nameField.value = "Mark Zuckerberg";
       emailField.value = "mark@facebook.com";
       phoneField.value = "+1 650 550 450 ";
+
+      autofillUsed = true; // Mark autofill as used
     }
 
     // Remove event listeners to prevent repeated autofill
@@ -445,10 +454,19 @@ document.addEventListener("DOMContentLoaded", () => {
     phoneField.removeEventListener("focus", autofillAllFields);
   }
 
-  // Add event listeners to form fields
-  nameField.addEventListener("focus", autofillAllFields);
-  emailField.addEventListener("focus", autofillAllFields);
-  phoneField.addEventListener("focus", autofillAllFields);
+  function activateAutofill() {
+    // Attach the autofill function to input fields when focused
+    nameField.addEventListener("focus", autofillAllFields);
+    emailField.addEventListener("focus", autofillAllFields);
+    phoneField.addEventListener("focus", autofillAllFields);
+  }
+
+  activateAutofill(); // Activate autofill when the page loads
+
+  // Reactivate autofill when the contact overlay is opened
+  document.getElementById("addContactOverlay").addEventListener("click", () => {
+    activateAutofill();
+  });
 });
 
 // Hide error message when all input fields are filled
@@ -549,11 +567,7 @@ document.addEventListener("click", function (e) {
   const contactEmail = emailEl.textContent.trim();
 
   // Get the phone number from the details section
-  const infoDivs = detailsContainer.querySelectorAll(".details-info > div");
-  let phoneText = "";
-  if (infoDivs.length > 1) {
-    phoneText = infoDivs[1].textContent.trim();
-  }
+  const phoneText = selectedContact.getAttribute("data-phone") || "";
 
   // Get the contact overlay element
   const overlay = document.getElementById("addContactOverlay");
