@@ -467,7 +467,6 @@ header {
   margin-bottom: 10px;
 }
 
-
 .add-contact-subtitle {
   margin: 0;
   font-size: 27px;
@@ -582,4 +581,15 @@ header {
 
 .delete-btn-contact {
   display: none;
+}
+
+#overlayAvatar {
+  width: 150px;
+  height: 150px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 47px;
 }

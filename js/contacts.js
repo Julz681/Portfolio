@@ -170,6 +170,17 @@ const closeOverlayBtn = document.getElementById("closeOverlayBtn");
 // Open the contact overlay when the "Add Contact" button is clicked
 openBtn.addEventListener("click", () => {
   overlay.classList.add("open");
+
+  // 🛑 If we are adding a new contact, reset the avatar to the default image
+  if (!isEditing) {
+    const avatarOverlay = document.getElementById("overlayAvatar");
+
+    if (avatarOverlay) {
+      // Set the avatar back to the default image
+      avatarOverlay.innerHTML = `<img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar">`;
+      avatarOverlay.style.backgroundColor = "transparent"; // Remove background color
+    }
+  }
 });
 
 // Close the overlay when the "Cancel" button is clicked
@@ -261,14 +272,16 @@ document
     const updatedEmail = emailField.value.trim();
     const updatedPhone = phoneField.value.trim();
 
-    // Show error message if any field is empty and do not clear fields
+    // Check if any field is empty
     if (!updatedName || !updatedEmail || !updatedPhone) {
-      errorMessage.style.display = "block";
-      overlay.classList.add("open");
-      return; 
+      errorMessage.style.display = "block"; // Show error message
+      overlay.classList.add("open"); // Ensure the overlay remains open
+
+      // Stop the function to prevent clearing the fields or exiting edit mode
+      return;
     }
 
-    // Hide error message if validation passes
+    // Hide the error message if validation passes
     errorMessage.style.display = "none";
 
     // Only clear input fields if contact was successfully created or edited
@@ -560,6 +573,15 @@ document.addEventListener("click", function (e) {
     return;
   }
 
+  // Get the avatar of the selected contact
+  const contactAvatar = selectedContact.querySelector(".contact-avatar");
+  const avatarOverlay = document.getElementById("overlayAvatar");
+
+  if (contactAvatar && avatarOverlay) {
+    avatarOverlay.textContent = contactAvatar.textContent; // Set the initials from the selected contact
+    avatarOverlay.style.backgroundColor = contactAvatar.style.backgroundColor; // Apply the same background color
+  }
+
   // Get the details container
   const detailsContainer = document.querySelector(".contacts-right-bottom");
   if (!detailsContainer) return;
@@ -646,12 +668,19 @@ document.addEventListener("click", function (e) {
     currentEditingContact = null;
   }
 
-  // Event listener to reset overlay when submitting changes
+  // Event listener to reset the overlay only if all fields are filled
   document
     .getElementById("createContact")
     .addEventListener("click", function () {
       setTimeout(() => {
-        resetOverlay();
+        // Ensure that all fields are filled before resetting the overlay
+        const nameField = document.getElementById("contactName").value.trim();
+        const emailField = document.getElementById("contactEmail").value.trim();
+        const phoneField = document.getElementById("contactPhone").value.trim();
+
+        if (nameField && emailField && phoneField) {
+          resetOverlay(); // Reset overlay only if all fields contain values
+        }
       }, 200);
     });
 
