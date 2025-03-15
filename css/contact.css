@@ -560,6 +560,7 @@ header {
   background-color: #ffffff;
   border: 1px solid #2a3647;
   color: #2a3647;
+  position: relative;
 }
 
 #cancelAddContact:hover {

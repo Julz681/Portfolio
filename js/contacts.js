@@ -167,37 +167,99 @@ const cancelBtn = document.getElementById("cancelAddContact");
 const createBtn = document.getElementById("createContact");
 const closeOverlayBtn = document.getElementById("closeOverlayBtn");
 
-// Open the contact overlay when the "Add Contact" button is clicked
 openBtn.addEventListener("click", () => {
+  // Open the overlay
   overlay.classList.add("open");
 
-  // 🛑 If we are adding a new contact, reset the avatar to the default image
-  if (!isEditing) {
-    const avatarOverlay = document.getElementById("overlayAvatar");
+  // Ensure edit mode is reset
+  isEditing = false;
+  currentEditingContact = null;
 
-    if (avatarOverlay) {
-      // Set the avatar back to the default image
-      avatarOverlay.innerHTML = `<img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar">`;
-      avatarOverlay.style.backgroundColor = "transparent"; // Remove background color
-    }
+  // Reset input fields
+  document.getElementById("contactName").value = "";
+  document.getElementById("contactEmail").value = "";
+  document.getElementById("contactPhone").value = "";
+
+  // Set the title and description for "Add Contact"
+  const overlayTitle = document.getElementById("overlayTitle");
+  const overlayDescription = document.getElementById("overlayDescription");
+  const submitBtn = document.getElementById("createContact");
+
+  if (overlayTitle) overlayTitle.textContent = "Add Contact";
+  if (overlayDescription) overlayDescription.style.display = "block";
+  if (submitBtn) submitBtn.textContent = "Create Contact \u2714";
+
+  // Reset the avatar image to default
+  const avatarOverlay = document.getElementById("overlayAvatar");
+  if (avatarOverlay) {
+    avatarOverlay.innerHTML = `<img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar">`;
+    avatarOverlay.style.backgroundColor = "transparent";
+  }
+
+  // Reset Cancel Button animation (ensures margin-left is always applied correctly)
+  if (cancelBtn) {
+    cancelBtn.style.transition = "none"; // Temporarily disable animation
+    cancelBtn.style.marginLeft = "0px"; // Reset position
+    cancelBtn.offsetHeight; // Force reflow
+
+    setTimeout(() => {
+      cancelBtn.style.transition = "margin-left 0.3s ease-in-out"; // Enable animation
+      cancelBtn.style.setProperty("margin-left", "-75px", "!important"); // Apply movement
+    }, 100);
   }
 });
 
-// Close the overlay when the "Cancel" button is clicked
-cancelBtn.addEventListener("click", () => {
+function resetOverlay() {
+  // Close the overlay
   overlay.classList.remove("open");
-});
 
-// Close the overlay when clicking outside of it
+  // Reset editing state
+  isEditing = false;
+  currentEditingContact = null;
+
+  // Clear input fields
+  document.getElementById("contactName").value = "";
+  document.getElementById("contactEmail").value = "";
+  document.getElementById("contactPhone").value = "";
+
+  // Reset UI elements (title, description, button text, avatar)
+  const overlayTitle = document.getElementById("overlayTitle");
+  const overlayDescription = document.getElementById("overlayDescription");
+  const submitBtn = document.getElementById("createContact");
+  const avatarOverlay = document.getElementById("overlayAvatar");
+
+  if (overlayTitle) overlayTitle.textContent = "Add Contact";
+  if (overlayDescription) overlayDescription.style.display = "block";
+  if (submitBtn) submitBtn.textContent = "Create Contact \u2714";
+
+  if (avatarOverlay) {
+    avatarOverlay.innerHTML = `<img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar">`;
+    avatarOverlay.style.backgroundColor = "transparent";
+  }
+
+  // Reset Cancel Button animation
+  if (cancelBtn) {
+    cancelBtn.style.transition = "none"; // Temporarily disable animation
+    cancelBtn.style.removeProperty("margin-left"); // Reset margin-left
+    cancelBtn.offsetHeight; // Force a reflow to apply changes immediately
+
+    // Reapply the animation after a short delay
+    setTimeout(() => {
+      cancelBtn.style.transition = "margin-left 0.3s ease-in-out"; // Enable animation
+      cancelBtn.style.setProperty("margin-left", "-75px", "!important"); // Apply movement
+    }, 100);
+  }
+}
+
+// Add event listeners to close the overlay
+if (cancelBtn) cancelBtn.addEventListener("click", resetOverlay);
+if (closeOverlayBtn) closeOverlayBtn.addEventListener("click", resetOverlay);
+
+//  Ensure the overlay closes when clicking outside of it
 overlay.addEventListener("click", (e) => {
   if (e.target === overlay) {
-    overlay.classList.remove("open");
+    resetOverlay();
   }
-});
-
-// Close the overlay when clicking the close button
-closeOverlayBtn.addEventListener("click", () => {
-  overlay.classList.remove("open");
 });
 
 // Sort contacts alphabetically within their respective groups and reorder groups
