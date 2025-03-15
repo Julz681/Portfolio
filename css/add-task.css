@@ -1,3 +1,7 @@
+.add-task-body {
+  overflow-y: hidden;
+}
+
 .add-task-header-wrapper {
   margin-top: 96px;
   position: relative;
@@ -80,7 +84,7 @@
   background-size: 18px;
 }
 
-/* general styling date picker */
+/* styling date picker */
 
 .date-picker::-webkit-calendar-picker-indicator {
   background: transparent;
@@ -91,6 +95,10 @@
   background-size: 20px;
   background-color: #ffff;
   color: #000000;
+}
+
+.date-picker:hover {
+  cursor: pointer;
 }
 
 .date-picker::-webkit-datetime-edit {
@@ -124,6 +132,7 @@
 
 .priority-labels:hover {
   cursor: pointer;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 /* assigned to */
@@ -134,6 +143,7 @@
   border: 1px solid #d1d1d1;
   background-color: #ffffff;
   padding-right: 16px;
+  z-index: 45;
 }
 
 .contacts-dropdown-input-wrapper:focus-within {
@@ -184,25 +194,80 @@
 .contacts-dropdown-wrapper {
   background-color: #ffffff;
   border-radius: 0 0 10px 10px;
+  padding-top: 8px;
+  margin-top: -8px;
+  z-index: 1;
+  gap: 2px;
+  height: 256px;
+}
+
+.contacts-dropdown {
+  overflow-y: auto;
+  max-height: 240px;
+  height: 230px;
 }
 
 .single-contact-wrapper {
   background-color: #ffffff;
   list-style: none;
-  padding: 7px 16px;
+  padding: 7px 8px;
 }
 
-/* .single-contact {
-  display: flex;
-} */
+.single-contact-wrapper:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
 
 .single-contact-icon {
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   border-radius: 45px;
   background-color: #1fd7c1;
   color: #f4f4f4;
   border: 1px solid #f4f4f4;
   font-size: 12px;
   font-weight: 400;
+}
+
+.single-contact-checkbox {
+  background: url(../assets/img/icons/checkbox_unchecked.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+
+/* assigned-to scrollbar */
+
+.contacts-dropdown::-webkit-scrollbar {
+  width: 10px;
+}
+
+.contacts-dropdown::-webkit-scrollbar-thumb {
+  background: url(../assets/img/icons/thumb.png) no-repeat center;
+}
+
+.contacts-dropdown::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
+.contacts-dropdown::-webkit-scrollbar-button {
+  width: 20px;
+  height: 20px;
+  color: #d1d1d1;
+  background-color: #ffffff;
+}
+
+.contacts-dropdown::-webkit-scrollbar-button:vertical:start {
+  background: url(../assets/img/icons/scroll_up_arrow.png) no-repeat center;
+  background-size: contain;
+  margin-top: 256px;
+}
+
+.contacts-dropdown::-webkit-scrollbar-button:vertical:end {
+  background: url(../assets/img/icons/scroll_down_arrow.png) no-repeat center;
+  background-size: contain;
+}
+
+.contacts-dropdown::-webkit-scrollbar-button:vertical:start:increment,
+.contacts-dropdown::-webkit-scrollbar-button:vertical:end:decrement {
+  display: none;
 }
