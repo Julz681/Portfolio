@@ -75,10 +75,11 @@
                 placeholder="Password"
                 required
                 oninput="updatePasswordIcon('password', this.nextElementSibling)"
+                onfocus="updateOnFocus()"
               />
               <img
                 class="imgs-input_signup toggle-password"
-                id="eye-icon-password"
+                id="password-eye"
                 src="../assets/img/lock.png"
                 alt="Toggle Password Visibility"
                 onclick="togglePasswordVisibility('password', this)"
@@ -93,6 +94,7 @@
                 placeholder="Confirm Password"
                 required
                 oninput="updatePasswordIcon('confirm-password', this.nextElementSibling)"
+                onfocus="updateOnFocus()"
               />
               <img
                 class="imgs-input_signup toggle-password"

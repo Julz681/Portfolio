@@ -79,14 +79,34 @@ function guestLogin() {
  */
 function restoreLogin() {
   const rememberMe = localStorage.getItem("rememberMe") === "true";
+
   if (rememberMe) {
+    // If "Remember Me" is checked, restore the saved credentials from localStorage
     const email = localStorage.getItem("email");
     const password = localStorage.getItem("password");
     document.getElementById("email").value = email || "";
     document.getElementById("password").value = password || "";
     document.getElementById("rememberMe").checked = true;
+  } else {
+    // If "Remember Me" is unchecked, reset the form fields
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("rememberMe").checked = false;
+  }
+
+  // Check if there's sessionStorage data from sign up (if the user just signed up)
+  const sessionEmail = sessionStorage.getItem("registeredEmail");
+  const sessionPassword = sessionStorage.getItem("registeredPassword");
+
+  if (sessionEmail && sessionPassword) {
+    document.getElementById("email").value = sessionEmail;
+    document.getElementById("password").value = sessionPassword;
+    sessionStorage.removeItem("registeredEmail"); // Clear sessionStorage after using the data
+    sessionStorage.removeItem("registeredPassword");
   }
 }
 
 // Restore login details on page load
-restoreLogin();
+window.onload = function() {
+  restoreLogin(); // This function is called when the page loads
+};
