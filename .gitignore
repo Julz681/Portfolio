@@ -1,3 +1,9 @@
 /.vscode
 up.bat
 .gitignore
+node_modules/
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+js/add_contact.js
