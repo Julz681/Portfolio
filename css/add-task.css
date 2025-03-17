@@ -362,7 +362,6 @@
   background: url(../assets/img/icons/add_subtask_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
-  background-color: #ffffff;
   border-radius: 0px 10px 10px 0px;
 }
 
@@ -380,7 +379,6 @@
   background: url(../assets/img/icons/clear_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
-  background-color: #ffffff;
 }
 
 .clear-icon:hover {
@@ -397,12 +395,43 @@
   background: url(../assets/img/icons/confirm_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
-  background-color: #ffffff;
 }
 
 .confirm-icon:hover {
   background: url(../assets/img/icons/confirm_icon_hover.png) no-repeat 50% 50%;
   cursor: pointer;
+}
+
+.subtask-list {
+}
+
+.subtask-list-item {
+  list-style-position: inside;
+  padding: 6px 16px 6px 16px;
+  margin-left: 32px;
+}
+
+.subtask-list-item:hover {
+  cursor: pointer;
+  background-color: #eeeeee;
+}
+
+.subtask-item-input:disabled {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 400;
+}
+
+.edit-subtask-icons {
+  display: none;
+  gap: 4px;
+}
+
+.edit-subtask-icons:hover {
+  cursor: pointer;
+  display: block;
 }
 
 /* styling bottom section */
