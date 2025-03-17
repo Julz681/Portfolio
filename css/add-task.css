@@ -17,7 +17,7 @@
 .add-task-header-wrapper {
   margin-top: 96px;
   position: relative;
-  max-width: 1920px;
+ 
 }
 
 .add-task-content {
@@ -329,3 +329,65 @@
 }
 
 /* subtasks styling */
+
+.add-task-bottom {
+  display: flex;
+  align-items: center;
+  margin-top: 600px;
+  
+}
+
+.text-bottom {
+  font-size: 20px;
+  margin-right: 480px;
+}
+
+.button {
+  padding: 12px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.clearBtn {
+  background-color: #ffffff;
+  border: 1px solid #2a3647 !important;
+  color: #2a3647;
+  position: relative;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-right: 8px;
+  
+}
+
+.clearBtn:hover {
+  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
+  color: #29abe2;
+  border: 1px solid #29abe2;
+}
+
+.createBtn {
+  background-color: #2a3647;
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.createBtn:hover {
+  background-color: #29abe2;
+  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+
+
