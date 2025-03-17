@@ -17,7 +17,6 @@
 .add-task-header-wrapper {
   margin-top: 96px;
   position: relative;
- 
 }
 
 .add-task-content {
@@ -330,11 +329,88 @@
 
 /* subtasks styling */
 
+.subtask-input-wrapper {
+  width: 100%;
+  border: 1px solid #d1d1d1;
+  background-color: #ffffff;
+  padding-right: 16px;
+}
+
+.subtask-input-wrapper:focus-within {
+  border: 1px solid #29abe2;
+}
+
+.subtask-input {
+  border: none;
+  padding: 12px 0 12px 16px;
+  border-radius: 10px 0 0 10px;
+}
+
+.subtask-input:focus {
+  outline: 0;
+}
+
+.subtask-input::-webkit-input-placeholder {
+  color: #d1d1d1;
+  font-size: 20px;
+  line-height: 24px !important;
+  font-weight: 400;
+  font-family: "Inter", sans-serif !important;
+}
+
+.add-subtask-icon {
+  background: url(../assets/img/icons/add_subtask_icon.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+  background-color: #ffffff;
+  border-radius: 0px 10px 10px 0px;
+}
+
+.add-subtask-icon:hover {
+  background: url(../assets/img/icons/add_subtask_icon_hover.png) no-repeat 50%
+    50%;
+  cursor: pointer;
+}
+
+.confirm-input-icons {
+  gap: 4px;
+}
+
+.clear-icon {
+  background: url(../assets/img/icons/clear_icon.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+  background-color: #ffffff;
+}
+
+.clear-icon:hover {
+  background: url(../assets/img/icons/clear_icon_hover.png) no-repeat 50% 50%;
+  cursor: pointer;
+}
+
+.confirm-input-icons-separator {
+  height: 24px;
+  color: #d1d1d1;
+}
+
+.confirm-icon {
+  background: url(../assets/img/icons/confirm_icon.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+  background-color: #ffffff;
+}
+
+.confirm-icon:hover {
+  background: url(../assets/img/icons/confirm_icon_hover.png) no-repeat 50% 50%;
+  cursor: pointer;
+}
+
+/* styling bottom section */
+
 .add-task-bottom {
   display: flex;
   align-items: center;
   margin-top: 600px;
-  
 }
 
 .text-bottom {
@@ -387,6 +463,3 @@
   background-color: #29abe2;
   box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
 }
-
-
-

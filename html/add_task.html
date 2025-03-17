@@ -190,15 +190,27 @@
           </div>
           <div class="subtasks-wrapper d-flex-column gap-8">
             <label for="subtasks">Subtasks</label>
-            <input type="text" name="subtasks" id="subtasks" class="task-input-fields size-20 br-10"
-              placeholder="Add new Subtask" />
+            <div class="subtask-input-wrapper d-flex-space-between br-10 ">
+              <input type="text" name="subtasks" id="subtasks" class="subtask-input size-20 br-10"
+                placeholder="Add new Subtask" />
+              <span class="add-subtask-icon"></span>
+              <div class="confirm-input-icons d-flex-space-between d_none">
+                <span class="clear-icon"></span>
+                <span class="confirm-input-icons-separator">|</span>
+                <span class="confirm-icon"></span>
+              </div>
+            </div>
+          </div>
+          <div class="subtask-list-wrapper">
+            <ul class="subtask-list"></ul>
           </div>
         </div>
         </div>
       </form>
     </section>
     <div class="add-task-bottom">
-      <span class="red">*</span><p class="text-bottom">This field ist required</p>
+      <span class="red">*</span>
+      <p class="text-bottom">This field ist required</p>
       <div>
         <button class="clearBtn">Clear &#10006;</button>
         <button class="createBtn">Create Task &#10004;</button>
