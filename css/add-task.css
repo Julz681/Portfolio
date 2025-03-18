@@ -403,12 +403,26 @@
 }
 
 .subtask-list {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.subtask-list-item-content-wrapper {
+  width: 100%;
+  padding-left: 8px;
 }
 
 .subtask-list-item {
-  list-style-position: inside;
   padding: 6px 16px 6px 16px;
-  margin-left: 32px;
+  display: flex;
+  align-items: baseline;
+  list-style-type: none;
+}
+
+.bullet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .subtask-list-item:hover {
@@ -416,7 +430,11 @@
   background-color: #eeeeee;
 }
 
-.subtask-item-input:disabled {
+.subtask-list-item:hover .edit-subtask-icons {
+  display: flex;
+}
+
+.subtask-item-input {
   background: transparent;
   border: none;
   font-size: 16px;
@@ -427,11 +445,6 @@
 .edit-subtask-icons {
   display: none;
   gap: 4px;
-}
-
-.edit-subtask-icons:hover {
-  cursor: pointer;
-  display: block;
 }
 
 /* styling bottom section */
