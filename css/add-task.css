@@ -526,13 +526,12 @@
 
 .clearBtn {
   background-color: #ffffff;
-  border: 1px solid #2a3647 !important;
+  border: 1px solid #2a3647;
   color: #2a3647;
   position: relative;
   padding: 12px 20px;
   font-size: 16px;
   cursor: pointer;
-  border: none;
   border-radius: 5px;
   box-sizing: border-box;
   margin-right: 8px;
