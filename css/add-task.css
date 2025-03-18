@@ -379,6 +379,7 @@
   background: url(../assets/img/icons/clear_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
+  display: none;
 }
 
 .clear-icon:hover {
@@ -386,15 +387,29 @@
   cursor: pointer;
 }
 
-.confirm-input-icons-separator {
+.confirm-input-icons-separator,
+.confirm-input-icons-separator-1,
+.confirm-input-icons-separator-2 {
   height: 24px;
   color: #d1d1d1;
+  display: none;
+}
+
+.confirm-input-icons .confirm-icon,
+.confirm-input-icons .clear-icon,
+.confirm-input-icons .confirm-input-icons-separator {
+  display: flex;
+}
+
+.confirm-input-icons .add-subtask-icon {
+  display: none;
 }
 
 .confirm-icon {
   background: url(../assets/img/icons/confirm_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
+  display: none;
 }
 
 .confirm-icon:hover {
@@ -407,22 +422,26 @@
   padding: 0;
   margin: 0;
 }
-.subtask-list-item-content-wrapper {
-  width: 100%;
-  padding-left: 8px;
-}
 
 .subtask-list-item {
   padding: 6px 16px 6px 16px;
   display: flex;
   align-items: baseline;
   list-style-type: none;
+  background: transparent;
 }
 
-.bullet {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.subtask-list-item-active {
+  list-style-type: none;
+  padding: 6px 16px 6px 16px;
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #29abe2;
+}
+
+.subtask-list-item-content-wrapper {
+  width: 100%;
+  padding-left: 8px;
 }
 
 .subtask-list-item:hover {
@@ -430,21 +449,57 @@
   background-color: #eeeeee;
 }
 
-.subtask-list-item:hover .edit-subtask-icons {
-  display: flex;
-}
-
 .subtask-item-input {
-  background: transparent;
   border: none;
   font-size: 16px;
   font-family: "Inter", sans-serif !important;
   font-weight: 400;
+  outline: 0;
+  line-height: 24px !important;
+}
+
+.subtask-item-input:disabled {
+  background: transparent;
+}
+
+/* styling icons */
+
+.subtask-list-item:hover .edit-marker,
+.subtask-list-item:hover .delete-marker,
+.subtask-list-item:hover .confirm-input-icons-separator-1 {
+  display: flex;
 }
 
 .edit-subtask-icons {
-  display: none;
   gap: 4px;
+}
+
+.subtask-list-item-active .delete-marker,
+.subtask-list-item-active .confirm-icon,
+.subtask-list-item-active .confirm-input-icons-separator-2 {
+  display: flex;
+}
+
+.edit-marker {
+  background: url(../assets/img/icons/edit.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+  display: none;
+}
+
+.delete-marker {
+  background: url(../assets/img/icons/delete_icon.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: none;
+}
+
+.delete-marker:hover {
+  background: url(../assets/img/icons/delete_icon_hover.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
 }
 
 /* styling bottom section */
