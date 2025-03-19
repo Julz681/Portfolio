@@ -45,7 +45,7 @@
             <div class="no-tasks-feedback d-flex-center br-10 d_none">
               No tasks To do
             </div>
-            <div class="board-card d-flex-center">
+            <div class="board-card d-flex-center d_none">
               <div class="board-card-content d-flex-column">
                 <label class="board-card-label br-8 d-flex-center">User Story</label>
                 <div class="board-card-text d-flex-column br-10">
@@ -118,8 +118,8 @@
       <div class="modal-card-wrapper br-30">
         <div class="modal-card-content size-20 d-flex-column">
           <div class="modal-label d-flex-center">
-            <label class="modal-card-label br-8 d-flex-center">User Story</label>
-            <span id="modal-close-button">X</span>
+            <label style="width: 180px;" class="modal-card-label br-8 d-flex-center">User Story</label>
+            <span id="modal-close-button">&times;</span>
           </div>
           <h3 class="modal-card-title">Kochwelt Page & Recipe Recommender</h3>
           <p>Build start page with recipe recommendation.</p>
@@ -143,6 +143,13 @@
             <div class="user-line gap-16 d-flex-space-between">
               <span class="user-icons d-flex-center">US</span><span>Default User</span>
             </div>
+            <div class="assignments d-flex-column">
+              <span>Assigned to:</span>
+              <div class="assigned-users"></div>
+              <input type="text" id="user-input" placeholder="Add a user..." />
+              <button id="add-user-button">Add</button>
+            </div>
+            
           </div>
           <div class="subtask-section d-flex-column">
             <span>Subtasks:</span>

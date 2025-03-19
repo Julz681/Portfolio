@@ -597,3 +597,70 @@ body {
   background: url(../assets/img/icons/edit-hover.png);
   transform: scale(1.02);
 }
+
+#task-card-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#task-card-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-card-wrapper {
+  position: fixed;
+  top: 50%;
+  right: -100%; 
+  transform: translateY(-50%);
+  width: 500px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: right 0.75s ease-out; 
+  overflow: hidden;
+  flex-direction: row;
+}
+
+.modal-card-wrapper.slide-in {
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+.modal-card-wrapper.slide-out {
+  right: -100%;
+  transform: translateY(50%, -50%);
+}
+
+
+#modal-close-button {
+  position: absolute;
+  top: 48px;
+  right: 40px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  font-size: 32px;
+  color: #2a3647;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  border-radius: 50%;
+}
+
+#modal-close-button:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}
