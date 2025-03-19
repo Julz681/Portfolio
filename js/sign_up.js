@@ -1,7 +1,24 @@
-/**
- * This function automatically fills the sign-up form fields with predefined values when clicking in the e-mail field.
- * This function is primarily used for testing or demonstration purposes.
- */
+// Import the necessary Firebase functions
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAZ9srsMl4-kHVT_LsIXZ1jsq2iDfKdr0Y",
+  authDomain: "join-67ec1.firebaseapp.com",
+  databaseURL: "https://join-67ec1-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "join-67ec1",
+  storageBucket: "join-67ec1.firebasestorage.app",
+  messagingSenderId: "401858328124",
+  appId: "1:401858328124:web:3c24258f8f0ce204a5f539"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
 function autoFillFieldsSignUp() {
   document.getElementById("name").value = "Sofia Müller";
   document.getElementById("email").value = "SofiaMueller@gmail.com";
@@ -10,48 +27,52 @@ function autoFillFieldsSignUp() {
   document.getElementById("privacy-policy").checked = true;
 }
 
-/**
- * This function handles the form submission, stores the data, and redirects to the homepage.
- */
-function handleSignUp() {
-  // Prevent the form from actually submitting
+async function handleSignUp(event) {
   event.preventDefault();
 
-  // The success message element.
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await set(ref(db, 'users/' + user.uid), {
+      name: name,
+      email: email,
+      createdAt: new Date().toISOString()
+    });
+
+    showSuccessMessage("You signed up successfully!");
+    sessionStorage.setItem("registeredEmail", email);
+    sessionStorage.setItem("registeredPassword", password);
+    setTimeout(() => {
+      window.location.href = "/index.html";
+    }, 2000);
+  } catch (error) {
+    console.error("Error during registration:", error);
+    showSuccessMessage("Registration failed: " + error.message);
+  }
+}
+
+function showSuccessMessage(message) {
   let successMessage = document.querySelector(".success-message");
 
-  // If the success message does not exist, create and append it
   if (!successMessage) {
     successMessage = document.createElement("div");
     successMessage.className = "success-message";
-    successMessage.textContent = "You signed up successfully";
     document.body.appendChild(successMessage);
   }
 
-  // Show the success message
+  successMessage.textContent = message;
   successMessage.classList.add("show");
 
-  // Hide the success message after 4 seconds
   setTimeout(() => {
     successMessage.classList.remove("show");
   }, 4000);
-
-  // Store the registered credentials in sessionStorage to use in the login form
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  sessionStorage.setItem("registeredEmail", email);
-  sessionStorage.setItem("registeredPassword", password);
-
-  // Redirect to the homepage (login page)
-  window.location.href = "/index.html";
 }
 
-/**
- * This function toggles the visibility of a password input field and updates the corresponding icon.
- *
- * @param {string} inputId - The ID of the password input field.
- * @param {HTMLImageElement} imgElement - The image element representing the eye icon.
- */
 function togglePasswordVisibility(inputId, imgElement) {
   const inputField = document.getElementById(inputId);
   const isPasswordVisible = inputField.type === "text";
@@ -65,26 +86,20 @@ function togglePasswordVisibility(inputId, imgElement) {
   }
 }
 
-/**
- * This function updates the password visibility icon based on the input field value.
- * If the field contains text, the closed-eye icon is shown- if it does not, a lock icon is displayed.
- *
- * @param {string} inputId - The ID of the password input field.
- * @param {HTMLImageElement} imgElement - The image element representing the eye or lock icon.
- */
-function updatePasswordIcon(inputId, imgElement) {
-  const inputField = document.getElementById(inputId);
-  if (inputField.value.length > 0) {
-    imgElement.src = "../assets/img/eye_closed.png";
-  } else {
-    imgElement.src = "../assets/img/lock.png";
-  }
-}
+document.querySelectorAll('.toggle-password').forEach((toggle) => {
+  toggle.addEventListener('click', function () {
+    const inputId = this.previousElementSibling.id;
+    togglePasswordVisibility(inputId, this);
+  });
+});
 
-/**
- * This function hides the element with the ID "start" by setting its display property to "none".
- */
+document.querySelectorAll('.input-field[type="password"]').forEach((inputField) => {
+  inputField.addEventListener('input', function () {
+    const imgElement = this.nextElementSibling;
+    imgElement.src = this.value.length > 0 ? "../assets/img/eye_closed.png" : "../assets/img/lock.png";
+  });
+});
+
+document.getElementById("name").addEventListener("click", autoFillFieldsSignUp);
 document.getElementById("start").style.display = "none";
-
-// Call the handleSignUp function when the form is submitted (no EventListener)
 document.getElementById("signup-form").onsubmit = handleSignUp;
