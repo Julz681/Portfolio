@@ -504,24 +504,13 @@
 
 /* styling bottom section */
 
-.add-task-bottom {
-  display: flex;
-  align-items: center;
-  margin-top: 600px;
+.add-task-footer {
+  align-items: flex-end;
 }
 
-.text-bottom {
-  font-size: 20px;
-  margin-right: 480px;
-}
-
-.button {
-  padding: 12px 20px;
-  font-size: 20px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  box-sizing: border-box;
+.text-container {
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .clearBtn {
@@ -530,10 +519,7 @@
   color: #2a3647;
   position: relative;
   padding: 12px 20px;
-  font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
-  box-sizing: border-box;
   margin-right: 8px;
 }
 
@@ -545,14 +531,11 @@
 
 .createBtn {
   background-color: #2a3647;
-  color: #fff;
+  color: #ffffff;
   font-weight: bold;
   padding: 12px 20px;
-  font-size: 16px;
   cursor: pointer;
   border: none;
-  border-radius: 5px;
-  box-sizing: border-box;
 }
 
 .createBtn:hover {

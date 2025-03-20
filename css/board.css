@@ -12,7 +12,6 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
   margin: 0;
-  cursor: pointer;
 }
 
 .d-flex-center {
