@@ -92,12 +92,18 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   height: 100vh;
   background-color: #f6f7f8;
-  max-width: 1920px;
   margin: 0 auto;
   position: relative;
+ 
+}
+
+header {
+  left: 0;
+  right: 0;
+  position: fixed;
 }
 
 /* generic templates styling */
@@ -113,15 +119,12 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  max-width: 1920px;
+  width: 100%;
 }
 
 /* board styling */
 
 .content-wrapper {
-  height: 100vh;
-  width: 100%;
-  position: relative;
   font-family: "Inter", sans-serif !important;
   margin-top: 96px;
 }
@@ -130,14 +133,17 @@ body {
 
 .board-header-wrapper {
   height: 208px;
-  position: relative;
-  max-width: 1920px;
+  margin-top: 95px;
 }
 
 .board-header {
   width: calc(100% - 232px);
-  left: 232px;
-  position: absolute;
+  margin-left: 270px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 96px;
+  margin-bottom: 64px;
 }
 .board-title {
   font-size: 74px;
@@ -236,20 +242,20 @@ body {
 /* board body */
 
 .board-wrapper {
-  max-width: 1920px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
-  position: relative;
 }
 
 .board {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: flex-start;
   width: calc(100% - 232px);
-  left: 232px;
-  position: absolute;
-  gap: 24px;
+  margin-left: 270px;
+  position: relative;
+  gap: 50px;
 }
 
 .board-columns {
@@ -620,12 +626,12 @@ body {
 .modal-card-wrapper {
   position: fixed;
   top: 50%;
-  right: -100%; 
+  right: -100%;
   transform: translateY(-50%);
   width: 500px;
   background: white;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: right 0.75s ease-out; 
+  transition: right 0.75s ease-out;
   overflow: hidden;
   flex-direction: row;
 }
@@ -639,7 +645,6 @@ body {
   right: -100%;
   transform: translateY(50%, -50%);
 }
-
 
 #modal-close-button {
   position: absolute;

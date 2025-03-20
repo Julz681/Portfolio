@@ -96,7 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderTasks() {
     boardColumn.innerHTML = "";
     tasks.forEach((task) => {
-      const taskLabel = task.taskType === "technical" ? "Technical Task" : "User Story";
+      const taskLabel =
+        task.taskType === "technical" ? "Technical Task" : "User Story";
       const labelColor = task.taskType === "technical" ? "#1fd7c1" : "blue";
 
       const taskHTML = `
@@ -117,9 +118,16 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             <div class="d-flex-space-between board-card-footer">
               <div class="user-icons-wrapper d-flex-center">
-                ${task.assignedTo.map(user => `<span class="user-icons d-flex-center">${user[0]}</span>`).join("")}
+                ${task.assignedTo
+                  .map(
+                    (user) =>
+                      `<span class="user-icons d-flex-center">${user[0]}</span>`
+                  )
+                  .join("")}
               </div>
-              <img src="../assets/img/icons/${task.priority}-icon.png" class="priority" />
+              <img src="../assets/img/icons/${
+                task.priority
+              }-icon.png" class="priority" />
             </div>
           </div>
         </div>
@@ -139,24 +147,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (taskData) {
           const modalLabel = document.querySelector(".modal-card-label");
-          modalLabel.textContent = taskData.taskType === "technical" ? "Technical Task" : "User Story";
-          modalLabel.style.background = taskData.taskType === "technical" ? "#1fd7c1" : "blue";
+          modalLabel.textContent =
+            taskData.taskType === "technical" ? "Technical Task" : "User Story";
+          modalLabel.style.background =
+            taskData.taskType === "technical" ? "#1fd7c1" : "blue";
 
-          document.querySelector(".modal-card-title").textContent = taskData.title;
-          document.querySelector(".modal-card-content p").textContent = taskData.description;
-          document.querySelector(".date-line span:last-child").textContent = taskData.dueDate;
-          document.querySelector(".prio-label span").textContent = taskData.priority.charAt(0).toUpperCase() + taskData.priority.slice(1);
-          document.querySelector(".prio-label img").src = `../assets/img/icons/${taskData.priority}-icon.png`;
+          document.querySelector(".modal-card-title").textContent =
+            taskData.title;
+          document.querySelector(".modal-card-content p").textContent =
+            taskData.description;
+          document.querySelector(".date-line span:last-child").textContent =
+            taskData.dueDate;
+          document.querySelector(".prio-label span").textContent =
+            taskData.priority.charAt(0).toUpperCase() +
+            taskData.priority.slice(1);
+          document.querySelector(
+            ".prio-label img"
+          ).src = `../assets/img/icons/${taskData.priority}-icon.png`;
 
           const userContainer = document.querySelector(".assignments");
-          userContainer.innerHTML = `<span>Assigned to:</span>` + taskData.assignedTo.map(user => `
+          userContainer.innerHTML =
+            `<span>Assigned to:</span>` +
+            taskData.assignedTo
+              .map(
+                (user) => `
             <div class="user-line gap-16 d-flex-space-between">
               <span class="user-icons d-flex-center">${user[0]}</span><span>${user}</span>
             </div>
-          `).join("");
+          `
+              )
+              .join("");
 
           const subtaskContainer = document.querySelector(".subtasks-wrapper");
-          subtaskContainer.innerHTML = taskData.subtasks.map((subtask, index) => `
+          subtaskContainer.innerHTML = taskData.subtasks
+            .map(
+              (subtask, index) => `
             <div class="modal-card-subtask-wrapper d-flex-center">
               <label class="modal-card-subtask gap-16">
                 <input type="checkbox" id="subtask-${index}" />
@@ -164,7 +189,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <span>${subtask}</span>
               </label>
             </div>
-          `).join("");
+          `
+            )
+            .join("");
 
           modalOverlay.classList.add("active");
           modalCardWrapper.classList.add("slide-in");
