@@ -7,5 +7,4 @@ firebase.json
 firestore.indexes.json
 firestore.rules
 js/add_contact.js
-js/sign_up.js
-js/summary.js
+js/firebase.js

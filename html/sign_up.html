@@ -12,10 +12,12 @@
     <title>Join</title>
   </head>
   <body>
+    <!-- Start Button Container -->
     <div class="start" id="start">
       <img class="start-logo" src="../assets/img/logo.png" alt="logo" />
     </div>
 
+    <!-- Sign-up Form Container -->
     <div id="signup-form-container">
       <div class="sign-up-frame">
         <div class="signup-header">
@@ -34,7 +36,8 @@
           <hr />
         </div>
 
-        <form id="signup-form" onsubmit="handleSignUp(event)">
+        <!-- Sign-up Form -->
+        <form id="signup-form">
           <div class="signup-data">
             <label for="name">
               <input
@@ -123,12 +126,15 @@
       </div>
     </div>
 
+    <!-- Footer Section -->
     <footer class="footer-start">
       <a href="../html/privacy_policy_logged_out.html">Privacy Policy</a>
       <a href="../html/legal_notice_logged_out.html">Legal notice</a>
     </footer>
 
+    <!-- JS Files placed at the end of the body -->
+    <script type="module" src="../js/firebase.js" defer></script>
     <script type="module" src="../js/sign_up.js" defer></script>
-
+    
   </body>
 </html>

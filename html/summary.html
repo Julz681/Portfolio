@@ -11,7 +11,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
 <title>Summary</title> 
 </head> 
-<body onload="setGreetingName(localStorage.getItem('username') || 'Sofia Müller');"> 
+<body>
+
 <header class="header"> 
 <span class="headline">Kanban Project Management Tool</span> 
 <div class="nav-right"> 
@@ -70,9 +71,7 @@
 </ul> 
 </nav> 
 </aside> 
-<!DOCTYPE html> 
-<html lang="en"> 
-<body> 
+
 <div class="wrapper_content_greeting"> 
 <div class="container"> 
 <div class="wrapper_headline_section"> 
@@ -126,14 +125,15 @@
 </div> 
 </section> 
 <div class="greeting">
-  <p>Good morning, <br><span class="highlight" id="greeting-name">Sophia Müller</span></p>
+  <p><br><span class="highlight" id="greeting-name">Sophia Müller</span></p>
 </div>
 
-
 </div> 
-<script src="../js/dropwdown.js"></script> 
-<script type="module" src="../js/summary.js"></script> 
-<script src="../js/log_in.js"></script> 
-<script src="../js/sign_up.js"></script> 
+<script type="module" src="../js/firebase.js" defer></script>
+<script src="../js/dropwdown.js" defer></script> 
+<script type="module" src="../js/summary.js" defer></script>
+<script type="module" src="../js/log_in.js" defer></script>
+<script type="module" src="../js/sign_up.js" defer></script>
+
 </body> 
 </html>

@@ -27,28 +27,13 @@ function togglePasswordVisibility(inputId, imgElement) {
 }
 
 /**
- * This function updates the password visibility icon based on the input field value.
- * If the field contains text, the closed-eye icon is shown; if it does not, a lock icon is displayed.
- * @param {string} inputId - The ID of the password input field.
- * @param {HTMLImageElement} imgElement - The image element representing the eye or lock icon.
- */
-function updatePasswordIcon(inputId, imgElement) {
-  const inputField = document.getElementById(inputId);
-  if (inputField.value.length > 0) {
-    imgElement.src = "../assets/img/eye_closed.png"; // Show the closed eye icon when the field is not empty
-  } else {
-    imgElement.src = "../assets/img/lock.png"; // Show the lock icon when the field is empty
-  }
-}
-
-/**
  * This function handles the normal login.
  * It saves or removes login credentials based on the "Remember Me" checkbox status.
  */
 function normalLogin() {
-  const rememberMe = document.getElementById("rememberMe").checked;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const rememberMe = document.getElementById("rememberMe") ? document.getElementById("rememberMe").checked : false;
+  const email = document.getElementById("email") ? document.getElementById("email").value : "";
+  const password = document.getElementById("password") ? document.getElementById("password").value : "";
 
   if (rememberMe) {
     localStorage.setItem("email", email);
@@ -78,35 +63,45 @@ function guestLogin() {
  * This function restores the saved credentials when the page loads if "Remember Me" was checked.
  */
 function restoreLogin() {
-  const rememberMe = localStorage.getItem("rememberMe") === "true";
+  // Ensure the elements exist before trying to access them
+  const emailField = document.getElementById("email");
+  const passwordField = document.getElementById("password");
+  const rememberMeField = document.getElementById("rememberMe");
 
-  if (rememberMe) {
-    // If "Remember Me" is checked, restore the saved credentials from localStorage
-    const email = localStorage.getItem("email");
-    const password = localStorage.getItem("password");
-    document.getElementById("email").value = email || "";
-    document.getElementById("password").value = password || "";
-    document.getElementById("rememberMe").checked = true;
+  // Check if all required elements exist
+  if (emailField && passwordField && rememberMeField) {
+    const rememberMe = localStorage.getItem("rememberMe") === "true";
+
+    if (rememberMe) {
+      // If "Remember Me" is checked, restore the saved credentials from localStorage
+      const email = localStorage.getItem("email");
+      const password = localStorage.getItem("password");
+      emailField.value = email || "";
+      passwordField.value = password || "";
+      rememberMeField.checked = true;
+    } else {
+      // If "Remember Me" is unchecked, reset the form fields
+      emailField.value = "";
+      passwordField.value = "";
+      rememberMeField.checked = false;
+    }
+
+    // Check if there's sessionStorage data from sign up (if the user just signed up)
+    const sessionEmail = sessionStorage.getItem("registeredEmail");
+    const sessionPassword = sessionStorage.getItem("registeredPassword");
+
+    if (sessionEmail && sessionPassword) {
+      emailField.value = sessionEmail;
+      passwordField.value = sessionPassword;
+      sessionStorage.removeItem("registeredEmail"); // Clear sessionStorage after using the data
+      sessionStorage.removeItem("registeredPassword");
+    }
   } else {
-    // If "Remember Me" is unchecked, reset the form fields
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
-    document.getElementById("rememberMe").checked = false;
-  }
-
-  // Check if there's sessionStorage data from sign up (if the user just signed up)
-  const sessionEmail = sessionStorage.getItem("registeredEmail");
-  const sessionPassword = sessionStorage.getItem("registeredPassword");
-
-  if (sessionEmail && sessionPassword) {
-    document.getElementById("email").value = sessionEmail;
-    document.getElementById("password").value = sessionPassword;
-    sessionStorage.removeItem("registeredEmail"); // Clear sessionStorage after using the data
-    sessionStorage.removeItem("registeredPassword");
+    console.error("Required form elements not found.");
   }
 }
 
-// Restore login details on page load
-window.onload = function() {
-  restoreLogin(); // This function is called when the page loads
-};
+// Ensure the DOM is fully loaded before running restoreLogin
+document.addEventListener('DOMContentLoaded', function() {
+  restoreLogin(); // This function is called when the DOM is ready
+});
