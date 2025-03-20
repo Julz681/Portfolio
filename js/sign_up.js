@@ -1,130 +1,115 @@
-// Import the necessary Firebase functions
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+// Import the necessary Firebase functions from firebase.js
+import { auth, db } from "./firebase.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAZ9srsMl4-kHVT_LsIXZ1jsq2iDfKdr0Y",
-  authDomain: "join-67ec1.firebaseapp.com",
-  databaseURL: "https://join-67ec1-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "join-67ec1",
-  storageBucket: "join-67ec1.firebasestorage.app",
-  messagingSenderId: "401858328124",
-  appId: "1:401858328124:web:3c24258f8f0ce204a5f539"
-};
+// Warten, bis das DOM vollständig geladen ist
+document.addEventListener("DOMContentLoaded", () => {
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+  // Autofill Function for SignUp Form
+  function autoFillFieldsSignUp() {
+    document.getElementById("name").value = "Sofia Müller";
+    document.getElementById("email").value = "SofiaMueller@gmail.com";
+    document.getElementById("password").value = "MyPassword12345";
+    document.getElementById("confirm-password").value = "MyPassword12345";
+    document.getElementById("privacy-policy").checked = true;
+  }
 
-// Initialize Firebase Authentication
-const auth = getAuth(app);
+  // Function to Handle User Registration (Sign-Up)
+  async function handleSignUp(event) {
+    event.preventDefault();
 
-// Initialize Firebase Database
-const db = getDatabase(app);
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-// Autofill Function for SignUp Form
-function autoFillFieldsSignUp() {
-  // Autofill form fields for demonstration or testing
-  document.getElementById("name").value = "Sofia Müller";
-  document.getElementById("email").value = "SofiaMueller@gmail.com";
-  document.getElementById("password").value = "MyPassword12345";
-  document.getElementById("confirm-password").value = "MyPassword12345";
-  document.getElementById("privacy-policy").checked = true;
-}
+    try {
+      // Create a new user with Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-// Function to Handle User Registration (Sign-Up)
-async function handleSignUp(event) {
-  event.preventDefault(); // Prevent the default form submission
+      // Store the user's information in Firebase Realtime Database
+      await set(ref(db, 'users/' + user.uid), {
+        name: name,
+        email: email,
+        createdAt: new Date().toISOString()
+      });
 
-  // Get the form values from the input fields
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+      showSuccessMessage("You signed up successfully!");
+      sessionStorage.setItem("registeredEmail", email);
+      sessionStorage.setItem("registeredPassword", password);
+      setTimeout(() => {
+        window.location.href = "/index.html";
+      }, 2000);
+    } catch (error) {
+      console.error("Error during registration:", error);
+      showSuccessMessage("Registration failed: " + error.message);
+    }
+  }
 
-  try {
-    // Create a new user with Firebase Authentication
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+  // Function to display success messages to the user
+  function showSuccessMessage(message) {
+    let successMessage = document.querySelector(".success-message");
 
-    // Store the user's information in Firebase Realtime Database
-    await set(ref(db, 'users/' + user.uid), {
-      name: name,
-      email: email,
-      createdAt: new Date().toISOString() // Store the account creation date
-    });
+    if (!successMessage) {
+      successMessage = document.createElement("div");
+      successMessage.className = "success-message";
+      document.body.appendChild(successMessage);
+    }
 
-    // Show success message and redirect after registration
-    showSuccessMessage("You signed up successfully!");
-    sessionStorage.setItem("registeredEmail", email);
-    sessionStorage.setItem("registeredPassword", password);
+    successMessage.textContent = message;
+    successMessage.classList.add("show");
+
     setTimeout(() => {
-      window.location.href = "/index.html"; // Redirect to the main page after 2 seconds
-    }, 2000);
-  } catch (error) {
-    // Handle any errors that occur during registration
-    console.error("Error during registration:", error);
-    showSuccessMessage("Registration failed: " + error.message);
-  }
-}
-
-// Function to display success messages to the user
-function showSuccessMessage(message) {
-  let successMessage = document.querySelector(".success-message");
-
-  if (!successMessage) {
-    // Create a success message element if it doesn't exist
-    successMessage = document.createElement("div");
-    successMessage.className = "success-message";
-    document.body.appendChild(successMessage);
+      successMessage.classList.remove("show");
+    }, 4000);
   }
 
-  // Update and show the success message
-  successMessage.textContent = message;
-  successMessage.classList.add("show");
+  // Function to toggle password visibility
+  function togglePasswordVisibility(inputId, imgElement) {
+    const inputField = document.getElementById(inputId);
+    const isPasswordVisible = inputField.type === "text";
 
-  // Hide the success message after a certain amount of time
-  setTimeout(() => {
-    successMessage.classList.remove("show");
-  }, 4000);
-}
-
-// Function to toggle password visibility
-function togglePasswordVisibility(inputId, imgElement) {
-  const inputField = document.getElementById(inputId);
-  const isPasswordVisible = inputField.type === "text"; // Check the current visibility status of the password
-
-  // Toggle the password visibility and change the icon accordingly
-  if (isPasswordVisible) {
-    inputField.type = "password";
-    imgElement.src = "../assets/img/eye_closed.png";
-  } else {
-    inputField.type = "text";
-    imgElement.src = "../assets/img/eye.png";
+    if (isPasswordVisible) {
+      inputField.type = "password";
+      imgElement.src = "../assets/img/eye_closed.png";
+    } else {
+      inputField.type = "text";
+      imgElement.src = "../assets/img/eye.png";
+    }
   }
-}
 
-// Add event listener to toggle password visibility on clicking the icon
-document.querySelectorAll('.toggle-password').forEach((toggle) => {
-  toggle.addEventListener('click', function () {
-    const inputId = this.previousElementSibling.id;
-    togglePasswordVisibility(inputId, this);
+  // Event Listener für Passwort-Sichtbarkeit beim Klick auf das Auge
+  document.querySelectorAll('.toggle-password').forEach((toggle) => {
+    toggle.addEventListener('click', function () {
+      const inputId = this.previousElementSibling.id;
+      togglePasswordVisibility(inputId, this);
+    });
   });
-});
 
-// Add event listener to change the password visibility icon when typing in the password field
-document.querySelectorAll('.input-field[type="password"]').forEach((inputField) => {
-  inputField.addEventListener('input', function () {
-    const imgElement = this.nextElementSibling;
-    imgElement.src = this.value.length > 0 ? "../assets/img/eye_closed.png" : "../assets/img/lock.png";
+  // Event Listener zum Ändern des Passwort-Icons beim Tippen
+  document.querySelectorAll('.input-field[type="password"]').forEach((inputField) => {
+    inputField.addEventListener('input', function () {
+      const imgElement = this.nextElementSibling;
+      imgElement.src = this.value.length > 0 ? "../assets/img/eye_closed.png" : "../assets/img/lock.png";
+    });
   });
+
+  // Trigger autofill when the name field is clicked (for testing purposes)
+  const nameField = document.getElementById("name");
+  if (nameField) {
+    nameField.addEventListener("click", autoFillFieldsSignUp);
+  }
+
+  // Hide the "start" section upon loading the sign-up form
+  const startSection = document.getElementById("start");
+  if (startSection) {
+    startSection.style.display = "none";
+  }
+
+  // Set up the form submission event to call handleSignUp
+  const signupForm = document.getElementById("signup-form");
+  if (signupForm) {
+    signupForm.addEventListener("submit", handleSignUp);
+  }
 });
-
-// Trigger autofill when the name field is clicked (for testing purposes)
-document.getElementById("name").addEventListener("click", autoFillFieldsSignUp);
-
-// Hide the "start" section upon loading the sign-up form
-document.getElementById("start").style.display = "none";
-
-// Set up the form submission event to call handleSignUp
-document.getElementById("signup-form").onsubmit = handleSignUp;
