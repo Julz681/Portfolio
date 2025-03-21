@@ -110,6 +110,10 @@
   background: transparent;
 }
 
+.date-picker::-webkit-calendar-picker-indicator:hover {
+  cursor: pointer;
+}
+
 .date-picker {
   background: url(../assets/img/icons/date-picker.png) no-repeat 95% 50%;
   background-size: 20px;
@@ -121,16 +125,12 @@
   cursor: pointer;
 }
 
-.date-picker::-webkit-datetime-edit {
+.date-picker:invalid::-webkit-datetime-edit {
   color: #d1d1d1;
   font-size: 20px;
   line-height: 24px !important;
   font-weight: 400;
   font-family: "Inter", sans-serif !important;
-}
-
-.date-picker:focus::-webkit-datetime-edit {
-  color: #000000;
 }
 
 /* separator styling */
@@ -199,7 +199,6 @@
   width: 24px;
   height: 24px;
   background-color: #ffffff;
-  border: 1px solid #d1d1d1;
   border-left: 0;
   border-radius: 0px 10px 10px 0px;
   border: none;
@@ -208,6 +207,25 @@
 .dropdown-icon-closed:hover {
   background: url(../assets/img/icons/arrow_drop_down_hover.png) no-repeat 50%
     50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.dropdown-icon-open {
+  background: url(../assets/img/icons/arrow_drop_down_reverse.png) no-repeat 50%
+    50%;
+  width: 24px;
+  height: 24px;
+  background-color: #ffffff;
+  border-left: 0;
+  border-radius: 0px 10px 10px 0px;
+  border: none;
+}
+
+.dropdown-icon-open:hover {
+  background: url(../assets/img/icons/arrow_drop_down_reverse_hover.png)
+    no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   cursor: pointer;
