@@ -524,28 +524,65 @@
   background-color: #ffffff;
   border: 1px solid #2a3647;
   color: #2a3647;
-  position: relative;
-  padding: 12px 20px;
-  cursor: pointer;
-  margin-right: 8px;
+  font-weight: 400;
+  padding: 16px;
+  gap: 4px;
 }
 
 .clearBtn:hover {
-  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: #29abe2;
   border: 1px solid #29abe2;
+  cursor: pointer;
+}
+
+.cancel-icon {
+  background: url(../assets/img/icons/cancel.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+
+.clearBtn:hover .cancel-icon {
+  background: url(../assets/img/icons/cancel_hover.png) no-repeat 50% 50%;
+  height: 24px;
+  width: 24px;
 }
 
 .createBtn {
+  border: 1px solid #2a3647;
   background-color: #2a3647;
   color: #ffffff;
-  font-weight: bold;
-  padding: 12px 20px;
-  cursor: pointer;
-  border: none;
+  padding: 16px;
+  gap: 4px;
+  font-weight: 700;
 }
 
 .createBtn:hover {
+  cursor: pointer;
+  border: 1px solid #29abe2;
   background-color: #29abe2;
-  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.checkmark-icon {
+  background: url(../assets/img/icons/check-mark-icon.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+
+.clearBtn:active {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid #091931;
+  color: #091931;
+}
+
+.clearBtn:active .cancel-icon {
+  background: url(../assets/img/icons/cancel_click.png) no-repeat 50% 50%;
+  height: 24px;
+  width: 24px;
+}
+
+.createBtn:active {
+  border: 1px solid #2a3647;
+  background-color: #091931;
 }
