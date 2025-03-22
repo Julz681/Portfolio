@@ -82,7 +82,7 @@ const tasks = [
     taskType: "technical",
     dueDate: "10/10/2023",
     assignedTo: ["Frances Allen", "Edsger Dijkstra"],
-    subtasks: ["Setup Firebase","Create Login Form", "Test Auth Flow"],
+    subtasks: ["Setup Firebase", "Create Login Form", "Test Auth Flow"],
     status: "in-progress",
   },
   {
@@ -93,18 +93,27 @@ const tasks = [
     taskType: "userStory",
     dueDate: "15/04/2025",
     assignedTo: ["Ada Lovelace", "Shafi Goldwasser"],
-    subtasks: ["Design toggle switch","Implement dark/light themes","Store preference in localStorage",],
+    subtasks: [
+      "Design toggle switch",
+      "Implement dark/light themes",
+      "Store preference in localStorage",
+    ],
     status: "to-do",
   },
   {
     id: "task-5",
     title: "Drag & Drop Task Board",
-    description:"Enable drag and drop functionality to move tasks across different columns.",
+    description:
+      "Enable drag and drop functionality to move tasks across different columns.",
     priority: "low",
     taskType: "technical",
     dueDate: "20/04/2025",
     assignedTo: ["Reshma Saujani", "Frances Allen"],
-    subtasks: ["Set up drag listeners","Handle drop zones","Update task status on drop",],
+    subtasks: [
+      "Set up drag listeners",
+      "Handle drop zones",
+      "Update task status on drop",
+    ],
     status: "to-do",
   },
 ];
@@ -280,3 +289,67 @@ document.addEventListener("DOMContentLoaded", function () {
 
   renderAllColumns();
 });
+
+function openEditOverlay() {
+  document.getElementById("editTaskOverlay").classList.remove("hidden");
+}
+
+function closeEditOverlay() {
+  document.getElementById("editTaskOverlay").classList.add("hidden");
+}
+
+document.querySelectorAll(".edit-priority button").forEach((button) => {
+  button.addEventListener("click", function () {
+    document
+      .querySelectorAll(".edit-priority button")
+      .forEach((btn) => btn.classList.remove("active"));
+    this.classList.add("active");
+  });
+});
+
+const priorityButtons = document.querySelectorAll(".priority-labels");
+
+priorityButtons.forEach((button) => {
+  button.addEventListener("click", function () {
+    priorityButtons.forEach((btn) => resetPriorityButton(btn));
+    activatePriorityButton(this);
+  });
+});
+
+function resetPriorityButton(button) {
+  button.style.backgroundColor = "#ffffff";
+  button.style.color = "#000000";
+  button.style.fontWeight = "normal";
+  const svgPaths = button.querySelectorAll("svg path");
+  svgPaths.forEach((path) => {
+    if (button.id === "urgent") path.setAttribute("fill", "#FF3D00");
+    if (button.id === "medium") path.setAttribute("fill", "#FFA800");
+    if (button.id === "low") path.setAttribute("fill", "#7AE229");
+  });
+}
+
+function activatePriorityButton(button) {
+  const svgPaths = button.querySelectorAll("svg path");
+
+  button.style.fontWeight = "bold";
+
+  switch (button.id) {
+    case "urgent":
+      button.style.backgroundColor = "#FF3D00";
+      button.style.color = "#ffffff";
+      svgPaths.forEach((path) => path.setAttribute("fill", "#ffffff"));
+      break;
+
+    case "medium":
+      button.style.backgroundColor = "#FFA800";
+      button.style.color = "#ffffff";
+      svgPaths.forEach((path) => path.setAttribute("fill", "#ffffff"));
+      break;
+
+    case "low":
+      button.style.backgroundColor = "#7AE229";
+      button.style.color = "#ffffff";
+      svgPaths.forEach((path) => path.setAttribute("fill", "#ffffff"));
+      break;
+  }
+}
