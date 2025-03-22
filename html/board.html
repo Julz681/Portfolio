@@ -47,7 +47,7 @@
               <div class="no-tasks-feedback d-flex-center br-10 d_none">
                 No tasks To do
               </div>
-              <div class="board-card d-flex-center d_none">
+              <div class="board-card d-flex-center d_none" data-task-id="1">
                 <div class="board-card-content d-flex-column">
                   <label class="board-card-label br-8 d-flex-center"
                     >User Story</label
@@ -215,15 +215,17 @@
             </div>
             <div class="modal-card-footer">
               <div class="edit-area d-flex-space-between">
-                <div class="d-flex-space-between">
-                  <span class="delete-icon"></span><span>Delete</span>
-                </div>
-                <div class="d-flex-space-between">
-                  <span class="edit-icon"></span><span>Edit</span>
-                </div>
+                <button id="delete-task-button" class="d-flex-space-between delete-button">
+                  <span class="delete-icon"></span>
+                  <span>Delete</span>
+                </button>
+                <button id="edit-task-button" class="d-flex-space-between edit-button">
+                  <span class="edit-icon"></span>
+                  <span>Edit</span>
+                </button>
               </div>
             </div>
-          </div>
+            
         </div>
       </section>
     </main>
