@@ -49,10 +49,7 @@ function updatePasswordIcon(inputId, imgElement) {
  * It saves or removes login credentials based on the "Remember Me" checkbox status.
  */
 function normalLogin(event) {
-  // Prevent form submission
-  if (event) {
-    event.preventDefault(); // Make sure event is defined before calling preventDefault()
-  }
+  event.preventDefault();  // Prevent the form submission from reloading the page
 
   console.log("Login button clicked!"); // Check if this log appears
 
@@ -85,7 +82,9 @@ function normalLogin(event) {
  * This function handles the guest login.
  * It does not require email or password, and just sets the "isGuest" flag.
  */
-function guestLogin() {
+function guestLogin(event) {
+  event.preventDefault();  // Prevent the form submission from reloading the page
+  
   localStorage.setItem("isGuest", "true");
   location.href = '../html/summary.html'; // Redirect to the summary page after guest login
 }
@@ -118,22 +117,5 @@ function restoreLogin() {
   }
 }
 
-// Ensure the form and elements exist before adding event listeners
-window.onload = () => {
-  restoreLogin();
-
-  const loginForm = document.getElementById("login-form");
-  if (loginForm) {
-    loginForm.addEventListener("submit", normalLogin);
-  } else {
-    console.error("Login form not found!");
-  }
-
-  // Add event listener for guest login
-  const guestLoginButton = document.getElementById("guest-login-button");
-  if (guestLoginButton) {
-    guestLoginButton.addEventListener("click", guestLogin);
-  } else {
-    console.error("Guest login button not found!");
-  }
-};
+// Call restoreLogin() immediately to restore any saved credentials on page load
+restoreLogin();

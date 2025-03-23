@@ -17,7 +17,7 @@ function autoFillFieldsSignUp() {
  * displays a success message, and redirects the user after a short delay.
  */
 function handleSignUpSubmission(event) {
-  event.preventDefault();
+  event.preventDefault();  // Prevent the form from submitting the usual way
 
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
@@ -84,5 +84,14 @@ window.handleSignUpSubmission = handleSignUpSubmission;
 window.togglePasswordVisibility = togglePasswordVisibility;
 window.updatePasswordIcon = updatePasswordIcon;
 
+// Ensure that the signup form event listener is properly attached after DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+  const signUpForm = document.getElementById("signup-form");
+  if (signUpForm) {
+    signUpForm.addEventListener("submit", handleSignUpSubmission);
+  } else {
+    console.error("Sign-up form not found.");
+  }
+});
+
 document.getElementById("start").style.display = "none";
-document.getElementById("signup-form").addEventListener("submit", handleSignUpSubmission);

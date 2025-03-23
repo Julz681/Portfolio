@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded', function() {
+
+
 /**
  * This function updates the greeting message based on the current time of day.
  * It displays "Good morning", "Good afternoon", or "Good evening" 
@@ -51,3 +54,4 @@ function updateTaskMetrics() {
 updateGreeting();
 updateTaskMetrics();
 
+});
