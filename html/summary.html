@@ -1,139 +1,156 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-<meta charset="UTF-8"> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<link rel="icon" type="icon" href="../assets/img/favicon.png"> 
-<link rel="stylesheet" href="../css/desktop_template.css"> 
-<link rel="stylesheet" href="../css/summary.css"> 
-<link rel="preconnect" href="https://fonts.googleapis.com"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
-<title>Summary</title> 
-</head> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="icon" href="../assets/img/favicon.png">
+    <link rel="stylesheet" href="../css/desktop_template.css">
+    <link rel="stylesheet" href="../css/summary.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <title>Summary</title>
+</head>
+
+<body onload="setGreetingName(localStorage.getItem('username') || 'Sofia Müller');">
+
+<header class="header">
+  <span class="headline">Kanban Project Management Tool</span>
+  
+  <div class="nav-right">
+    <a href="../html/help.html" class="help-btn" title="Help">
+        <img src="../assets/img/help.png" alt="Help"/>
+    </a>
+    <div class="user-profile" id="userProfile" onclick="toggleDropdown()">
+        <img src="../assets/img/ellipse.png" alt="Profile">
+        <span>SM</span>
+    </div>
+    <div class="dropdown-menu" id="dropdownMenu">
+        <a href="../html/legal_notice.html">Legal Notice</a>
+        <a href="../html/privacy_policy.html">Privacy Policy</a>
+        <a href="../index.html">Log out</a>
+    </div>
+  </div>
+</header>
+
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <a href="/index.html" class="start"> 
+          <img src="../assets/img/logo_sidemenu.png" alt="logo"> 
+        </a>
+      </div>
+  
+      <nav class="main-nav">
+        <ul>
+          <li class="main-nav-size">
+            <a href="/html/summary.html">
+              <img class="img-main-nav" src="../assets/img/summary.png" alt="Summary Icon">
+              <span>Summary</span>
+            </a>
+          </li>
+          <li class="main-nav-size">
+            <a href="/html/add_task.html">
+              <img class="img-main-nav" src="../assets/img/addtask.png" alt="Add Task Icon">
+              <span>Add Task</span>
+            </a>
+          </li>
+          <li class="main-nav-size">
+            <a href="/html/board.html">
+              <img class="img-main-nav" src="../assets/img/board.png" alt="Board Icon">
+              <span>Board</span>
+            </a>
+          </li>
+          <li class="main-nav-size">
+            <a href="/html/contacts.html">
+              <img class="img-main-nav" src="../assets/img/contacts.png" alt="Contacts Icon">
+              <span>Contacts</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    <nav class="bottom-nav">
+      <ul>
+        <li><a class="bottom-nav-a" href="/html/privacy_policy.html">Privacy Policy</a></li>
+        <li><a class="bottom-nav-a" href="/html/legal_notice.html">Legal Notice</a></li>
+      </ul>
+    </nav>
+</aside>
+
+<!DOCTYPE html>
+<html lang="en">
+
 <body>
 
-<header class="header"> 
-<span class="headline">Kanban Project Management Tool</span> 
-<div class="nav-right"> 
-<a href="../html/help.html" class="help-btn" title="Help"> 
-<img src="../assets/img/help.png" alt="Help"/> 
-</a> 
-<div class="user-profile" id="userProfile" onclick="toggleDropdown()">
-  <img src="../assets/img/ellipse.png" alt="Profile">
-  <span id="user-initials">SM</span>
-</div>
-<div class="dropdown-menu" id="dropdownMenu"> 
-<a href="../html/legal_notice.html">Legal Notice</a> 
-<a href="../html/privacy_policy.html">Privacy Policy</a> 
-<a href="../index.html">Log out</a> 
-</div> 
-</div> 
-</header> 
-<aside class="sidebar"> 
-<div class="sidebar-logo"> 
-<a href="/index.html" class="start"> 
-<img src="../assets/img/logo_sidemenu.png" alt="logo"> 
-</a> 
-</div> 
-<nav class="main-nav"> 
-<ul> 
-<li class="main-nav-size"> 
-<a href="/html/summary.html"> 
-<img class="img-main-nav" src="../assets/img/summary.png" alt="Summary Icon"> 
-<span>Summary</span> 
-</a> 
-</li> 
-<li class="main-nav-size"> 
-<a href="/html/add_task.html"> 
-<img class="img-main-nav" src="../assets/img/addtask.png" alt="Add Task Icon"> 
-<span>Add Task</span> 
-</a> 
-</li> 
-<li class="main-nav-size"> 
-<a href="/html/board.html"> 
-<img class="img-main-nav" src="../assets/img/board.png" alt="Board Icon"> 
-<span>Board</span> 
-</a> 
-</li> 
-<li class="main-nav-size"> 
-<a href="/html/contacts.html"> 
-<img class="img-main-nav" src="../assets/img/contacts.png" alt="Contacts Icon"> 
-<span>Contacts</span> 
-</a> 
-</li> 
-</ul> 
-</nav> 
-<nav class="bottom-nav"> 
-<ul> 
-<li><a class="bottom-nav-a" href="/html/privacy_policy.html">Privacy Policy</a></li> 
-<li><a class="bottom-nav-a" href="/html/legal_notice.html">Legal Notice</a></li> 
-</ul> 
-</nav> 
-</aside> 
+  <div class="wrapper_content_greeting">
 
-<div class="wrapper_content_greeting"> 
-<div class="container"> 
-<div class="wrapper_headline_section"> 
-<div class="headline_2"> 
-<h1>Join <span class="bold">360</span></h1> 
-<span class="title">Key Metrics at a Glance</span> 
-</div> 
-<div class="wrapper_todo_done"> 
-<section class="metrics"> 
-<div class="metric-box"> 
-<img src="../assets/img/pen.png" alt="Pen"> 
-<div class="wrapper_box"> 
-<h2>1</h2> 
-<p>To-do</p> 
-</div> 
-</div> 
-<div class="metric-box"> 
-<img src="../assets/img/check.png" alt="Check"> 
-<div class="wrapper_box"> 
-<h2>1</h2> 
-<p>Done</p> 
-</div> 
-</div> 
-</div> 
-<div class="metric-box-urgent"> 
-<img src="../assets/img/arrow.png" alt="Arrow"> 
-<div class="wrapper_box"> 
-<h2>1</h2> 
-<p>Urgent</p> 
-</div> 
-<div class="deadline-info"> 
-<p>October 16, 2022</p> 
-<p>Upcoming Deadline</p> 
-</div> 
-</div> 
-<div class="wrapper_tasks"> 
-<div class="metric-box-tasks"> 
-<h2>5</h2> 
-<p>Tasks in <br> Board</p> 
-</div> 
-<div class="metric-box-tasks"> 
-<h2>2</h2> 
-<p>Tasks In <br> Progress</p> 
-</div> 
-<div class="metric-box-tasks"> 
-<h2>2</h2> 
-<p>Awaiting <br> Feedback</p> 
-</div> 
-</div> 
-</div> 
-</div> 
-</section> 
-<div class="greeting">
-  <p><br><span class="highlight" id="greeting-name">Sophia Müller</span></p>
+    <div class="container">
+      
+      <div class="wrapper_headline_section">
+        <div class="headline_2">
+            <h1>Join <span class="bold">360</span></h1>
+            <span class="title">Key Metrics at a Glance</span>
+          </div>
+
+          
+          <div class="wrapper_todo_done">
+            <section class="metrics">
+            <div class="metric-box">
+                <img src="../assets/img/pen.png" alt="Pen">
+                <div class="wrapper_box">
+                <h2>1</h2>
+                <p>To-do</p>
+              </div>
+            </div>
+            <div class="metric-box">
+                <img src="../assets/img/check.png" alt="Check">
+                <div class="wrapper_box">
+                <h2>1</h2>
+                <p>Done</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="metric-box-urgent">
+            <img src="../assets/img/arrow.png" alt="Arrow">
+            <div class="wrapper_box">
+            <h2>1</h2>
+            <p>Urgent</p>
+          </div>
+            <div class="deadline-info">
+                <p>October 16, 2022</p>
+                <p>Upcoming Deadline</p>
+            </div>
+        </div>
+
+        
+        <div class="wrapper_tasks">
+            <div class="metric-box-tasks">
+                <h2>5</h2>
+                <p>Tasks in <br> Board</p>
+            </div>
+            <div class="metric-box-tasks">
+                <h2>2</h2>
+                <p>Tasks In <br> Progress</p>
+            </div>
+            <div class="metric-box-tasks">
+                <h2>2</h2>
+                <p>Awaiting <br> Feedback</p>
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  </section>
+  <div class="greeting">
+    <p>Good morning, <br> <span class="highlight">Sofia Müller</span></p>
+  </div>
 </div>
 
-</div> 
-<script type="module" src="../js/firebase.js" defer></script>
-<script src="../js/dropwdown.js" defer></script> 
-<script type="module" src="../js/summary.js" defer></script>
-<script type="module" src="../js/log_in.js" defer></script>
-<script type="module" src="../js/sign_up.js" defer></script>
+<script src="../js/dropwdown.js"></script>
+<script src="../js/summary.js"></script>
+<script src="../js/log_in.js"></script>
 
-</body> 
+</body>
 </html>
+

@@ -3,8 +3,11 @@
  * This function is primarily used for testing or demonstration purposes.
  */
 function autoFillFields() {
-  document.getElementById("email").value = "SofiaMueller@gmail.com";
-  document.getElementById("password").value = "MyPassword12345";
+  // Always autofill with the default test credentials for Sophia Müller
+  const email = "SofiaMueller@gmail.com";
+  const password = "MyPassword12345";
+  document.getElementById("email").value = email;
+  document.getElementById("password").value = password;
 }
 
 /**
@@ -19,10 +22,25 @@ function togglePasswordVisibility(inputId, imgElement) {
   // Toggle password visibility and update icon
   if (isPasswordVisible) {
     inputField.type = "password";
-    imgElement.src = "../assets/img/eye_closed.png"; // Change to closed eye icon when password is hidden
+    imgElement.src = "../assets/img/eye_closed.png";
   } else {
     inputField.type = "text";
-    imgElement.src = "../assets/img/eye.png"; // Change to open eye icon when password is visible
+    imgElement.src = "../assets/img/eye.png";
+  }
+}
+
+/**
+ * This function updates the password visibility icon based on the input field value.
+ * If the field contains text, the closed-eye icon is shown; if it does not, a lock icon is displayed.
+ * @param {string} inputId - The ID of the password input field.
+ * @param {HTMLImageElement} imgElement - The image element representing the eye or lock icon.
+ */
+function updatePasswordIcon(inputId, imgElement) {
+  const inputField = document.getElementById(inputId);
+  if (inputField.value.length > 0) {
+    imgElement.src = "../assets/img/eye_closed.png";
+  } else {
+    imgElement.src = "../assets/img/lock.png";
   }
 }
 
@@ -30,10 +48,23 @@ function togglePasswordVisibility(inputId, imgElement) {
  * This function handles the normal login.
  * It saves or removes login credentials based on the "Remember Me" checkbox status.
  */
-function normalLogin() {
-  const rememberMe = document.getElementById("rememberMe") ? document.getElementById("rememberMe").checked : false;
-  const email = document.getElementById("email") ? document.getElementById("email").value : "";
-  const password = document.getElementById("password") ? document.getElementById("password").value : "";
+function normalLogin(event) {
+  // Prevent form submission
+  if (event) {
+    event.preventDefault(); // Make sure event is defined before calling preventDefault()
+  }
+
+  console.log("Login button clicked!"); // Check if this log appears
+
+  const rememberMe = document.getElementById("rememberMe").checked;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  // Check if both fields are filled
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
 
   if (rememberMe) {
     localStorage.setItem("email", email);
@@ -47,61 +78,45 @@ function normalLogin() {
 
   // Set Guest Mode to false for normal login
   localStorage.setItem("isGuest", "false");
-  location.href = '../html/summary.html';
-}
-
-/**
- * This function handles the guest login.
- * It sets the "isGuest" value to true and redirects to the summary page.
- */
-function guestLogin() {
-  localStorage.setItem("isGuest", "true");
-  location.href = "../html/summary.html";
+  location.href = '../html/summary.html'; // Redirect to the summary page after successful login
 }
 
 /**
  * This function restores the saved credentials when the page loads if "Remember Me" was checked.
  */
 function restoreLogin() {
-  // Ensure the elements exist before trying to access them
-  const emailField = document.getElementById("email");
-  const passwordField = document.getElementById("password");
-  const rememberMeField = document.getElementById("rememberMe");
+  const rememberMe = localStorage.getItem("rememberMe") === "true";
 
-  // Check if all required elements exist
-  if (emailField && passwordField && rememberMeField) {
-    const rememberMe = localStorage.getItem("rememberMe") === "true";
+  // Get email and password from localStorage if available
+  const email = localStorage.getItem("email");
+  const password = localStorage.getItem("password");
 
-    if (rememberMe) {
-      // If "Remember Me" is checked, restore the saved credentials from localStorage
-      const email = localStorage.getItem("email");
-      const password = localStorage.getItem("password");
-      emailField.value = email || "";
-      passwordField.value = password || "";
-      rememberMeField.checked = true;
-    } else {
-      // If "Remember Me" is unchecked, reset the form fields
-      emailField.value = "";
-      passwordField.value = "";
-      rememberMeField.checked = false;
-    }
-
-    // Check if there's sessionStorage data from sign up (if the user just signed up)
-    const sessionEmail = sessionStorage.getItem("registeredEmail");
-    const sessionPassword = sessionStorage.getItem("registeredPassword");
-
-    if (sessionEmail && sessionPassword) {
-      emailField.value = sessionEmail;
-      passwordField.value = sessionPassword;
-      sessionStorage.removeItem("registeredEmail"); // Clear sessionStorage after using the data
-      sessionStorage.removeItem("registeredPassword");
-    }
+  // If credentials are found, fill in the form
+  if (email && password) {
+    document.getElementById("email").value = email;
+    document.getElementById("password").value = password;
   } else {
-    console.error("Required form elements not found.");
+    // Leave the fields empty if no data in localStorage
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+  }
+
+  // Set the "Remember Me" checkbox based on the localStorage
+  if (rememberMe) {
+    document.getElementById("rememberMe").checked = true;
+  } else {
+    document.getElementById("rememberMe").checked = false;
   }
 }
 
-// Ensure the DOM is fully loaded before running restoreLogin
-document.addEventListener('DOMContentLoaded', function() {
-  restoreLogin(); // This function is called when the DOM is ready
-});
+// Ensure the form and elements exist before adding event listeners
+window.onload = () => {
+  restoreLogin();
+
+  const loginForm = document.getElementById("login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", normalLogin);
+  } else {
+    console.error("Login form not found!");
+  }
+};
