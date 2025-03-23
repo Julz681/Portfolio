@@ -45,24 +45,9 @@ function updateTaskMetrics() {
     document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(3) h2").textContent = awaitFeedbackCount;
 }
 
-/**
- * This function updates the user profile icon and initials in the summary.
- * It sets the profile initials to "G" for guests and "SM" for logged-in users.
- */
-function updateUserProfile() {
-    const userProfile = document.querySelector(".user-profile span");
 
-    // Check if the user is logged in as a guest
-    const isGuest = localStorage.getItem("isGuest") === "true";
-
-    // Set profile initials
-    const profileInitials = isGuest ? "G" : "SM";
-
-    // Update the profile icon text
-    userProfile.textContent = profileInitials;
-}
 
 // Call the functions when the page loads
 updateGreeting();
 updateTaskMetrics();
-updateUserProfile();
+

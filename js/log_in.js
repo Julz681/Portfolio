@@ -82,6 +82,15 @@ function normalLogin(event) {
 }
 
 /**
+ * This function handles the guest login.
+ * It does not require email or password, and just sets the "isGuest" flag.
+ */
+function guestLogin() {
+  localStorage.setItem("isGuest", "true");
+  location.href = '../html/summary.html'; // Redirect to the summary page after guest login
+}
+
+/**
  * This function restores the saved credentials when the page loads if "Remember Me" was checked.
  */
 function restoreLogin() {
@@ -118,5 +127,13 @@ window.onload = () => {
     loginForm.addEventListener("submit", normalLogin);
   } else {
     console.error("Login form not found!");
+  }
+
+  // Add event listener for guest login
+  const guestLoginButton = document.getElementById("guest-login-button");
+  if (guestLoginButton) {
+    guestLoginButton.addEventListener("click", guestLogin);
+  } else {
+    console.error("Guest login button not found!");
   }
 };
