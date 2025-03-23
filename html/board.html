@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/board.css" />
     <link rel="stylesheet" href="../css/desktop_template.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="icon" type="icon" href="../assets/img/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -226,10 +227,8 @@
                   <span class="edit-icon"></span>
                   <span>Edit</span>
                 </button>
-                
               </div>
             </div>
-            
         </div>
       </section>
     </main>
@@ -237,20 +236,27 @@
 <div id="editTaskOverlay" class="edit-overlay hidden">
   <div class="edit-modal">
     <button class="edit-close-btn" onclick="closeEditOverlay()">&times;</button>
-    <div class="modal-card-content">
+    <div class="modal-card-content-edit">
       
       <label class="edit-label">Title</label>
       <input class="edit-input" type="text" placeholder="Enter a title">
 
       <label class="edit-label">Description</label>
-      <textarea class="edit-textarea" placeholder="Enter a Description"></textarea>
-
-      <div class="edit-label"><span>Due date</span>
-        <input class="edit-input edit-input-error" type="date" name="date" id="due-date"  required />
+      <div class="edit-textarea-wrapper">
+        <textarea class="edit-textarea" placeholder="Enter a Description"></textarea>
+      </div>
+      
+      <div class="edit-label">
+        <span>Due date</span>
+        <div class="date-input-wrapper">
+          <input class="edit-input edit-input-error" type="text" id="due-date" placeholder="dd/mm/yyyy" required />
+          <span class="date-picker-icon"></span>
+        </div>
         <span class="required-error-message d_none" id="task-title-error">This field is required</span>
       </div>
+      
       <div class="priority-wrapper d-flex-column gap-8">
-        <label class="edit-label">Priority</label>
+        <label style="font-weight: 600;" class="edit-label">Priority</label>
         <div class="d-flex-space-between gap-8">
           <div class="priority-labels d-flex-center gap-8 br-10" id="urgent">
             <span>Urgent</span>
@@ -292,28 +298,41 @@
             </span>
           </div>
         </div>
-
-      <label class="edit-label">Assigned to</label>
-      <select class="edit-select">
-        <option>Select contacts to assign</option>
-        <option selected></option>
-        <option selected></option>
-      </select>
-
-      <label class="edit-label">Subtasks</label>
-      <div class="edit-subtasks">
-        <input class="edit-input" placeholder="Add new subtask">
+        <label class="edit-label">Assigned to</label>
+        <div class="select-wrapper">
+          <span class="select-placeholder">Select contacts to assign</span>
+          <select class="edit-select" id="assigned-select">
+            <option value="" disabled selected hidden></option>
+            <option value="1">Contact 1</option>
+            <option value="2">Contact 2</option>
+          </select>
+          <label for="assigned-select" class="select-arrow closed" id="select-arrow"></label>
+        </div>
+        
+        <label class="edit-label" for="subtasks">Subtasks</label>
+        <div class="subtask-input-wrapper">
+          <input type="text" name="subtasks" id="subtasks" class="subtask-input edit-input" placeholder="Add new subtask">
+          
+          <span class="add-subtask-icon" id="add-subtask-icon"></span>
+        
+          <div class="confirm-input-icons d-none" id="confirm-icons">
+            <span class="clear-icon" id="clear-icon"></span>
+            <span class="confirm-input-icons-separator">|</span>
+            <span class="confirm-icon" id="confirm-icon"></span>
+          </div>
+        </div>
       </div>
-
-    <button class="edit-save-btn" onclick="saveEdit()">
-      <span class="ok-text">Ok</span>
-      <img class="ok-btn-icon" src="../assets/img/icons/check-mark-icon.png" alt="icon">
-    </button>
-    
     </div>
+
+    <footer class="footer-edit-modal">
+      <button class="edit-save-btn" onclick="saveEdit()">
+        <span class="ok-text">Ok</span>
+        <img class="ok-btn-icon" src="../assets/img/icons/check-mark-icon.png" alt="icon">
+      </button>
+    </footer>
   </div>
-</div>
 
     <script src="../js/board.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   </body>
 </html>

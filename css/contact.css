@@ -70,6 +70,7 @@ header {
 .contacts-list {
   flex: 1;
   overflow-y: auto;
+  scrollbar-width: thin; 
   padding: 0 20px 20px;
   min-height: 0;
 }
