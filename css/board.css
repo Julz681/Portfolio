@@ -953,7 +953,7 @@ header {
 }
 
 .select-click-wrapper::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   top: 0;
@@ -1003,8 +1003,6 @@ header {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  display: flex;
-  align-items: center;
   gap: 6px;
 }
 

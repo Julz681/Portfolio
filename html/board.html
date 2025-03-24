@@ -1,339 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/board.css" />
-    <link rel="stylesheet" href="../css/desktop_template.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="icon" type="icon" href="../assets/img/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <script src="../js/add_task.js" defer></script>
-    <script src="../js/summary.js" defer></script>
-    <script src="../js/script.js" defer></script>
-    <title>Board</title>
-  </head>
 
-  <body onload="init()">
-    <!-- <div id="sidebarRef" w3-include-html="../assets/templates/sidebar.html"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../css/board.css" />
+  <link rel="stylesheet" href="../css/desktop_template.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="icon" type="icon" href="../assets/img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
+  <script src="../js/add_task.js" defer></script>
+  <script src="../js/summary.js" defer></script>
+  <script src="../js/script.js" defer></script>
+  <title>Board</title>
+</head>
+
+<body onload="init()">
+  <!-- <div id="sidebarRef" w3-include-html="../assets/templates/sidebar.html"></div>
   <header id="headerRef" w3-include-html="../assets/templates/header.html"></header> -->
-    <aside
-      id="general-frame"
-      w3-include-html="../assets/templates/desktop_template.html"
-    ></aside>
+  <aside id="general-frame" w3-include-html="../assets/templates/desktop_template.html"></aside>
 
-    <main class="content-wrapper-board d-flex-column">
-      <section class="board-header-wrapper d-flex-center">
-        <div class="board-header d-flex-space-between pd-l-r-64">
-          <h1 class="board-title">Board</h1>
-          <div class="input-wrapper d-flex-space-between">
-            <div class="search br-10 pd-8-16">
-              <input type="text" placeholder="Find Task" />
-              <div class="search-icon"></div>
-            </div>
-            <div class="add-task-button d-flex-space-between br-10">
-              <span>Add Task</span><span class="plus"></span>
-            </div>
+  <main class="content-wrapper-board d-flex-column">
+    <section class="board-header-wrapper d-flex-center">
+      <div class="board-header d-flex-space-between pd-l-r-64">
+        <h1 class="board-title">Board</h1>
+        <div class="input-wrapper d-flex-space-between">
+          <div class="search br-10 pd-8-16">
+            <input type="text" placeholder="Find Task" />
+            <div class="search-icon"></div>
+          </div>
+          <div class="add-task-button d-flex-space-between br-10">
+            <span>Add Task</span><span class="plus"></span>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="board-wrapper">
-        <div class="board pd-l-r-64">
-          <div class="board-columns d-flex-column to-do-wrapper">
-            <div class="column-title d-flex-space-between">
-              <h3>To do</h3>
-              <div class="add-task-icon"></div>
+    <section class="board-wrapper">
+      <div class="board pd-l-r-64">
+        <div class="board-columns d-flex-column to-do-wrapper">
+          <div class="column-title d-flex-space-between">
+            <h3>To do</h3>
+            <div class="add-task-icon"></div>
+          </div>
+
+          <div class="column-content-wrapper">
+            <div class="no-tasks-feedback d-flex-center br-10 d_none">
+              No tasks To do
             </div>
-
-            <div class="column-content-wrapper">
-              <div class="no-tasks-feedback d-flex-center br-10 d_none">
-                No tasks To do
-              </div>
-              <div class="board-card d-flex-center d_none" data-task-id="1">
-                <div class="board-card-content d-flex-column">
-                  <label class="board-card-label br-8 d-flex-center"
-                    >User Story</label
-                  >
-                  <div class="board-card-text d-flex-column br-10">
-                    <h4 class="board-card-title">
-                      Kochwelt Page & Recipe Recommender
-                    </h4>
-                    <p class="board-card-description">
-                      Build start page with recipe recommendation...
-                    </p>
+            <div class="board-card d-flex-center d_none" data-task-id="1">
+              <div class="board-card-content d-flex-column">
+                <label class="board-card-label br-8 d-flex-center">User Story</label>
+                <div class="board-card-text d-flex-column br-10">
+                  <h4 class="board-card-title">
+                    Kochwelt Page & Recipe Recommender
+                  </h4>
+                  <p class="board-card-description">
+                    Build start page with recipe recommendation...
+                  </p>
+                </div>
+                <div class="status d-flex-center">
+                  <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div id="progress-bar" class="progress-bar" style="width: 60%"></div>
                   </div>
-                  <div class="status d-flex-center">
-                    <div
-                      class="progress"
-                      role="progressbar"
-                      aria-label="Example with label"
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >
-                      <div
-                        id="progress-bar"
-                        class="progress-bar"
-                        style="width: 60%"
-                      ></div>
-                    </div>
-                    <div class="d-flex-center subtasks">
-                      <span id="current-subtask-number">0</span>
-                      <span>/</span>
-                      <span id="total-subtask-number">3</span>
-                      <span>Subtasks</span>
-                    </div>
+                  <div class="d-flex-center subtasks">
+                    <span id="current-subtask-number">0</span>
+                    <span>/</span>
+                    <span id="total-subtask-number">3</span>
+                    <span>Subtasks</span>
                   </div>
-                  <div class="d-flex-space-between board-card-footer">
-                    <div class="user-icons-wrapper d-flex-center">
-                      <span class="user-icons d-flex-center">US</span>
-                      <span class="user-icons d-flex-center">US</span>
-                      <span class="user-icons d-flex-center">US</span>
-                    </div>
-                    <img
-                      src="../assets/img/icons/low-icon.png"
-                      alt="medium priority"
-                      class="priority"
-                    />
+                </div>
+                <div class="d-flex-space-between board-card-footer">
+                  <div class="user-icons-wrapper d-flex-center">
+                    <span class="user-icons d-flex-center">US</span>
+                    <span class="user-icons d-flex-center">US</span>
+                    <span class="user-icons d-flex-center">US</span>
                   </div>
+                  <img src="../assets/img/icons/low-icon.png" alt="medium priority" class="priority" />
                 </div>
               </div>
             </div>
           </div>
-          <div class="board-columns d-flex-column in-progress-wrapper">
-            <div class="column-title d-flex-space-between">
-              <h3>In progress</h3>
-              <div class="add-task-icon"></div>
-            </div>
-            <div class="column-content-wrapper">
-              <div class="no-tasks-feedback d-flex-center br-10">
-                No tasks In Progress
-              </div>
-            </div>
+        </div>
+        <div class="board-columns d-flex-column in-progress-wrapper">
+          <div class="column-title d-flex-space-between">
+            <h3>In progress</h3>
+            <div class="add-task-icon"></div>
           </div>
-          <div class="board-columns d-flex-column await-feedback-wrapper">
-            <div class="column-title d-flex-space-between">
-              <h3>Await feedback</h3>
-              <div class="add-task-icon"></div>
-            </div>
-            <div class="column-content-wrapper">
-              <div class="no-tasks-feedback d-flex-center br-10">
-                No tasks Await feedback
-              </div>
-            </div>
-          </div>
-          <div class="board-columns d-flex-column done-wrapper">
-            <div class="column-title d-flex-space-between">
-              <h3>Done</h3>
-            </div>
-            <div class="column-content-wrapper">
-              <div class="no-tasks-feedback d-flex-center br-10">
-                No tasks Done
-              </div>
+          <div class="column-content-wrapper">
+            <div class="no-tasks-feedback d-flex-center br-10">
+              No tasks In Progress
             </div>
           </div>
         </div>
-      </section>
-      <section
-        id="task-card-modal"
-        class="board-card-modal-wrapper d-flex-center d_none"
-      >
-        <div class="modal-card-wrapper br-30">
-          <div class="modal-card-content size-20 d-flex-column">
-            <div class="modal-label d-flex-center">
-              <label
-                style="width: 200px !important"
-                class="modal-card-label br-8 d-flex-center"
-                >User Story</label
-              >
-              <span id="modal-close-button">&times;</span>
+        <div class="board-columns d-flex-column await-feedback-wrapper">
+          <div class="column-title d-flex-space-between">
+            <h3>Await feedback</h3>
+            <div class="add-task-icon"></div>
+          </div>
+          <div class="column-content-wrapper">
+            <div class="no-tasks-feedback d-flex-center br-10">
+              No tasks Await feedback
             </div>
-            <h3 class="modal-card-title">Kochwelt Page & Recipe Recommender</h3>
-            <p>Build start page with recipe recommendation.</p>
-            <div class="d-flex-space-between date-line">
-              <span>Due date:</span>
-              <span>10/05/2023</span>
+          </div>
+        </div>
+        <div class="board-columns d-flex-column done-wrapper">
+          <div class="column-title d-flex-space-between">
+            <h3>Done</h3>
+          </div>
+          <div class="column-content-wrapper">
+            <div class="no-tasks-feedback d-flex-center br-10">
+              No tasks Done
             </div>
-            <div class="d-flex-space-between priority">
-              <span>Priority:</span>
-              <div class="d-flex-space-between prio-label">
-                <span>Medium</span
-                ><img
-                  src="../assets/img/icons/medium-icon.png"
-                  alt="Medium Icon"
-                />
-              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="task-card-modal" class="board-card-modal-wrapper d-flex-center d_none">
+      <div class="modal-card-wrapper br-30">
+        <div class="modal-card-content size-20 d-flex-column">
+          <div class="modal-label d-flex-center">
+            <label style="width: 200px !important" class="modal-card-label br-8 d-flex-center">User Story</label>
+            <span id="modal-close-button">&times;</span>
+          </div>
+          <h3 class="modal-card-title">Kochwelt Page & Recipe Recommender</h3>
+          <p>Build start page with recipe recommendation.</p>
+          <div class="d-flex-space-between date-line">
+            <span>Due date:</span>
+            <span>10/05/2023</span>
+          </div>
+          <div class="d-flex-space-between priority">
+            <span>Priority:</span>
+            <div class="d-flex-space-between prio-label">
+              <span>Medium</span><img src="../assets/img/icons/medium-icon.png" alt="Medium Icon" />
+            </div>
+          </div>
+          <div class="assignments d-flex-column">
+            <span>Assigned to:</span>
+            <div class="user-line gap-16 d-flex-space-between">
+              <span class="user-icons d-flex-center">US</span><span>Default User</span>
+            </div>
+            <div class="user-line gap-16 d-flex-space-between">
+              <span class="user-icons d-flex-center">US</span><span>Default User</span>
+            </div>
+            <div class="user-line gap-16 d-flex-space-between">
+              <span class="user-icons d-flex-center">US</span><span>Default User</span>
             </div>
             <div class="assignments d-flex-column">
               <span>Assigned to:</span>
-              <div class="user-line gap-16 d-flex-space-between">
-                <span class="user-icons d-flex-center">US</span
-                ><span>Default User</span>
+              <div class="assigned-users"></div>
+              <input type="text" id="user-input" placeholder="Add a user..." />
+              <button id="add-user-button">Add</button>
+            </div>
+          </div>
+          <div class="subtask-section d-flex-column">
+            <span>Subtasks:</span>
+            <div class="subtasks-wrapper d-flex-column">
+              <div class="modal-card-subtask-wrapper d-flex-center">
+                <label class="modal-card-subtask gap-16">
+                  <input type="checkbox" id="subtask-1" />
+                  <span class="checkmark"></span>
+                  <span>Subtask 1</span>
+                </label>
               </div>
-              <div class="user-line gap-16 d-flex-space-between">
-                <span class="user-icons d-flex-center">US</span
-                ><span>Default User</span>
+              <div class="modal-card-subtask-wrapper d-flex-center">
+                <label class="modal-card-subtask gap-16">
+                  <input type="checkbox" id="subtask-1" />
+                  <span class="checkmark"></span>
+                  <span>Subtask 1</span>
+                </label>
               </div>
-              <div class="user-line gap-16 d-flex-space-between">
-                <span class="user-icons d-flex-center">US</span
-                ><span>Default User</span>
-              </div>
-              <div class="assignments d-flex-column">
-                <span>Assigned to:</span>
-                <div class="assigned-users"></div>
-                <input
-                  type="text"
-                  id="user-input"
-                  placeholder="Add a user..."
-                />
-                <button id="add-user-button">Add</button>
+              <div class="modal-card-subtask-wrapper d-flex-center">
+                <label class="modal-card-subtask gap-16">
+                  <input type="checkbox" id="subtask-1" />
+                  <span class="checkmark"></span>
+                  <span>Subtask 1</span>
+                </label>
               </div>
             </div>
-            <div class="subtask-section d-flex-column">
-              <span>Subtasks:</span>
-              <div class="subtasks-wrapper d-flex-column">
-                <div class="modal-card-subtask-wrapper d-flex-center">
-                  <label class="modal-card-subtask gap-16">
-                    <input type="checkbox" id="subtask-1" />
-                    <span class="checkmark"></span>
-                    <span>Subtask 1</span>
-                  </label>
-                </div>
-                <div class="modal-card-subtask-wrapper d-flex-center">
-                  <label class="modal-card-subtask gap-16">
-                    <input type="checkbox" id="subtask-1" />
-                    <span class="checkmark"></span>
-                    <span>Subtask 1</span>
-                  </label>
-                </div>
-                <div class="modal-card-subtask-wrapper d-flex-center">
-                  <label class="modal-card-subtask gap-16">
-                    <input type="checkbox" id="subtask-1" />
-                    <span class="checkmark"></span>
-                    <span>Subtask 1</span>
-                  </label>
-                </div>
-              </div>
+          </div>
+          <div class="modal-card-footer">
+            <div class="edit-area d-flex-space-between">
+              <button id="delete-task-button" class="d-flex-space-between">
+                <span class="delete-icon"></span>
+                <span>Delete</span>
+              </button>
+              <button onclick="openEditOverlay()" id="edit-task-button" class="d-flex-space-between">
+                <span class="edit-icon"></span>
+                <span>Edit</span>
+              </button>
             </div>
-            <div class="modal-card-footer">
-              <div class="edit-area d-flex-space-between">
-                <button id="delete-task-button" class="d-flex-space-between">
-                  <span class="delete-icon"></span>
-                  <span>Delete</span>
-                </button>
-                <button onclick="openEditOverlay()" id="edit-task-button" class="d-flex-space-between">
-                  <span class="edit-icon"></span>
-                  <span>Edit</span>
-                </button>
-              </div>
-            </div>
+          </div>
         </div>
-      </section>
-    </main>
+    </section>
+  </main>
 
-<div id="editTaskOverlay" class="edit-overlay hidden">
-  <div class="edit-modal">
-    <button class="edit-close-btn" onclick="closeEditOverlay()">&times;</button>
-    <div class="modal-card-content-edit">
-      
-      <label class="edit-label">Title</label>
-      <input class="edit-input" type="text" placeholder="Enter a title">
+  <div id="editTaskOverlay" class="edit-overlay hidden">
+    <div class="edit-modal">
+      <button class="edit-close-btn" onclick="closeEditOverlay()">&times;</button>
+      <div class="modal-card-content-edit">
 
-      <label class="edit-label">Description</label>
-      <div class="edit-textarea-wrapper">
-        <textarea class="edit-textarea" placeholder="Enter a Description"></textarea>
+        <label class="edit-label">Title</label>
+        <input class="edit-input" type="text" placeholder="Enter a title">
+
+        <label class="edit-label">Description</label>
+        <div class="edit-textarea-wrapper">
+          <textarea class="edit-textarea" placeholder="Enter a Description"></textarea>
+        </div>
+
+        <div class="edit-label">
+          <span>Due date</span>
+          <div class="date-input-wrapper">
+            <input class="edit-input edit-input-error" type="text" id="due-date" placeholder="dd/mm/yyyy" required />
+            <span class="date-picker-icon"></span>
+          </div>
+          <span class="required-error-message d_none" id="task-title-error">This field is required</span>
+        </div>
+
+        <div class="priority-wrapper d-flex-column gap-8">
+          <label style="font-weight: 600;" class="edit-label">Priority</label>
+          <div class="d-flex-space-between gap-8">
+            <div class="priority-labels d-flex-center gap-8 br-10" id="urgent">
+              <span>Urgent</span>
+              <span class="priority d-flex-center">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9.00002 4.75476C9.19945 4.75443 9.39372 4.81633 9.55427 4.93137L17.1228 10.3653C17.2212 10.4361 17.3044 10.525 17.3675 10.627C17.4307 10.7291 17.4725 10.8422 17.4907 10.9599C17.5273 11.1977 17.4654 11.4399 17.3184 11.6333C17.1714 11.8266 16.9514 11.9553 16.7068 11.9909C16.4623 12.0266 16.2131 11.9664 16.0143 11.8234L9.00002 6.7925L1.98577 11.8234C1.8873 11.8942 1.77545 11.9454 1.65662 11.9742C1.53779 12.0029 1.4143 12.0086 1.2932 11.9909C1.1721 11.9733 1.05577 11.9326 0.950844 11.8712C0.845915 11.8099 0.754446 11.729 0.681662 11.6333C0.608878 11.5375 0.556201 11.4288 0.52664 11.3132C0.49708 11.1977 0.491215 11.0776 0.509379 10.9599C0.527545 10.8422 0.569382 10.7291 0.632508 10.627C0.695632 10.525 0.778805 10.4361 0.87728 10.3653L8.44577 4.93137C8.60631 4.81633 8.80059 4.75443 9.00002 4.75476Z"
+                    fill="#FF3D00" />
+                  <path
+                    d="M9.00002 -0.000121266C9.19945 -0.000455511 9.39372 0.0614475 9.55427 0.176482L17.1228 5.61045C17.3216 5.75336 17.454 5.96724 17.4907 6.20502C17.5273 6.4428 17.4654 6.68501 17.3184 6.87837C17.1714 7.07173 16.9514 7.20039 16.7068 7.23606C16.4623 7.27173 16.2131 7.21147 16.0143 7.06856L9.00002 2.03761L1.98577 7.06856C1.78689 7.21147 1.53777 7.27173 1.2932 7.23606C1.04863 7.20039 0.828657 7.07173 0.681662 6.87837C0.534667 6.68501 0.472695 6.4428 0.509379 6.20502C0.546065 5.96723 0.678402 5.75336 0.87728 5.61044L8.44577 0.176482C8.60631 0.0614474 8.80059 -0.000455546 9.00002 -0.000121266Z"
+                    fill="#FF3D00" />
+                </svg>
+              </span>
+            </div>
+            <div class="priority-labels d-flex-center gap-8 br-10" id="medium">
+              <span>Medium</span>
+              <span class="priority d-flex-center">
+                <svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M16.5685 7.16658L1.43151 7.16658C1.18446 7.16658 0.947523 7.06773 0.772832 6.89177C0.598141 6.71581 0.5 6.47716 0.5 6.22831C0.5 5.97947 0.598141 5.74081 0.772832 5.56485C0.947523 5.38889 1.18446 5.29004 1.43151 5.29004L16.5685 5.29004C16.8155 5.29004 17.0525 5.38889 17.2272 5.56485C17.4019 5.74081 17.5 5.97947 17.5 6.22831C17.5 6.47716 17.4019 6.71581 17.2272 6.89177C17.0525 7.06773 16.8155 7.16658 16.5685 7.16658Z"
+                    fill="#FFA800" />
+                  <path
+                    d="M16.5685 2.7098L1.43151 2.7098C1.18446 2.7098 0.947523 2.61094 0.772832 2.43498C0.598141 2.25902 0.5 2.02037 0.5 1.77152C0.5 1.52268 0.598141 1.28403 0.772832 1.10807C0.947523 0.932105 1.18446 0.833252 1.43151 0.833252L16.5685 0.833252C16.8155 0.833252 17.0525 0.932105 17.2272 1.10807C17.4019 1.28403 17.5 1.52268 17.5 1.77152C17.5 2.02037 17.4019 2.25902 17.2272 2.43498C17.0525 2.61094 16.8155 2.7098 16.5685 2.7098Z"
+                    fill="#FFA800" />
+                </svg>
+              </span>
+            </div>
+            <div class="priority-labels d-flex-center gap-8 br-10" id="low">
+              <span>Low</span>
+              <span class="priority d-flex-center">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M8.99998 7.24524C8.80055 7.24557 8.60628 7.18367 8.44574 7.06863L0.877242 1.63467C0.778768 1.56391 0.695595 1.47498 0.632471 1.37296C0.569347 1.27094 0.527508 1.15784 0.509344 1.0401C0.472658 0.802317 0.53463 0.560105 0.681625 0.366747C0.828621 0.17339 1.0486 0.0447247 1.29317 0.00905743C1.53773 -0.0266099 1.78686 0.0336422 1.98574 0.176559L8.99998 5.2075L16.0142 0.17656C16.1127 0.105795 16.2245 0.0545799 16.3434 0.02584C16.4622 -0.00289994 16.5857 -0.00860237 16.7068 0.00905829C16.8279 0.0267189 16.9442 0.0673968 17.0492 0.128769C17.1541 0.190142 17.2456 0.271007 17.3183 0.366748C17.3911 0.462489 17.4438 0.571231 17.4734 0.686765C17.5029 0.802299 17.5088 0.922362 17.4906 1.0401C17.4725 1.15784 17.4306 1.27094 17.3675 1.37296C17.3044 1.47498 17.2212 1.56391 17.1227 1.63467L9.55423 7.06863C9.39369 7.18367 9.19941 7.24557 8.99998 7.24524Z"
+                    fill="#7AE229" />
+                  <path
+                    d="M8.99998 12.0001C8.80055 12.0005 8.60628 11.9386 8.44574 11.8235L0.877242 6.38955C0.678366 6.24664 0.546029 6.03276 0.509344 5.79498C0.472658 5.5572 0.53463 5.31499 0.681625 5.12163C0.828621 4.92827 1.0486 4.79961 1.29317 4.76394C1.53773 4.72827 1.78686 4.78853 1.98574 4.93144L8.99998 9.96239L16.0142 4.93144C16.2131 4.78853 16.4622 4.72827 16.7068 4.76394C16.9514 4.79961 17.1713 4.92827 17.3183 5.12163C17.4653 5.31499 17.5273 5.5572 17.4906 5.79498C17.4539 6.03276 17.3216 6.24664 17.1227 6.38956L9.55423 11.8235C9.39369 11.9386 9.19941 12.0005 8.99998 12.0001Z"
+                    fill="#7AE229" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <label class="edit-label">Assigned to</label>
+          <div class="select-wrapper">
+            <span class="select-placeholder">Select contacts to assign</span>
+            <select class="edit-select" id="assigned-select">
+              <option value="" disabled selected hidden></option>
+              <option value="1">Contact 1</option>
+              <option value="2">Contact 2</option>
+            </select>
+            <label for="assigned-select" class="select-arrow closed" id="select-arrow"></label>
+          </div>
+
+          <label class="edit-label" for="subtasks">Subtasks</label>
+          <div class="subtask-input-wrapper">
+            <input type="text" name="subtasks" id="subtasks" class="subtask-input edit-input"
+              placeholder="Add new subtask">
+
+            <span class="add-subtask-icon d-flex-center" id="add-subtask-icon"></span>
+
+            <div class="confirm-input-icons d-flex-center d-none" id="confirm-icons">
+              <span class="clear-icon" id="clear-icon"></span>
+              <span class="confirm-input-icons-separator">|</span>
+              <span class="confirm-icon" id="confirm-icon"></span>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <div class="edit-label">
-        <span>Due date</span>
-        <div class="date-input-wrapper">
-          <input class="edit-input edit-input-error" type="text" id="due-date" placeholder="dd/mm/yyyy" required />
-          <span class="date-picker-icon"></span>
-        </div>
-        <span class="required-error-message d_none" id="task-title-error">This field is required</span>
-      </div>
-      
-      <div class="priority-wrapper d-flex-column gap-8">
-        <label style="font-weight: 600;" class="edit-label">Priority</label>
-        <div class="d-flex-space-between gap-8">
-          <div class="priority-labels d-flex-center gap-8 br-10" id="urgent">
-            <span>Urgent</span>
-            <span class="priority d-flex-center">
-              <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9.00002 4.75476C9.19945 4.75443 9.39372 4.81633 9.55427 4.93137L17.1228 10.3653C17.2212 10.4361 17.3044 10.525 17.3675 10.627C17.4307 10.7291 17.4725 10.8422 17.4907 10.9599C17.5273 11.1977 17.4654 11.4399 17.3184 11.6333C17.1714 11.8266 16.9514 11.9553 16.7068 11.9909C16.4623 12.0266 16.2131 11.9664 16.0143 11.8234L9.00002 6.7925L1.98577 11.8234C1.8873 11.8942 1.77545 11.9454 1.65662 11.9742C1.53779 12.0029 1.4143 12.0086 1.2932 11.9909C1.1721 11.9733 1.05577 11.9326 0.950844 11.8712C0.845915 11.8099 0.754446 11.729 0.681662 11.6333C0.608878 11.5375 0.556201 11.4288 0.52664 11.3132C0.49708 11.1977 0.491215 11.0776 0.509379 10.9599C0.527545 10.8422 0.569382 10.7291 0.632508 10.627C0.695632 10.525 0.778805 10.4361 0.87728 10.3653L8.44577 4.93137C8.60631 4.81633 8.80059 4.75443 9.00002 4.75476Z"
-                  fill="#FF3D00" />
-                <path
-                  d="M9.00002 -0.000121266C9.19945 -0.000455511 9.39372 0.0614475 9.55427 0.176482L17.1228 5.61045C17.3216 5.75336 17.454 5.96724 17.4907 6.20502C17.5273 6.4428 17.4654 6.68501 17.3184 6.87837C17.1714 7.07173 16.9514 7.20039 16.7068 7.23606C16.4623 7.27173 16.2131 7.21147 16.0143 7.06856L9.00002 2.03761L1.98577 7.06856C1.78689 7.21147 1.53777 7.27173 1.2932 7.23606C1.04863 7.20039 0.828657 7.07173 0.681662 6.87837C0.534667 6.68501 0.472695 6.4428 0.509379 6.20502C0.546065 5.96723 0.678402 5.75336 0.87728 5.61044L8.44577 0.176482C8.60631 0.0614474 8.80059 -0.000455546 9.00002 -0.000121266Z"
-                  fill="#FF3D00" />
-              </svg>
-            </span>
-          </div>
-          <div class="priority-labels d-flex-center gap-8 br-10" id="medium">
-            <span>Medium</span>
-            <span class="priority d-flex-center">
-              <svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M16.5685 7.16658L1.43151 7.16658C1.18446 7.16658 0.947523 7.06773 0.772832 6.89177C0.598141 6.71581 0.5 6.47716 0.5 6.22831C0.5 5.97947 0.598141 5.74081 0.772832 5.56485C0.947523 5.38889 1.18446 5.29004 1.43151 5.29004L16.5685 5.29004C16.8155 5.29004 17.0525 5.38889 17.2272 5.56485C17.4019 5.74081 17.5 5.97947 17.5 6.22831C17.5 6.47716 17.4019 6.71581 17.2272 6.89177C17.0525 7.06773 16.8155 7.16658 16.5685 7.16658Z"
-                  fill="#FFA800" />
-                <path
-                  d="M16.5685 2.7098L1.43151 2.7098C1.18446 2.7098 0.947523 2.61094 0.772832 2.43498C0.598141 2.25902 0.5 2.02037 0.5 1.77152C0.5 1.52268 0.598141 1.28403 0.772832 1.10807C0.947523 0.932105 1.18446 0.833252 1.43151 0.833252L16.5685 0.833252C16.8155 0.833252 17.0525 0.932105 17.2272 1.10807C17.4019 1.28403 17.5 1.52268 17.5 1.77152C17.5 2.02037 17.4019 2.25902 17.2272 2.43498C17.0525 2.61094 16.8155 2.7098 16.5685 2.7098Z"
-                  fill="#FFA800" />
-              </svg>
-            </span>
-          </div>
-          <div class="priority-labels d-flex-center gap-8 br-10" id="low">
-            <span>Low</span>
-            <span class="priority d-flex-center">
-              <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M8.99998 7.24524C8.80055 7.24557 8.60628 7.18367 8.44574 7.06863L0.877242 1.63467C0.778768 1.56391 0.695595 1.47498 0.632471 1.37296C0.569347 1.27094 0.527508 1.15784 0.509344 1.0401C0.472658 0.802317 0.53463 0.560105 0.681625 0.366747C0.828621 0.17339 1.0486 0.0447247 1.29317 0.00905743C1.53773 -0.0266099 1.78686 0.0336422 1.98574 0.176559L8.99998 5.2075L16.0142 0.17656C16.1127 0.105795 16.2245 0.0545799 16.3434 0.02584C16.4622 -0.00289994 16.5857 -0.00860237 16.7068 0.00905829C16.8279 0.0267189 16.9442 0.0673968 17.0492 0.128769C17.1541 0.190142 17.2456 0.271007 17.3183 0.366748C17.3911 0.462489 17.4438 0.571231 17.4734 0.686765C17.5029 0.802299 17.5088 0.922362 17.4906 1.0401C17.4725 1.15784 17.4306 1.27094 17.3675 1.37296C17.3044 1.47498 17.2212 1.56391 17.1227 1.63467L9.55423 7.06863C9.39369 7.18367 9.19941 7.24557 8.99998 7.24524Z"
-                  fill="#7AE229" />
-                <path
-                  d="M8.99998 12.0001C8.80055 12.0005 8.60628 11.9386 8.44574 11.8235L0.877242 6.38955C0.678366 6.24664 0.546029 6.03276 0.509344 5.79498C0.472658 5.5572 0.53463 5.31499 0.681625 5.12163C0.828621 4.92827 1.0486 4.79961 1.29317 4.76394C1.53773 4.72827 1.78686 4.78853 1.98574 4.93144L8.99998 9.96239L16.0142 4.93144C16.2131 4.78853 16.4622 4.72827 16.7068 4.76394C16.9514 4.79961 17.1713 4.92827 17.3183 5.12163C17.4653 5.31499 17.5273 5.5572 17.4906 5.79498C17.4539 6.03276 17.3216 6.24664 17.1227 6.38956L9.55423 11.8235C9.39369 11.9386 9.19941 12.0005 8.99998 12.0001Z"
-                  fill="#7AE229" />
-              </svg>
-            </span>
-          </div>
-        </div>
-        <label class="edit-label">Assigned to</label>
-        <div class="select-wrapper">
-          <span class="select-placeholder">Select contacts to assign</span>
-          <select class="edit-select" id="assigned-select">
-            <option value="" disabled selected hidden></option>
-            <option value="1">Contact 1</option>
-            <option value="2">Contact 2</option>
-          </select>
-          <label for="assigned-select" class="select-arrow closed" id="select-arrow"></label>
-        </div>
-        
-        <label class="edit-label" for="subtasks">Subtasks</label>
-        <div class="subtask-input-wrapper">
-          <input type="text" name="subtasks" id="subtasks" class="subtask-input edit-input" placeholder="Add new subtask">
-          
-          <span class="add-subtask-icon" id="add-subtask-icon"></span>
-        
-          <div class="confirm-input-icons d-none" id="confirm-icons">
-            <span class="clear-icon" id="clear-icon"></span>
-            <span class="confirm-input-icons-separator">|</span>
-            <span class="confirm-icon" id="confirm-icon"></span>
-          </div>
-        </div>
-      </div>
+
+      <footer class="footer-edit-modal">
+        <button class="edit-save-btn" onclick="saveEdit()">
+          <span class="ok-text">Ok</span>
+          <img class="ok-btn-icon" src="../assets/img/icons/check-mark-icon.png" alt="icon">
+        </button>
+      </footer>
     </div>
-
-    <footer class="footer-edit-modal">
-      <button class="edit-save-btn" onclick="saveEdit()">
-        <span class="ok-text">Ok</span>
-        <img class="ok-btn-icon" src="../assets/img/icons/check-mark-icon.png" alt="icon">
-      </button>
-    </footer>
-  </div>
 
     <script src="../js/board.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  </body>
+</body>
+
 </html>
