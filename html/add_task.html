@@ -32,9 +32,10 @@
             <label for="task-title"><span>Title</span><span class="red">*</span></label>
             <input class="task-input-fields size-20 br-10" type="text" id="task-title" name="task-title"
               placeholder="Enter a title" minlength="4"
-              onfocus="toggleInvalidMessage(`task-title-error` , `task-title`)"
-              oninput="toggleInvalidMessage(`task-title-error` , `task-title`)" required />
-            <span class="required-error-message d_none" id="task-title-error">This field is required</span>
+              onfocus="toggleInvalidEntryMessages(`task-title-error`, `value-length-error`, `task-title`)"
+              oninput="toggleInvalidEntryMessages(`task-title-error`,`value-length-error`, `task-title`)" required />
+            <span class="required-error-message d_none" id="task-title-error">This field is required!</span>
+            <span class="required-error-message d_none" id="value-length-error">Value too short!</span>
           </div>
           <div class="task-description-input wrapper d-flex-column gap-8">
             <label for="task-description"><span>Description</span></label>

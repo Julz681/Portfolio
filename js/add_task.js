@@ -23,21 +23,26 @@ async function fetchFile(element, file) {
     }
 }
 
-function toggleInvalidMessage(errorContainerId, containerId) {
-    let errorContainer = getErrorContainer(`${errorContainerId}`);
+function toggleInvalidEntryMessages(requiredErrorContainerId, valueSizeErrorContainerId,  containerId) {
+    let requiredErrorContainer = getErrorContainer(`${requiredErrorContainerId}`);
+    let valueSizeErrorContainer = getErrorContainer(`${valueSizeErrorContainerId}`)
     let inputContainer = getInputContainer(`${containerId}`);
-    let inputContainerValue = getInputValue(inputContainer);
-    console.log(inputContainerValue);
-     
-    requiredErrorHandling(errorContainer, inputContainer, inputContainerValue);
+    let inputContainerValue = getInputValue(inputContainer);     
+    requiredErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, inputContainerValue);
 }
 
-function requiredErrorHandling(errorContainer, inputContainer, containerValue) {
-    if(containerValue.length == 0 || containerValue.length <= 3 || !isNaN(containerValue) || containerValue === "") {
-        showErrorMessage(errorContainer);
+function requiredErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, containerValue) {
+    if(containerValue.length == 0 || containerValue.length <= 3) {
+        showErrorMessage(valueSizeErrorContainer);
+        showErrorMessage(requiredErrorContainer);
         addValueErrorStylingOnInput(inputContainer);
+    } else if(!isNaN(containerValue) || containerValue === "") {
+        showErrorMessage(requiredErrorContainer);
+        addValueErrorStylingOnInput(inputContainer);
+        removeErrorMessage(valueSizeErrorContainer);
     } else {
-        removeErrorMessage(errorContainer);
+        removeErrorMessage(valueSizeErrorContainer);
+        removeErrorMessage(requiredErrorContainer);
         removeValueErrorStylingOnInput(inputContainer);
     }
 }
