@@ -429,3 +429,4 @@ function initSubtaskInput() {
   clearIcon.addEventListener("click", resetSubtaskInput);
   confirmIcon.addEventListener("click", resetSubtaskInput);
 }
+
