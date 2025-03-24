@@ -673,14 +673,20 @@ header {
   font-size: 32px;
   color: #2a3647;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s;
   border-radius: 50%;
 }
 
 #modal-close-button:hover,
 .edit-close-btn:hover {
   background-color: #e0e0e0;
-  transform: scale(1.05);
+}
+
+.edit-close-btn {
+  margin-left: 465px;
+  margin-top: 32px;
+  height: 32px;
+  margin-bottom: 24px;
 }
 
 #task-card-modal.fade-out {
@@ -701,76 +707,122 @@ header {
   z-index: 1100;
 }
 
-.edit-close-btn {
-  margin-left: 420px;
-}
-
 .hidden {
   display: none !important;
 }
 
 .edit-modal {
-  padding: 48px 40px;
   background-color: #ffffff;
   width: 525px;
   height: 931px;
   border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: overlay;
   position: relative;
+  padding: 0;
 }
 
-.modal-card-content {
-  gap: 24px;
-  justify-content: space-between;
-  max-height: 931px;
+.modal-card-content-edit {
+  padding-right: 10px;
+  padding-left: 30px;
+  flex: 1;
+  overflow-y: auto;
   color: #2a3647;
   font-family: "Poppins", sans-serif;
   font-style: normal;
+  scrollbar-width: thin;
+  scrollbar-color: #a8a8a8 transparent;
+  margin-right: 10px;
+}
+
+.modal-card-content-edit::-webkit-scrollbar {
+  width: 16px;
+}
+
+.modal-card-content-edit::-webkit-scrollbar-track {
+  background: transparent;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.modal-card-content-edit::-webkit-scrollbar-thumb {
+  background-color: #b3b3b3;
+  border-radius: 10px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.modal-card-content-edit::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
 }
 
 .edit-label {
-  font-weight: 500;
+  font-weight: 400;
   margin-top: 15px;
   display: block;
   color: #333;
+  font-size: 18px;
 }
 
 .edit-input,
 .edit-textarea,
 .edit-select {
   width: 100%;
-  padding: 8px;
+  padding: 8px 40px 8px 12px;
   margin-top: 5px;
   box-sizing: border-box;
   border-radius: 10px;
   border: 1px solid #ccc;
   outline: none;
   font-size: 18px;
-  font-family: "Poppins", sans-serif;;
+  font-family: "Poppins", sans-serif;
+  color: #000;
+  cursor: pointer;
 }
 
 .edit-input:focus,
 .edit-textarea:focus,
 .edit-select:focus {
-  border-color: #29abe2 !important;
+  border: 1px solid #29abe2 !important;
 }
 
 .edit-textarea {
-  resize: vertical;
-  min-height: 100px;
-  font-family: "Poppins", sans-serif;
+  resize: none;
+  position: relative;
+  height: 240px;
+  color: #000;
 }
 
-.edit-priority button {
-  padding: 8px 12px;
-  margin-right: 5px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.5;
+.edit-textarea-wrapper,
+.date-input-wrapper,
+.select-wrapper,
+.subtask-input-wrapper {
+  position: relative;
+  width: 100%;
 }
 
-.edit-priority .active {
-  opacity: 1;
+.edit-textarea-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 12px;
+  right: 10px;
+  width: 16px;
+  height: 16px;
+  background: url(../assets/img/icons/resizer.png) no-repeat 100% 100%;
+  background-size: cover;
+  pointer-events: none;
+}
+
+.date-picker-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background: url("../assets/img/icons/date-picker.png") no-repeat center;
 }
 
 .priority-labels {
@@ -778,21 +830,22 @@ header {
   background-color: #ffffff;
   text-align: center;
   width: 136px;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
 }
 
 .priority-labels:hover {
   cursor: pointer;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .edit-subtasks {
-  margin-top: 10px;
+  margin-top: -5px;
+  color: #d1d1d1;
 }
 
 .edit-subtask-list {
   padding-left: 20px;
-  margin-top: 10px;
 }
 
 .edit-save-btn,
@@ -813,7 +866,19 @@ header {
   gap: 4px;
   position: absolute;
   bottom: 40px;
-  right: 40px;
+  right: 30px;
+}
+
+.edit-save-btn:hover {
+  background-color: #29abe2;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.footer-edit-modal {
+  padding: 20px 20px;
+  flex-shrink: 0;
+  background-color: #ffffff;
+  height: 120px;
 }
 
 .ok-btn-icon {
@@ -826,9 +891,155 @@ header {
   display: inline-block;
 }
 
-.edit-save-btn:hover {
+.edit-input[type="date"] {
+  color: rgba(209, 209, 209, 1) !important;
+}
+
+.edit-input[type="date"]:valid,
+.edit-select:valid {
+  color: #000;
+}
+
+.edit-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: transparent;
+  height: 45px;
+  z-index: 10;
+}
+
+.select-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #000;
+  pointer-events: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+}
+
+.edit-select:hover {
+  border: 2px solid #ccc;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-click-wrapper {
+  position: relative;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border-radius: 50%;
+  transition: background-color 0.3s;
   cursor: pointer;
-  border: none;
-  background-color: #29abe2;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  z-index: 20;
+}
+
+.select-click-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.select-arrow.closed {
+  background-image: url("../assets/img/icons/arrow_drop_down.png");
+}
+
+.select-arrow.open {
+  background-image: url("../assets/img/icons/arrow_drop_down_reverse.png");
+}
+
+.select-arrow:hover {
+  background-color: #e0e0e0;
+}
+
+.subtask-input.edit-input {
+  padding-right: 70px;
+}
+
+.subtask-input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.subtask-input.edit-input {
+  width: 100%;
+  padding: 8px 70px 8px 12px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+}
+
+.add-subtask-icon,
+.confirm-input-icons {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.add-subtask-icon,
+.clear-icon,
+.confirm-icon {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.add-subtask-icon {
+  background-image: url("../assets/img/icons/add_subtask_icon.png");
+}
+
+.clear-icon {
+  background-image: url("../assets/img/icons/cancel_click.png");
+}
+
+.confirm-icon {
+  background-image: url("../assets/img/icons/confirm_icon.png");
+}
+
+.add-subtask-icon:hover,
+.clear-icon:hover,
+.confirm-icon:hover {
+  background-color: #e0e0e0;
+}
+
+.confirm-input-icons-separator {
+  color: #ccc;
+  font-size: 20px;
+}
+
+.d-none {
+  display: none !important;
 }

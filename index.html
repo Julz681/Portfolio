@@ -28,7 +28,7 @@
                 <hr>
             </div>
 
-            <form class="input-container" id="loginForm" action="../html/summary.html" method="GET">
+            <form class="input-container" id="login-form" action="../html/summary.html" method="GET">
                 <div class="login-data">
                     <label for="email" style="position: relative;">
                         <input class="input-field" id="email" type="email" placeholder="Email" onclick="autoFillFields()" required>
@@ -36,8 +36,10 @@
                     </label>
 
                     <label for="password" style="position: relative;">
-                        <input class="input-field" id="password" type="password" placeholder="Password" required>
-                        <img class="imgs-input_login toggle-password" id="eye-icon-password" src="../assets/img/lock.png" 
+                        <input class="input-field" id="password" type="password" placeholder="Password" 
+                               onblur="handlePasswordBlur(this.nextElementSibling)" 
+                               oninput="updatePasswordIcon('password', this.nextElementSibling)" required>
+                        <img class="imgs-input_login toggle-password" src="../assets/img/lock.png" 
                              alt="Toggle Password Visibility" 
                              onclick="togglePasswordVisibility('password', this)">
                     </label>
@@ -49,8 +51,11 @@
             </form>
 
             <div class="login-btn-container">
-                <button type="button" class="login-btn" onclick="normalLogin()">Log in</button>
-                <button type="button" class="guest-login-btn" onclick="guestLogin()">Guest Log In</button>
+                
+                <button type="button" class="login-btn" onclick="normalLogin(event)">Log in</button>
+
+                
+                <button type="button" class="guest-login-btn" onclick="guestLogin(event)">Guest Log In</button>
             </div>
 
         </div>
@@ -61,13 +66,12 @@
         <a href="../html/legal_notice_logged_out.html">Legal notice</a>
     </footer>
 
-    <script src="../js/add_task.js"></script>
-    <script src="../js/board.js"></script>
-    <script src="../js/contacts.js"></script>
-    <script src="../js/script.js"></script>
-    <script src="../js/firebase.js"></script> <!-- Firebase JS must be loaded first -->
-    <script src="../js/summary.js"></script> <!-- Then summary.js -->
-    <script src="../js/log_in.js"></script>
 
+
+
+    <script src="../js/script.js" defer></script>
+    <script src="../js/log_in.js"></script>
+    
+    
 </body>
 </html>

@@ -353,3 +353,79 @@ function activatePriorityButton(button) {
       break;
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  initAssignedToDropdown();
+  initDatePicker();
+  initSubtaskInput();
+});
+
+function initAssignedToDropdown() {
+  const assignedSelect = document.getElementById("assigned-select");
+  const selectArrow = document.getElementById("select-arrow");
+  const selectPlaceholder = document.querySelector(".select-placeholder");
+
+  let isOpen = false;
+
+  function updateArrow() {
+    if (isOpen) {
+      selectArrow.classList.remove("closed");
+      selectArrow.classList.add("open");
+    } else {
+      selectArrow.classList.remove("open");
+      selectArrow.classList.add("closed");
+    }
+  }
+
+  assignedSelect.addEventListener("mousedown", () => {
+    isOpen = !isOpen;
+    updateArrow();
+  });
+
+  document.addEventListener("click", (e) => {
+    const wrapper = document.querySelector(".select-wrapper");
+    if (!wrapper.contains(e.target)) {
+      isOpen = false;
+      updateArrow();
+    }
+  });
+
+  assignedSelect.addEventListener("change", () => {
+    selectPlaceholder.style.display = assignedSelect.value ? "none" : "block";
+    isOpen = false;
+    updateArrow();
+  });
+}
+
+function initDatePicker() {
+  flatpickr("#due-date", {
+    dateFormat: "d/m/Y",
+    altInput: true,
+    altFormat: "d/m/Y",
+    allowInput: true,
+  });
+}
+
+function initSubtaskInput() {
+  const addSubtaskIcon = document.getElementById("add-subtask-icon");
+  const confirmIcons = document.getElementById("confirm-icons");
+  const clearIcon = document.getElementById("clear-icon");
+  const confirmIcon = document.getElementById("confirm-icon");
+  const subtaskInput = document.getElementById("subtasks");
+
+  function showConfirmIcons() {
+    addSubtaskIcon.classList.add("d-none");
+    confirmIcons.classList.remove("d-none");
+    subtaskInput.focus();
+  }
+
+  function resetSubtaskInput() {
+    subtaskInput.value = "";
+    confirmIcons.classList.add("d-none");
+    addSubtaskIcon.classList.remove("d-none");
+  }
+
+  addSubtaskIcon.addEventListener("click", showConfirmIcons);
+  clearIcon.addEventListener("click", resetSubtaskInput);
+  confirmIcon.addEventListener("click", resetSubtaskInput);
+}
