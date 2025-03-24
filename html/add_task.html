@@ -40,7 +40,9 @@
           <div class="task-description-input wrapper d-flex-column gap-8">
             <label for="task-description"><span>Description</span></label>
             <textarea class="task-description-text size-20 br-10" id="task-description" name="task-description"
-              placeholder="Enter a description"></textarea>
+              placeholder="Enter a description" minlength="4"
+              oninput="checkDescriptionInput(`task-description`, `description-value-length-error`)"></textarea>
+            <span class="required-error-message d_none" id="description-value-length-error">Value too short!</span>
           </div>
           <div class="date-picker-wrapper d-flex-column gap-8">
             <label for="date"><span>Due date</span><span class="red">*</span></label>

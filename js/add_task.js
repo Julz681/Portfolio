@@ -47,6 +47,31 @@ function requiredErrorsHandling(requiredErrorContainer, valueSizeErrorContainer,
     }
 }
 
+function checkDescriptionInput(containerId, valueSizeErrorContainerId) {
+    let valueSize = getInputContainerValueSize(`${containerId}`);
+    if(valueSize == 0 || valueSize <= 3) {
+        showValueErrorMessage(`${valueSizeErrorContainerId}`)
+    } else {
+        hideValueErrorMessage(`${valueSizeErrorContainerId}`)
+    }
+}
+
+function getInputContainerValueSize(containerId) {
+    let inputContainer = getInputContainer(`${containerId}`);
+    let inputContainerValue = getInputValue(inputContainer);
+    return inputContainerValue;
+}
+
+function showValueErrorMessage (valueSizeErrorContainerId) {
+    let errorContainer = getErrorContainer(`${valueSizeErrorContainerId}`);
+    return showErrorMessage(errorContainer);
+}
+
+function hideValueErrorMessage(valueSizeErrorContainerId) {
+    let errorContainer = getErrorContainer(`${valueSizeErrorContainerId}`);
+    return removeErrorMessage(errorContainer);
+}
+
 function getInputContainer(id) {
     return document.getElementById(`${id}`)
 }
