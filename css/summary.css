@@ -9,7 +9,7 @@ body {
   scroll-behavior: smooth;
   background-color: #f6f7f8;
   overflow-x: hidden;
-  cursor: pointer;
+ 
 }
 
 .header {
@@ -99,6 +99,7 @@ body {
   justify-content: center;
   align-items: center;
   margin-bottom: 26px;
+  cursor: pointer;
 }
 
 
@@ -135,6 +136,7 @@ body {
   align-items: center;
   text-align: center;
   margin-top: 26px;
+  cursor: pointer;
 }
 
 .metric-box-tasks h2 {
@@ -165,6 +167,7 @@ body {
   gap: 36px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .metric-box-urgent h2 {

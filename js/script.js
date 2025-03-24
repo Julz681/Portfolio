@@ -1,3 +1,8 @@
+// This function ensures that the arrow always brings the user back to the page they were on before clicking the help button.
+function goBack() {
+    window.history.back();
+  }
+
 // This function is used for the animation at the beginning.
 document.addEventListener("DOMContentLoaded", () => {
   const startElement = document.querySelector(".start");
@@ -22,11 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       helpButton.style.display = "block"; // Ensure it is visible on other pages
     }
-  }
-
-  // This function ensures that the arrow always brings the user back to the page they were on before clicking the help button.
-  function goBack() {
-    window.history.back();
   }
 
   /**
