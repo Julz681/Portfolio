@@ -23,6 +23,61 @@ async function fetchFile(element, file) {
     }
 }
 
+function toggleInvalidMessage(errorContainerId, containerId) {
+    let errorContainer = getErrorContainer(`${errorContainerId}`);
+    let inputContainer = getInputContainer(`${containerId}`);
+    let inputContainerValue = getInputValue(inputContainer);
+    console.log(inputContainerValue);
+     
+    requiredErrorHandling(errorContainer, inputContainer, inputContainerValue);
+}
+
+function requiredErrorHandling(errorContainer, inputContainer, containerValue) {
+    if(containerValue.length == 0 || containerValue.length <= 3 || !isNaN(containerValue) || containerValue === "") {
+        showErrorMessage(errorContainer);
+        addValueErrorStylingOnInput(inputContainer);
+    } else {
+        removeErrorMessage(errorContainer);
+        removeValueErrorStylingOnInput(inputContainer);
+    }
+}
+
+function getInputContainer(id) {
+    return document.getElementById(`${id}`)
+}
+
+function getInputValue(inputContainer) {
+    return inputContainer.value;
+}
+
+function getErrorContainer (id) {
+    return document.getElementById(`${id}`);
+}
+
+function showErrorMessage(errorContainer) {
+    if(errorContainer.classList.contains("d_none")) {
+        errorContainer.classList.remove("d_none");
+    }
+}
+
+function addValueErrorStylingOnInput(inputContainer) {
+    if(!inputContainer.classList.contains("task-input-fields-invalid")) {
+        inputContainer.classList.add("task-input-fields-invalid");
+    }
+}
+
+function removeErrorMessage(errorContainer) {
+    if(!errorContainer.classList.contains("d_none")) {
+        errorContainer.classList.add("d_none");
+    }
+}
+
+function removeValueErrorStylingOnInput(inputContainer) {
+    if(inputContainer.classList.contains("task-input-fields-invalid")) {
+        inputContainer.classList.remove("task-input-fields-invalid");
+    }
+}
+
 
 //commented out, because the header and sidebar would disappear - because of w3 include
 

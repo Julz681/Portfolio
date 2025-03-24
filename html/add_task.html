@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../css/board.css">
   <link rel="stylesheet" href="../css/add-task.css">
   <script src="../js/add_task.js" defer></script>
+  <!-- <script src="../js/dropwdown.js" defer></script> -->
   <title>Add Task</title>
 </head>
 
@@ -29,7 +30,9 @@
           <div class="task-title-input wrapper d-flex-column gap-8">
             <label for="task-title"><span>Title</span><span class="red">*</span></label>
             <input class="task-input-fields size-20 br-10" type="text" id="task-title" name="task-title"
-              placeholder="Enter a title" minlength="4" required />
+              placeholder="Enter a title" minlength="4"
+              onfocus="toggleInvalidMessage(`task-title-error` , `task-title`)"
+              oninput="toggleInvalidMessage(`task-title-error` , `task-title`)" required />
             <span class="required-error-message d_none" id="task-title-error">This field is required</span>
           </div>
           <div class="task-description-input wrapper d-flex-column gap-8">
@@ -39,8 +42,10 @@
           </div>
           <div class="date-picker-wrapper d-flex-column gap-8">
             <label for="date"><span>Due date</span><span class="red">*</span></label>
-            <input type="date" name="date" id="due-date" class="task-input-fields date-picker size-20 br-10" required />
-            <span class="required-error-message d_none" id="task-title-error">This field is required</span>
+            <input type="date" name="date" id="due-date" class="date-picker size-20 br-10"
+              onfocus="toggleInvalidMessage(`due-date-error` , `due-date`)"
+              oninput="toggleInvalidMessage(`due-date-error` , `due-date`)" required />
+            <span class="required-error-message d_none" id="due-date-error">This field is required</span>
           </div>
         </div>
         <div class="separator"></div>

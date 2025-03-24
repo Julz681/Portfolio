@@ -59,6 +59,10 @@
   border: 1px solid #ff8190;
 }
 
+.task-input-fields:invalid:not(:placeholder-shown) {
+  border: 1px solid #ff8190;
+}
+
 .task-input-fields::-webkit-input-placeholder {
   color: #d1d1d1;
   font-size: 20px;
@@ -67,7 +71,8 @@
   font-family: "Inter", sans-serif !important;
 }
 
-.task-input-fields:focus {
+.task-input-fields:focus,
+.date-picker:focus {
   outline: 0;
   border: 1px solid #29abe2;
 }
@@ -119,6 +124,8 @@
   background-size: 20px;
   background-color: #ffff;
   color: #000000;
+  padding: 12px 21px;
+  border: 1px solid #d1d1d1;
 }
 
 .date-picker:hover {
