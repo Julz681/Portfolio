@@ -769,11 +769,9 @@ header {
   margin-bottom: 20px;
 }
 
-.modal-card-content-edit::-webkit-scrollbar-thumb {
-  background-color: #b3b3b3;
-  border-radius: 10px;
-  border: 6px solid transparent;
-  background-clip: content-box;
+.dropdown::-webkit-scrollbar-thumb {
+  background: url(../assets/img/icons/thumb.png) no-repeat center;
+  display: none;
 }
 
 .modal-card-content-edit::-webkit-scrollbar-thumb:hover {

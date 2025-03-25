@@ -119,314 +119,328 @@ const tasks = [
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
-  const boardColumn = document.querySelector(".column-content-wrapper");
-  const modalOverlay = document.getElementById("task-card-modal");
-  const modalCardWrapper = document.querySelector(".modal-card-wrapper");
-  const modalCloseButton = document.getElementById("modal-close-button");
-  const deleteButton = document.getElementById("delete-task-button");
-
-  function renderAllColumns() {
-    const columnMap = {
-      "to-do": document.querySelector(".to-do-wrapper .column-content-wrapper"),
-      "in-progress": document.querySelector(
-        ".in-progress-wrapper .column-content-wrapper"
-      ),
-      "await-feedback": document.querySelector(
-        ".await-feedback-wrapper .column-content-wrapper"
-      ),
-      done: document.querySelector(".done-wrapper .column-content-wrapper"),
-    };
-
-    for (const status in columnMap) {
-      const column = columnMap[status];
-      const placeholder = column.querySelector(".no-tasks-feedback");
-      column.querySelectorAll(".board-card").forEach((card) => card.remove());
-
-      const filteredTasks = tasks.filter((task) => task.status === status);
-
-      filteredTasks.forEach((task) => {
-        const taskLabel =
-          task.taskType === "technical" ? "Technical Task" : "User Story";
-        const labelColor = task.taskType === "technical" ? "#1fd7c1" : "blue";
-
-        const taskHTML = `
-          <div class="board-card d-flex-center" data-task-id="${task.id}">
-            <div class="board-card-content d-flex-column">
-              <label class="board-card-label br-8 d-flex-center" style="background: ${labelColor};">${taskLabel}</label>
-              <div class="board-card-text d-flex-column br-10">
-                <h4 class="board-card-title">${task.title}</h4>
-                <p class="board-card-description">${task.description}</p>
-              </div>
-              <div class="status d-flex-center">
-                <div class="progress" role="progressbar">
-                  <div class="progress-bar" style="width: 60%"></div>
-                </div>
-                <div class="d-flex-center subtasks">
-                  <span>0</span> / <span>${task.subtasks.length}</span> Subtasks
-                </div>
-              </div>
-              <div class="d-flex-space-between board-card-footer">
-                <div class="user-icons-wrapper d-flex-center">
-                  ${task.assignedTo
-                    .map(
-                      (user) =>
-                        `<span class="user-icons d-flex-center">${user[0]}</span>`
-                    )
-                    .join("")}
-                </div>
-                <img src="../assets/img/icons/${
-                  task.priority
-                }-icon.png" class="priority" />
-              </div>
-            </div>
-          </div>
-        `;
-        column.insertAdjacentHTML("beforeend", taskHTML);
-      });
-
-      if (placeholder) {
-        placeholder.classList.toggle("d_none", filteredTasks.length > 0);
-      }
-    }
-
-    attachTaskClickEvents();
-
-    modalOverlay.addEventListener("click", function (event) {
-      const isInsideModal = modalCardWrapper.contains(event.target);
-      if (!isInsideModal) {
-        closeModal();
-      }
-    });
-  }
-
-  function attachTaskClickEvents() {
-    document.querySelectorAll(".board-card").forEach((card) => {
-      card.addEventListener("click", function () {
-        const taskId = this.getAttribute("data-task-id");
-        const taskData = tasks.find((task) => task.id === taskId);
-        if (!taskData) return;
-
-        document.querySelector(".modal-card-label").textContent =
-          taskData.taskType === "technical" ? "Technical Task" : "User Story";
-        document.querySelector(".modal-card-label").style.background =
-          taskData.taskType === "technical" ? "#1fd7c1" : "blue";
-        document.querySelector(".modal-card-title").textContent =
-          taskData.title;
-        document.querySelector(".modal-card-content p").textContent =
-          taskData.description;
-        document.querySelector(".date-line span:last-child").textContent =
-          taskData.dueDate;
-        document.querySelector(".prio-label span").textContent =
-          taskData.priority.charAt(0).toUpperCase() +
-          taskData.priority.slice(1);
-        document.querySelector(
-          ".prio-label img"
-        ).src = `../assets/img/icons/${taskData.priority}-icon.png`;
-
-        const userContainer = document.querySelector(".assignments");
-        userContainer.innerHTML =
-          `<span>Assigned to:</span>` +
-          taskData.assignedTo
-            .map(
-              (user) => `
-            <div class="user-line gap-16 d-flex-space-between">
-              <span class="user-icons d-flex-center">${user[0]}</span><span>${user}</span>
-            </div>
-          `
-            )
-            .join("");
-
-        const subtaskContainer = document.querySelector(".subtasks-wrapper");
-        subtaskContainer.innerHTML = taskData.subtasks
-          .map(
-            (subtask, index) => `
-            <div class="modal-card-subtask-wrapper d-flex-center">
-              <label class="modal-card-subtask gap-16">
-                <input type="checkbox" id="subtask-${index}" />
-                <span class="checkmark"></span>
-                <span>${subtask}</span>
-              </label>
-            </div>
-          `
-          )
-          .join("");
-
-        modalOverlay.classList.add("active");
-        modalCardWrapper.classList.remove("slide-out");
-        modalCardWrapper.classList.add("slide-in");
-        modalOverlay.setAttribute("data-task-id", taskId);
-      });
-    });
-  }
-
-  modalCloseButton.addEventListener("click", closeModal);
-
-  function closeModal() {
-    modalCardWrapper.classList.remove("slide-in");
-    modalCardWrapper.classList.add("slide-out");
-    modalOverlay.classList.add("fade-out");
-
-    modalCardWrapper.addEventListener(
-      "transitionend",
-      function handleClose() {
-        modalOverlay.classList.remove("active", "fade-out");
-        modalCardWrapper.classList.remove("slide-out");
-        modalCardWrapper.removeEventListener("transitionend", handleClose);
-      },
-      { once: true }
-    );
-  }
-
-  deleteButton.addEventListener("click", function () {
-    const taskId = modalOverlay.getAttribute("data-task-id");
-    const index = tasks.findIndex((task) => task.id === taskId);
-    if (index !== -1) {
-      tasks.splice(index, 1);
-      renderAllColumns();
-      closeModal();
-    }
-  });
-
+  setupModalOverlay();
+  setupModalCloseButton();
+  setupDeleteButton();
+  setupPrioritySelection();
+  setupAssignedToDropdown();
+  setupSubtaskInput();
+  setupDatePicker();
   renderAllColumns();
 });
 
+function setupModalOverlay() {
+  const overlay = document.getElementById("task-card-modal");
+  const card = document.querySelector(".modal-card-wrapper");
+  overlay.addEventListener("click", function (e) {
+    if (!card.contains(e.target)) {
+      closeModal();
+    }
+  });
+}
+
+function getColumnMap() {
+  return {
+    "to-do": document.querySelector(".to-do-wrapper .column-content-wrapper"),
+    "in-progress": document.querySelector(
+      ".in-progress-wrapper .column-content-wrapper"
+    ),
+    "await-feedback": document.querySelector(
+      ".await-feedback-wrapper .column-content-wrapper"
+    ),
+    done: document.querySelector(".done-wrapper .column-content-wrapper"),
+  };
+}
+
+function renderAllColumns() {
+  const map = getColumnMap();
+  for (const status in map) {
+    const column = map[status];
+    const list = getTasksByStatus(status);
+    clearColumn(column);
+    list.forEach((task) => renderTask(column, task));
+    toggleEmptyMsg(column, list);
+  }
+  setupCardClick();
+}
+
+function getTasksByStatus(status) {
+  return tasks.filter((task) => task.status === status);
+}
+
+function clearColumn(column) {
+  column.querySelectorAll(".board-card").forEach((card) => card.remove());
+}
+
+function renderTask(column, task) {
+  const html = createTaskHTML(task);
+  column.insertAdjacentHTML("beforeend", html);
+}
+
+function toggleEmptyMsg(column, tasks) {
+  const msg = column.querySelector(".no-tasks-feedback");
+  if (msg) msg.classList.toggle("d_none", tasks.length > 0);
+}
+
+function createTaskHTML(task) {
+  const label = task.taskType === "technical" ? "Technical Task" : "User Story";
+  const color = task.taskType === "technical" ? "#1fd7c1" : "blue";
+  const users = task.assignedTo
+    .map((u) => `<span class='user-icons d-flex-center'>${u[0]}</span>`)
+    .join("");
+  return `
+    <div class="board-card d-flex-center" data-task-id="${task.id}">
+      <div class="board-card-content d-flex-column">
+        <label class="board-card-label br-8 d-flex-center" style="background:${color};">${label}</label>
+        <div class="board-card-text d-flex-column br-10">
+          <h4 class="board-card-title">${task.title}</h4>
+          <p class="board-card-description">${task.description}</p>
+        </div>
+        <div class="status d-flex-center">
+          <div class="progress" role="progressbar">
+            <div class="progress-bar" style="width: 60%"></div>
+          </div>
+          <div class="d-flex-center subtasks">
+            <span>0</span> / <span>${task.subtasks.length}</span> Subtasks
+          </div>
+        </div>
+        <div class="d-flex-space-between board-card-footer">
+          <div class="user-icons-wrapper d-flex-center">${users}</div>
+          <img src="../assets/img/icons/${task.priority}-icon.png" class="priority" />
+        </div>
+      </div>
+    </div>`;
+}
+
+function setupCardClick() {
+  const modal = document.getElementById("task-card-modal");
+  const wrapper = document.querySelector(".modal-card-wrapper");
+  const cards = document.querySelectorAll(".board-card");
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      const id = card.getAttribute("data-task-id");
+      const task = tasks.find((t) => t.id === id);
+      if (task) openModal(task, modal, wrapper);
+    });
+  });
+}
+
+function openModal(task, modal, wrapper) {
+  setModalContent(task);
+  modal.classList.add("active");
+  wrapper.classList.remove("slide-out");
+  wrapper.classList.add("slide-in");
+  modal.setAttribute("data-task-id", task.id);
+}
+
+function setModalContent(task) {
+  setModalBasics(task);
+  setModalPriority(task);
+  setModalUsers(task);
+  setModalSubtasks(task);
+}
+
+function setModalBasics(task) {
+  const label = document.querySelector(".modal-card-label");
+  label.textContent =
+    task.taskType === "technical" ? "Technical Task" : "User Story";
+  label.style.background = task.taskType === "technical" ? "#1fd7c1" : "blue";
+  document.querySelector(".modal-card-title").textContent = task.title;
+  document.querySelector(".modal-card-content p").textContent =
+    task.description;
+  document.querySelector(".date-line span:last-child").textContent =
+    task.dueDate;
+}
+
+function setModalPriority(task) {
+  const span = document.querySelector(".prio-label span");
+  const img = document.querySelector(".prio-label img");
+  span.textContent =
+    task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
+  img.src = `../assets/img/icons/${task.priority}-icon.png`;
+}
+
+function setModalUsers(task) {
+  const box = document.querySelector(".assignments");
+  box.innerHTML =
+    `<span>Assigned to:</span>` +
+    task.assignedTo
+      .map(
+        (user) => `
+    <div class="user-line gap-16 d-flex-space-between">
+      <span class="user-icons d-flex-center">${user[0]}</span><span>${user}</span>
+    </div>`
+      )
+      .join("");
+}
+
+function setModalSubtasks(task) {
+  const box = document.querySelector(".subtasks-wrapper");
+  box.innerHTML = task.subtasks
+    .map(
+      (s, i) => `
+    <div class="modal-card-subtask-wrapper d-flex-center">
+      <label class="modal-card-subtask gap-16">
+        <input type="checkbox" id="subtask-${i}" />
+        <span class="checkmark"></span>
+        <span>${s}</span>
+      </label>
+    </div>`
+    )
+    .join("");
+}
+
+function setupModalCloseButton() {
+  const btn = document.getElementById("modal-close-button");
+  btn.addEventListener("click", closeModal);
+}
+
+function closeModal() {
+  const modal = document.getElementById("task-card-modal");
+  const wrapper = document.querySelector(".modal-card-wrapper");
+  wrapper.classList.remove("slide-in");
+  wrapper.classList.add("slide-out");
+  modal.classList.add("fade-out");
+  wrapper.addEventListener(
+    "transitionend",
+    function end() {
+      modal.classList.remove("active", "fade-out");
+      wrapper.classList.remove("slide-out");
+      wrapper.removeEventListener("transitionend", end);
+    },
+    { once: true }
+  );
+}
+
+function setupDeleteButton() {
+  const btn = document.getElementById("delete-task-button");
+  btn.addEventListener("click", deleteTask);
+}
+
+function deleteTask() {
+  const modal = document.getElementById("task-card-modal");
+  const id = modal.getAttribute("data-task-id");
+  const index = tasks.findIndex((t) => t.id === id);
+  if (index !== -1) tasks.splice(index, 1);
+  renderAllColumns();
+  closeModal();
+}
+
 function openEditOverlay() {
-  document.getElementById("editTaskOverlay").classList.remove("hidden");
+  const overlay = document.getElementById("editTaskOverlay");
+  overlay.classList.remove("hidden");
 }
 
 function closeEditOverlay() {
-  document.getElementById("editTaskOverlay").classList.add("hidden");
+  const overlay = document.getElementById("editTaskOverlay");
+  overlay.classList.add("hidden");
 }
 
-document.querySelectorAll(".edit-priority button").forEach((button) => {
-  button.addEventListener("click", function () {
-    document
-      .querySelectorAll(".edit-priority button")
-      .forEach((btn) => btn.classList.remove("active"));
-    this.classList.add("active");
+function openEditOverlay() {
+  const overlay = document.getElementById("editTaskOverlay");
+  overlay.classList.remove("hidden");
+}
+
+function closeEditOverlay() {
+  const overlay = document.getElementById("editTaskOverlay");
+  overlay.classList.add("hidden");
+}
+
+function setupPrioritySelection() {
+  const buttons = document.querySelectorAll(".priority-labels");
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((btn) => resetPriority(btn));
+      activatePriority(button);
+    });
   });
-});
+}
 
-const priorityButtons = document.querySelectorAll(".priority-labels");
-
-priorityButtons.forEach((button) => {
-  button.addEventListener("click", function () {
-    priorityButtons.forEach((btn) => resetPriorityButton(btn));
-    activatePriorityButton(this);
-  });
-});
-
-function resetPriorityButton(button) {
+function resetPriority(button) {
   button.style.backgroundColor = "#ffffff";
   button.style.color = "#000000";
   button.style.fontWeight = "normal";
-  const svgPaths = button.querySelectorAll("svg path");
-  svgPaths.forEach((path) => {
-    if (button.id === "urgent") path.setAttribute("fill", "#FF3D00");
-    if (button.id === "medium") path.setAttribute("fill", "#FFA800");
-    if (button.id === "low") path.setAttribute("fill", "#7AE229");
-  });
+  const paths = button.querySelectorAll("svg path");
+  paths.forEach((path) => setDefaultColor(path, button.id));
 }
 
-function activatePriorityButton(button) {
-  const svgPaths = button.querySelectorAll("svg path");
+function setDefaultColor(path, id) {
+  if (id === "urgent") path.setAttribute("fill", "#FF3D00");
+  if (id === "medium") path.setAttribute("fill", "#FFA800");
+  if (id === "low") path.setAttribute("fill", "#7AE229");
+}
 
+function activatePriority(button) {
+  const paths = button.querySelectorAll("svg path");
   button.style.fontWeight = "bold";
-
-  switch (button.id) {
-    case "urgent":
-      button.style.backgroundColor = "#FF3D00";
-      button.style.color = "#ffffff";
-      svgPaths.forEach((path) => path.setAttribute("fill", "#ffffff"));
-      break;
-
-    case "medium":
-      button.style.backgroundColor = "#FFA800";
-      button.style.color = "#ffffff";
-      svgPaths.forEach((path) => path.setAttribute("fill", "#ffffff"));
-      break;
-
-    case "low":
-      button.style.backgroundColor = "#7AE229";
-      button.style.color = "#ffffff";
-      svgPaths.forEach((path) => path.setAttribute("fill", "#ffffff"));
-      break;
-  }
+  button.style.color = "#ffffff";
+  if (button.id === "urgent") button.style.backgroundColor = "#FF3D00";
+  if (button.id === "medium") button.style.backgroundColor = "#FFA800";
+  if (button.id === "low") button.style.backgroundColor = "#7AE229";
+  paths.forEach((path) => path.setAttribute("fill", "#ffffff"));
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initAssignedToDropdown();
-  initDatePicker();
-  initSubtaskInput();
-});
-
-function initAssignedToDropdown() {
-  const assignedSelect = document.getElementById("assigned-select");
-  const selectArrow = document.getElementById("select-arrow");
-  const selectPlaceholder = document.querySelector(".select-placeholder");
-
-  let isOpen = false;
-
-  function updateArrow() {
-    if (isOpen) {
-      selectArrow.classList.remove("closed");
-      selectArrow.classList.add("open");
-    } else {
-      selectArrow.classList.remove("open");
-      selectArrow.classList.add("closed");
-    }
-  }
-
-  assignedSelect.addEventListener("mousedown", () => {
-    isOpen = !isOpen;
-    updateArrow();
+function setupAssignedToDropdown() {
+  const select = document.getElementById("assigned-select");
+  const arrow = document.getElementById("select-arrow");
+  const placeholder = document.querySelector(".select-placeholder");
+  select.addEventListener("mousedown", () => toggleArrow(arrow));
+  select.addEventListener("change", () => {
+    placeholder.style.display = select.value ? "none" : "block";
+    resetArrow(arrow);
   });
-
   document.addEventListener("click", (e) => {
     const wrapper = document.querySelector(".select-wrapper");
-    if (!wrapper.contains(e.target)) {
-      isOpen = false;
-      updateArrow();
-    }
-  });
-
-  assignedSelect.addEventListener("change", () => {
-    selectPlaceholder.style.display = assignedSelect.value ? "none" : "block";
-    isOpen = false;
-    updateArrow();
+    if (!wrapper.contains(e.target)) resetArrow(arrow);
   });
 }
 
-function initDatePicker() {
-  flatpickr("#due-date", {
-    dateFormat: "d/m/Y",
-    altInput: true,
-    altFormat: "d/m/Y",
-    allowInput: true,
-  });
+function toggleArrow(arrow) {
+  arrow.classList.toggle("open");
+  arrow.classList.toggle("closed");
 }
 
-function initSubtaskInput() {
-  const addSubtaskIcon = document.getElementById("add-subtask-icon");
-  const confirmIcons = document.getElementById("confirm-icons");
-  const clearIcon = document.getElementById("clear-icon");
-  const confirmIcon = document.getElementById("confirm-icon");
-  const subtaskInput = document.getElementById("subtasks");
+function resetArrow(arrow) {
+  arrow.classList.remove("open");
+  arrow.classList.add("closed");
+}
 
-  function showConfirmIcons() {
-    addSubtaskIcon.classList.add("d-none");
-    confirmIcons.classList.remove("d-none");
-    subtaskInput.focus();
+function setupSubtaskInput() {
+  const input = document.getElementById("subtasks");
+  const addBtn = document.getElementById("add-subtask-icon");
+  const confirmWrap = document.getElementById("confirm-icons");
+  const confirmBtn = document.getElementById("confirm-icon");
+  const clearBtn = document.getElementById("clear-icon");
+  addBtn.addEventListener("click", () =>
+    showConfirm(input, confirmWrap, addBtn)
+  );
+  clearBtn.addEventListener("click", () =>
+    resetInput(input, confirmWrap, addBtn)
+  );
+  confirmBtn.addEventListener("click", () =>
+    resetInput(input, confirmWrap, addBtn)
+  );
+}
+
+function showConfirm(input, confirm, add) {
+  add.classList.add("d-none");
+  confirm.classList.remove("d-none");
+  input.focus();
+}
+
+function resetInput(input, confirm, add) {
+  input.value = "";
+  confirm.classList.add("d-none");
+  add.classList.remove("d-none");
+}
+
+function setupDatePicker() {
+  if (window.flatpickr) {
+    flatpickr("#due-date", {
+      dateFormat: "d/m/Y",
+      altInput: true,
+      altFormat: "d/m/Y",
+      allowInput: true,
+    });
   }
-
-  function resetSubtaskInput() {
-    subtaskInput.value = "";
-    confirmIcons.classList.add("d-none");
-    addSubtaskIcon.classList.remove("d-none");
-  }
-
-  addSubtaskIcon.addEventListener("click", showConfirmIcons);
-  clearIcon.addEventListener("click", resetSubtaskInput);
-  confirmIcon.addEventListener("click", resetSubtaskInput);
 }
-
