@@ -47,3 +47,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Call the function to update the user profile, but only if the element exists
   updateUserProfile();
 });
+
+// Alle Board-Karten (Task-Elemente) abrufen
+const boardCards = document.querySelectorAll('.board-card');
+
+// Die Spalten, in die die Karten verschoben werden können, abrufen
+const columns = document.querySelectorAll('.board-columns');
+
+// Durchlaufen Sie alle Karten und fügen Sie Event-Listener für den Drag-Start hinzu
+boardCards.forEach(card => {
+  card.addEventListener('dragstart', (e) => {
+    // Setze den ID-Wert der Karte als Data, die im Drag-and-Drop gespeichert wird
+    e.dataTransfer.setData('text/plain', card.dataset.taskId);
+    
+    // Karte um 20 Grad nach rechts drehen
+    card.style.transform = 'rotate(20deg)';
+  });
+});
+
+

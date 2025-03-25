@@ -300,6 +300,26 @@ header {
 
 /* board card styling */
 
+.highlight-line {
+  position: absolute;
+  width: 252px;
+  height: 244px; /* Du kannst diese Höhe anpassen, wenn du eine bestimmte Drop-Höhe brauchst */
+  border: 1px dashed #A8A8A8;
+  z-index: 1000;
+  opacity: 0.5;
+  display: none;
+  border-radius: 30px;
+  pointer-events: none; /* Damit keine weiteren Event-Handler auf der Linie selbst aktiv sind */
+}
+
+
+
+
+
+.board-card.dragging {
+  opacity: 0.5; /* Transparenz beim Ziehen der Karte */
+}
+
 .board-card {
   width: 252px;
   padding: 16px;
