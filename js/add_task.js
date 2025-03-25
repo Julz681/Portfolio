@@ -49,9 +49,9 @@ function requiredErrorsHandling(requiredErrorContainer, valueSizeErrorContainer,
 
 function checkDescriptionInput(containerId, valueSizeErrorContainerId) {
     let valueSize = getInputContainerValueSize(`${containerId}`);
-    if(valueSize == 0 || valueSize <= 3) {
+    if(valueSize.length <= 3 && valueSize.length > 0) {
         showValueErrorMessage(`${valueSizeErrorContainerId}`)
-    } else {
+    } else if (valueSize.length == 0 || valueSize.length > 3) {
         hideValueErrorMessage(`${valueSizeErrorContainerId}`)
     }
 }
