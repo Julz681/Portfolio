@@ -769,9 +769,9 @@ header {
   margin-bottom: 20px;
 }
 
-.dropdown::-webkit-scrollbar-thumb {
+.modal-card-content-edit::-webkit-scrollbar-thumb {
   background: url(../assets/img/icons/thumb.png) no-repeat center;
-  display: none;
+
 }
 
 .modal-card-content-edit::-webkit-scrollbar-thumb:hover {

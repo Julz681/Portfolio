@@ -336,16 +336,6 @@ function closeEditOverlay() {
   overlay.classList.add("hidden");
 }
 
-function openEditOverlay() {
-  const overlay = document.getElementById("editTaskOverlay");
-  overlay.classList.remove("hidden");
-}
-
-function closeEditOverlay() {
-  const overlay = document.getElementById("editTaskOverlay");
-  overlay.classList.add("hidden");
-}
-
 function setupPrioritySelection() {
   const buttons = document.querySelectorAll(".priority-labels");
   buttons.forEach((button) => {
@@ -444,3 +434,9 @@ function setupDatePicker() {
     });
   }
 }
+
+function saveEdit() {
+  document.getElementById("editTaskOverlay").classList.add("hidden");
+  document.getElementById("task-card-modal").classList.add("active");
+}
+
