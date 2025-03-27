@@ -303,16 +303,29 @@ header {
 .highlight-line {
   position: absolute;
   width: 252px;
-  height: 244px; /* Du kannst diese Höhe anpassen, wenn du eine bestimmte Drop-Höhe brauchst */
+  height: 244px; 
   border: 1px dashed #A8A8A8;
   z-index: 1000;
   opacity: 0.5;
   display: none;
   border-radius: 30px;
-  pointer-events: none; /* Damit keine weiteren Event-Handler auf der Linie selbst aktiv sind */
+  pointer-events: none;
 }
 
 
+.board-columns {
+  position: relative;
+}
+
+.board-columns .column-content-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 100px; 
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
 
 
@@ -770,8 +783,10 @@ header {
 }
 
 .modal-card-content-edit::-webkit-scrollbar-thumb {
-  background: url(../assets/img/icons/thumb.png) no-repeat center;
-
+  background-color: #b3b3b3;
+  border-radius: 10px;
+  border: 6px solid transparent;
+  background-clip: content-box;
 }
 
 .modal-card-content-edit::-webkit-scrollbar-thumb:hover {

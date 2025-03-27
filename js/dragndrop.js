@@ -1,7 +1,3 @@
-/**
- * Initializes the drag-and-drop functionality by adding event listeners to the tasks and columns.
- * Sets each task to be draggable and binds the appropriate drag events to the tasks and columns.
- */
 function init() {
     const tasks = document.querySelectorAll('.board-card');
     tasks.forEach(task => {
@@ -20,47 +16,34 @@ function init() {
 }
 
 let draggedTask = null;
-const DROP_AREA_PADDING = 20;
 
 /**
- * Handles the start of the drag event. 
- * Adds a 'dragging' class to the task and rotates the task by 5 degrees.
- * Sets the data for the dragged task and displays the highlight line.
- * 
- * @param {Event} event - The dragstart event.
+ * Startet das Dragging und zeigt die Highlight-Line an.
  */
 function dragStart(event) {
     draggedTask = event.target;
     draggedTask.classList.add('dragging');
-
-    // Rotate the task by 5 degrees while dragging
-    draggedTask.style.transform = 'rotate(5deg)';
-
+    draggedTask.style.transform = 'rotate(5deg)'; // Drehe die Karte leicht beim Draggen
+    
     event.dataTransfer.setData('text/plain', draggedTask.dataset.taskId);
     document.querySelector('.highlight-line').style.display = 'block';
 }
 
 /**
- * Handles the end of the drag event.
- * Removes the 'dragging' class from the task and resets its rotation.
- * Hides the highlight line after the task has been dropped.
+ * Entfernt den Dragging-Effekt nach dem Loslassen.
  */
 function dragEnd() {
-    // Remove rotation after dragging
-    draggedTask.style.transform = 'none';  // Reset rotation
-
+    draggedTask.style.transform = 'none'; // Zurücksetzen der Drehung
     draggedTask.classList.remove('dragging');
     removeHighlightLine();
 }
 
 /**
- * Handles the dragover event.
- * Displays the highlight line and positions it correctly depending on where the task is being dragged over.
- * 
- * @param {Event} event - The dragover event.
+ * Handhabt das Dragover-Ereignis, damit die Karte richtig positioniert wird.
+ * Hier wird auch die Highlight-Line angezeigt.
  */
 function dragOver(event) {
-    event.preventDefault();
+    event.preventDefault(); // Standardverhalten verhindern (damit das Drop möglich ist)
     const column = event.target.closest('.board-columns');
     const columnContent = column.querySelector('.column-content-wrapper');
     const highlightLine = document.querySelector('.highlight-line');
@@ -69,60 +52,39 @@ function dragOver(event) {
         const rect = columnContent.getBoundingClientRect();
         const allCards = columnContent.querySelectorAll('.board-card');
 
-        let topPosition = rect.top + 10; // If column is empty, set the line at the top
+        let topPosition = rect.top + 10; // Wenn keine Karten vorhanden sind, setze die Linie oben
 
+        // Wenn Karten existieren, positioniere die Highlight-Line unter der letzten Karte
         if (allCards.length > 0) {
             const lastCard = allCards[allCards.length - 1];
-            topPosition = lastCard.getBoundingClientRect().bottom + 16;
+            topPosition = lastCard.getBoundingClientRect().bottom + 16; // Linie unter der letzten Karte
         }
 
-        highlightLine.style.top = `${topPosition}px`;
-        highlightLine.style.left = `${rect.left + rect.width / 2 - highlightLine.offsetWidth / 2}px`; // Center the line
-        highlightLine.style.width = `252px`; // Set a fixed width for the card
-        highlightLine.style.display = 'block';
+        highlightLine.style.top = `${topPosition}px`; // Positioniere die Linie unterhalb der letzten Karte
+        highlightLine.style.left = `${rect.left + rect.width / 2 - 126}px`; // Linie zentrieren
+        highlightLine.style.display = 'block'; // Zeige die Linie
     }
 }
 
 /**
- * Handles the drop event.
- * Moves the dragged task into the appropriate position within the target column.
- * If the task is dropped above an existing card, it will be inserted before that card.
- * Otherwise, it will be appended at the end of the column.
- * 
- * @param {Event} event - The drop event.
+ * Handhabt das Drop-Ereignis. Der Drop ist jetzt in der gesamten Spalte möglich.
  */
 function drop(event) {
-    event.preventDefault();
+    event.preventDefault(); // Verhindert das Standardverhalten
+
     const column = event.target.closest('.board-columns');
     const columnContent = column.querySelector('.column-content-wrapper');
-    const highlightLine = document.querySelector('.highlight-line');
 
+    // Wenn Karten vorhanden sind, fügen wir die Karte ans Ende der Spalte hinzu
     if (columnContent && draggedTask) {
-        const allCards = columnContent.querySelectorAll('.board-card');
-        const highlightRect = highlightLine.getBoundingClientRect();
-
-        let dropPosition = allCards.length;
-
-        for (let i = 0; i < allCards.length; i++) {
-            const cardRect = allCards[i].getBoundingClientRect();
-            if (highlightRect.top + highlightRect.height / 2 < cardRect.top + cardRect.height / 2) {
-                dropPosition = i;
-                break;
-            }
-        }
-
-        if (dropPosition >= allCards.length) {
-            columnContent.appendChild(draggedTask);
-        } else {
-            columnContent.insertBefore(draggedTask, allCards[dropPosition]);
-        }
+        columnContent.appendChild(draggedTask); // Karte ans Ende der Spalte anfügen
     }
 
-    removeHighlightLine();
+    removeHighlightLine(); // Verstecke die Highlight-Line nach dem Drop
 }
 
 /**
- * Creates the highlight line element and appends it to the document body if it does not already exist.
+ * Erstellt die Highlight-Line, falls diese noch nicht existiert.
  */
 function createHighlightLine() {
     if (!document.querySelector('.highlight-line')) {
@@ -133,11 +95,11 @@ function createHighlightLine() {
 }
 
 /**
- * Removes the highlight line by setting its display to 'none'.
+ * Entfernt die Highlight-Line.
  */
 function removeHighlightLine() {
     document.querySelector('.highlight-line').style.display = 'none';
 }
 
-// Initialize the drag-and-drop functionality once the DOM is fully loaded
+// Initialisiere das Drag & Drop beim Laden der Seite
 document.addEventListener('DOMContentLoaded', init);
