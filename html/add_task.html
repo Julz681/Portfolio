@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/desktop_template.css" />
   <link rel="stylesheet" href="../css/board.css">
   <link rel="stylesheet" href="../css/add-task.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="../js/add_task.js" defer></script>
   <!-- <script src="../js/dropwdown.js" defer></script> -->
 
@@ -41,14 +42,20 @@
             <label for="task-description"><span>Description</span></label>
             <textarea class="task-description-text size-20 br-10" id="task-description" name="task-description"
               placeholder="Enter a description" minlength="4"
-              oninput="checkDescriptionInput(`task-description`, `description-value-length-error`)" onfocus="checkDescriptionInput(`task-description`, `description-value-length-error`)"></textarea>
+              oninput="checkDescriptionInput(`task-description`, `description-value-length-error`)"
+              onfocus="checkDescriptionInput(`task-description`, `description-value-length-error`)"></textarea>
             <span class="required-error-message d_none" id="description-value-length-error">Value too short!</span>
           </div>
           <div class="date-picker-wrapper d-flex-column gap-8">
             <label for="date"><span>Due date</span><span class="red">*</span></label>
-            <input type="date" name="date" id="due-date" class="date-picker size-20 br-10"
-              onfocus="toggleInvalidMessage(`due-date-error` , `due-date`)"
-              oninput="toggleInvalidMessage(`due-date-error` , `due-date`)" required />
+            <!-- <div class="date-input-wrapper"> -->
+            <input class="date-picker size-20 br-10" type="text" id="due-date" name="due-date" placeholder="dd/mm/yyyy"
+              maxlength="10" required oninput="checkDateInput(`due-date`)" />
+            <!-- <span class="date-picker-icon"></span> -->
+            <!-- </div> -->
+            <!-- <input type="date" name="date" id="due-date" class="date-picker size-20 br-10"
+              onfocus="toggleInvalidEntryMessages(`due-date-error` , `due-date`)"
+              oninput="toggleInvalidEntryMessages(`due-date-error` , `due-date`)" required /> -->
             <span class="required-error-message d_none" id="due-date-error">This field is required</span>
           </div>
         </div>
@@ -263,7 +270,7 @@
     </section>
   </main>
 
-
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 <!-- <script src="../js/dropwdown.js" defer></script> -->
 

@@ -1,4 +1,5 @@
 async function init() {
+    initDatePicker();
     await includeHTML();
 }
 
@@ -62,6 +63,15 @@ function getInputContainerValueSize(containerId) {
     return inputContainerValue;
 }
 
+// TODO : Write function for date input
+
+function checkDateInput(containerId) {
+    let dateInput = getInputContainer(`${containerId}`);
+    let dateInputValue = getInputValue(dateInput);
+    console.log(dateInputValue);
+    
+}
+
 function showValueErrorMessage (valueSizeErrorContainerId) {
     let errorContainer = getErrorContainer(`${valueSizeErrorContainerId}`);
     return showErrorMessage(errorContainer);
@@ -108,6 +118,14 @@ function removeValueErrorStylingOnInput(inputContainer) {
     }
 }
 
+function initDatePicker() {
+    flatpickr("#due-date", {
+      dateFormat: "d/m/Y",
+      altInput: true,
+      altFormat: "d/m/Y",
+      allowInput: true,
+    });
+}
 
 //commented out, because the header and sidebar would disappear - because of w3 include
 

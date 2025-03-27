@@ -111,14 +111,6 @@
 
 /* date picker styling*/
 
-.date-picker::-webkit-calendar-picker-indicator {
-  background: transparent;
-}
-
-.date-picker::-webkit-calendar-picker-indicator:hover {
-  cursor: pointer;
-}
-
 .date-picker {
   background: url(../assets/img/icons/date-picker.png) no-repeat 95% 50%;
   background-size: 20px;
@@ -132,13 +124,13 @@
   cursor: pointer;
 }
 
-.date-picker:invalid::-webkit-datetime-edit {
+/* .date-picker:invalid::-webkit-datetime-edit {
   color: #d1d1d1;
   font-size: 20px;
   line-height: 24px !important;
   font-weight: 400;
   font-family: "Inter", sans-serif !important;
-}
+} */
 
 /* separator styling */
 
