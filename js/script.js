@@ -1,7 +1,7 @@
 // This function ensures that the arrow always brings the user back to the page they were on before clicking the help button.
 function goBack() {
-    window.history.back();
-  }
+  window.history.back();
+}
 
 // This function is used for the animation at the beginning.
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,6 +29,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // the hover-effect is on the klicked link (Sidebar) active
+  window.addEventListener("DOMContentLoaded", function () {
+    const navLinks = document.querySelectorAll(".main-nav a");
+    const currentPage = window.location.pathname.split("/").pop();
+
+    for (let i = 0; i < navLinks.length; i++) {
+      const link = navLinks[i];
+      const linkPage = link.getAttribute("href").split("/").pop();
+
+      if (linkPage === currentPage) {
+        link.parentElement.classList.add("active");
+      } else {
+        link.parentElement.classList.remove("active");
+      }
+    }
+  });
+
   /**
    * This function updates the user profile icon and initials in the summary.
    * It sets the profile initials to "G" for guests and "SM" for logged-in users.
@@ -49,20 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Alle Board-Karten (Task-Elemente) abrufen
-const boardCards = document.querySelectorAll('.board-card');
+const boardCards = document.querySelectorAll(".board-card");
 
 // Die Spalten, in die die Karten verschoben werden können, abrufen
-const columns = document.querySelectorAll('.board-columns');
+const columns = document.querySelectorAll(".board-columns");
 
 // Durchlaufen Sie alle Karten und fügen Sie Event-Listener für den Drag-Start hinzu
-boardCards.forEach(card => {
-  card.addEventListener('dragstart', (e) => {
+boardCards.forEach((card) => {
+  card.addEventListener("dragstart", (e) => {
     // Setze den ID-Wert der Karte als Data, die im Drag-and-Drop gespeichert wird
-    e.dataTransfer.setData('text/plain', card.dataset.taskId);
-    
+    e.dataTransfer.setData("text/plain", card.dataset.taskId);
+
     // Karte um 20 Grad nach rechts drehen
-    card.style.transform = 'rotate(20deg)';
+    card.style.transform = "rotate(20deg)";
   });
 });
-
-
