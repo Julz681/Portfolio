@@ -70,7 +70,7 @@ header {
 .contacts-list {
   flex: 1;
   overflow-y: auto;
-  scrollbar-width: thin; 
+  scrollbar-width: thin;
   padding: 0 20px 20px;
   min-height: 0;
 }
@@ -392,7 +392,7 @@ header {
 #error-message {
   color: red;
   display: none;
-  margin-left: 50px;
+  margin-left: -70px;
   margin-bottom: 16px;
 }
 
@@ -488,6 +488,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: auto;
 }
 
 .add-contact-avatar {
@@ -495,7 +496,7 @@ header {
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid #fff;
-  margin-right: 85px;
+  margin-left: -90px;
   margin-top: 30px;
 }
 
@@ -503,6 +504,7 @@ header {
   width: 140px;
   height: 140px;
   object-fit: cover;
+  margin-right: 70px;
 }
 
 .contact-data {
@@ -510,6 +512,7 @@ header {
   flex-direction: column;
   gap: 20px;
   width: 340px;
+  margin-right: 45px;
 }
 
 .contact-data label {
@@ -518,7 +521,7 @@ header {
 }
 
 .input-field {
-  width: 100%;
+  width: 422px;
   padding: 10px 40px 10px 10px;
   font-size: 16px;
   box-sizing: border-box;
@@ -533,65 +536,101 @@ header {
 
 .imgs-input_contact {
   position: absolute;
-  right: 10px;
+  right: -60px;
   top: 50%;
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  opacity: 0.7;
 }
 
 .add-contact-buttons {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   margin-top: 10px;
-  margin-left: 190px;
+  margin-left: 90px;
 }
 
-.add-contact-buttons button {
-  padding: 12px 20px;
-  font-size: 16px;
+#cancelAddContact,
+#createContact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  font-size: 18px;
+  font-weight: 400;
+  border-radius: 10px;
+  border: 1px solid #2a3647;
+  gap: 4px;
   cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  box-sizing: border-box;
 }
 
 #cancelAddContact {
   background-color: #ffffff;
-  border: 1px solid #2a3647;
   color: #2a3647;
-  position: relative;
+}
+
+#cancelAddContact:active {
+  border: 1px solid #091931;
+  color: #091931;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cancel-icon {
+  background-image: url(../assets/img/icons/cancel.png);
+  width: 24px;
+  height: 24px;
+}
+
+#cancelAddContact:hover .cancel-icon {
+  background-image: url(../assets/img/icons/cancel_hover.png);
 }
 
 #cancelAddContact:hover {
-  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
-  color: #29abe2;
   border: 1px solid #29abe2;
+  color: #29abe2;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 #createContact {
   background-color: #2a3647;
-  color: #fff;
-  font-weight: bold;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 #createContact:hover {
+  border: 1px solid #29abe2;
   background-color: #29abe2;
-  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#createContact:active {
+  border: 1px solid #2a3647;
+  background-color: #091931;
+}
+
+.checkmark-icon {
+  background: url(../assets/img/icons/check-mark-icon.png) no-repeat center
+    center;
+  width: 24px;
+  height: 24px;
 }
 
 .delete-btn-contact {
   display: none;
 }
 
-#overlayAvatar {
-  width: 150px;
-  height: 150px;
-  color: white;
-  font-weight: bold;
+.avatar-initials {
+  height: 140px;
+  width: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 47px;
+  font-weight: bold;
+  color: white;
+  border-radius: 50%;
+}
+
+.edit-avatar {
+  margin-right: 90px;
 }

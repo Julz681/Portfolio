@@ -128,7 +128,10 @@ function openOverlay() {
   document.getElementById("addContactOverlay").classList.add("open");
   document.getElementById("overlayTitle").textContent = "Add Contact";
   document.getElementById("overlayDescription").style.display = "block";
-  document.getElementById("createContact").textContent = "Create Contact ✓";
+  document.getElementById("createContact").innerHTML = `
+  <span>${isEditing ? "Save" : "Create Contact"}</span>
+  <span class="checkmark-icon"></span>
+`;
   document.getElementById(
     "overlayAvatar"
   ).innerHTML = `<img class="vector" src="../assets/img/addnewcontact.png">`;
@@ -154,7 +157,7 @@ function animateCancelBtn() {
 
   setTimeout(() => {
     cancel.style.transition = "margin-left 0.3s ease-in-out";
-    cancel.style.marginLeft = "-75px";
+    cancel.style.marginLeft = "-95px";
   }, 100);
 }
 
@@ -164,6 +167,8 @@ function resetOverlay() {
   clearForm();
   isEditing = false;
   currentEditingContact = null;
+  resetAvatarToDefault();
+  resetCancelButtonToDefault();
 }
 
 // clears all input from the overlay
@@ -190,7 +195,7 @@ function bindCreateButton() {
       } else {
         createContactElement(name, email, phone, list);
       }
-      document.getElementById("addContactOverlay").classList.remove("open");
+      resetOverlay();
     });
 }
 
@@ -288,27 +293,112 @@ function bindDeleteButton() {
     });
 }
 
-// activates the edit mode and the associated data
+// start the edit mode, if the edit-btn is klicked
 function bindEditButton() {
   document.addEventListener("click", (e) => {
     if (!e.target.closest("#edit")) return;
-    const selected = document.querySelector(".contact-item.selected");
-    if (!selected) return;
-    const avatar = selected.querySelector(".contact-avatar");
-    const avatarOverlay = document.getElementById("overlayAvatar");
-    avatarOverlay.textContent = avatar.textContent;
-    avatarOverlay.style.backgroundColor = avatar.style.backgroundColor;
-    document.getElementById("contactName").value = selected.dataset.name;
-    document.getElementById("contactEmail").value = selected.dataset.email;
-    document.getElementById("contactPhone").value = selected.dataset.phone;
-    document.getElementById("overlayTitle").textContent = "Edit Contact";
-    document.getElementById("overlayDescription").style.display = "none";
-    document.getElementById("createContact").textContent = "Save ✓";
-    document.getElementById("addContactOverlay").classList.add("open");
-    isEditing = true;
-    currentEditingContact = selected;
-    animateCancelBtn();
+    startEditMode();
   });
+}
+
+// prepares everything for editing a contact
+function startEditMode() {
+  const selected = document.querySelector(".contact-item.selected");
+  if (!selected) return;
+
+  setOverlayText("Edit Contact");
+  fillFormFields(selected);
+  updateAvatarForEdit(selected);
+  updateButtonsForEdit();
+
+  document.getElementById("addContactOverlay").classList.add("open");
+  isEditing = true;
+  currentEditingContact = selected;
+  animateCancelBtn();
+}
+
+// changes the overlay text
+function setOverlayText(title) {
+  document.getElementById("overlayTitle").textContent = title;
+  document.getElementById("overlayDescription").style.display = "none";
+}
+
+// enter the name, email, and phone number of the selected contact into the form fields
+function fillFormFields(contact) {
+  document.getElementById("contactName").value = contact.dataset.name;
+  document.getElementById("contactEmail").value = contact.dataset.email;
+  document.getElementById("contactPhone").value = contact.dataset.phone;
+}
+
+// update the avatar
+function updateAvatarForEdit(contact) {
+  const avatar = contact.querySelector(".contact-avatar");
+  const initials = avatar.textContent;
+  const bgColor = avatar.style.backgroundColor;
+
+  const avatarOverlay = document.getElementById("overlayAvatar");
+  avatarOverlay.innerHTML = `<div class="avatar-initials">${initials}</div>`;
+  avatarOverlay.style.backgroundColor = bgColor;
+  avatarOverlay.classList.add("edit-avatar");
+}
+
+// reset the avatar to the img for create contact
+function resetAvatarToDefault() {
+  const avatarOverlay = document.getElementById("overlayAvatar");
+  avatarOverlay.classList.remove("edit-avatar");
+  avatarOverlay.innerHTML = `
+    <img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar">
+  `;
+  avatarOverlay.style.backgroundColor = "transparent";
+}
+
+// changes the buttons for edit mode
+function updateButtonsForEdit() {
+  const createBtn = document.getElementById("createContact");
+  createBtn.innerHTML = `
+    <span>Save</span>
+    <span class="checkmark-icon"></span>
+  `;
+
+  const deleteBtn = document.getElementById("cancelAddContact");
+  deleteBtn.innerHTML = "Delete";
+  deleteBtn.classList.add("delete-mode");
+  deleteBtn.onclick = deleteCurrentContact;
+  const newDeleteBtn = deleteBtn.cloneNode(true);
+  deleteBtn.parentNode.replaceChild(newDeleteBtn, deleteBtn);
+  newDeleteBtn.innerHTML = "Delete";
+  newDeleteBtn.classList.add("delete-mode");
+  newDeleteBtn.addEventListener("click", deleteCurrentContact);
+}
+
+// reset cancel button (used in create Contact mode)
+function resetCancelButtonToDefault() {
+  const cancelBtn = document.getElementById("cancelAddContact");
+  if (!cancelBtn) return;
+  cancelBtn.innerHTML = `
+    <span>Cancel</span>
+    <span class="cancel-icon"></span>
+  `;
+  cancelBtn.classList.remove("delete-mode");
+  cancelBtn.onclick = resetOverlay;
+}
+
+// delete the current contact
+function deleteCurrentContact() {
+  const name = currentEditingContact?.dataset.name;
+  if (!name) return;
+
+  document.querySelectorAll(".contact-item").forEach((item) => {
+    if (item.dataset.name === name) item.remove();
+  });
+
+  document.querySelectorAll(".contact-group").forEach((group) => {
+    if (!group.querySelector(".contact-item")) group.remove();
+  });
+
+  document.getElementById("addContactOverlay").classList.remove("open");
+  document.querySelector(".contacts-right-bottom").innerHTML = "";
+  resetOverlay();
 }
 
 // activates autofill when all fields are empty and receive focus
