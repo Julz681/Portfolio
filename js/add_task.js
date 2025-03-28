@@ -68,14 +68,28 @@ function getInputContainerValue(containerId) {
 function checkDateInput(containerId) {
     let dateInput = getInputContainer(containerId);
     let dateInputValue = getInputValue(dateInput);
-    
-    console.log("Value", dateInputValue);
-    let currentDate = new Date();
-    if (dateInputValue == currentDate.setHours(0,0,0)) {
+    let formattedDateValue = formatDateValue(dateInputValue).setHours(0,0,0,0);
+    let currentDate = new Date().setHours(0,0,0,0);
+    if (dateFormat.test(dateInputValue )) {
+        console.log("Date is in the correct format");
+    } 
+    else if (formattedDateValue < currentDate) {
+        console.log("Date needs to be in the future");
+    } else if (formattedDateValue == currentDate) {
         console.log("Date is today");
-        
-    }
-    
+    } else {
+        return console.log("Date is fine");
+    }    
+}
+
+let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
+
+function formatDateValue(dateInputValue) {
+    let dateParts = dateInputValue.split("/");
+    let day = dateParts[0];
+    let month = dateParts[1];
+    let year = dateParts[2];
+    return new Date(year, month - 1, day);
 }
 
 function showValueErrorMessage (valueSizeErrorContainerId) {
