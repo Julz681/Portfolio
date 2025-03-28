@@ -33,8 +33,8 @@
             <label for="task-title"><span>Title</span><span class="red">*</span></label>
             <input class="task-input-fields size-20 br-10" type="text" id="task-title" name="task-title"
               placeholder="Enter a title" minlength="4"
-              onfocus="toggleInvalidEntryMessages(`task-title-error`, `value-length-error`, `task-title`)"
-              oninput="toggleInvalidEntryMessages(`task-title-error`,`value-length-error`, `task-title`)" required />
+              onfocus="checkTitleInputValue(`task-title-error`, `value-length-error`, `task-title`)"
+              oninput="checkTitleInputValue(`task-title-error`,`value-length-error`, `task-title`)" required />
             <span class="required-error-message d_none" id="task-title-error">This field is required!</span>
             <span class="required-error-message d_none" id="value-length-error">Value too short!</span>
           </div>
@@ -50,7 +50,7 @@
             <label for="date"><span>Due date</span><span class="red">*</span></label>
             <!-- <div class="date-input-wrapper"> -->
             <input class="date-picker size-20 br-10" type="text" id="due-date" name="due-date" placeholder="dd/mm/yyyy"
-              maxlength="10" required oninput="checkDateInput(`due-date`)" />
+              maxlength="10" required onopen="checkDateInput(`due-date`)" />
             <!-- <span class="date-picker-icon"></span> -->
             <!-- </div> -->
             <!-- <input type="date" name="date" id="due-date" class="date-picker size-20 br-10"

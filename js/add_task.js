@@ -24,15 +24,15 @@ async function fetchFile(element, file) {
     }
 }
 
-function toggleInvalidEntryMessages(requiredErrorContainerId, valueSizeErrorContainerId,  containerId) {
+function checkTitleInputValue(requiredErrorContainerId, valueSizeErrorContainerId,  containerId) {
     let requiredErrorContainer = getErrorContainer(`${requiredErrorContainerId}`);
     let valueSizeErrorContainer = getErrorContainer(`${valueSizeErrorContainerId}`)
     let inputContainer = getInputContainer(`${containerId}`);
-    let inputContainerValue = getInputValue(inputContainer);     
-    requiredErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, inputContainerValue);
+    let inputContainerValue = getInputContainerValue(`${containerId}`);     
+    titleErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, inputContainerValue);
 }
 
-function requiredErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, containerValue) {
+function titleErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, containerValue) {
     if(containerValue.length == 0 || containerValue.length <= 3) {
         showErrorMessage(valueSizeErrorContainer);
         showErrorMessage(requiredErrorContainer);
@@ -49,7 +49,7 @@ function requiredErrorsHandling(requiredErrorContainer, valueSizeErrorContainer,
 }
 
 function checkDescriptionInput(containerId, valueSizeErrorContainerId) {
-    let valueSize = getInputContainerValueSize(`${containerId}`);
+    let valueSize = getInputContainerValue(containerId);
     if(valueSize.length <= 3 && valueSize.length > 0) {
         showValueErrorMessage(`${valueSizeErrorContainerId}`)
     } else if (valueSize.length == 0 || valueSize.length > 3) {
@@ -57,8 +57,8 @@ function checkDescriptionInput(containerId, valueSizeErrorContainerId) {
     }
 }
 
-function getInputContainerValueSize(containerId) {
-    let inputContainer = getInputContainer(`${containerId}`);
+function getInputContainerValue(containerId) {
+    let inputContainer = getInputContainer(containerId);
     let inputContainerValue = getInputValue(inputContainer);
     return inputContainerValue;
 }
@@ -66,24 +66,30 @@ function getInputContainerValueSize(containerId) {
 // TODO : Write function for date input
 
 function checkDateInput(containerId) {
-    let dateInput = getInputContainer(`${containerId}`);
+    let dateInput = getInputContainer(containerId);
     let dateInputValue = getInputValue(dateInput);
-    console.log(dateInputValue);
+    
+    console.log("Value", dateInputValue);
+    let currentDate = new Date();
+    if (dateInputValue == currentDate.setHours(0,0,0)) {
+        console.log("Date is today");
+        
+    }
     
 }
 
 function showValueErrorMessage (valueSizeErrorContainerId) {
-    let errorContainer = getErrorContainer(`${valueSizeErrorContainerId}`);
+    let errorContainer = getErrorContainer(valueSizeErrorContainerId);
     return showErrorMessage(errorContainer);
 }
 
 function hideValueErrorMessage(valueSizeErrorContainerId) {
-    let errorContainer = getErrorContainer(`${valueSizeErrorContainerId}`);
+    let errorContainer = getErrorContainer(valueSizeErrorContainerId);
     return removeErrorMessage(errorContainer);
 }
 
 function getInputContainer(id) {
-    return document.getElementById(`${id}`)
+    return document.getElementById(id)
 }
 
 function getInputValue(inputContainer) {
@@ -91,7 +97,7 @@ function getInputValue(inputContainer) {
 }
 
 function getErrorContainer (id) {
-    return document.getElementById(`${id}`);
+    return document.getElementById(id);
 }
 
 function showErrorMessage(errorContainer) {
@@ -120,10 +126,16 @@ function removeValueErrorStylingOnInput(inputContainer) {
 
 function initDatePicker() {
     flatpickr("#due-date", {
-      dateFormat: "d/m/Y",
-      altInput: true,
-      altFormat: "d/m/Y",
-      allowInput: true,
+        dateFormat: "d/m/Y",
+        altInput: true,
+        altFormat: "d/m/Y",
+        allowInput: true,
+        onOpen: function() {
+            checkDateInput("due-date");
+        },
+        onChange: function() {
+            checkDateInput("due-date");
+        }
     });
 }
 
