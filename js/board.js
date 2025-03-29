@@ -225,7 +225,10 @@ function getUserAvatarsHTML(assignedTo) {
       }
     } else {
       let parts = name.split(" ");
-      let initials = parts.map(part => part[0]).join("").toUpperCase();
+      let initials = parts
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase();
       let firstLetter = initials.charAt(0);
       let bgColor = letterColors[firstLetter] || "#888";
 
@@ -326,12 +329,17 @@ function setModalUsers(task) {
     namesHTML += "<span>" + name + "</span>";
   }
 
-  let html = ""
-    + "<span>Assigned to:</span>"
-    + "<div class='user-line d-flex-space-between gap-16'>"
-    +   "<div class='d-flex-column gap-16'>" + avatars + "</div>"
-    +   "<div class='user-names d-flex-column gap-24'>" + namesHTML + "</div>"
-    + "</div>";
+  let html =
+    "" +
+    "<span>Assigned to:</span>" +
+    "<div class='user-line d-flex-space-between gap-16'>" +
+    "<div class='d-flex-column gap-16'>" +
+    avatars +
+    "</div>" +
+    "<div class='user-names d-flex-column gap-24'>" +
+    namesHTML +
+    "</div>" +
+    "</div>";
 
   box.innerHTML = html;
 }
@@ -502,33 +510,43 @@ function saveEdit() {
   document.getElementById("task-card-modal").classList.add("active");
 }
 
-let searchInput = document.getElementById('task-search');
+let searchInput = document.getElementById("task-search");
+let noResults = document.getElementById("no-results");
 
-searchInput.addEventListener('input', function () {
+searchInput.addEventListener("input", function () {
   let searchText = searchInput.value.toLowerCase();
-  let allCards = document.querySelectorAll('.board-card');
+  handleSearch(searchText);
+});
 
-  if (searchText.length < 2) {
-    for (let i = 0; i < allCards.length; i++) {
-      allCards[i].style.display = 'flex';
-    }
-    return;
-  }
+function handleSearch(text) {
+  let allCards = document.querySelectorAll(".board-card");
+  let found = 0;
 
   for (let i = 0; i < allCards.length; i++) {
     let card = allCards[i];
-    let title = card.querySelector('.board-card-title').textContent.toLowerCase();
-    let description = card.querySelector('.board-card-description').textContent.toLowerCase();
+    let title = card
+      .querySelector(".board-card-title")
+      .textContent.toLowerCase();
+    let description = card
+      .querySelector(".board-card-description")
+      .textContent.toLowerCase();
 
-    if (title.includes(searchText) || description.includes(searchText)) {
-      card.style.display = 'flex';
+    if (text.length < 2 || title.includes(text) || description.includes(text)) {
+      card.style.display = "flex";
+      if (
+        text.length >= 2 &&
+        (title.includes(text) || description.includes(text))
+      ) {
+        found++;
+      }
     } else {
-      card.style.display = 'none';
+      card.style.display = "none";
     }
   }
-});
 
-
-
-
-
+  if (text.length >= 2 && found === 0) {
+    noResults.style.display = "block";
+  } else {
+    noResults.style.display = "none";
+  }
+}

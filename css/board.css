@@ -257,6 +257,7 @@ header {
   margin-left: 270px;
   position: relative;
   gap: 50px;
+  min-height: 400px;
 }
 
 .board-columns {
@@ -1088,4 +1089,18 @@ header {
   align-items: center;
   justify-content: center;
   margin-right: -8px;
+}
+
+.no-results-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  padding: 20px 40px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 24px;
+  color: #42526e;
+  width: auto;
 }
