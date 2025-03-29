@@ -51,6 +51,35 @@ async function fetchFile(element, file) {
   }
 }
 
+const letterColors = {
+  A: "#D32F2F",
+  B: "#C2185B",
+  C: "#7B1FA2",
+  D: "#512DA8",
+  E: "#1976D2",
+  F: "#0288D1",
+  G: "#00796B",
+  H: "#388E3C",
+  I: "#689F38",
+  J: "#F57C00",
+  K: "#E64A19",
+  L: "#5D4037",
+  M: "#455A64",
+  N: "#263238",
+  O: "#D81B60",
+  P: "#8E24AA",
+  Q: "#673AB7",
+  R: "#303F9F",
+  S: "#0288D1",
+  T: "#0097A7",
+  U: "#00796B",
+  V: "#388E3C",
+  W: "#689F38",
+  X: "#F57C00",
+  Y: "#E64A19",
+  Z: "#5D4037",
+};
+
 const tasks = [
   {
     id: "task-1",
@@ -182,12 +211,39 @@ function toggleEmptyMsg(column, tasks) {
   if (msg) msg.classList.toggle("d_none", tasks.length > 0);
 }
 
+function getUserAvatarsHTML(assignedTo) {
+  let result = "";
+
+  for (let i = 0; i < assignedTo.length; i++) {
+    let name = assignedTo[i];
+    let contact = document.querySelector(`.contact-item[data-name="${name}"]`);
+
+    if (contact) {
+      let avatar = contact.querySelector(".contact-avatar");
+      if (avatar) {
+        result += avatar.outerHTML;
+      }
+    } else {
+      let parts = name.split(" ");
+      let initials = parts.map(part => part[0]).join("").toUpperCase();
+      let firstLetter = initials.charAt(0);
+      let bgColor = letterColors[firstLetter] || "#888";
+
+      result += `
+        <div class="contact-avatar" style="background-color: ${bgColor};">
+          ${initials}
+        </div>
+      `;
+    }
+  }
+
+  return result;
+}
+
 function createTaskHTML(task) {
   const label = task.taskType === "technical" ? "Technical Task" : "User Story";
   const color = task.taskType === "technical" ? "#1fd7c1" : "blue";
-  const users = task.assignedTo
-    .map((u) => `<span class='user-icons d-flex-center'>${u[0]}</span>`)
-    .join("");
+  const users = getUserAvatarsHTML(task.assignedTo);
   return `
     <div class="board-card d-flex-center" data-task-id="${task.id}">
       <div class="board-card-content d-flex-column">
@@ -261,17 +317,23 @@ function setModalPriority(task) {
 }
 
 function setModalUsers(task) {
-  const box = document.querySelector(".assignments");
-  box.innerHTML =
-    `<span>Assigned to:</span>` +
-    task.assignedTo
-      .map(
-        (user) => `
-    <div class="user-line gap-16 d-flex-space-between">
-      <span class="user-icons d-flex-center">${user[0]}</span><span>${user}</span>
-    </div>`
-      )
-      .join("");
+  let box = document.querySelector(".assignments");
+  let avatars = getUserAvatarsHTML(task.assignedTo);
+  let namesHTML = "";
+
+  for (let i = 0; i < task.assignedTo.length; i++) {
+    let name = task.assignedTo[i];
+    namesHTML += "<span>" + name + "</span>";
+  }
+
+  let html = ""
+    + "<span>Assigned to:</span>"
+    + "<div class='user-line d-flex-space-between gap-16'>"
+    +   "<div class='d-flex-column gap-16'>" + avatars + "</div>"
+    +   "<div class='user-names d-flex-column gap-24'>" + namesHTML + "</div>"
+    + "</div>";
+
+  box.innerHTML = html;
 }
 
 function setModalSubtasks(task) {
@@ -465,3 +527,8 @@ searchInput.addEventListener('input', function () {
     }
   }
 });
+
+
+
+
+

@@ -1077,3 +1077,15 @@ header {
 .d-none {
   display: none !important;
 }
+
+.contact-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -8px;
+}
