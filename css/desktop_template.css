@@ -215,3 +215,109 @@ body {
   font-weight: bold;
   color: #29abe2;
 }
+
+.mobile-nav {
+  display: none;
+}
+
+.only-responsive {
+  display: none !important;
+}
+
+
+@media (max-width: 1200px) {
+  .sidebar {
+    display: none;
+  }
+
+  .header {
+    padding: 16px;
+    height: 80px !important;
+  }
+
+  .headline {
+    display: none;
+  }
+
+  .help-btn {
+    display: none !important;
+  }
+
+  .only-responsive {
+    display: block !important;
+  }
+
+  .dropdown-menu {
+    top: 80px;
+    right: 16px;
+    width: 150px;
+  }
+
+  .dropdown-menu a {
+    font-size: 16px;
+  }
+
+
+  .nav-right {
+    margin-left: auto;
+  }
+
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 80px;
+    width: 100%;
+    background-color: #2a3647;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-nav a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .mobile-nav img {
+    width: 24px;
+    height: 24px;
+  }
+
+  body {
+    padding-bottom: 80px; 
+  }
+
+  .user-profile {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user-profile img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user-profile span {
+    font-size: 14px;
+  }
+
+  .greeting {
+    display: none;
+    width: 1px;
+  }
+
+  .container {
+    margin-left: -320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

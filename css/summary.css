@@ -209,6 +209,7 @@ body {
   width: 100%;
   position: relative;
   top: 400px;
+  padding: 24px;
 }
 
 .highlight {
@@ -254,3 +255,6 @@ body {
     background-color: transparent;
 }
 
+.only-responsive {
+  display: none !important;
+}

@@ -632,3 +632,7 @@ header {
 .edit-avatar {
   margin-right: 90px;
 }
+
+.only-responsive {
+  display: none !important;
+}

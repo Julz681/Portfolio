@@ -126,3 +126,18 @@ strong {
 p {
   max-width: 1440px;
 }
+
+.only-responsive {
+  display: none !important;
+}
+
+@media (max-width: 1200px) {
+  .help-content {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  .help-div {
+    padding-right: 16px;
+  }
+}

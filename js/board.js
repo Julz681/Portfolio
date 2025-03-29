@@ -444,7 +444,11 @@ function setupAssignedToDropdown() {
   const select = document.getElementById("assigned-select");
   const arrow = document.getElementById("select-arrow");
   const placeholder = document.querySelector(".select-placeholder");
-  select.addEventListener("mousedown", () => toggleArrow(arrow));
+  select.addEventListener("mousedown", () => {
+    toggleArrow(arrow);
+    fillEditDropdownWithContacts(); 
+  });
+  
   select.addEventListener("change", () => {
     placeholder.style.display = select.value ? "none" : "block";
     resetArrow(arrow);

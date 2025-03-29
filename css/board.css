@@ -1104,3 +1104,8 @@ header {
   color: #42526e;
   width: auto;
 }
+
+.only-responsive {
+  display: none !important;
+}
+

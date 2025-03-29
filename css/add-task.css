@@ -603,3 +603,7 @@
   border: 1px solid #2a3647;
   background-color: #091931;
 }
+
+.only-responsive {
+  display: none !important;
+}

@@ -51,6 +51,11 @@ button {
   z-index: 1001;
 }
 
+.only-responsive {
+  display: none !important;
+}
+
+
 @keyframes backgroundExpand {
   0% {
     background-color: #f6f7f8;
