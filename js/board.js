@@ -440,3 +440,28 @@ function saveEdit() {
   document.getElementById("task-card-modal").classList.add("active");
 }
 
+let searchInput = document.getElementById('task-search');
+
+searchInput.addEventListener('input', function () {
+  let searchText = searchInput.value.toLowerCase();
+  let allCards = document.querySelectorAll('.board-card');
+
+  if (searchText.length < 2) {
+    for (let i = 0; i < allCards.length; i++) {
+      allCards[i].style.display = 'flex';
+    }
+    return;
+  }
+
+  for (let i = 0; i < allCards.length; i++) {
+    let card = allCards[i];
+    let title = card.querySelector('.board-card-title').textContent.toLowerCase();
+    let description = card.querySelector('.board-card-description').textContent.toLowerCase();
+
+    if (title.includes(searchText) || description.includes(searchText)) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  }
+});
