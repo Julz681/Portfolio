@@ -224,6 +224,10 @@ body {
   display: none !important;
 }
 
+.logo-only-responsive {
+  display: none;
+}
+
 
 @media (max-width: 1200px) {
   .sidebar {
@@ -237,6 +241,10 @@ body {
 
   .headline {
     display: none;
+  }
+
+  .logo-only-responsive {
+    display: block;
   }
 
   .help-btn {
