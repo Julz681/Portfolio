@@ -1,5 +1,7 @@
+let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
+
 async function init() {
-    initDatePicker();
+  //  initDatePicker();
     await includeHTML();
 }
 
@@ -68,21 +70,29 @@ function getInputContainerValue(containerId) {
 function checkDateInput(containerId) {
     let dateInput = getInputContainer(containerId);
     let dateInputValue = getInputValue(dateInput);
+    let requiredErrorContainerRef = getErrorContainer("due-date-required-error-message");
+    let invalidInputErrorContainerRef = getErrorContainer("due-date-time-error-message");
+    let dateFormatErrorContainerRef = getErrorContainer("date-format-error-message");
     let formattedDateValue = formatDateValue(dateInputValue).setHours(0,0,0,0);
     let currentDate = new Date().setHours(0,0,0,0);
-    if (dateFormat.test(dateInputValue )) {
-        console.log("Date is in the correct format");
+    if(dateInputValue.length === 0) {
+        showErrorMessage(requiredErrorContainerRef);
+        fp.altInput.classList.add("task-input-fields-invalid");
+    }
+    else if (!dateFormat.test(dateInputValue )) {
+        showErrorMessage(dateFormatErrorContainerRef);
+        fp.altInput.classList.add("task-input-fields-invalid");
     } 
-    else if (formattedDateValue < currentDate) {
-        console.log("Date needs to be in the future");
-    } else if (formattedDateValue == currentDate) {
-        console.log("Date is today");
+    else if (formattedDateValue < currentDate|| formattedDateValue == currentDate) {
+        showErrorMessage(invalidInputErrorContainerRef);
+        fp.altInput.classList.add("task-input-fields-invalid");
     } else {
-        return console.log("Date is fine");
+        fp.altInput.classList.remove("task-input-fields-invalid");
+        removeErrorMessage(requiredErrorContainerRef);
+        removeErrorMessage(dateFormatErrorContainerRef);
+        removeErrorMessage(invalidInputErrorContainerRef);
     }    
 }
-
-let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
 
 function formatDateValue(dateInputValue) {
     let dateParts = dateInputValue.split("/");
@@ -138,20 +148,33 @@ function removeValueErrorStylingOnInput(inputContainer) {
     }
 }
 
-function initDatePicker() {
-    flatpickr("#due-date", {
-        dateFormat: "d/m/Y",
-        altInput: true,
-        altFormat: "d/m/Y",
-        allowInput: true,
-        onOpen: function() {
-            checkDateInput("due-date");
-        },
-        onChange: function() {
-            checkDateInput("due-date");
-        }
-    });
-}
+//function initDatePicker() {
+//    const fp = flatpickr("#due-date", {
+//        dateFormat: "d/m/Y",
+//        altInput: true,
+//        altFormat: "d/m/Y",
+//        allowInput: true,
+//        onOpen: function() {
+//            checkDateInput("due-date");
+//        },
+//        onChange: function() {
+//            checkDateInput("due-date");
+//        }
+//    });
+//}
+
+const fp = flatpickr("#due-date", {
+    dateFormat: "d/m/Y",
+    altInput: true,
+    altFormat: "d/m/Y",
+    allowInput: true,
+    onOpen: function() {
+        checkDateInput("due-date");
+    },
+    onChange: function() {
+        checkDateInput("due-date");
+    }
+});
 
 //commented out, because the header and sidebar would disappear - because of w3 include
 

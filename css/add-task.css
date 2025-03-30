@@ -56,7 +56,7 @@
 }
 
 .task-input-fields-invalid {
-  border: 1px solid #ff8190;
+  border: 1px solid #ff8190 !important;
 }
 
 .task-input-fields:invalid:not(:placeholder-shown) {

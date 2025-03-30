@@ -57,7 +57,9 @@
             <!-- <input type="date" name="date" id="due-date" class="date-picker size-20 br-10"
               onfocus="toggleInvalidEntryMessages(`due-date-error` , `due-date`)"
               oninput="toggleInvalidEntryMessages(`due-date-error` , `due-date`)" required /> -->
-            <span class="required-error-message d_none" id="due-date-error">This field is required</span>
+            <span class="required-error-message d_none" id="due-date-required-error-message">This field is required!</span>
+            <span class="required-error-message d_none" id="due-date-time-error-message">Date needs to be in the future!</span>
+            <span class="required-error-message d_none" id="date-format-error-message">Expected format dd/mm/yyyy!</span>
           </div>
         </div>
         <div class="separator"></div>
