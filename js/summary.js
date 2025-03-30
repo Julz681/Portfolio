@@ -1,57 +1,69 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    /**
+     * This function updates the greeting message based on the current time of day.
+     */
+    function updateGreeting() {
+        const greetingElement = document.querySelector(".greeting p");
+        const currentHour = new Date().getHours();
+        let greetingText = "Good morning";
 
-/**
- * This function updates the greeting message based on the current time of day.
- * It displays "Good morning", "Good afternoon", or "Good evening" 
- * depending on the hour and updates the content of the greeting element.
- */
-function updateGreeting() {
-    // This function selects the greeting paragraph element
-    const greetingElement = document.querySelector(".greeting p");
+        if (currentHour >= 12 && currentHour < 18) {
+            greetingText = "Good afternoon";
+        } else if (currentHour >= 18 || currentHour < 5) {
+            greetingText = "Good evening";
+        }
 
-    // This function gets the current hour (0-23)
-    const currentHour = new Date().getHours();
+        const isGuest = localStorage.getItem("isGuest") === "true";
+        const userName = isGuest ? "Guest" : localStorage.getItem("loggedInUserName") || "User";
 
-    // Default greeting message
-    let greetingText = "Good morning";
-
-    // Adjust the greeting based on the time of day
-    if (currentHour >= 12 && currentHour < 18) {
-        greetingText = "Good afternoon";
-    } else if (currentHour >= 18 || currentHour < 5) {
-        greetingText = "Good evening";
+        greetingElement.innerHTML = `${greetingText}, <br> <span class='highlight'>${userName}</span>`;
     }
 
-    // Get the user name from localStorage or use "Guest"
-    const isGuest = localStorage.getItem("isGuest") === "true";
-    const userName = isGuest ? "Guest" : "Sofia Müller";
+    /**
+     * This function counts the tasks and updates the task metrics.
+     */
+    function updateTaskMetrics() {
+        const todoCount = document.querySelectorAll(".to-do-wrapper .board-card").length;
+        const inProgressCount = document.querySelectorAll(".in-progress-wrapper .board-card").length;
+        const awaitFeedbackCount = document.querySelectorAll(".await-feedback-wrapper .board-card").length;
+        const doneCount = document.querySelectorAll(".done-wrapper .board-card").length;
+        const totalCount = todoCount + inProgressCount + awaitFeedbackCount + doneCount;
 
-    // Update the greeting message in the DOM
-    greetingElement.innerHTML = `${greetingText}, <br> <span class='highlight'>${userName}</span>`;
-}
+        document.querySelector(".metrics .metric-box:nth-of-type(1) h2").textContent = todoCount;
+        document.querySelector(".metrics .metric-box:nth-of-type(2) h2").textContent = doneCount;
+        document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(1) h2").textContent = totalCount;
+        document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(2) h2").textContent = inProgressCount;
+        document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(3) h2").textContent = awaitFeedbackCount;
+    }
 
-/**
- * This function counts the tasks and updates the task metrics.
- */
-function updateTaskMetrics() {
-    const todoCount = document.querySelectorAll(".to-do-wrapper .board-card").length;
-    const inProgressCount = document.querySelectorAll(".in-progress-wrapper .board-card").length;
-    const awaitFeedbackCount = document.querySelectorAll(".await-feedback-wrapper .board-card").length;
-    const doneCount = document.querySelectorAll(".done-wrapper .board-card").length;
-    const totalCount = todoCount + inProgressCount + awaitFeedbackCount + doneCount;
+    /**
+     * This function updates the user profile initials.
+     */
+    function updateUserProfileInitials() {
+        const userProfileSpan = document.querySelector("#userProfile span");
+        const isGuest = localStorage.getItem("isGuest") === "true";
+        const userName = localStorage.getItem("loggedInUserName");
 
-    document.querySelector(".metrics .metric-box:nth-of-type(1) h2").textContent = todoCount;
-    document.querySelector(".metrics .metric-box:nth-of-type(2) h2").textContent = doneCount;
-    document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(1) h2").textContent = totalCount;
-    document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(2) h2").textContent = inProgressCount;
-    document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(3) h2").textContent = awaitFeedbackCount;
-}
+        if (isGuest) {
+            userProfileSpan.textContent = "G"; // Immer "G" für Gäste
+        } else if (userName) {
+            const names = userName.split(" ");
+            let initials = "";
+            if (names.length > 0) {
+                initials += names[0].charAt(0).toUpperCase();
+            }
+            if (names.length > 1) {
+                initials += names[1].charAt(0).toUpperCase();
+            }
+            userProfileSpan.textContent = initials;
+        } else {
+            userProfileSpan.textContent = "G"; // Standardinitiale, falls kein Name vorhanden
+        }
+    }
 
-
-
-// Call the functions when the page loads
-updateGreeting();
-updateTaskMetrics();
-
+    // Call the functions when the page loads
+    updateGreeting();
+    updateTaskMetrics();
+    updateUserProfileInitials();
 });
