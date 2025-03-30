@@ -433,3 +433,38 @@ function closeErrorOnInput() {
 
 let isEditing = false;
 let currentEditingContact = null;
+
+// show the contacts right - responsive
+window.addEventListener('DOMContentLoaded', () => {
+  const contactItems = document.querySelectorAll('.contact-item');
+
+  contactItems.forEach(item => {
+    item.addEventListener('click', () => {
+      openContactDetails();
+    });
+  });
+});
+
+function openContactDetails() {
+  const rightBox = document.querySelector('.contacts-right');
+  const backBtn = document.querySelector('.mobile-only-goback');
+
+  if (rightBox) rightBox.classList.add('show-contact-right');
+
+  if (window.innerWidth <= 900 && backBtn) {
+    backBtn.classList.add('visible');
+  }
+}
+
+// shows the close button only in the mobile version - contacts right 
+window.closeContactDetails = function() {
+  const rightBox = document.querySelector('.contacts-right');
+  const backBtn = document.querySelector('.mobile-only-goback');
+
+  if (rightBox) rightBox.classList.remove('show-contact-right');
+
+  if (window.innerWidth <= 900 && backBtn) {
+    backBtn.classList.remove('visible');
+  }
+}
+

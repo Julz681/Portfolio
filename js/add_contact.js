@@ -20,3 +20,4 @@ const db = getFirestore(app);
 
 // Export Firestore database to use it in other scripts
 export { db };
+

@@ -179,15 +179,19 @@ alt="Contacts Icon"
 </aside> 
 <div class="contact-content"> 
 <div class="contacts-container"> 
-<div class="contacts-left"> 
+<div class="contacts-left show-contact-right"> 
 <button id="openAddContact" class="add-contact-btn"> 
 Add new contact 
 <img 
 class="add-contact-img" 
+id="floatingBtnIcon"
 src="../assets/img/addperson.png" 
 alt="add new contact" 
 /> 
 </button> 
+<button id="menuDotsBtn" class="add-contact-btn" style="display: none;">
+  <img src="../assets/img/responsive_dot_menu.png" alt="menu" />
+</button>
 <div class="contacts-list" id="contactList"> 
 <div class="contact-group"> 
 <div class="contact-group-letter">A</div> 
@@ -407,6 +411,13 @@ Delete
 <div class="vertical-line"></div> 
 <p class="contacts-subtitle">Better with a team</p> 
 </div> 
+<a href="javascript:void(0);" onclick="closeContactDetails()" class="mobile-only-goback back-btn">
+  <img
+    class="help-arrow"
+    src="../assets/img/help-arrow.png"
+    alt="back arrow"
+  />
+</a>
 <div class="background-color-contacts"> 
 <div class="contacts-right-bottom"> 
 <div class="contact-details-card"> 
@@ -449,6 +460,8 @@ Delete
 </div> 
 </div> 
 </div> 
+
+
 
 <nav class="mobile-nav">
   <a href="../html/summary.html">
