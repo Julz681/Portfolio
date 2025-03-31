@@ -1,7 +1,7 @@
 import { saveUserData } from "./firebase.js";
 
 /**
- * This function automatically fills the sign-up form fields with predefined values when clicking in the e-mail field.
+ * This function automatically fills the sign-up form fields with predefined values when clicking in the email field.
  * This function is primarily used for testing or demonstration purposes.
  */
 function autoFillFieldsSignUp() {
@@ -13,11 +13,12 @@ function autoFillFieldsSignUp() {
 }
 
 /**
- * This function handles the sign-up form submission, saves the data to Firebase,
- * displays a success message, and redirects the user after a short delay.
+ * This function handles the sign-up form submission, saves the user data to Firebase,
+ * displays a success message, and redirects the user to the login page after a short delay.
+ * @param {Event} event - The event object for preventing default form submission.
  */
 function handleSignUpSubmission(event) {
-  event.preventDefault();  // Prevent the form from submitting the usual way
+  event.preventDefault(); // Prevent the form from submitting the usual way
 
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
@@ -43,15 +44,17 @@ function handleSignUpSubmission(event) {
   }
   successMessage.classList.add("show");
 
-  // Hide the success message after 4 seconds and redirect to login page
+  // Hide the success message after 4 seconds and redirect to the login page
   setTimeout(() => {
     successMessage.classList.remove("show");
-    window.location.href = "/index.html";  // Redirect to login page
+    window.location.href = "/index.html"; // Redirect to login page
   }, 1000);
 }
 
 /**
  * This function toggles the visibility of a password input field and updates the corresponding icon.
+ * @param {string} inputId - The ID of the password input field.
+ * @param {HTMLImageElement} imgElement - The image element representing the visibility icon.
  */
 function togglePasswordVisibility(inputId, imgElement) {
   const inputField = document.getElementById(inputId);
@@ -67,7 +70,9 @@ function togglePasswordVisibility(inputId, imgElement) {
 }
 
 /**
- * This function updates the password visibility icon based on the input field value.
+ * This function updates the password visibility icon based on whether the input field contains text.
+ * @param {string} inputId - The ID of the password input field.
+ * @param {HTMLImageElement} imgElement - The image element representing the visibility icon.
  */
 function updatePasswordIcon(inputId, imgElement) {
   const inputField = document.getElementById(inputId);
@@ -78,14 +83,16 @@ function updatePasswordIcon(inputId, imgElement) {
   }
 }
 
-// Expose functions to global scope for inline event listeners
+// Expose functions to the global scope for inline event listeners
 window.autoFillFieldsSignUp = autoFillFieldsSignUp;
 window.handleSignUpSubmission = handleSignUpSubmission;
 window.togglePasswordVisibility = togglePasswordVisibility;
 window.updatePasswordIcon = updatePasswordIcon;
 
-// Ensure that the signup form event listener is properly attached after DOM is loaded
-document.addEventListener("DOMContentLoaded", function() {
+/**
+ * This function ensures that the sign-up form event listener is properly attached after the DOM is loaded.
+ */
+document.addEventListener("DOMContentLoaded", function () {
   const signUpForm = document.getElementById("signup-form");
   if (signUpForm) {
     signUpForm.addEventListener("submit", handleSignUpSubmission);
@@ -94,4 +101,31 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
+/**
+ * This function changes the eye icon when the password field is focused.
+ */
+document.addEventListener("DOMContentLoaded", function () {
+  const passwordField = document.getElementById("password");
+  const confirmPasswordField = document.getElementById("confirm-password");
+  const passwordIcon = document.getElementById("eye-icon-password");
+  const confirmPasswordIcon = document.getElementById("eye-icon-confirm-password");
+
+  if (passwordField && passwordIcon) {
+    passwordField.addEventListener("focus", function () {
+      if (passwordField.type === "password") {
+        passwordIcon.src = "../assets/img/eye_closed.png";
+      }
+    });
+  }
+
+  if (confirmPasswordField && confirmPasswordIcon) {
+    confirmPasswordField.addEventListener("focus", function () {
+      if (confirmPasswordField.type === "password") {
+        confirmPasswordIcon.src = "../assets/img/eye_closed.png";
+      }
+    });
+  }
+});
+
+// Hide the start element
 document.getElementById("start").style.display = "none";

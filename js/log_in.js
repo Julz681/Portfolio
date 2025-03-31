@@ -1,7 +1,7 @@
 import { getUserDataByEmail } from './firebase.js';
 
 /**
- * This function automatically fills the login form fields...
+ * This function automatically fills the login form fields with predefined values for testing or demonstration purposes.
  */
 function autoFillFields() {
     const email = "SofiaMueller@gmail.com";
@@ -11,7 +11,9 @@ function autoFillFields() {
 }
 
 /**
- * This function toggles the visibility of a password input field...
+ * This function toggles the visibility of a password input field and updates the corresponding icon.
+ * @param {string} inputId - The ID of the password input field.
+ * @param {HTMLImageElement} imgElement - The image element representing the visibility icon.
  */
 function togglePasswordVisibility(inputId, imgElement) {
     const inputField = document.getElementById(inputId);
@@ -27,19 +29,25 @@ function togglePasswordVisibility(inputId, imgElement) {
 }
 
 /**
- * This function updates the password visibility icon...
+ * This function updates the password visibility icon based on whether the input field contains text.
+ * @param {string} inputId - The ID of the password input field.
+ * @param {HTMLImageElement} imgElement - The image element representing the visibility icon.
  */
 function updatePasswordIcon(inputId, imgElement) {
     const inputField = document.getElementById(inputId);
-    if (inputField.value.length > 0) {
+    if (inputField.value.length > 0 && inputField.type === "password") {
         imgElement.src = "../assets/img/eye_closed.png";
-    } else {
+    } else if (inputField.value.length === 0 && inputField.type === "password") {
         imgElement.src = "../assets/img/lock.png";
+    } else if (inputField.type === "text") {
+        imgElement.src = "../assets/img/eye.png";
     }
 }
 
 /**
- * This function handles the normal login.
+ * This function handles the normal login process, verifies user credentials, 
+ * and redirects the user upon successful authentication.
+ * @param {Event} event - The event object to prevent default form submission.
  */
 async function normalLogin(event) {
     event.preventDefault();
@@ -90,7 +98,8 @@ async function normalLogin(event) {
 }
 
 /**
- * This function handles the guest login.
+ * This function handles the guest login, allowing access without authentication.
+ * @param {Event} event - The event object to prevent default form submission.
  */
 function guestLogin(event) {
     event.preventDefault();
@@ -99,7 +108,7 @@ function guestLogin(event) {
 }
 
 /**
- * This function restores the saved credentials...
+ * This function restores saved credentials if the "Remember Me" option was previously selected.
  */
 function restoreLogin() {
     const rememberMe = localStorage.getItem("rememberMe") === "true";
@@ -116,17 +125,32 @@ function restoreLogin() {
     }
 }
 
-// Add event listeners after DOM content is loaded
+// Add event listeners after the DOM content is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('password');
+    const togglePasswordImg = document.querySelector('.toggle-password');
+    let firstFocus = true;
+
     document.getElementById('email').addEventListener('click', autoFillFields);
-    document.getElementById('password').addEventListener('input', () => updatePasswordIcon('password', document.querySelector('#password + img')));
-    document.getElementById('password').addEventListener('blur', () => {
-        const passwordImg = document.querySelector('#password + img');
-        if (passwordImg) {
-            updatePasswordIcon('password', passwordImg);
+
+    passwordInput.addEventListener('focus', () => {
+        if (firstFocus) {
+            togglePasswordImg.src = "../assets/img/eye_closed.png";
+            firstFocus = false;
         }
     });
-    document.querySelector('.toggle-password').addEventListener('click', () => togglePasswordVisibility('password', document.querySelector('.toggle-password')));
+
+    passwordInput.addEventListener('input', () => updatePasswordIcon('password', togglePasswordImg));
+
+    passwordInput.addEventListener('blur', () => {
+        updatePasswordIcon('password', togglePasswordImg);
+    });
+
+    togglePasswordImg.addEventListener('click', () => {
+        togglePasswordVisibility('password', togglePasswordImg);
+        updatePasswordIcon('password', togglePasswordImg); // Update icon after toggle
+    });
+
     document.getElementById('loginButton').addEventListener('click', normalLogin);
     document.getElementById('guestLoginButton').addEventListener('click', guestLogin);
 
