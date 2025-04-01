@@ -75,23 +75,56 @@ function checkDateInput(containerId) {
     let dateFormatErrorContainerRef = getErrorContainer("date-format-error-message");
     let formattedDateValue = formatDateValue(dateInputValue).setHours(0,0,0,0);
     let currentDate = new Date().setHours(0,0,0,0);
-    if(dateInputValue.length === 0) {
-        showErrorMessage(requiredErrorContainerRef);
-        fp.altInput.classList.add("task-input-fields-invalid");
+    // if(dateInputValue.length === 0) {
+    //     showErrorMessage(requiredErrorContainerRef);
+    //     fp.altInput.classList.add("task-input-fields-invalid");
+    // }
+    // else if (!dateFormat.test(dateInputValue )) {
+    //     showErrorMessage(dateFormatErrorContainerRef);
+    //     fp.altInput.classList.add("task-input-fields-invalid");
+    // } 
+    // else if (formattedDateValue < currentDate|| formattedDateValue == currentDate) {
+    //     showErrorMessage(invalidInputErrorContainerRef);
+    //     fp.altInput.classList.add("task-input-fields-invalid");
+    // } else {
+    //     fp.altInput.classList.remove("task-input-fields-invalid");
+    //     removeErrorMessage(requiredErrorContainerRef);
+    //     removeErrorMessage(dateFormatErrorContainerRef);
+    //     removeErrorMessage(invalidInputErrorContainerRef);
+    // }
+    if(checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef)) {
+        return
+    } else if (checkFormattedDateValue(formattedDateValue, invalidInputErrorContainerRef, currentDate)) {
+        return
     }
-    else if (!dateFormat.test(dateInputValue )) {
-        showErrorMessage(dateFormatErrorContainerRef);
-        fp.altInput.classList.add("task-input-fields-invalid");
-    } 
-    else if (formattedDateValue < currentDate|| formattedDateValue == currentDate) {
-        showErrorMessage(invalidInputErrorContainerRef);
-        fp.altInput.classList.add("task-input-fields-invalid");
-    } else {
+    else {
         fp.altInput.classList.remove("task-input-fields-invalid");
         removeErrorMessage(requiredErrorContainerRef);
         removeErrorMessage(dateFormatErrorContainerRef);
         removeErrorMessage(invalidInputErrorContainerRef);
+        removeValueErrorStylingOnInput(fp.altInput);
     }    
+}
+
+function checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef) {
+    if(dateInputValue.length === 0) {
+        fp.altInput.classList.add("task-input-fields-invalid");
+        showErrorMessage(requiredErrorContainerRef);
+        return true;
+    }
+    else if (!dateFormat.test(dateInputValue )) {
+        fp.altInput.classList.add("task-input-fields-invalid");
+        showErrorMessage(dateFormatErrorContainerRef);
+        return true;
+    }
+}
+
+function checkFormattedDateValue(formattedDateValue, invalidInputErrorContainerRef, currentDate) {
+    if (formattedDateValue < currentDate|| formattedDateValue == currentDate) {
+        showErrorMessage(invalidInputErrorContainerRef);
+        fp.altInput.classList.add("task-input-fields-invalid");
+        return true;
+    }
 }
 
 function formatDateValue(dateInputValue) {
