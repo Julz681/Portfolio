@@ -10,6 +10,8 @@ body {
   align-items: center;
   min-height: 100vh;
   background-color: #f6f7f8;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 * {
@@ -322,9 +324,62 @@ a:hover {
 .page-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: 1440px;
 }
+
+
+@media (max-height: 900px) {
+  @keyframes logoAppear {
+    0% {
+      width: 274px;
+      height: 344.07px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    100% {
+      width: 64px;
+      height: 84px;
+      top: 80px;
+      left: 77px;
+      transform: translate(0, 0);
+    }
+  }
+}
+
+@media (max-height: 720px) {
+
+  @keyframes logoAppear {
+
+    0% {
+      width: 274px;
+      height: 344.07px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    100% {
+      width: 64px;
+      height: 84px;
+      top: 80px;
+      left: 77px;
+      transform: translate(0, 0);
+      padding-bottom: 12px;
+    }
+  }
+  .top-right {
+    padding-bottom: 12px;
+  }
+  .login-frame-alignment {
+    margin-top: 160px;
+}
+
+}
+
 
 @media (max-width: 660px) {
   .login-frame {
@@ -377,43 +432,25 @@ a:hover {
     height: 48px;
     gap: 8px;
   }
-
-  .start {
-    order: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .top-right {
-    position: static; 
-    align-items: center;
-    margin-top: 20px;
+  
+  @keyframes logoAppear {
+    0% {
+      width: 274px;
+      height: 344.07px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
-   .login-frame-alignment {
-    order: 1;
-    padding-top: 20px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    box-sizing: border-box; 
+    100% {
+      width: 54px;
+      height: 68px;
+      top: 80px;
+      left: 77px;
+      transform: translate(0, 0);
+    }
   }
 
-  footer.footer-start {
-  order: 3;
-  
-  }
-
-  .start-logo {
-  display: none;
-  }
-
-  .start.finished {
-    margin-top: auto;
-  }
 }
 
 
