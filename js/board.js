@@ -51,6 +51,7 @@ async function fetchFile(element, file) {
   }
 }
 
+//colors for the avatars depending on the letter
 const letterColors = {
   A: "#D32F2F",
   B: "#C2185B",
@@ -80,6 +81,7 @@ const letterColors = {
   Z: "#5D4037",
 };
 
+// array with objects
 const tasks = [
   {
     id: "task-1",
@@ -158,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
   renderAllColumns();
 });
 
+// this funktion ensures that clicking outside the task detail card closes the modal
 function setupModalOverlay() {
   const overlay = document.getElementById("task-card-modal");
   const card = document.querySelector(".modal-card-wrapper");
@@ -168,6 +171,7 @@ function setupModalOverlay() {
   });
 }
 
+// this function links the task status names to the corresponding columns in the DOM
 function getColumnMap() {
   return {
     "to-do": document.querySelector(".to-do-wrapper .column-content-wrapper"),
@@ -181,6 +185,7 @@ function getColumnMap() {
   };
 }
 
+// renders all columns in the board
 function renderAllColumns() {
   const map = getColumnMap();
   for (const status in map) {
@@ -193,24 +198,29 @@ function renderAllColumns() {
   setupCardClick();
 }
 
+// filters all task by they status
 function getTasksByStatus(status) {
   return tasks.filter((task) => task.status === status);
 }
 
+// deletes all board-card elements in the passed column
 function clearColumn(column) {
   column.querySelectorAll(".board-card").forEach((card) => card.remove());
 }
 
+// inserts a new task card into the given column - HTML template
 function renderTask(column, task) {
   const html = createTaskHTML(task);
   column.insertAdjacentHTML("beforeend", html);
 }
 
+// shows or hides the No Tasks message in a column depending on whether tasks are present
 function toggleEmptyMsg(column, tasks) {
   const msg = column.querySelector(".no-tasks-feedback");
   if (msg) msg.classList.toggle("d_none", tasks.length > 0);
 }
 
+// returns the HTML code for all user avatars of a task. Generates initials and the color
 function getUserAvatarsHTML(assignedTo) {
   let result = "";
 
@@ -243,6 +253,7 @@ function getUserAvatarsHTML(assignedTo) {
   return result;
 }
 
+// creates a task card including labels, texts, subtask count, avatars, priority, ...
 function createTaskHTML(task) {
   const label = task.taskType === "technical" ? "Technical Task" : "User Story";
   const color = task.taskType === "technical" ? "#1fd7c1" : "blue";
@@ -271,6 +282,7 @@ function createTaskHTML(task) {
     </div>`;
 }
 
+//  adds a click listener to all task cards so that they open the modal when clicked
 function setupCardClick() {
   const modal = document.getElementById("task-card-modal");
   const wrapper = document.querySelector(".modal-card-wrapper");
@@ -284,6 +296,7 @@ function setupCardClick() {
   });
 }
 
+// opens the modal and fills it with task data
 function openModal(task, modal, wrapper) {
   setModalContent(task);
   modal.classList.add("active");
@@ -292,6 +305,7 @@ function openModal(task, modal, wrapper) {
   modal.setAttribute("data-task-id", task.id);
 }
 
+// fills all content in the modal (title, description, user, subtasks, ...) for the passed task
 function setModalContent(task) {
   setModalBasics(task);
   setModalPriority(task);
@@ -299,6 +313,7 @@ function setModalContent(task) {
   setModalSubtasks(task);
 }
 
+// sets task type - label, title, description and date in the modal
 function setModalBasics(task) {
   const label = document.querySelector(".modal-card-label");
   label.textContent =
@@ -311,6 +326,7 @@ function setModalBasics(task) {
     task.dueDate;
 }
 
+// displays priority labels in the modal
 function setModalPriority(task) {
   const span = document.querySelector(".prio-label span");
   const img = document.querySelector(".prio-label img");
@@ -319,6 +335,7 @@ function setModalPriority(task) {
   img.src = `../assets/img/icons/${task.priority}-icon.png`;
 }
 
+// shows the user avatars + names in the modal in the “Assigned to” area
 function setModalUsers(task) {
   let box = document.querySelector(".assignments");
   let avatars = getUserAvatarsHTML(task.assignedTo);
@@ -344,6 +361,7 @@ function setModalUsers(task) {
   box.innerHTML = html;
 }
 
+// renders the individual subtasks in the modal as a checkbox list
 function setModalSubtasks(task) {
   const box = document.querySelector(".subtasks-wrapper");
   box.innerHTML = task.subtasks
@@ -360,11 +378,13 @@ function setModalSubtasks(task) {
     .join("");
 }
 
+// closing function of the modal
 function setupModalCloseButton() {
   const btn = document.getElementById("modal-close-button");
   btn.addEventListener("click", closeModal);
 }
 
+// performs a slide-out and fade-out animation and then closes the modal
 function closeModal() {
   const modal = document.getElementById("task-card-modal");
   const wrapper = document.querySelector(".modal-card-wrapper");
@@ -382,11 +402,13 @@ function closeModal() {
   );
 }
 
+// adds the function to delete a task to the delete button in the modal
 function setupDeleteButton() {
   const btn = document.getElementById("delete-task-button");
   btn.addEventListener("click", deleteTask);
 }
 
+// deletes the current task from the array, re-renders the board, and closes the modal
 function deleteTask() {
   const modal = document.getElementById("task-card-modal");
   const id = modal.getAttribute("data-task-id");
@@ -396,16 +418,19 @@ function deleteTask() {
   closeModal();
 }
 
+// shows the editing overlay
 function openEditOverlay() {
   const overlay = document.getElementById("editTaskOverlay");
   overlay.classList.remove("hidden");
 }
 
+// hides the editing overlay
 function closeEditOverlay() {
   const overlay = document.getElementById("editTaskOverlay");
   overlay.classList.add("hidden");
 }
 
+// click event for all priority buttons (Urgent, Medium, Low) in the edit overlay
 function setupPrioritySelection() {
   const buttons = document.querySelectorAll(".priority-labels");
   buttons.forEach((button) => {
@@ -416,6 +441,7 @@ function setupPrioritySelection() {
   });
 }
 
+// resets the color and style of a priority button
 function resetPriority(button) {
   button.style.backgroundColor = "#ffffff";
   button.style.color = "#000000";
@@ -424,12 +450,14 @@ function resetPriority(button) {
   paths.forEach((path) => setDefaultColor(path, button.id));
 }
 
+// colors the icons in the button again according to the priority (if inactive)
 function setDefaultColor(path, id) {
   if (id === "urgent") path.setAttribute("fill", "#FF3D00");
   if (id === "medium") path.setAttribute("fill", "#FFA800");
   if (id === "low") path.setAttribute("fill", "#7AE229");
 }
 
+// activates the clicked priority button (color, style, icon white)
 function activatePriority(button) {
   const paths = button.querySelectorAll("svg path");
   button.style.fontWeight = "bold";
@@ -440,6 +468,7 @@ function activatePriority(button) {
   paths.forEach((path) => path.setAttribute("fill", "#ffffff"));
 }
 
+// controls the dropdown for "Assigned to" in the edit overlay including the arrow behavior
 function setupAssignedToDropdown() {
   const select = document.getElementById("assigned-select");
   const arrow = document.getElementById("select-arrow");
@@ -459,16 +488,19 @@ function setupAssignedToDropdown() {
   });
 }
 
+// toggles the dropdown arrow icon (opens/closes)
 function toggleArrow(arrow) {
   arrow.classList.toggle("open");
   arrow.classList.toggle("closed");
 }
 
+// sets the dropdown arrow icon to the closed state
 function resetArrow(arrow) {
   arrow.classList.remove("open");
   arrow.classList.add("closed");
 }
 
+// binds buttons for adding or canceling subtask inputs in the overlay
 function setupSubtaskInput() {
   const input = document.getElementById("subtasks");
   const addBtn = document.getElementById("add-subtask-icon");
@@ -486,18 +518,21 @@ function setupSubtaskInput() {
   );
 }
 
+// shows the check mark/cancel symbol on the subtask input
 function showConfirm(input, confirm, add) {
   add.classList.add("d-none");
   confirm.classList.remove("d-none");
   input.focus();
 }
 
+// resets the subtask input field
 function resetInput(input, confirm, add) {
   input.value = "";
   confirm.classList.add("d-none");
   add.classList.remove("d-none");
 }
 
+// initializes the calendar field (Flatpickr) for the due date
 function setupDatePicker() {
   if (window.flatpickr) {
     flatpickr("#due-date", {
@@ -509,11 +544,16 @@ function setupDatePicker() {
   }
 }
 
+// closes the edit overlay and shows the modal again 
+// - This is only a temporary feature!
 function saveEdit() {
   document.getElementById("editTaskOverlay").classList.add("hidden");
   document.getElementById("task-card-modal").classList.add("active");
 }
 
+
+// searches all tasks by title or description 
+// - shows/hides cards based on the search term
 let searchInput = document.getElementById("task-search");
 let noResults = document.getElementById("no-results");
 

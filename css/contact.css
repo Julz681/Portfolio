@@ -642,6 +642,14 @@ header {
   display: none;
 }
 
+#openAddContact {
+  display: flex !important;
+}
+
+#menuDotsBtn {
+  display: none !important;
+}
+
 @media (max-width: 1200px) {
   .contact-content {
     margin-left: 0;
@@ -722,6 +730,18 @@ header {
     z-index: 50;
     overflow-y: auto;
   }
+
+  #menuDotsBtn.no-img {
+    background-image: url('../assets/img/responsive_dot_menu.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+  }
+  
+  #menuDotsBtn.no-img:focus {
+    background-image: url('../assets/img/responsive_dot_btn_hovered.png');
+  }
+  
 
   .mobile-only-goback {
     display: block;
