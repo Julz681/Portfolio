@@ -12,47 +12,54 @@
     <title>Join</title>
 </head>
 <body>
-    <div class="page-container">
-        <div class="start" id="start">
-            <img class="start-logo" src="../assets/img/logo.png" alt="logo">
-            <div class="top-right" id="top-right">
-                <p>Not a Join user?</p>
-                <button class="signup-btn" onclick="location.href='../html/sign_up.html'">Sign up</button>
-            </div>
+
+    <div class="start" id="start">
+        <img class="start-logo" src="../assets/img/logo.png" alt="logo">
+        <div class="top-right" id="top-right">
+            <p>Not a Join user?</p>
+            <button class="signup-btn" onclick="location.href='../html/sign_up.html'">Sign up</button>
         </div>
-        <div class="login-frame-alignment">
-            <div class="login-frame">
-                <div class="h1-container">
-                    <h1>Log in</h1>
-                    <hr>
-                </div>
-                <form class="input-container" id="login-form" action="../html/summary.html" method="GET">
-                    <div class="login-data">
-                        <label for="email" style="position: relative;">
-                            <input class="input-field" id="email" type="email" placeholder="Email" required autocomplete="username">
-                            <img class="imgs-input_login" src="../assets/img/mail.png" alt="letter">
-                        </label>
-                        <label for="password" style="position: relative;">
-                            <input class="input-field" id="password" type="password" placeholder="Password" required autocomplete="new-password">
-                            <img class="imgs-input_login toggle-password" src="../assets/img/lock.png" alt="Toggle Password Visibility">
-                        </label>
-                        <label class="remember-me">
-                            <input type="checkbox" id="rememberMe">
-                            Remember Me
-                        </label>
-                    </div>
-                </form>
-                <div class="login-btn-container">
-                    <button type="button" class="login-btn" id="loginButton">Log in</button>
-                    <button type="button" class="guest-login-btn" id="guestLoginButton">Guest Log In</button>
-                </div>
-            </div>
-        </div>
-        <footer class="footer-start">
-            <a href="../html/privacy_policy_logged_out.html">Privacy Policy</a>
-            <a href="../html/legal_notice_logged_out.html">Legal notice</a>
-        </footer>
     </div>
+    <div class="page-container">
+    <div class="login-frame-alignment">
+        <div class="login-frame">
+            <div class="h1-container">
+                <h1>Log in</h1>
+                <hr>
+            </div>
+
+            <form class="input-container" id="login-form" action="../html/summary.html" method="GET">
+                <div class="login-data">
+                    <label for="email" style="position: relative;">
+                        <input class="input-field" id="email" type="email" placeholder="Email" required autocomplete="username">
+                        <img class="imgs-input_login" src="../assets/img/mail.png" alt="letter">
+                    </label>
+
+                    <label for="password" style="position: relative;">
+                        <input class="input-field" id="password" type="password" placeholder="Password" required autocomplete="new-password">
+                        <img class="imgs-input_login toggle-password" src="../assets/img/lock.png" 
+                             alt="Toggle Password Visibility">
+                    </label>
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        Remember Me
+                    </label>
+                </div>
+            </form>
+
+            <div class="login-btn-container">
+                <button type="button" class="login-btn" id="loginButton">Log in</button>
+                <button type="button" class="guest-login-btn" id="guestLoginButton">Guest Log In</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-start">
+        <a href="../html/privacy_policy_logged_out.html">Privacy Policy</a>
+        <a href="../html/legal_notice_logged_out.html">Legal notice</a>
+    </footer>
+    </div>
+
     <script src="../js/log_in.js" type="module"></script>
     <script src="../js/firebase.js" type="module"></script>
     <script src="../js/script.js" type="module" defer></script>

@@ -642,9 +642,102 @@ header {
   display: none;
 }
 
+#openAddContact {
+  display: flex !important;
+}
+
+#menuDotsBtn {
+  display: none !important;
+}
+
 @media (max-width: 1200px) {
   .contact-content {
     margin-left: 0;
+  }
+
+  .add-contact-modal {
+    flex-direction: column;
+    max-width: 396px;
+    height: 760px;
+  }
+
+  .add-contact-logo {
+    display: none;
+  }
+
+  .add-contact-drawer-left {
+    height: 352px;
+    width: 396px;
+    padding: 16px;
+  }
+
+  .overlay-close-btn {
+    color: white;
+    top: 16px;
+    right: 16px;
+  }
+
+  .add-contact-title {
+    font-size: 47px;
+    gap: 8px;
+  }
+
+  .add-contact-subtitle {
+    font-size: 20px;
+  }
+
+  .add-contact-drawer-right {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 396px;
+  }
+
+  .alignment-right {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: -160px;
+  }
+
+  .add-contact-avatar,
+  .add-contact-avatar img {
+    position: relative;
+    margin-left: 0;
+    margin-right: 0;
+    overflow: visible !important;
+    object-fit: contain;
+    border: 0;
+  }
+
+  .contact-data {
+    margin-right: 0;
+    width: 364px;
+  }
+
+  .input-field {
+    max-width: 364px;
+  }
+
+  .imgs-input_contact {
+    right: 16px;
+  }
+
+  .add-contact-buttons {
+    margin-left: 0;
+  }
+
+  #cancelAddContact {
+    display: none;
+  }
+
+  #createContact {
+    width: 202px;
+    gap: 4px;
+    margin-top: 18px;
+    height: 51px;
   }
 }
 
@@ -723,6 +816,17 @@ header {
     overflow-y: auto;
   }
 
+  #menuDotsBtn.no-img {
+    background-image: url("../assets/img/responsive_dot_menu.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+  }
+
+  #menuDotsBtn.no-img:focus {
+    background-image: url("../assets/img/responsive_dot_btn_hovered.png");
+  }
+
   .mobile-only-goback {
     display: block;
   }
@@ -762,5 +866,15 @@ header {
 
   .contact-group-letter {
     margin-top: 17px;
+  }
+}
+
+@media (max-width: 410px) {
+  .contact-data {
+    width: 300px;
+  }
+
+  .input-field {
+    width: 300px;
   }
 }

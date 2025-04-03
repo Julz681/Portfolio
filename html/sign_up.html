@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="icon" href="../assets/img/favicon.png" />
-    <link rel="stylesheet" href="../css/sign_up.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/sign_up.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <title>Join</title>
   </head>
   <body>
-    <div class="start" id="start">
+    <div class="start" id="logo">
       <img class="start-logo" src="../assets/img/logo.png" alt="logo" />
     </div>
 
@@ -106,7 +106,7 @@
               />
           </label>
           </div>
-
+          <div class="wrapper">
           <div class="privacy-policy">
             <input type="checkbox" id="privacy-policy" required />
             <label for="privacy-policy"
@@ -120,6 +120,7 @@
           <div class="btn_center">
             <button type="submit" class="signup-btn">Sign up</button>
           </div>
+        </div>
         </form>
       </div>
     </div>
@@ -131,6 +132,10 @@
 
     <script type="module" src="../js/firebase.js"></script>
     <script type="module" src="../js/firebase_functions.js"></script>
-    <script type="module" src="../js/sign_up.js" defer></script>
+    <script type="module" src="../js/sign_up.js"></script>
+
+
+
+
   </body>
 </html>

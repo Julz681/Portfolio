@@ -62,12 +62,11 @@ body {
   display: none !important;
 }
 
-
 @media (max-width: 1200px) {
-  .main-content{
-   margin-left: -320px;
-   padding-top: 128px;
-   padding-right: 16px;
+  .main-content {
+    margin-left: -320px;
+    padding-top: 128px;
+    padding-right: 16px;
   }
 
   .main-content h1 {
@@ -82,12 +81,8 @@ body {
     font-size: 16px;
   }
 
-
   .user-profile,
   #dropdownMenu {
     display: block;
- 
   }
-
-
 }

@@ -109,3 +109,4 @@ boardCards.forEach((card) => {
       card.style.transform = "rotate(20deg)";
   });
 });
+
