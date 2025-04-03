@@ -93,11 +93,6 @@ body {
   animation: contentAppear 0.5s ease-in-out;
 }
 
-.top-right {
-  opacity: 0;
-  animation: showContent 0.5s ease-in-out 0.5s forwards;
-  pointer-events: auto;
-}
 
 @keyframes showContent {
   0% {
@@ -329,56 +324,6 @@ a:hover {
   max-width: 1440px;
 }
 
-
-@media (max-height: 900px) {
-  @keyframes logoAppear {
-    0% {
-      width: 274px;
-      height: 344.07px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    100% {
-      width: 64px;
-      height: 84px;
-      top: 80px;
-      left: 77px;
-      transform: translate(0, 0);
-    }
-  }
-}
-
-@media (max-height: 720px) {
-
-  @keyframes logoAppear {
-
-    0% {
-      width: 274px;
-      height: 344.07px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    100% {
-      width: 64px;
-      height: 84px;
-      top: 80px;
-      left: 77px;
-      transform: translate(0, 0);
-      padding-bottom: 12px;
-    }
-  }
-  .top-right {
-    padding-bottom: 12px;
-  }
-  .login-frame-alignment {
-    margin-top: 160px;
-}
-
-}
 
 
 @media (max-width: 660px) {
