@@ -67,6 +67,19 @@ function getInputContainerValue(containerId) {
 
 // TODO : Write function for date input
 
+function changePriorityColor(prioritySVG){
+  let label = document.getElementById(${priority});
+  let priorityIcon = label.childNodes;
+  switch(priority){
+    case 'urgent':
+     for(let i = 0; i < icon.length; i++) {
+       icon[i].style.fill = '581845';
+     }
+      break;
+  }
+  
+}
+
 function checkDateInput(containerId) {
     let dateInput = getInputContainer(containerId);
     let dateInputValue = getInputValue(dateInput);
