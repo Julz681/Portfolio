@@ -82,19 +82,6 @@ function getInputContainerValue(containerId) {
 
 // TODO : give date fcts. less variables
 
-function changePriorityColor(prioritySVG){
-  let label = document.getElementById(${priority});
-  let priorityIcon = label.childNodes;
-  switch(priority){
-    case 'urgent':
-     for(let i = 0; i < icon.length; i++) {
-       icon[i].style.fill = '581845';
-     }
-      break;
-  }
-  
-}
-
 function checkDateInput(containerId) {
     let dateInput = getInputContainer(containerId);
     let dateInputValue = getInputValue(dateInput);
@@ -168,28 +155,47 @@ function changePriorityLabelColor(priorityLabelId) {
     let priorityIconParts = prioritySVG.children;
     console.log(priorityIconParts);
     if (priorityLabel.style.backgroundColor === "#FFFFFF") {
-        resetPriorityLabelColor(priorityLabelId, priorityLabel, priorityIconParts);
-    } else {
-        switch(priorityLabelId) {
-            case "low":
-                priorityLabel.style.backgroundColor = "#7AE229"
-                break;
-            case "medium":
-                priorityLabel.style.backgroundColor = "#FFA800"
-                break;
-            case "urgent":
-                priorityLabel.style.backgroundColor = "#FF3D00"
-                break;
-        }
-        for(let i = 0; i < priorityIconParts.length; i++) {
-        priorityIconParts[i].style.fill = "#FFFFFF";
-        };
         priorityLabel.style.color = "#FFFFFF";
+        switchPriorityLabelColor(priorityLabelId, priorityLabel);
+        switchPriorityIconColor(priorityIconParts);
+    } else {
+        priorityLabel.style.color = "#000000";
+        priorityLabel.style.backgroundColor === "#FFFFFF"
     }
 }
 
-function resetPriorityLabelColor() {
+function switchPriorityLabelColor(priorityLabelId, priorityLabel) {
+    switch(priorityLabelId) {
+        case "low":
+            priorityLabel.style.backgroundColor = "#7AE229"
+            break;
+        case "medium":
+            priorityLabel.style.backgroundColor = "#FFA800"
+            break;
+        case "urgent":
+            priorityLabel.style.backgroundColor = "#FF3D00"
+            break;
+    }
+}
 
+function switchPriorityIconColor(priorityIconParts) {
+    for(let i = 0; i < priorityIconParts.length; i++) {
+        priorityIconParts[i].style.fill = "#FFFFFF";
+    };
+}
+
+function resetPriorityLabelColor(priorityLabelId, priorityLabel) {
+    switch(priorityLabelId) {
+        case "low":
+            priorityLabel.style.backgroundColor = "#7AE229"
+            break;
+        case "medium":
+            priorityLabel.style.backgroundColor = "#FFA800"
+            break;
+        case "urgent":
+            priorityLabel.style.backgroundColor = "#FF3D00"
+            break;
+    }
 }
 
 function showValueErrorMessage (valueSizeErrorContainerId) {

@@ -124,14 +124,6 @@
   cursor: pointer;
 }
 
-/* .date-picker:invalid::-webkit-datetime-edit {
-  color: #d1d1d1;
-  font-size: 20px;
-  line-height: 24px !important;
-  font-weight: 400;
-  font-family: "Inter", sans-serif !important;
-} */
-
 /* separator styling */
 
 .separator {
