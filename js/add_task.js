@@ -1,7 +1,22 @@
 let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
 
+const fp = flatpickr("#due-date", {
+    dateFormat: "d/m/Y",
+    altInput: true,
+    altFormat: "d/m/Y",
+    allowInput: true,
+    onOpen: function() {
+        checkDateInput("due-date");
+    },
+    onChange: function() {
+        checkDateInput("due-date");
+    },
+    onValueUpdate: function() {
+        checkDateInput("due-date");
+    }
+});
+
 async function init() {
-  //  initDatePicker();
     await includeHTML();
 }
 
@@ -180,21 +195,6 @@ function removeValueErrorStylingOnInput(inputContainer) {
     }
 }
 
-const fp = flatpickr("#due-date", {
-    dateFormat: "d/m/Y",
-    altInput: true,
-    altFormat: "d/m/Y",
-    allowInput: true,
-    onOpen: function() {
-        checkDateInput("due-date");
-    },
-    onChange: function() {
-        checkDateInput("due-date");
-    },
-    onValueUpdate: function() {
-        checkDateInput("due-date");
-    }
-});
 
 //commented out, because the header and sidebar would disappear - because of w3 include
 

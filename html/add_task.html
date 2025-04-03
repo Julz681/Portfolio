@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/css/desktop_template.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="/js/add_task.js" defer></script>
-  <!-- <script src="../js/dropwdown.js" defer></script> -->
+  <script src="/js/dropwdown.js" defer></script>
 
   <title>Add Task</title>
 </head>
@@ -52,11 +52,6 @@
             <!-- <div class="date-input-wrapper"> -->
             <input class="date-picker size-20 br-10" type="text" id="due-date" name="due-date" placeholder="dd/mm/yyyy"
               maxlength="10" required onopen="checkDateInput(`due-date`)" />
-            <!-- <span class="date-picker-icon"></span> -->
-            <!-- </div> -->
-            <!-- <input type="date" name="date" id="due-date" class="date-picker size-20 br-10"
-              onfocus="toggleInvalidEntryMessages(`due-date-error` , `due-date`)"
-              oninput="toggleInvalidEntryMessages(`due-date-error` , `due-date`)" required /> -->
             <span class="required-error-message d_none" id="due-date-required-error-message">This field is required!</span>
             <span class="required-error-message d_none" id="due-date-time-error-message">Date needs to be in the future!</span>
             <span class="required-error-message d_none" id="date-format-error-message">Expected format dd/mm/yyyy!</span>
@@ -275,6 +270,5 @@
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
-<!-- <script src="../js/dropwdown.js" defer></script> -->
 
 </html>
