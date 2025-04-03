@@ -149,6 +149,28 @@ function removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputE
     removeErrorMessage(invalidInputErrorContainerRef);
 }
 
+function changePriorityLabelColor(priorityLabelId) {
+    let priorityLabel = document.getElementById(priorityLabelId);
+    let prioritySVG = document.getElementById(`${priorityLabelId}-svg`);
+    let priorityIconParts = prioritySVG.children;
+    console.log(priorityIconParts);
+    switch(priorityLabelId) {
+        case "low":
+            priorityLabel.style.backgroundColor = "#7AE229"
+            break;
+        case "medium":
+            priorityLabel.style.backgroundColor = "#FFA800"
+            break;
+        case "urgent":
+            priorityLabel.style.backgroundColor = "#FF3D00"
+            break;
+    }
+    for(let i = 0; i < priorityIconParts.length; i++) {
+        priorityIconParts[i].style.fill = "#FFFFFF";
+    };
+    priorityLabel.style.color = "#FFFFFF";
+}
+
 function showValueErrorMessage (valueSizeErrorContainerId) {
     let errorContainer = getErrorContainer(valueSizeErrorContainerId);
     return showErrorMessage(errorContainer);
