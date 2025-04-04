@@ -29,21 +29,29 @@ button {
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: transparent;
-  z-index: 1000;
-  pointer-events: auto;
+  height: 200px; /* <- feste Höhe, nach Bedarf anpassen */
   position: relative;
+  background-color: transparent;
+  z-index: 1;
+  pointer-events: auto;
 }
 
 .start-logo {
-  width: 274px;
-  height: 344.07px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 274px;
+  height: 344.07px;
   animation: logoAppear 0.5s ease-out 0.5s forwards;
-  z-index: 1001;
+  z-index: 10;
+}
+
+.start-logo.finished {
+  position: absolute; 
+  top: 80px;
+  left: 77px;
+  transform: none;
 }
 
 .only-responsive {
@@ -316,14 +324,6 @@ a:hover {
   box-shadow: none;
 }
 
-.page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 1440px;
-}
-
 
 .bottom {
   display: none;
@@ -338,6 +338,20 @@ a:hover {
   body {
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  .guest-login-btn {
+    width: 180px;
+    height: 51px;
+    gap: 10px;
+    font-size: 16px;
+  }
+
+  .login-btn {
+    width: 180px;
+    height: 51px;
+    gap: 10px;
+    font-size: 16px;
   }
 }
 
@@ -363,19 +377,7 @@ a:hover {
     gap: 21px;
   }
 
-  .guest-login-btn {
-    width: 180px;
-    height: 51px;
-    gap: 10px;
-    font-size: 16px;
-  }
 
-  .login-btn {
-    width: 180px;
-    height: 51px;
-    gap: 10px;
-    font-size: 16px;
-  }
   .input-field {
     width: 364px;
     height: 48px;
@@ -399,6 +401,7 @@ a:hover {
       transform: translate(0, 0);
     }
   }
+
 
   .signup-btn1 {
     background-color: #2A3647;
@@ -433,6 +436,11 @@ a:hover {
     flex-direction: column;
   }
 
+  .login-frame-alignment {
+    height: auto;
+    padding-top: 20px;
+  }
+
 }
 
 
@@ -464,14 +472,14 @@ a:hover {
   }
 
   .guest-login-btn {
-    width: 140px;
+    width: 150px;
     height: 48px;
     gap: 10px;
     font-size: 16px;
   }
 
   .login-btn {
-    width: 140px;
+    width: 150px;
     height: 48px;
     gap: 10px;
     font-size: 16px;
