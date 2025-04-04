@@ -149,53 +149,65 @@ function removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputE
     removeErrorMessage(invalidInputErrorContainerRef);
 }
 
-function changePriorityLabelColor(priorityLabelId) {
+function changePriorityLabelColors(priorityLabelId) {
+    let priorityLabels = document.getElementsByClassName("priority-labels");
     let priorityLabel = document.getElementById(priorityLabelId);
     let prioritySVG = document.getElementById(`${priorityLabelId}-svg`);
     let priorityIconParts = prioritySVG.children;
-    console.log(priorityIconParts);
-    if (priorityLabel.style.backgroundColor === "#FFFFFF") {
+    if (priorityLabel.classList.contains("default-prio-bg")) {
         priorityLabel.style.color = "#FFFFFF";
-        switchPriorityLabelColor(priorityLabelId, priorityLabel);
-        switchPriorityIconColor(priorityIconParts);
+        switchPriorityLabelBackground(priorityLabelId, priorityLabel)
+        switchPriorityIconColor(priorityIconParts, "#FFFFFF");
     } else {
         priorityLabel.style.color = "#000000";
-        priorityLabel.style.backgroundColor === "#FFFFFF"
+        switchPriorityLabelBackground(priorityLabelId, priorityLabel);
+        resetPriorityIconColor(priorityLabelId, priorityIconParts)
     }
 }
 
-function switchPriorityLabelColor(priorityLabelId, priorityLabel) {
+function switchPriorityLabelBackground(priorityLabelId, priorityLabel) {
+    switchPriorityLabelBackgroundColor(priorityLabelId, priorityLabel);
+    togglePriorityLabelDefaultBackgroundColor(priorityLabel);
+}
+
+function switchPriorityLabelBackgroundColor(priorityLabelId, priorityLabel) {
     switch(priorityLabelId) {
         case "low":
-            priorityLabel.style.backgroundColor = "#7AE229"
+            priorityLabel.classList.toggle("low-prio-bg");
             break;
         case "medium":
-            priorityLabel.style.backgroundColor = "#FFA800"
+            priorityLabel.classList.toggle("medium-prio-bg");
             break;
         case "urgent":
-            priorityLabel.style.backgroundColor = "#FF3D00"
+            priorityLabel.classList.toggle("urgent-prio-bg");
             break;
     }
 }
 
-function switchPriorityIconColor(priorityIconParts) {
+
+function switchPriorityIconColor(priorityIconParts, color) {
     for(let i = 0; i < priorityIconParts.length; i++) {
-        priorityIconParts[i].style.fill = "#FFFFFF";
+        priorityIconParts[i].style.fill = color;
     };
 }
 
-function resetPriorityLabelColor(priorityLabelId, priorityLabel) {
+function resetPriorityIconColor(priorityLabelId, priorityIconParts) {
     switch(priorityLabelId) {
         case "low":
-            priorityLabel.style.backgroundColor = "#7AE229"
+            switchPriorityIconColor(priorityIconParts, "#7AE229")
             break;
         case "medium":
-            priorityLabel.style.backgroundColor = "#FFA800"
+            switchPriorityIconColor(priorityIconParts, "#FFA800")
             break;
         case "urgent":
-            priorityLabel.style.backgroundColor = "#FF3D00"
+            switchPriorityIconColor(priorityIconParts, "#FF3D00")
             break;
     }
+}
+
+
+function togglePriorityLabelDefaultBackgroundColor(priorityLabel) {
+    priorityLabel.classList.toggle("default-prio-bg");
 }
 
 function showValueErrorMessage (valueSizeErrorContainerId) {

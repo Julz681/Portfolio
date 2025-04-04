@@ -8,15 +8,15 @@
 }
 
 .urgent-prio-bg {
-  background-color: #FF3D00;
+  background-color: #ff3d00;
 }
 
 .medium-prio-bg {
-  background-color: #FFA800;
+  background-color: #ffa800;
 }
 
 .low-prio-bg {
-  background-color: #7AE299;
+  background-color: #7ae229;
 }
 
 .add-task-content-wrapper {
@@ -152,7 +152,6 @@
 
 .priority-labels {
   padding: 16px 10px;
-  background-color: #ffffff;
   text-align: center;
   width: 136px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
