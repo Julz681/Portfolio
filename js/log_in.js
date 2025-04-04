@@ -154,5 +154,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('loginButton').addEventListener('click', normalLogin);
     document.getElementById('guestLoginButton').addEventListener('click', guestLogin);
 
+    // Weiterleitung für die Sign-up Buttons
+    const signupBtn = document.querySelector('.signup-btn');
+    const signupBtn1 = document.querySelector('.signup-btn1');
+    
+    signupBtn.addEventListener('click', () => {
+        window.location.href = '../html/sign_up.html'; // Weiterleitung zur Sign-Up-Seite
+    });
+    
+    signupBtn1.addEventListener('click', () => {
+        window.location.href = '../html/sign_up.html'; // Weiterleitung zur Sign-Up-Seite
+    });
+
     restoreLogin();
 });
