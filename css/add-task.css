@@ -3,6 +3,22 @@
   src: url(../assets/font/Poppins/Poppins-Regular.ttf);
 }
 
+.default-prio-bg {
+  background-color: #ffffff;
+}
+
+.urgent-prio-bg {
+  background-color: #FF3D00;
+}
+
+.medium-prio-bg {
+  background-color: #FFA800;
+}
+
+.low-prio-bg {
+  background-color: #7AE299;
+}
+
 .add-task-content-wrapper {
   height: 100vh;
   font-family: "Inter", sans-serif;
