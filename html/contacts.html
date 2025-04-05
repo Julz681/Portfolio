@@ -1,490 +1,389 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-<meta charset="UTF-8" /> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-<link rel="icon" type="icon" href="../assets/img/favicon.png" /> 
-<link rel="stylesheet" href="../css/contact.css" /> 
-<link rel="stylesheet" href="../css/desktop_template.css" /> 
-<link rel="preconnect" href="https://fonts.googleapis.com" /> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> 
-<link 
-href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" 
-rel="stylesheet" 
-/> 
-<title>Contacts</title> 
-</head> 
-<body> 
-<div class="overlay overlay-hidden" id="addContactOverlay"> 
-<div class="add-contact-modal"> 
-<button class="overlay-close-btn" id="closeOverlayBtn">&times;</button> 
-<div class="add-contact-drawer-left"> 
-<div class="add-contact-logo"> 
-<img src="../assets/img/logo_sidemenu.png" alt="logo"> 
-</div> 
-<h2 id="overlayTitle" class="add-contact-title">Add contact</h2> 
-<p id="overlayDescription" class="add-contact-subtitle">Tasks are better with a team!</p> 
-<img src="../assets/img/addcontactvector.png" alt="vector"> 
-</div> 
-<div class="add-contact-drawer-right"> 
-<div class="alignment-right"> 
-<div id="overlayAvatar" class="add-contact-avatar"> 
-<img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar"> 
-</div> 
-<form class="contact-data" action="#" method="POST"> 
-<label for="contactName"> 
-<input 
-class="input-field" 
-id="contactName" 
-type="text" 
-placeholder="Name" 
-required 
-> 
-<img 
-class="imgs-input_contact" 
-src="../assets/img/user.png" 
-alt="User Icon" 
-> 
-</label> 
-<label for="contactEmail"> 
-<input 
-class="input-field" 
-id="contactEmail" 
-type="email" 
-placeholder="Email" 
-required 
-> 
-<img 
-class="imgs-input_contact" 
-src="../assets/img/mail.png" 
-alt="Mail Icon" 
-> 
-</label> 
-<label for="contactPhone"> 
-<input 
-class="input-field" 
-id="contactPhone" 
-type="tel" 
-placeholder="Phone" 
-required 
-> 
-<img 
-class="imgs-input_contact" 
-src="../assets/img/call.png" 
-alt="Phone Icon" 
-> 
-</label> 
-</div> 
-<p id="error-message" style="color: red; display: none;">Please fill in all fields!</p> 
-<div class="add-contact-buttons">
-    <button type="button" id="cancelAddContact">
-      <span>Cancel</span>
-      <span class="cancel-icon"></span>
-    </button>
-    <button type="submit" id="createContact">
-      <span>Create Contact</span>
-      <span class="checkmark-icon"></span>
-    </button>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="icon" href="../assets/img/favicon.png" />
+  <link rel="stylesheet" href="../css/contact.css" />
+  <link rel="stylesheet" href="../css/desktop_template.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet" />
+  <title>Contacts</title>
+</head>
+
+<body>
+  <div class="overlay overlay-hidden" id="addContactOverlay">
+    <div class="add-contact-modal">
+      <button class="overlay-close-btn" id="closeOverlayBtn">&times;</button>
+      <div class="add-contact-drawer-left">
+        <div class="add-contact-logo">
+          <img src="../assets/img/logo_sidemenu.png" alt="logo">
+        </div>
+        <h2 id="overlayTitle" class="add-contact-title">Add contact</h2>
+        <p id="overlayDescription" class="add-contact-subtitle">Tasks are better with a team!</p>
+        <img src="../assets/img/addcontactvector.png" alt="vector">
+      </div>
+      <div class="add-contact-drawer-right">
+        <div class="alignment-right">
+          <div id="overlayAvatar" class="add-contact-avatar">
+            <img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar">
+          </div>
+          <form class="contact-data" action="#" method="POST">
+            <label for="contactName">
+              <input class="input-field" id="contactName" type="text" placeholder="Name" required>
+              <img class="imgs-input_contact" src="../assets/img/user.png" alt="User Icon">
+            </label>
+            <label for="contactEmail">
+              <input class="input-field" id="contactEmail" type="email" placeholder="Email" required>
+              <img class="imgs-input_contact" src="../assets/img/mail.png" alt="Mail Icon">
+            </label>
+            <label for="contactPhone">
+              <input class="input-field" id="contactPhone" type="tel" placeholder="Phone" required>
+              <img class="imgs-input_contact" src="../assets/img/call.png" alt="Phone Icon">
+            </label>
+        </div>
+        <p id="error-message" style="color: red; display: none;">Please fill in all fields!</p>
+        <div class="add-contact-buttons">
+          <button type="button" id="cancelAddContact">
+            <span>Cancel</span>
+            <span class="cancel-icon"></span>
+          </button>
+          <button type="submit" id="createContact">
+            <span>Create Contact</span>
+            <span class="checkmark-icon"></span>
+          </button>
+        </div>
+
+        </form>
+      </div>
+    </div>
   </div>
-  
-</form> 
-</div> 
-</div> 
-</div> 
-<header class="header"> 
-  <img src="../assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
-<span class="headline">Kanban Project Management Tool</span> 
-<div class="nav-right"> 
-<a href="../html/help.html" class="help-btn" title="Help"> 
-<img src="../assets/img/help.png" alt="Help"/> 
-</a> 
-<div class="user-profile" id="userProfile" onclick="toggleDropdown()"> 
-<img src="../assets/img/ellipse.png" alt="Profile"> 
-<span>SM</span> 
-</div> 
-<div class="dropdown-menu" id="dropdownMenu"> 
-<a class="only-responsive" href="../html/help.html">Help</a>
-<a href="../html/legal_notice.html">Legal Notice</a> 
-<a href="../html/privacy_policy.html">Privacy Policy</a> 
-<a href="../index.html">Log out</a> 
-</div> 
-</div> 
-</header> 
-<aside class="sidebar"> 
-<div class="top-section">
-<div class="sidebar-logo"> 
-<a href="../index.html" class="start"> 
-<img src="../assets/img/logo_sidemenu.png" alt="logo" /> 
-</a> 
-</div> 
-<nav class="main-nav"> 
-<ul> 
-<li class="main-nav-size"> 
-<a href="../html/summary.html"> 
-<img 
-class="img-main-nav" 
-src="../assets/img/summary.png" 
-alt="Summary Icon" 
-/> 
-<span>Summary</span> 
-</a> 
-</li> 
-<li class="main-nav-size"> 
-<a href="../html/add_task.html"> 
-<img 
-class="img-main-nav" 
-src="../assets/img/addtask.png" 
-alt="Add Task Icon" 
-/> 
-<span>Add Task</span> 
-</a> 
-</li> 
-<li class="main-nav-size"> 
-<a href="../html/board.html"> 
-<img 
-class="img-main-nav" 
-src="../assets/img/board.png" 
-alt="Board Icon" 
-/> 
-<span>Board</span> 
-</a> 
-</li> 
-<li class="main-nav-size"> 
-<a href="../html/contacts.html"> 
-<img 
-class="img-main-nav" 
-src="../assets/img/contacts.png" 
-alt="Contacts Icon" 
-/> 
-<span>Contacts</span> 
-</a> 
-</li> 
-</ul> 
-</nav> 
-</div>
-<nav class="bottom-nav"> 
-<ul> 
-<li> 
-<a class="bottom-nav-a" href="../html/privacy_policy.html" 
->Privacy Policy</a 
-> 
-</li> 
-<li> 
-<a class="bottom-nav-a" href="../html/legal_notice.html" 
->Legal Notice</a 
-> 
-</li> 
-</ul> 
-</nav> 
-</aside> 
-<div class="contact-content"> 
-<div class="contacts-container"> 
-<div class="contacts-left show-contact-right"> 
-<button id="openAddContact" class="add-contact-btn"> 
-Add new contact 
-<img 
-class="add-contact-img" 
-id="floatingBtnIcon"
-src="../assets/img/addperson.png" 
-alt="add new contact" 
-/> 
-</button> 
-<button id="menuDotsBtn" class="add-contact-btn no-img">
-  <img src="../assets/img/responsive_dot_menu.png" alt="menu" />
-</button>
-<div class="contacts-list" id="contactList"> 
-<div class="contact-group"> 
-<div class="contact-group-letter">A</div> 
-<div 
-class="contact-item" 
-data-name="Ada Lovelace" 
-data-email="ada.lovelace@gmail.com" 
-data-phone="+49 111 111 11 11" 
-> 
-<div class="contact-avatar" data-name="Ada Lovelace">AL</div> 
-<div class="contact-details"> 
-<div class="contact-name">Ada Lovelace</div> 
-<div class="contact-email">ada.lovelace@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">B</div> 
-<div 
-class="contact-item" 
-data-name="Bernadette Pöltl" 
-data-email="bernadette.poeltl99@gmail.com" 
-data-phone="+43 650 88 00 963" 
-> 
-<div class="contact-avatar" data-name="Bernadette Pöltl">BP</div> 
-<div class="contact-details"> 
-<div class="contact-name">Bernadette Pöltl</div> 
-<div class="contact-email">bernadette.poeltl99@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">C</div> 
-<div 
-class="contact-item" 
-data-name="Claude Shannon" 
-data-email="claude.shannon@gmail.com" 
-data-phone="+49 333 333 33 33" 
-> 
-<div class="contact-avatar" data-name="Claude Shannon">CS</div> 
-<div class="contact-details"> 
-<div class="contact-name">Claude Shannon</div> 
-<div class="contact-email">claude.shannon@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">D</div> 
-<div 
-class="contact-item" 
-data-name="Dennis Ritchie" 
-data-email="dennis.ritchie@gmail.com" 
-data-phone="+49 444 444 44 44" 
-> 
-<div class="contact-avatar" data-name="Dennis Ritchie">DR</div> 
-<div class="contact-details"> 
-<div class="contact-name">Dennis Ritchie</div> 
-<div class="contact-email">dennis.ritchie@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">E</div> 
-<div 
-class="contact-item" 
-data-name="Edsger Dijkstra" 
-data-email="edsger.dijkstra@gmail.com" 
-data-phone="+49 555 555 55 55" 
-> 
-<div class="contact-avatar" data-name="Edsger Dijkstra">ED</div> 
-<div class="contact-details"> 
-<div class="contact-name">Edsger Dijkstra</div> 
-<div class="contact-email">edsger.dijkstra@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">F</div> 
-<div 
-class="contact-item" 
-data-name="Frances Allen" 
-data-email="frances.allen@gmail.com" 
-data-phone="+49 666 666 66 66" 
-> 
-<div class="contact-avatar" data-name="Frances Allen">FA</div> 
-<div class="contact-details"> 
-<div class="contact-name">Frances Allen</div> 
-<div class="contact-email">frances.allen@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">J</div> 
-<div 
-class="contact-item" 
-data-name="Judith Lütke" 
-data-email="judithlachtrup@yahoo.de" 
-data-phone="+49 777 777 77 77" 
-> 
-<div class="contact-avatar" data-name="Judith Lütke">JL</div> 
-<div class="contact-details"> 
-<div class="contact-name">Judith Lütke</div> 
-<div class="contact-email">judithlachtrup@yahoo.de</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">M</div> 
-<div 
-class="contact-item" 
-data-name="Margaret Hamilton" 
-data-email="margaret.hamilton@gmail.com" 
-data-phone="+49 888 888 88 88" 
-> 
-<div class="contact-avatar" data-name="Margaret Hamilton">MH</div> 
-<div class="contact-details"> 
-<div class="contact-name">Margaret Hamilton</div> 
-<div class="contact-email">margaret.hamilton@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">R</div> 
-<div 
-class="contact-item" 
-data-name="Reshma Saujani" 
-data-email="reshma.saujani@gmail.com" 
-data-phone="+49 999 999 99 99" 
-> 
-<div class="contact-avatar" data-name="Reshma Saujani">RS</div> 
-<div class="contact-details"> 
-<div class="contact-name">Reshma Saujani</div> 
-<div class="contact-email">reshma.saujani@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">S</div> 
-<div 
-class="contact-item" 
-data-name="Shafi Goldwasser" 
-data-email="shafi.goldwasser@gmail.com" 
-data-phone="+49 101 101 10 10" 
-> 
-<div class="contact-avatar" data-name="Shafi Goldwasser">SG</div> 
-<div class="contact-details"> 
-<div class="contact-name">Shafi Goldwasser</div> 
-<div class="contact-email">shafi.goldwasser@gmail.com</div> 
-</div> 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-<div class="contact-group"> 
-<div class="contact-group-letter">T</div> 
-<div 
-class="contact-item" 
-data-name="Tobias Fröhler" 
-data-email="tobias.froehler24@gmail.com" 
-data-phone="+49 202 202 20 20" 
-> 
-<div class="contact-avatar" data-name="Tobias Fröhler">TF</div> 
-<div class="contact-details"> 
-<div class="contact-name">Tobias Fröhler</div> 
-<div class="contact-email">tobias.froehler24@gmail.com</div> 
-</div> 
+  <header class="header">
+    <img src="../assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
+    <span class="headline">Kanban Project Management Tool</span>
+    <div class="nav-right">
+      <a href="../html/help.html" class="help-btn" title="Help">
+        <img src="../assets/img/help.png" alt="Help" />
+      </a>
+      <div class="user-profile" id="userProfile" onclick="toggleDropdown()">
+        <img src="../assets/img/ellipse.png" alt="Profile">
+        <span>SM</span>
+      </div>
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a class="only-responsive" href="../html/help.html">Help</a>
+        <a href="../html/legal_notice.html">Legal Notice</a>
+        <a href="../html/privacy_policy.html">Privacy Policy</a>
+        <a href="../index.html">Log out</a>
+      </div>
+    </div>
+  </header>
+  <aside class="sidebar">
+    <div class="top-section">
+      <div class="sidebar-logo">
+        <a href="../index.html" class="start">
+          <img src="../assets/img/logo_sidemenu.png" alt="logo" />
+        </a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li class="main-nav-size">
+            <a href="../html/summary.html">
+              <img class="img-main-nav" src="../assets/img/summary.png" alt="Summary Icon" />
+              <span>Summary</span>
+            </a>
+          </li>
+          <li class="main-nav-size">
+            <a href="../html/add_task.html">
+              <img class="img-main-nav" src="../assets/img/addtask.png" alt="Add Task Icon" />
+              <span>Add Task</span>
+            </a>
+          </li>
+          <li class="main-nav-size">
+            <a href="../html/board.html">
+              <img class="img-main-nav" src="../assets/img/board.png" alt="Board Icon" />
+              <span>Board</span>
+            </a>
+          </li>
+          <li class="main-nav-size">
+            <a href="../html/contacts.html">
+              <img class="img-main-nav" src="../assets/img/contacts.png" alt="Contacts Icon" />
+              <span>Contacts</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <nav class="bottom-nav">
+      <ul>
+        <li>
+          <a class="bottom-nav-a" href="../html/privacy_policy.html">Privacy Policy</a>
+        </li>
+        <li>
+          <a class="bottom-nav-a" href="../html/legal_notice.html">Legal Notice</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <div class="contact-content">
+    <div class="contacts-container">
+      <div class="contacts-left show-contact-right">
+        <button id="openAddContact" class="add-contact-btn">
+          Add new contact
+          <img class="add-contact-img" id="floatingBtnIcon" src="../assets/img/addperson.png" alt="add new contact" />
+        </button>
+        <button id="menuDotsBtn" class="add-contact-btn no-img">
+          <img src="../assets/img/responsive_dot_menu.png" alt="menu" />
+        </button>
+        <div class="contacts-list" id="contactList">
+          <div class="contact-group">
+            <div class="contact-group-letter">A</div>
+            <div class="contact-item" data-name="Ada Lovelace" data-email="ada.lovelace@gmail.com"
+              data-phone="+49 111 111 11 11">
+              <div class="contact-avatar" data-name="Ada Lovelace">AL</div>
+              <div class="contact-details">
+                <div class="contact-name">Ada Lovelace</div>
+                <div class="contact-email">ada.lovelace@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">B</div>
+            <div class="contact-item" data-name="Bernadette Pöltl" data-email="bernadette.poeltl99@gmail.com"
+              data-phone="+43 650 88 00 963">
+              <div class="contact-avatar" data-name="Bernadette Pöltl">BP</div>
+              <div class="contact-details">
+                <div class="contact-name">Bernadette Pöltl</div>
+                <div class="contact-email">bernadette.poeltl99@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">C</div>
+            <div class="contact-item" data-name="Claude Shannon" data-email="claude.shannon@gmail.com"
+              data-phone="+49 333 333 33 33">
+              <div class="contact-avatar" data-name="Claude Shannon">CS</div>
+              <div class="contact-details">
+                <div class="contact-name">Claude Shannon</div>
+                <div class="contact-email">claude.shannon@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">D</div>
+            <div class="contact-item" data-name="Dennis Ritchie" data-email="dennis.ritchie@gmail.com"
+              data-phone="+49 444 444 44 44">
+              <div class="contact-avatar" data-name="Dennis Ritchie">DR</div>
+              <div class="contact-details">
+                <div class="contact-name">Dennis Ritchie</div>
+                <div class="contact-email">dennis.ritchie@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">E</div>
+            <div class="contact-item" data-name="Edsger Dijkstra" data-email="edsger.dijkstra@gmail.com"
+              data-phone="+49 555 555 55 55">
+              <div class="contact-avatar" data-name="Edsger Dijkstra">ED</div>
+              <div class="contact-details">
+                <div class="contact-name">Edsger Dijkstra</div>
+                <div class="contact-email">edsger.dijkstra@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">F</div>
+            <div class="contact-item" data-name="Frances Allen" data-email="frances.allen@gmail.com"
+              data-phone="+49 666 666 66 66">
+              <div class="contact-avatar" data-name="Frances Allen">FA</div>
+              <div class="contact-details">
+                <div class="contact-name">Frances Allen</div>
+                <div class="contact-email">frances.allen@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">J</div>
+            <div class="contact-item" data-name="Judith Lütke" data-email="judithlachtrup@yahoo.de"
+              data-phone="+49 777 777 77 77">
+              <div class="contact-avatar" data-name="Judith Lütke">JL</div>
+              <div class="contact-details">
+                <div class="contact-name">Judith Lütke</div>
+                <div class="contact-email">judithlachtrup@yahoo.de</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">M</div>
+            <div class="contact-item" data-name="Margaret Hamilton" data-email="margaret.hamilton@gmail.com"
+              data-phone="+49 888 888 88 88">
+              <div class="contact-avatar" data-name="Margaret Hamilton">MH</div>
+              <div class="contact-details">
+                <div class="contact-name">Margaret Hamilton</div>
+                <div class="contact-email">margaret.hamilton@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">R</div>
+            <div class="contact-item" data-name="Reshma Saujani" data-email="reshma.saujani@gmail.com"
+              data-phone="+49 999 999 99 99">
+              <div class="contact-avatar" data-name="Reshma Saujani">RS</div>
+              <div class="contact-details">
+                <div class="contact-name">Reshma Saujani</div>
+                <div class="contact-email">reshma.saujani@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">S</div>
+            <div class="contact-item" data-name="Shafi Goldwasser" data-email="shafi.goldwasser@gmail.com"
+              data-phone="+49 101 101 10 10">
+              <div class="contact-avatar" data-name="Shafi Goldwasser">SG</div>
+              <div class="contact-details">
+                <div class="contact-name">Shafi Goldwasser</div>
+                <div class="contact-email">shafi.goldwasser@gmail.com</div>
+              </div>
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="contact-group">
+            <div class="contact-group-letter">T</div>
+            <div class="contact-item" data-name="Tobias Fröhler" data-email="tobias.froehler24@gmail.com"
+              data-phone="+49 202 202 20 20">
+              <div class="contact-avatar" data-name="Tobias Fröhler">TF</div>
+              <div class="contact-details">
+                <div class="contact-name">Tobias Fröhler</div>
+                <div class="contact-email">tobias.froehler24@gmail.com</div>
+              </div>
 
-<button id="delete" class="delete-btn-contact"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-</div> 
-</div> 
-<div class="contacts-right"> 
-<div class="contacts-right-top"> 
-<h2 class="contacts-title">Contacts</h2> 
-<div class="vertical-line"></div> 
-<p class="contacts-subtitle">Better with a team</p> 
-</div> 
-<a href="javascript:void(0);" onclick="closeContactDetails()" class="mobile-only-goback back-btn">
-  <img
-    class="help-arrow"
-    src="../assets/img/help-arrow.png"
-    alt="back arrow"
-  />
-</a>
-<div class="background-color-contacts"> 
-<div class="contacts-right-bottom"> 
-<div class="contact-details-card"> 
-<div class="contact-header"> 
-<div class="contact-avatar-large" style="background-color: #D32F2F;"> 
-AL 
-</div> 
-<div class="name-action-alignment"> 
-<h3 class="details-name">Ada Lovelace</h3> 
-<div class="contact-details-actions-containter"> 
-<div class="contact-details-actions-1"> 
-<button id="edit"> 
-<img class="actions-img" src="../assets/img/edit.png" alt="edit"> 
-Edit 
-</button> 
-</div> 
-<div class="contact-details-actions-2"> 
-<button id="deleteBtn"> 
-<img class="actions-img" src="../assets/img/delete.png" alt="delete"> 
-Delete 
-</button> 
-</div> 
-</div> 
-</div> 
-</div> 
-<div class="details-label">Contact Information</div> 
-<div class="details-info"> 
-<div> 
-<strong>Email</strong> 
-<br><br> 
-<a class="email-address" href="mailto:ada.lovelace@gmail.com">ada.lovelace@gmail.com</a> 
-</div> 
-<div> 
-<strong>Phone</strong> 
-<br><br> 
-+49 111 111 11 11 
-</div> 
-</div> 
-</div> 
-</div> 
-</div> 
-</div> 
+              <button id="delete" class="delete-btn-contact">
+                <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contacts-right">
+        <div class="contacts-right-top">
+          <h2 class="contacts-title">Contacts</h2>
+          <div class="vertical-line"></div>
+          <p class="contacts-subtitle">Better with a team</p>
+        </div>
+        <a href="javascript:void(0);" onclick="closeContactDetails()" class="mobile-only-goback back-btn">
+          <img class="help-arrow" src="../assets/img/help-arrow.png" alt="back arrow" />
+        </a>
+        <div class="background-color-contacts">
+          <div class="contacts-right-bottom">
+            <div class="contact-details-card">
+              <div class="contact-header">
+                <div class="contact-avatar-large" style="background-color: #D32F2F;">
+                  AL
+                </div>
+                <div class="name-action-alignment">
+                  <h3 class="details-name">Ada Lovelace</h3>
+                  <div class="contact-details-actions-containter">
+                    <div class="contact-details-actions-1">
+                      <button id="edit">
+                        <img class="actions-img" src="../assets/img/edit.png" alt="edit">
+                        Edit
+                      </button>
+                    </div>
+                    <div class="contact-details-actions-2">
+                      <button id="deleteBtn">
+                        <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="details-label">Contact Information</div>
+              <div class="details-info">
+                <div>
+                  <strong>Email</strong>
+                  <br><br>
+                  <a class="email-address" href="mailto:ada.lovelace@gmail.com">ada.lovelace@gmail.com</a>
+                </div>
+                <div>
+                  <strong>Phone</strong>
+                  <br><br>
+                  +49 111 111 11 11
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
-<nav class="mobile-nav">
-  <a href="../html/summary.html">
-    <img src="../assets/img/summary.png" alt="Summary" />
-    <span>Summary</span>
-  </a>
-  <a href="../html/board.html">
-    <img src="../assets/img/board.png" alt="Board" />
-    <span>Board</span>
-  </a>
-  <a href="../html/add_task.html">
-    <img src="../assets/img/addtask.png" alt="Add Task" />
-    <span>Tasks</span>
-  </a>
-  <a href="../html/contacts.html">
-    <img src="../assets/img/contacts.png" alt="Contacts" />
-    <span>Contacts</span>
-  </a>
-</nav>
+      <nav class="mobile-nav">
+        <a href="../html/summary.html">
+          <img src="../assets/img/summary.png" alt="Summary" />
+          <span>Summary</span>
+        </a>
+        <a href="../html/board.html">
+          <img src="../assets/img/board.png" alt="Board" />
+          <span>Board</span>
+        </a>
+        <a href="../html/add_task.html">
+          <img src="../assets/img/addtask.png" alt="Add Task" />
+          <span>Tasks</span>
+        </a>
+        <a href="../html/contacts.html">
+          <img src="../assets/img/contacts.png" alt="Contacts" />
+          <span>Contacts</span>
+        </a>
+      </nav>
 
-<script src="../js/contacts.js"></script> 
-<script src="../js/dropwdown.js"></script> 
-<script src="../js/script.js"></script>
-<script type="module" src="../js/add_contact.js"></script> 
-</body> 
-</html> 
+      <script src="../js/contacts.js"></script>
+      <script src="../js/dropwdown.js"></script>
+      <script src="../js/script.js"></script>
+      <script type="module" src="../js/add_contact.js"></script>
+</body>
+
+</html>

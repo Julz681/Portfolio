@@ -16,31 +16,6 @@ const fp = flatpickr("#due-date", {
     }
 });
 
-async function init() {
-    await includeHTML();
-}
-
-async function includeHTML() {
-    let generalFrameRef = document.getElementById("general-frame");
-    let generalFrameFile = generalFrameRef.getAttribute("w3-include-html");
-    await fetchFile(generalFrameRef, generalFrameFile);
-}
-
-async function fetchFile(element, file) {
-    if (!file) return;
-    try {
-        const response = await fetch(file);
-        if (!response.ok) {
-            throw new Error("Page not found.");
-        }
-        element.innerHTML = await response.text();
-    } catch (error) {
-        element.innerHTML = error.message;
-    } finally {
-        element.removeAttribute("w3-include-html");
-    }
-}
-
 function checkTitleInputValue(requiredErrorContainerId, valueSizeErrorContainerId,  containerId) {
     let requiredErrorContainer = getErrorContainer(`${requiredErrorContainerId}`);
     let valueSizeErrorContainer = getErrorContainer(`${valueSizeErrorContainerId}`)
@@ -97,10 +72,6 @@ function checkDateInput(containerId) {
     }
     else {
         removeAllDateErrorUserInteractions(requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef);
-       // fp.altInput.classList.remove("task-input-fields-invalid");
-       // removeErrorMessage(requiredErrorContainerRef);
-       // removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputErrorContainerRef)
-       // removeValueErrorStylingOnInput(fp.altInput);
     }    
 }
 
@@ -151,26 +122,53 @@ function removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputE
 
 function changePriorityLabelColors(priorityLabelId) {
     let priorityLabels = document.getElementsByClassName("priority-labels");
-    let priorityLabel = document.getElementById(priorityLabelId);
-    let prioritySVG = document.getElementById(`${priorityLabelId}-svg`);
-    let priorityIconParts = prioritySVG.children;
-    if (priorityLabel.classList.contains("default-prio-bg")) {
-        priorityLabel.style.color = "#FFFFFF";
-        switchPriorityLabelBackground(priorityLabelId, priorityLabel)
-        switchPriorityIconColor(priorityIconParts, "#FFFFFF");
-    } else {
-        priorityLabel.style.color = "#000000";
-        switchPriorityLabelBackground(priorityLabelId, priorityLabel);
-        resetPriorityIconColor(priorityLabelId, priorityIconParts)
+    for (let i = 0; i < priorityLabels.length; i++) {
+        let currentPriorityLabelId = priorityLabels[i].id;
+        let priorityIconParts = getPriorityIconParts(currentPriorityLabelId);
+        let priorityColor = getPriorityColor(currentPriorityLabelId);
+        if(currentPriorityLabelId != priorityLabelId) {
+            priorityLabels[i].style.color = "#000000";
+            switchPriorityIconColor(priorityIconParts, priorityColor);
+            togglePriorityLabelDefaultBackgroundColor(priorityLabels[i]);
+        } else if (!priorityLabels[i].classList.contains("default-prio-bg")) {
+            priorityLabels[i].style.color = "#000000";
+            switchPriorityIconColor(priorityIconParts, priorityColor);
+            togglePriorityLabelDefaultBackgroundColor(priorityLabels[i]);
+            togglePriorityLabelBackgroundColor(priorityLabelId, priorityLabels[i]);
+        }        
+        else {
+            priorityLabels[i].style.color = "#ffffff";
+            togglePriorityLabelBackgroundColor(priorityLabelId, priorityLabels[i]);
+            switchPriorityIconColor(priorityIconParts, "#ffffff");
+            togglePriorityLabelDefaultBackgroundColor(priorityLabels[i])
+        }
     }
 }
 
-function switchPriorityLabelBackground(priorityLabelId, priorityLabel) {
-    switchPriorityLabelBackgroundColor(priorityLabelId, priorityLabel);
-    togglePriorityLabelDefaultBackgroundColor(priorityLabel);
+// TODO: integrate
+function changePrioritypartsColor(currentPriorityLabel, priorityIconParts, priorityColor) {
+    switchPriorityIconColor(priorityIconParts, priorityColor);
+    togglePriorityLabelDefaultBackgroundColor(currentPriorityLabel);
 }
 
-function switchPriorityLabelBackgroundColor(priorityLabelId, priorityLabel) {
+function getPriorityColor(priorityLabelId) {
+    switch(priorityLabelId) {
+        case "low":
+            return "#7AE229"
+        case "medium":
+            return "#FFA800"
+        case "urgent":
+            return "#FF3D00"
+    }
+}
+
+function getPriorityIconParts(priorityLabelId) {
+    let prioritySVG = document.getElementById(`${priorityLabelId}-svg`);
+    let priorityIconParts = prioritySVG.children;
+    return priorityIconParts;
+}
+
+function togglePriorityLabelBackgroundColor(priorityLabelId, priorityLabel) {
     switch(priorityLabelId) {
         case "low":
             priorityLabel.classList.toggle("low-prio-bg");
@@ -182,8 +180,8 @@ function switchPriorityLabelBackgroundColor(priorityLabelId, priorityLabel) {
             priorityLabel.classList.toggle("urgent-prio-bg");
             break;
     }
-}
 
+}
 
 function switchPriorityIconColor(priorityIconParts, color) {
     for(let i = 0; i < priorityIconParts.length; i++) {
@@ -191,23 +189,12 @@ function switchPriorityIconColor(priorityIconParts, color) {
     };
 }
 
-function resetPriorityIconColor(priorityLabelId, priorityIconParts) {
-    switch(priorityLabelId) {
-        case "low":
-            switchPriorityIconColor(priorityIconParts, "#7AE229")
-            break;
-        case "medium":
-            switchPriorityIconColor(priorityIconParts, "#FFA800")
-            break;
-        case "urgent":
-            switchPriorityIconColor(priorityIconParts, "#FF3D00")
-            break;
-    }
-}
-
-
 function togglePriorityLabelDefaultBackgroundColor(priorityLabel) {
-    priorityLabel.classList.toggle("default-prio-bg");
+    if (!priorityLabel.classList.contains("default-prio-bg")) {
+        priorityLabel.classList.add("default-prio-bg");
+    } else {
+        priorityLabel.classList.remove("default-prio-bg");
+    }
 }
 
 function showValueErrorMessage (valueSizeErrorContainerId) {
