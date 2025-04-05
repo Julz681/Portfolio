@@ -228,7 +228,6 @@ body {
   display: none;
 }
 
-
 @media (max-width: 1200px) {
   .sidebar {
     display: none;
@@ -265,14 +264,13 @@ body {
     font-size: 16px;
   }
 
-
   .nav-right {
     margin-left: auto;
   }
 
   .mobile-nav {
-    display: flex;
-    position: fixed;
+    display: flex !important;
+    position: fixed !important;
     bottom: 0;
     left: 0;
     height: 80px;
@@ -280,7 +278,7 @@ body {
     background-color: #2a3647;
     justify-content: space-around;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999 !important;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
   }
 
@@ -300,7 +298,7 @@ body {
   }
 
   body {
-    padding-bottom: 80px; 
+    padding-bottom: 80px;
   }
 
   .user-profile {
