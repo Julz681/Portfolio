@@ -179,7 +179,7 @@ alt="Contacts Icon"
 </aside> 
 <div class="contact-content"> 
 <div class="contacts-container"> 
-<div class="contacts-left show-contact-right"> 
+<div class="contacts-left"> 
 <button id="openAddContact" class="add-contact-btn"> 
 Add new contact 
 <img 
@@ -188,10 +188,24 @@ id="floatingBtnIcon"
 src="../assets/img/addperson.png" 
 alt="add new contact" 
 /> 
-</button> 
-<button id="menuDotsBtn" class="add-contact-btn no-img">
-  <img src="../assets/img/responsive_dot_menu.png" alt="menu" />
 </button>
+<div id="menuDotsWrapper">
+  <button id="menuDotsBtn" class="add-contact-btn no-img" onclick="toggleDropupMenu()" style="display: none;">
+    <img src="../assets/img/white_dots.png" alt="menu" />
+  </button>
+
+  <div id="dropupMenu" class="dropup-menu">
+    <div class="menu-item" onclick="startEditMode()">
+      <img src="../assets/img/edit.png" alt="edit" />
+      <span>Edit</span>
+    </div>   
+    <div class="menu-item"  onclick="deleteContact()">
+      <img src="../assets/img/delete.png" alt="delete" />
+      <span>Delete</span>
+    </div>
+  </div>
+</div>
+
 <div class="contacts-list" id="contactList"> 
 <div class="contact-group"> 
 <div class="contact-group-letter">A</div> 
@@ -460,8 +474,6 @@ Delete
 </div> 
 </div> 
 </div> 
-
-
 
 <nav class="mobile-nav">
   <a href="../html/summary.html">

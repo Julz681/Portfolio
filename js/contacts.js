@@ -435,36 +435,135 @@ let isEditing = false;
 let currentEditingContact = null;
 
 // show the contacts right - responsive
-window.addEventListener('DOMContentLoaded', () => {
-  const contactItems = document.querySelectorAll('.contact-item');
+window.addEventListener("DOMContentLoaded", () => {
+  const contactItems = document.querySelectorAll(".contact-item");
 
-  contactItems.forEach(item => {
-    item.addEventListener('click', () => {
+  contactItems.forEach((item) => {
+    item.addEventListener("click", () => {
       openContactDetails();
     });
   });
 });
 
 function openContactDetails() {
-  const rightBox = document.querySelector('.contacts-right');
-  const backBtn = document.querySelector('.mobile-only-goback');
+  const rightBox = document.querySelector(".contacts-right");
+  const backBtn = document.querySelector(".mobile-only-goback");
 
-  if (rightBox) rightBox.classList.add('show-contact-right');
+  if (rightBox) rightBox.classList.add("show-contact-right");
 
   if (window.innerWidth <= 900 && backBtn) {
-    backBtn.classList.add('visible');
+    backBtn.classList.add("visible");
   }
 }
 
-// shows the close button only in the mobile version - contacts right 
-window.closeContactDetails = function() {
-  const rightBox = document.querySelector('.contacts-right');
-  const backBtn = document.querySelector('.mobile-only-goback');
+// shows the close button only in the mobile version - contacts right
+window.closeContactDetails = function () {
+  const rightBox = document.querySelector(".contacts-right");
+  const backBtn = document.querySelector(".mobile-only-goback");
 
-  if (rightBox) rightBox.classList.remove('show-contact-right');
+  if (rightBox) rightBox.classList.remove("show-contact-right");
 
   if (window.innerWidth <= 900 && backBtn) {
-    backBtn.classList.remove('visible');
+    backBtn.classList.remove("visible");
+  }
+  updateFloatingButtons();
+};
+
+function updateFloatingButtons() {
+  const right = document.querySelector(".contacts-right");
+  const addBtn = document.getElementById("openAddContact");
+  const dotsBtn = document.getElementById("menuDotsBtn");
+  const dropup = document.getElementById("dropupMenu");
+  const isMobile = window.innerWidth < 900;
+  const visible = right?.classList.contains("show-contact-right");
+
+  addBtn.style.display = isMobile && visible ? "none" : "flex";
+  dotsBtn.style.display = isMobile && visible ? "flex" : "none";
+  if (!visible && dropup) dropup.classList.remove("show");
+
+  document.getElementById("cancelAddContact")?.classList.add("hidden");
+  document.querySelector(".mobile-only-goback")?.classList.add("visible");
+}
+
+function toggleDropupMenu() {
+  const menu = document.getElementById("dropupMenu");
+  const right = document.querySelector(".contacts-right");
+  if (!right?.classList.contains("show-contact-right")) return;
+
+  if (menu.classList.contains("show")) {
+    menu.classList.remove("show");
+    menu.classList.add("hide");
+    setTimeout(() => {
+      menu.classList.remove("hide");
+      menu.style.display = "none";
+    }, 250);
+  } else {
+    menu.style.display = "block";
+    requestAnimationFrame(() => menu.classList.add("show"));
   }
 }
 
+function editContact() {
+  startEditMode();
+}
+
+function deleteContact() {
+  const name = document.querySelector(".details-name")?.textContent;
+  if (!name) return;
+
+  document.querySelectorAll(".contact-item").forEach(item => {
+    if (item.dataset.name === name) item.remove();
+  });
+  document.querySelectorAll(".contact-group").forEach(group => {
+    if (!group.querySelector(".contact-item")) group.remove();
+  });
+
+  document.querySelector(".contacts-right")?.classList.remove("show-contact-right");
+  document.querySelector(".contacts-right-bottom").innerHTML = "";
+
+  const menu = document.getElementById("dropupMenu");
+  if (menu?.classList.contains("show")) {
+    menu.classList.remove("show");
+    menu.classList.add("hide");
+    setTimeout(() => {
+      menu.classList.remove("hide");
+      menu.style.display = "none";
+    }, 250);
+  }
+
+  updateFloatingButtons();
+  if (window.innerWidth < 1200) {
+    closeContactDetails();
+    document.getElementById("addContactOverlay")?.classList.remove("open");
+  }
+}
+
+document.addEventListener("click", e => {
+  const menu = document.getElementById("dropupMenu");
+  const btn = document.getElementById("menuDotsBtn");
+  if (!menu.contains(e.target) && !btn.contains(e.target)) {
+    if (menu.classList.contains("show")) {
+      menu.classList.remove("show");
+      menu.classList.add("hide");
+      setTimeout(() => {
+        menu.classList.remove("hide");
+        menu.style.display = "none";
+      }, 250);
+    }
+  }
+});
+
+function openContactDetails() {
+  document.querySelector(".contacts-right")?.classList.add("show-contact-right");
+  updateFloatingButtons();
+}
+
+function closeContactDetails() {
+  document.querySelector(".contacts-right")?.classList.remove("show-contact-right");
+  document.querySelector(".mobile-only-goback")?.classList.remove("visible");
+  updateFloatingButtons();
+}
+
+document.getElementById("dropupMenu")?.classList.remove("show");
+window.addEventListener("load", updateFloatingButtons);
+window.addEventListener("resize", updateFloatingButtons);
