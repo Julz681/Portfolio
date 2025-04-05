@@ -567,3 +567,4 @@ function closeContactDetails() {
 document.getElementById("dropupMenu")?.classList.remove("show");
 window.addEventListener("load", updateFloatingButtons);
 window.addEventListener("resize", updateFloatingButtons);
+

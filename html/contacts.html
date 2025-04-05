@@ -135,9 +135,20 @@
           Add new contact
           <img class="add-contact-img" id="floatingBtnIcon" src="../assets/img/addperson.png" alt="add new contact" />
         </button>
-        <button id="menuDotsBtn" class="add-contact-btn no-img">
+        <button id="menuDotsBtn" onclick="toggleDropupMenu()" class="add-contact-btn no-img">
           <img src="../assets/img/responsive_dot_menu.png" alt="menu" />
         </button>
+        <div id="dropupMenu" class="dropup-menu">
+          <div class="menu-item" onclick="editContact()">
+            <img src="../assets/img/edit.png" alt="edit" />
+            <span>Edit</span>
+          </div>
+          <div class="menu-item" onclick="deleteContact()">
+            <img src="../assets/img/delete.png" alt="delete" />
+            <span>Delete</span>
+          </div>
+        </div>
+        
         <div class="contacts-list" id="contactList">
           <div class="contact-group">
             <div class="contact-group-letter">A</div>
