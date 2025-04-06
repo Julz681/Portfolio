@@ -229,6 +229,22 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 // TODO: search contacts in dropdown
 // TODO: assigned contacts handling
 
+function assignContactToTask(contactId, event) {
+    let contactContainerRef = document.getElementById(contactId);
+    if(contactContainerRef.classList.contains("single-contact-wrapper")) {
+        contactContainerRef.classList.toggle("single-contact-wrapper");
+        contactContainerRef.classList.toggle("single-contact-wrapper-checked");
+        contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
+        contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-checked");
+    } else {
+        contactContainerRef.classList.toggle("single-contact-wrapper");
+        contactContainerRef.classList.toggle("single-contact-wrapper-checked");
+        contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
+        contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-checked");
+    }
+    event.stopPropagation();
+}
+
 //  error message handling
 
 function showValueErrorMessage (valueSizeErrorContainerId) {
