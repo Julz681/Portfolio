@@ -1,10 +1,11 @@
 //colors for the avatars depending on the letter
 const letterColors = {
-  A: "#D32F2F", B: "#C2185B", C: "#7B1FA2", D: "#512DA8", E: "#1976D2",
-  F: "#0288D1", G: "#00796B", H: "#388E3C", I: "#689F38", J: "#F57C00",
-  K: "#E64A19", L: "#5D4037", M: "#455A64", N: "#263238", O: "#D81B60",
-  P: "#8E24AA", Q: "#673AB7", R: "#303F9F", S: "#0288D1", T: "#0097A7",
-  U: "#00796B", V: "#388E3C", W: "#689F38", X: "#F57C00", Y: "#E64A19", Z: "#5D4037"
+  A: "#D32F2F",  B: "#C2185B",  C: "#7B1FA2",  D: "#512DA8",  E: "#1976D2",
+  F: "#0288D1",  G: "#00796B",  H: "#388E3C",  I: "#689F38",  J: "#F57C00",
+  K: "#E64A19",  L: "#5D4037",  M: "#455A64",  N: "#263238",  O: "#D81B60",
+  P: "#8E24AA",  Q: "#673AB7",  R: "#303F9F",  S: "#0288D1",  T: "#0097A7",
+  U: "#00796B",  V: "#388E3C",  W: "#689F38",  X: "#F57C00",  Y: "#E64A19",
+  Z: "#5D4037"
 };
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -17,12 +18,32 @@ window.addEventListener("DOMContentLoaded", () => {
   bindEditButton(); // enable editing an existing contact
   enableAutofill(); // automatically fill in example contact -> Mark Zuckerberg
   closeErrorOnInput(); // hide the error message when all fields are filled
+  bindEditOverlayButtons(); // binds all Event-Listener for the Edit-Overlay
 });
 
-// hides the error message
+// Hides the error message when all fields are filled (Add & Edit Overlay)
 function hideError() {
-  const error = document.getElementById("error-message");
-  if (error) error.style.display = "none";
+  const nameField = document.getElementById("contactName");
+  const emailField = document.getElementById("contactEmail");
+  const phoneField = document.getElementById("contactPhone");
+
+  const addError = document.getElementById("error-message");
+  const editError = document.getElementById("edit-error-message");
+
+  if (!nameField || !emailField || !phoneField) return;
+
+  const checkAndHide = () => {
+    const allFilled =
+      nameField.value.trim() &&
+      emailField.value.trim() &&
+      phoneField.value.trim();
+    if (allFilled && addError) addError.style.display = "none";
+    if (allFilled && editError) editError.style.display = "none";
+  };
+
+  [nameField, emailField, phoneField].forEach((field) =>
+    field.addEventListener("input", checkAndHide)
+  );
 }
 
 // sets the color for each avatar based on the first letter of the name
@@ -85,7 +106,7 @@ function showContactDetails(name, email, phone) {
   container.classList.add("slide-in");
 }
 
-// connects buttons for opening, closing and canceling the overlay
+// connects buttons for opening, closing and canceling the add-contact overlay
 function bindOverlayButtons() {
   const overlay = document.getElementById("addContactOverlay");
   const cancel = document.getElementById("cancelAddContact");
@@ -100,7 +121,7 @@ function bindOverlayButtons() {
   });
 }
 
-// opens the overlay for adding a new contact
+// opens the "Add Contact" overlay and resets relevant states
 function openOverlay() {
   isEditing = false;
   currentEditingContact = null;
@@ -126,39 +147,22 @@ function openOverlay() {
   updateFloatingButtons();
 }
 
-// function for the cancel-btn in the edit mode
-function animateCancelBtn() {
-  const cancel = document.getElementById("cancelAddContact");
-  if (!cancel || !isEditing) return;
-
-  cancel.style.transition = "none";
-  cancel.style.marginLeft = "-95px";
-  cancel.offsetHeight;
-
-  setTimeout(() => {
-    cancel.style.transition = "margin-left 0.3s ease-in-out";
-    cancel.style.marginLeft = "-95px";
-  }, 100);
-}
-
-// resets the overlay
+// closes the add-contact overlay and resets form and state
 function resetOverlay() {
   document.getElementById("addContactOverlay").classList.remove("open");
   clearForm();
   isEditing = false;
   currentEditingContact = null;
-  resetAvatarToDefault();
-  resetCancelButtonToDefault();
 }
 
-// clears all input from the overlay
+// clears all inputs in the add-contact form
 function clearForm() {
   ["contactName", "contactEmail", "contactPhone"].forEach((id) => {
     document.getElementById(id).value = "";
   });
 }
 
-// connects the "Create Contact" button to create or edit
+// handles creation of a new contact from the add-contact form
 function bindCreateButton() {
   document
     .getElementById("createContact")
@@ -170,16 +174,12 @@ function bindCreateButton() {
       if (!name || !email || !phone) return showError();
       hideError();
       const list = document.getElementById("contactList");
-      if (isEditing && currentEditingContact) {
-        updateEditedContact(name, email, phone, list);
-      } else {
-        createContactElement(name, email, phone, list);
-      }
+      createContactElement(name, email, phone, list);
       resetOverlay();
     });
 }
 
-// checks the value in the input field
+// returns trimmed value of a form input field by ID
 function getValue(id) {
   return document.getElementById(id).value.trim();
 }
@@ -190,7 +190,7 @@ function showError() {
   if (error) error.style.display = "block";
 }
 
-// create and add new contact
+// creates a new contact DOM element and appends it to the correct group
 function createContactElement(name, email, phone, contactList) {
   const item = buildContactItem(name, email, phone);
   const group = getOrCreateGroup(name[0].toUpperCase(), contactList);
@@ -227,7 +227,7 @@ function getInitials(name) {
     .slice(0, 2);
 }
 
-// get group or create if not exists
+// finds or creates a contact group container based on the first letter
 function getOrCreateGroup(letter, list) {
   let group = [...list.querySelectorAll(".contact-group")].find(
     (g) => g.querySelector(".contact-group-letter")?.textContent === letter
@@ -288,133 +288,121 @@ function bindDeleteButton() {
     });
 }
 
-// start the edit mode, if the edit-btn is klicked
+// opens the edit overlay when "Edit" button in detail view is clicked
 function bindEditButton() {
   document.addEventListener("click", (e) => {
     if (!e.target.closest("#edit")) return;
     startEditMode();
   });
-  updateButtonsForEdit();
 }
 
-// prepares everything for editing a contact
+// closes edit overlay when clicking outside the modal
+document.addEventListener("click", (e) => {
+  const overlay = document.getElementById("editContactOverlay");
+  const modal = overlay?.querySelector(".add-contact-modal");
+
+  if (overlay?.classList.contains("open") && !modal.contains(e.target)) {
+    closeEditOverlay();
+  }
+});
+
+// loads selected contact data and opens the edit overlay
 function startEditMode() {
   const selected = document.querySelector(".contact-item.selected");
   if (!selected) return;
 
-  setOverlayText("Edit Contact");
-  fillFormFields(selected);
-  updateAvatarForEdit(selected);
-  updateButtonsForEdit();
+  const { name, email, phone } = selected.dataset;
+  fillEditForm(name, email, phone);
+  setEditAvatar(name);
 
-  document.getElementById("addContactOverlay").classList.add("open");
-  isEditing = true;
-  currentEditingContact = selected;
-  animateCancelBtn();
-  updateButtonsForEdit();
-  updateFloatingButtons();
+  document.getElementById("editContactOverlay").classList.add("open");
+  document.getElementById("editContactOverlay").dataset.current = name;
 }
 
-// changes the overlay text
-function setOverlayText(title) {
-  document.getElementById("overlayTitle").textContent = title;
-  document.getElementById("overlayDescription").style.display = "none";
+// fills the edit form with selected contact's name, email, and phone
+function fillEditForm(name, email, phone) {
+  document.getElementById("editContactName").value = name;
+  document.getElementById("editContactEmail").value = email;
+  document.getElementById("editContactPhone").value = phone;
 }
 
-// enter the name, email, and phone number of the selected contact into the form fields
-function fillFormFields(contact) {
-  document.getElementById("contactName").value = contact.dataset.name;
-  document.getElementById("contactEmail").value = contact.dataset.email;
-  document.getElementById("contactPhone").value = contact.dataset.phone;
+// sets avatar in the edit overlay
+function setEditAvatar(name) {
+  const initials = getInitials(name);
+  const color = letterColors[name[0].toUpperCase()] || "#999";
+  const avatar = document.getElementById("editOverlayAvatar");
+  avatar.innerHTML = `<div class="avatar-initials">${initials}</div>`;
+  avatar.style.backgroundColor = color;
 }
 
-// update the avatar
-function updateAvatarForEdit(contact) {
-  const avatar = contact.querySelector(".contact-avatar");
-  const initials = avatar.textContent;
-  const bgColor = avatar.style.backgroundColor;
-
-  const avatarOverlay = document.getElementById("overlayAvatar");
-  avatarOverlay.innerHTML = `<div class="avatar-initials">${initials}</div>`;
-  avatarOverlay.style.backgroundColor = bgColor;
-  avatarOverlay.classList.add("edit-avatar");
+// binds all buttons inside the edit overlay: save, delete, close
+function bindEditOverlayButtons() {
+  document
+    .getElementById("closeEditOverlayBtn")
+    ?.addEventListener("click", closeEditOverlay);
+  document
+    .getElementById("editContactForm")
+    ?.addEventListener("submit", handleEditSubmit);
+  document
+    .getElementById("deleteContactEditOverlay")
+    ?.addEventListener("click", handleEditDelete);
+  hideEditErrorOnInput();
 }
 
-// reset the avatar to the img for create contact
-function resetAvatarToDefault() {
-  const avatarOverlay = document.getElementById("overlayAvatar");
-  avatarOverlay.classList.remove("edit-avatar");
-  avatarOverlay.innerHTML = `
-    <img class="vector" src="../assets/img/addnewcontact.png" alt="User Avatar">
-  `;
-  avatarOverlay.style.backgroundColor = "transparent";
-}
-
-// changes the buttons for edit mode
-function updateButtonsForEdit() {
-  const createBtn = document.getElementById("createContact");
-  createBtn.innerHTML = `
-    <span>Save</span>
-    <span class="checkmark-icon"></span>
-  `;
-
-  const deleteBtn = document.getElementById("cancelAddContact");
-  deleteBtn.innerHTML = "Delete";
-  deleteBtn.classList.add("delete-mode");
-  deleteBtn.onclick = deleteContact;
-
-  const newDeleteBtn = deleteBtn.cloneNode(true);
-  deleteBtn.parentNode.replaceChild(newDeleteBtn, deleteBtn);
-
-  const finalBtn = document.getElementById("cancelAddContact");
-  finalBtn.innerHTML = "Delete";
-  finalBtn.classList.add("delete-mode");
-  finalBtn.addEventListener("click", deleteContact);
-
-  finalBtn.classList.remove("show-delete-btn");
-
-  if (isEditing && window.innerWidth < 1200) {
-    finalBtn.classList.add("show-delete-btn");
-  } else {
-    finalBtn.classList.remove("show-delete-btn");
+// handles saving of edited contact: validates inputs and updates the contact
+function handleEditSubmit(e) {
+  e.preventDefault();
+  const name = getValue("editContactName");
+  const email = getValue("editContactEmail");
+  const phone = getValue("editContactPhone");
+  if (!name || !email || !phone) {
+    document.getElementById("edit-error-message").style.display = "block";
+    return;
   }
+  const list = document.getElementById("contactList");
+  const currentName =
+    document.getElementById("editContactOverlay").dataset.current;
+  const selected = [...document.querySelectorAll(".contact-item")].find(
+    (i) => i.dataset.name === currentName
+  );
+  if (!selected) return;
+  updateEditedContact(name, email, phone, list, selected);
+  closeEditOverlay();
 }
 
-// reset cancel button (used in create Contact mode)
-function resetCancelButtonToDefault() {
-  const cancelBtn = document.getElementById("cancelAddContact");
-  if (!cancelBtn) return;
-  cancelBtn.innerHTML = `
-    <span>Cancel</span>
-    <span class="cancel-icon"></span>
-  `;
-  cancelBtn.classList.remove("delete-mode");
-  cancelBtn.onclick = resetOverlay;
-
-  const isEditMode = cancelBtn.classList.contains("delete-mode");
-  if (!isEditMode || window.innerWidth < 1200) {
-    cancelBtn.style.display = "none";
-  } else {
-    cancelBtn.style.display = "flex";
-  }
-}
-
-// delete the current contact
-function deleteCurrentContact() {
-  const name = currentEditingContact?.dataset.name;
-  if (!name) return;
-
-  document.querySelectorAll(".contact-item").forEach((item) => {
-    if (item.dataset.name === name) item.remove();
+// handles contact deletion in edit overlay
+function handleEditDelete() {
+  const currentName =
+    document.getElementById("editContactOverlay").dataset.current;
+  if (!currentName) return;
+  document.querySelectorAll(".contact-item").forEach((i) => {
+    if (i.dataset.name === currentName) i.remove();
   });
-
-  document.querySelectorAll(".contact-group").forEach((group) => {
-    if (!group.querySelector(".contact-item")) group.remove();
+  document.querySelectorAll(".contact-group").forEach((g) => {
+    if (!g.querySelector(".contact-item")) g.remove();
   });
-
-  document.getElementById("addContactOverlay").classList.remove("open");
   document.querySelector(".contacts-right-bottom").innerHTML = "";
-  resetOverlay();
+  closeEditOverlay();
+}
+
+// removes old contact element and adds the updated one in the correct group
+function updateEditedContact(name, email, phone, list, oldItem) {
+  const oldGroup = oldItem.closest(".contact-group");
+  oldGroup.removeChild(oldItem);
+  if (!oldGroup.querySelector(".contact-item")) oldGroup.remove();
+  createContactElement(name, email, phone, list);
+}
+
+// closes the edit overlay
+function closeEditOverlay() {
+  const overlay = document.getElementById("editContactOverlay");
+  overlay.classList.remove("open");
+  overlay.dataset.current = "";
+}
+
+// helper to get trimmed input value
+function getValue(id) {
+  return document.getElementById(id).value.trim();
 }
 
 // activates autofill when all fields are empty and receive focus
@@ -422,6 +410,7 @@ function enableAutofill() {
   const name = document.getElementById("contactName");
   const email = document.getElementById("contactEmail");
   const phone = document.getElementById("contactPhone");
+  if (!name || !email || !phone) return;
   let used = false;
   const fill = () => {
     if (used || name.value || email.value || phone.value) return;
@@ -446,187 +435,3 @@ function closeErrorOnInput() {
   };
   [name, email, phone].forEach((f) => f.addEventListener("input", check));
 }
-
-let isEditing = false;
-let currentEditingContact = null;
-
-// show the contacts right - responsive
-window.addEventListener("DOMContentLoaded", () => {
-  const contactItems = document.querySelectorAll(".contact-item");
-
-  contactItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      openContactDetails();
-    });
-  });
-});
-
-function openContactDetails() {
-  const rightBox = document.querySelector(".contacts-right");
-  const backBtn = document.querySelector(".mobile-only-goback");
-
-  if (rightBox) rightBox.classList.add("show-contact-right");
-
-  if (window.innerWidth <= 900 && backBtn) {
-    backBtn.classList.add("visible");
-  }
-}
-
-// shows the close button only in the mobile version - contacts right
-window.closeContactDetails = function () {
-  const rightBox = document.querySelector(".contacts-right");
-  const backBtn = document.querySelector(".mobile-only-goback");
-
-  if (rightBox) rightBox.classList.remove("show-contact-right");
-
-  if (window.innerWidth <= 900 && backBtn) {
-    backBtn.classList.remove("visible");
-  }
-  updateFloatingButtons();
-};
-
-// update buttons for mobile and edit mode
-function updateFloatingButtons() {
-  const right = document.querySelector(".contacts-right");
-  const addBtn = document.getElementById("openAddContact");
-  const dotsBtn = document.getElementById("menuDotsBtn");
-  const dropup = document.getElementById("dropupMenu");
-  const cancelBtn = document.getElementById("cancelAddContact");
-
-  const isMobile = window.innerWidth < 900;
-  const isEditMode = cancelBtn?.classList.contains("delete-mode");
-  const isOverlayOpen = document
-    .getElementById("addContactOverlay")
-    ?.classList.contains("open");
-  const showContact = right?.classList.contains("show-contact-right");
-
-  addBtn.style.display = isMobile && showContact ? "none" : "flex";
-  dotsBtn.style.display = isMobile && showContact ? "flex" : "none";
-  if (!showContact && dropup) dropup.classList.remove("show");
-
-  if (cancelBtn && isOverlayOpen) {
-    if (isEditMode) {
-      cancelBtn.style.display =
-        window.innerWidth < 1200 ? "flex" : "inline-flex";
-    } else {
-      cancelBtn.style.display =
-        window.innerWidth < 1200 ? "none" : "inline-flex";
-    }
-  }
-
-  document.querySelector(".mobile-only-goback")?.classList.add("visible");
-}
-
-// show delete button only in edit mode under 1200px
-function showDeleteBtnInEdit(btn) {
-  if (!btn) return;
-  const editMode = btn.classList.contains("delete-mode");
-  const overlayOpen = document
-    .getElementById("addContactOverlay")
-    ?.classList.contains("open");
-  const smallScreen = window.innerWidth < 1200;
-  btn.style.display = editMode && overlayOpen && smallScreen ? "flex" : "none";
-}
-
-// toggle menu open/close with animation
-function toggleDropupMenu() {
-  const menu = document.getElementById("dropupMenu");
-  const right = document.querySelector(".contacts-right");
-  if (!right?.classList.contains("show-contact-right")) return;
-
-  if (menu.classList.contains("show")) {
-    menu.classList.remove("show");
-    menu.classList.add("hide");
-    setTimeout(() => {
-      menu.classList.remove("hide");
-      menu.style.display = "none";
-    }, 250);
-  } else {
-    menu.style.display = "block";
-    requestAnimationFrame(() => menu.classList.add("show"));
-  }
-}
-
-// open edit mode and refresh buttons
-function editContact() {
-  startEditMode();
-  updateFloatingButtons();
-}
-
-// delete contact and return to list
-function deleteContact() {
-  const name = document.querySelector(".details-name")?.textContent;
-  if (!name) return;
-
-  document.querySelectorAll(".contact-item").forEach((i) => {
-    if (i.dataset.name === name) i.remove();
-  });
-  document.querySelectorAll(".contact-group").forEach((g) => {
-    if (!g.querySelector(".contact-item")) g.remove();
-  });
-
-  closeDetailAndMenu();
-  updateFloatingButtons();
-  if (window.innerWidth < 1200) {
-    closeContactDetails();
-    document.getElementById("addContactOverlay")?.classList.remove("open");
-  }
-}
-
-// closes right view and clears detail content
-function closeDetailAndMenu() {
-  document
-    .querySelector(".contacts-right")
-    ?.classList.remove("show-contact-right");
-  document.querySelector(".contacts-right-bottom").innerHTML = "";
-
-  const menu = document.getElementById("dropupMenu");
-  if (menu?.classList.contains("show")) {
-    menu.classList.remove("show");
-    menu.classList.add("hide");
-    setTimeout(() => {
-      menu.classList.remove("hide");
-      menu.style.display = "none";
-    }, 250);
-  }
-}
-
-// close drop-up menu if clicked outside
-document.addEventListener("click", (e) => {
-  const menu = document.getElementById("dropupMenu");
-  const btn = document.getElementById("menuDotsBtn");
-  if (!menu.contains(e.target) && !btn.contains(e.target)) {
-    if (menu.classList.contains("show")) {
-      menu.classList.remove("show");
-      menu.classList.add("hide");
-      setTimeout(() => {
-        menu.classList.remove("hide");
-        menu.style.display = "none";
-      }, 250);
-    }
-  }
-});
-
-// open contact detail view
-function openContactDetails() {
-  document
-    .querySelector(".contacts-right")
-    ?.classList.add("show-contact-right");
-  updateFloatingButtons();
-}
-
-// close contact detail view
-function closeContactDetails() {
-  document
-    .querySelector(".contacts-right")
-    ?.classList.remove("show-contact-right");
-  document.querySelector(".mobile-only-goback")?.classList.remove("visible");
-  updateFloatingButtons();
-}
-
-// remove open state from menu at start
-document.getElementById("dropupMenu")?.classList.remove("show");
-
-// update buttons on load and resize
-window.addEventListener("load", updateFloatingButtons);
-window.addEventListener("resize", updateFloatingButtons);

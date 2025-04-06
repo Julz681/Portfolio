@@ -182,13 +182,22 @@
   border: 1px solid #a8a8a8;
 }
 
+.dropdown-input-wrapper:focus-within {
+  border: 1px solid #29abe2;
+}
+
 .dropdown-input {
+  cursor: pointer;
   padding-left: 16px;
   padding-top: 12px;
   padding-bottom: 12px;
   width: 100%;
   border-radius: 10px 0 0 10px;
   border: none;
+}
+
+.dropdown-input:focus {
+  outline: 0;
 }
 
 .dropdown-input:disabled {
