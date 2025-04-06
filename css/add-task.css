@@ -19,6 +19,10 @@
   background-color: #7ae229;
 }
 
+.weight-700 {
+  font-weight: 700;
+}
+
 .add-task-content-wrapper {
   height: 100vh;
   font-family: "Inter", sans-serif;
