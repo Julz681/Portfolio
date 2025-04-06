@@ -1,3 +1,5 @@
+// general variables
+
 let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
 
 const fp = flatpickr("#due-date", {
@@ -15,6 +17,8 @@ const fp = flatpickr("#due-date", {
         checkDateInput("due-date");
     }
 });
+
+// title input validation
 
 function checkTitleInputValue(requiredErrorContainerId, valueSizeErrorContainerId,  containerId) {
     let requiredErrorContainer = getErrorContainer(`${requiredErrorContainerId}`);
@@ -55,7 +59,9 @@ function getInputContainerValue(containerId) {
     return inputContainerValue;
 }
 
-// TODO : give date fcts. less variables
+// date input validation
+
+// TODO : give date fcts. less variables?
 
 function checkDateInput(containerId) {
     let dateInput = getInputContainer(containerId);
@@ -120,6 +126,8 @@ function removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputE
     removeErrorMessage(invalidInputErrorContainerRef);
 }
 
+// priority label color change
+
 function changePriorityLabelColors(priorityLabelId) {
     let priorityLabels = document.getElementsByClassName("priority-labels");
     modifyPriorityLabels(priorityLabels, priorityLabelId)
@@ -178,6 +186,50 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
     priorityLabel.classList.remove(`${priorityLabelId}-prio-bg`, "weight-700");
     priorityLabel.classList.add("default-prio-bg");
 }
+
+// assigned to dropdown toggle
+
+function openAssignedToDropdown(dropdownContainerId, event) {
+    let containerDropdownObject = createDropdownContainerObject(dropdownContainerId);
+    if(containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
+        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed);
+        toggleDropdownContainerVisibility(containerDropdownObject.iconOpen);
+    }
+    event.stopPropagation();
+}
+
+function closeAssignedToDropdown(dropdownContainerId, event) {
+    let containerDropdownObject = createDropdownContainerObject(dropdownContainerId);
+    if(!containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
+        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen);
+        toggleDropdownContainerVisibility(containerDropdownObject.iconClosed);
+    }
+    event.stopPropagation();
+}
+
+
+function createDropdownContainerObject(containerId) {
+    let containerDropdownObject = {
+        dropdownContainer: document.getElementById(containerId),
+        iconOpen: document.getElementById(`${containerId}-open`),
+        iconClosed: document.getElementById(`${containerId}-closed`)
+    }
+    return containerDropdownObject;
+}
+
+function toggleInputContainerVisibilities(dropdownContainerRef, dropdownIconContainerRef) {
+        toggleDropdownContainerVisibility(dropdownContainerRef);
+        toggleDropdownContainerVisibility(dropdownIconContainerRef);
+}
+
+function toggleDropdownContainerVisibility(dropdownContainerRef) {
+    dropdownContainerRef.classList.toggle("d_none");
+}
+
+// TODO: search contacts in dropdown
+// TODO: assigned contacts handling
+
+//  error message handling
 
 function showValueErrorMessage (valueSizeErrorContainerId) {
     let errorContainer = getErrorContainer(valueSizeErrorContainerId);

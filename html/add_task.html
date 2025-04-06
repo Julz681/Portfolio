@@ -85,7 +85,8 @@
     </nav>
   </aside>
 
-  <main class="add-task-content-wrapper abs-l-328 d-flex-column">
+  <main class="add-task-content-wrapper abs-l-328 d-flex-column"
+    onclick="closeAssignedToDropdown('assigned-to-dropdown', event)">
     <section class="add-task-header-wrapper">
       <h1 class="add-task-title">Add Task</h1>
     </section>
@@ -177,13 +178,16 @@
           <div class="assigned-to-wrapper d-flex-column gap-8">
             <label for="assigned-to">Assigned To</label>
             <div class="d-flex-column">
-              <div class="dropdown-input-wrapper br-10 d-flex-center">
+              <div class="dropdown-input-wrapper br-10 d-flex-center"
+                onclick="openAssignedToDropdown('assigned-to-dropdown', event)">
                 <input class="dropdown-input size-20" type="text" id="#" name="assigned-to"
-                  placeholder="Select contacts to assign" disabled />
-                <span class="dropdown-icon-closed"></span>
-                <span class="dropdown-icon-open d_none"></span>
+                  placeholder="Select contacts to assign" />
+                <span class="dropdown-icon-closed" id="assigned-to-dropdown-closed"
+                  onclick="openAssignedToDropdown('assigned-to-dropdown', event)"></span>
+                <span class="dropdown-icon-open d_none" id="assigned-to-dropdown-open"
+                  onclick="closeAssignedToDropdown('assigned-to-dropdown', event)"></span>
               </div>
-              <div class="dropdown-wrapper d_none">
+              <div class="dropdown-wrapper d_none" id="assigned-to-dropdown">
                 <ul class="dropdown d-flex-column">
                   <li class="single-contact-wrapper d-flex-space-between br-10">
                     <div class="d-flex-space-between gap-16">
