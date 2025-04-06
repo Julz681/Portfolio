@@ -1,31 +1,10 @@
 //colors for the avatars depending on the letter
 const letterColors = {
-  A: "#D32F2F",
-  B: "#C2185B",
-  C: "#7B1FA2",
-  D: "#512DA8",
-  E: "#1976D2",
-  F: "#0288D1",
-  G: "#00796B",
-  H: "#388E3C",
-  I: "#689F38",
-  J: "#F57C00",
-  K: "#E64A19",
-  L: "#5D4037",
-  M: "#455A64",
-  N: "#263238",
-  O: "#D81B60",
-  P: "#8E24AA",
-  Q: "#673AB7",
-  R: "#303F9F",
-  S: "#0288D1",
-  T: "#0097A7",
-  U: "#00796B",
-  V: "#388E3C",
-  W: "#689F38",
-  X: "#F57C00",
-  Y: "#E64A19",
-  Z: "#5D4037",
+  A: "#D32F2F", B: "#C2185B", C: "#7B1FA2", D: "#512DA8", E: "#1976D2",
+  F: "#0288D1", G: "#00796B", H: "#388E3C", I: "#689F38", J: "#F57C00",
+  K: "#E64A19", L: "#5D4037", M: "#455A64", N: "#263238", O: "#D81B60",
+  P: "#8E24AA", Q: "#673AB7", R: "#303F9F", S: "#0288D1", T: "#0097A7",
+  U: "#00796B", V: "#388E3C", W: "#689F38", X: "#F57C00", Y: "#E64A19", Z: "#5D4037"
 };
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -144,6 +123,7 @@ function openOverlay() {
     cancelBtn.style.transition = "none";
     cancelBtn.style.marginLeft = "0px";
   }
+  updateFloatingButtons();
 }
 
 // function for the cancel-btn in the edit mode
@@ -152,7 +132,7 @@ function animateCancelBtn() {
   if (!cancel || !isEditing) return;
 
   cancel.style.transition = "none";
-  cancel.style.marginLeft = "0px";
+  cancel.style.marginLeft = "-95px";
   cancel.offsetHeight;
 
   setTimeout(() => {
@@ -210,40 +190,55 @@ function showError() {
   if (error) error.style.display = "block";
 }
 
-// creates a new contact in the list
+// create and add new contact
 function createContactElement(name, email, phone, contactList) {
-  const groupLetter = name[0].toUpperCase();
-  const initials = name
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2);
+  const item = buildContactItem(name, email, phone);
+  const group = getOrCreateGroup(name[0].toUpperCase(), contactList);
+  group.appendChild(item);
+  selectContact(item);
+  bindContactClicks();
+  sortContacts();
+}
+
+// create the contact HTML element
+function buildContactItem(name, email, phone) {
+  const initials = getInitials(name);
+  const color = letterColors[name[0].toUpperCase()] || "#000";
   const item = document.createElement("div");
   item.className = "contact-item";
   item.dataset.name = name;
   item.dataset.email = email;
   item.dataset.phone = phone;
   item.innerHTML = `
-    <div class="contact-avatar" data-name="${name}" style="background-color:${
-    letterColors[groupLetter] || "#000"
-  }">${initials}</div>
+    <div class="contact-avatar" data-name="${name}" style="background-color:${color}">${initials}</div>
     <div class="contact-details">
       <div class="contact-name">${name}</div>
       <div class="contact-email">${email}</div>
     </div>`;
-  let group = [...document.querySelectorAll(".contact-group")].find(
-    (g) => g.querySelector(".contact-group-letter")?.textContent === groupLetter
+  return item;
+}
+
+// get initials for avatar
+function getInitials(name) {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2);
+}
+
+// get group or create if not exists
+function getOrCreateGroup(letter, list) {
+  let group = [...list.querySelectorAll(".contact-group")].find(
+    (g) => g.querySelector(".contact-group-letter")?.textContent === letter
   );
   if (!group) {
     group = document.createElement("div");
     group.className = "contact-group";
-    group.innerHTML = `<div class="contact-group-letter">${groupLetter}</div>`;
-    contactList.appendChild(group);
+    group.innerHTML = `<div class="contact-group-letter">${letter}</div>`;
+    list.appendChild(group);
   }
-  group.appendChild(item);
-  selectContact(item);
-  bindContactClicks();
-  sortContacts();
+  return group;
 }
 
 // sorts contacts alphabetically into groups
@@ -299,6 +294,7 @@ function bindEditButton() {
     if (!e.target.closest("#edit")) return;
     startEditMode();
   });
+  updateButtonsForEdit();
 }
 
 // prepares everything for editing a contact
@@ -315,6 +311,8 @@ function startEditMode() {
   isEditing = true;
   currentEditingContact = selected;
   animateCancelBtn();
+  updateButtonsForEdit();
+  updateFloatingButtons();
 }
 
 // changes the overlay text
@@ -363,12 +361,23 @@ function updateButtonsForEdit() {
   const deleteBtn = document.getElementById("cancelAddContact");
   deleteBtn.innerHTML = "Delete";
   deleteBtn.classList.add("delete-mode");
-  deleteBtn.onclick = deleteCurrentContact;
+  deleteBtn.onclick = deleteContact;
+
   const newDeleteBtn = deleteBtn.cloneNode(true);
   deleteBtn.parentNode.replaceChild(newDeleteBtn, deleteBtn);
-  newDeleteBtn.innerHTML = "Delete";
-  newDeleteBtn.classList.add("delete-mode");
-  newDeleteBtn.addEventListener("click", deleteCurrentContact);
+
+  const finalBtn = document.getElementById("cancelAddContact");
+  finalBtn.innerHTML = "Delete";
+  finalBtn.classList.add("delete-mode");
+  finalBtn.addEventListener("click", deleteContact);
+
+  finalBtn.classList.remove("show-delete-btn");
+
+  if (isEditing && window.innerWidth < 1200) {
+    finalBtn.classList.add("show-delete-btn");
+  } else {
+    finalBtn.classList.remove("show-delete-btn");
+  }
 }
 
 // reset cancel button (used in create Contact mode)
@@ -381,6 +390,13 @@ function resetCancelButtonToDefault() {
   `;
   cancelBtn.classList.remove("delete-mode");
   cancelBtn.onclick = resetOverlay;
+
+  const isEditMode = cancelBtn.classList.contains("delete-mode");
+  if (!isEditMode || window.innerWidth < 1200) {
+    cancelBtn.style.display = "none";
+  } else {
+    cancelBtn.style.display = "flex";
+  }
 }
 
 // delete the current contact
@@ -469,22 +485,50 @@ window.closeContactDetails = function () {
   updateFloatingButtons();
 };
 
+// update buttons for mobile and edit mode
 function updateFloatingButtons() {
   const right = document.querySelector(".contacts-right");
   const addBtn = document.getElementById("openAddContact");
   const dotsBtn = document.getElementById("menuDotsBtn");
   const dropup = document.getElementById("dropupMenu");
+  const cancelBtn = document.getElementById("cancelAddContact");
+
   const isMobile = window.innerWidth < 900;
-  const visible = right?.classList.contains("show-contact-right");
+  const isEditMode = cancelBtn?.classList.contains("delete-mode");
+  const isOverlayOpen = document
+    .getElementById("addContactOverlay")
+    ?.classList.contains("open");
+  const showContact = right?.classList.contains("show-contact-right");
 
-  addBtn.style.display = isMobile && visible ? "none" : "flex";
-  dotsBtn.style.display = isMobile && visible ? "flex" : "none";
-  if (!visible && dropup) dropup.classList.remove("show");
+  addBtn.style.display = isMobile && showContact ? "none" : "flex";
+  dotsBtn.style.display = isMobile && showContact ? "flex" : "none";
+  if (!showContact && dropup) dropup.classList.remove("show");
 
-  document.getElementById("cancelAddContact")?.classList.add("hidden");
+  if (cancelBtn && isOverlayOpen) {
+    if (isEditMode) {
+      cancelBtn.style.display =
+        window.innerWidth < 1200 ? "flex" : "inline-flex";
+    } else {
+      cancelBtn.style.display =
+        window.innerWidth < 1200 ? "none" : "inline-flex";
+    }
+  }
+
   document.querySelector(".mobile-only-goback")?.classList.add("visible");
 }
 
+// show delete button only in edit mode under 1200px
+function showDeleteBtnInEdit(btn) {
+  if (!btn) return;
+  const editMode = btn.classList.contains("delete-mode");
+  const overlayOpen = document
+    .getElementById("addContactOverlay")
+    ?.classList.contains("open");
+  const smallScreen = window.innerWidth < 1200;
+  btn.style.display = editMode && overlayOpen && smallScreen ? "flex" : "none";
+}
+
+// toggle menu open/close with animation
 function toggleDropupMenu() {
   const menu = document.getElementById("dropupMenu");
   const right = document.querySelector(".contacts-right");
@@ -503,22 +547,37 @@ function toggleDropupMenu() {
   }
 }
 
+// open edit mode and refresh buttons
 function editContact() {
   startEditMode();
+  updateFloatingButtons();
 }
 
+// delete contact and return to list
 function deleteContact() {
   const name = document.querySelector(".details-name")?.textContent;
   if (!name) return;
 
-  document.querySelectorAll(".contact-item").forEach(item => {
-    if (item.dataset.name === name) item.remove();
+  document.querySelectorAll(".contact-item").forEach((i) => {
+    if (i.dataset.name === name) i.remove();
   });
-  document.querySelectorAll(".contact-group").forEach(group => {
-    if (!group.querySelector(".contact-item")) group.remove();
+  document.querySelectorAll(".contact-group").forEach((g) => {
+    if (!g.querySelector(".contact-item")) g.remove();
   });
 
-  document.querySelector(".contacts-right")?.classList.remove("show-contact-right");
+  closeDetailAndMenu();
+  updateFloatingButtons();
+  if (window.innerWidth < 1200) {
+    closeContactDetails();
+    document.getElementById("addContactOverlay")?.classList.remove("open");
+  }
+}
+
+// closes right view and clears detail content
+function closeDetailAndMenu() {
+  document
+    .querySelector(".contacts-right")
+    ?.classList.remove("show-contact-right");
   document.querySelector(".contacts-right-bottom").innerHTML = "";
 
   const menu = document.getElementById("dropupMenu");
@@ -530,15 +589,10 @@ function deleteContact() {
       menu.style.display = "none";
     }, 250);
   }
-
-  updateFloatingButtons();
-  if (window.innerWidth < 1200) {
-    closeContactDetails();
-    document.getElementById("addContactOverlay")?.classList.remove("open");
-  }
 }
 
-document.addEventListener("click", e => {
+// close drop-up menu if clicked outside
+document.addEventListener("click", (e) => {
   const menu = document.getElementById("dropupMenu");
   const btn = document.getElementById("menuDotsBtn");
   if (!menu.contains(e.target) && !btn.contains(e.target)) {
@@ -553,18 +607,26 @@ document.addEventListener("click", e => {
   }
 });
 
+// open contact detail view
 function openContactDetails() {
-  document.querySelector(".contacts-right")?.classList.add("show-contact-right");
+  document
+    .querySelector(".contacts-right")
+    ?.classList.add("show-contact-right");
   updateFloatingButtons();
 }
 
+// close contact detail view
 function closeContactDetails() {
-  document.querySelector(".contacts-right")?.classList.remove("show-contact-right");
+  document
+    .querySelector(".contacts-right")
+    ?.classList.remove("show-contact-right");
   document.querySelector(".mobile-only-goback")?.classList.remove("visible");
   updateFloatingButtons();
 }
 
+// remove open state from menu at start
 document.getElementById("dropupMenu")?.classList.remove("show");
+
+// update buttons on load and resize
 window.addEventListener("load", updateFloatingButtons);
 window.addEventListener("resize", updateFloatingButtons);
-

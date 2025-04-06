@@ -734,7 +734,7 @@ header {
     margin-left: 0;
   }
 
-  #cancelAddContact {
+  #cancelAddContact:not(.delete-mode) {
     display: none !important;
   }
 
@@ -809,15 +809,18 @@ header {
   }
 
   .add-contact-buttons {
-    margin-left: 0;
+    margin-left: 24px;
+    gap: 16px;
   }
 
   #cancelAddContact {
-    display: none;
+    display: none !important;
+    height: 51px;
+    margin-top: 18px;
+    margin-left: 0px !important;
   }
 
   #createContact {
-    width: 202px;
     gap: 4px;
     margin-top: 18px;
     height: 51px;
@@ -827,6 +830,11 @@ header {
     margin-left: 0px;
     margin-top: 8px;
   }
+
+  #cancelAddContact.show-delete-btn {
+    display: flex !important;
+  }
+  
 }
 
 @media (max-width: 900px) {
