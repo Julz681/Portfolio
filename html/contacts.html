@@ -48,16 +48,15 @@
         </div>
         <p id="error-message" style="color: red; display: none;">Please fill in all fields!</p>
         <div class="add-contact-buttons">
-          <button type="button" id="cancelAddContact">
+          <button type="button" id="cancelAddContact" class="cancel-btn">
             <span>Cancel</span>
             <span class="cancel-icon"></span>
           </button>
-          <button type="submit" id="createContact">
+          <button type="submit" id="createContact" class="submit-btn">
             <span>Create Contact</span>
             <span class="checkmark-icon"></span>
           </button>
         </div>
-
         </form>
       </div>
     </div>
@@ -74,7 +73,7 @@
         <img src="../assets/img/addcontactvector.png" alt="vector">
       </div>
       <div class="add-contact-drawer-right">
-        <div class="alignment-right">
+        <div class="alignment-right alignment-right-edit">
           <div id="editOverlayAvatar" class="add-contact-avatar">
         
             <div class="avatar-initials">AB</div>
@@ -94,12 +93,11 @@
             </label>
         </div>
         <p id="edit-error-message" style="color: red; display: none;">Please fill in all fields!</p>
-        <div class="add-contact-buttons">
-          <button type="button" id="deleteContactEditOverlay">
+        <div class="add-contact-buttons-edit">
+          <button type="button" class="cancel-btn delete-btn-edit" id="deleteContactEditOverlay">
             <span>Delete</span>
-            <span class="cancel-icon"></span>
           </button>
-          <button type="submit" id="deleteContactEditOverlay">
+          <button type="submit" class="submit-btn" id="saveContactEditOverlay">
             <span>Save</span>
             <span class="checkmark-icon"></span>
           </button>
@@ -437,6 +435,7 @@
       </nav>
 
       <script src="../js/contacts.js"></script>
+      <script src="../js/contacts_responsive.js"></script>
       <script src="../js/dropwdown.js"></script>
       <script src="../js/script.js"></script>
       <script type="module" src="../js/add_contact.js"></script>
