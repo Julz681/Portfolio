@@ -20,22 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         greetingElement.innerHTML = `${greetingText}, <br> <span class='highlight'>${userName}</span>`;
     }
 
-    /**
-     * This function counts the tasks and updates the task metrics.
-     */
-    function updateTaskMetrics() {
-        const todoCount = document.querySelectorAll(".to-do-wrapper .board-card").length;
-        const inProgressCount = document.querySelectorAll(".in-progress-wrapper .board-card").length;
-        const awaitFeedbackCount = document.querySelectorAll(".await-feedback-wrapper .board-card").length;
-        const doneCount = document.querySelectorAll(".done-wrapper .board-card").length;
-        const totalCount = todoCount + inProgressCount + awaitFeedbackCount + doneCount;
 
-        document.querySelector(".metrics .metric-box:nth-of-type(1) h2").textContent = todoCount;
-        document.querySelector(".metrics .metric-box:nth-of-type(2) h2").textContent = doneCount;
-        document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(1) h2").textContent = totalCount;
-        document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(2) h2").textContent = inProgressCount;
-        document.querySelector(".wrapper_tasks .metric-box-tasks:nth-of-type(3) h2").textContent = awaitFeedbackCount;
-    }
 
     /**
      * This function updates the user profile initials.
@@ -58,12 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             userProfileSpan.textContent = initials;
         } else {
-            userProfileSpan.textContent = "G"; // Standardinitiale, falls kein Name vorhanden
+            userProfileSpan.textContent = "G"; // Standard if there is no name
         }
     }
 
     // Call the functions when the page loads
     updateGreeting();
-    updateTaskMetrics();
     updateUserProfileInitials();
 });

@@ -1,131 +1,244 @@
-import { saveUserData } from "./firebase.js";
+// Import Firebase database functions from firebase.js
+import { saveUserData, database, ref, push, get } from "./firebase.js";  // Now everything is imported from firebase.js
 
 /**
- * This function automatically fills the sign-up form fields with predefined values when clicking in the email field.
- * This function is primarily used for testing or demonstration purposes.
+ * This function automatically fills in the signup fields (for testing purposes).
  */
 function autoFillFieldsSignUp() {
-  document.getElementById("name").value = "Sofia Müller";
-  document.getElementById("email").value = "SofiaMueller@gmail.com";
-  document.getElementById("password").value = "MyPassword12345";
-  document.getElementById("confirm-password").value = "MyPassword12345";
-  document.getElementById("privacy-policy").checked = true;
+    document.getElementById("name").value = "Sofia Müller";
+    document.getElementById("email").value = "SofiaMueller@gmail.com";
+    document.getElementById("password").value = "MyPassword12345";
+    document.getElementById("confirm-password").value = "MyPassword12345";
+    document.getElementById("privacy-policy").checked = true;
 }
 
 /**
- * This function handles the sign-up form submission, saves the user data to Firebase,
- * displays a success message, and redirects the user to the login page after a short delay.
- * @param {Event} event - The event object for preventing default form submission.
+ * This function handles the form submission, saves user data to Firebase,
+ * displays a success message, and redirects to the signup page after a short delay.
+ * @param {Event} event - The event object to prevent the default form submission.
  */
 function handleSignUpSubmission(event) {
-  event.preventDefault(); // Prevent the form from submitting the usual way
+    event.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-  // Generate a simple user ID based on the email (or use UUID in a real-world scenario)
-  const userId = email.replace(/[^a-zA-Z0-9]/g, "_");
+    const userId = email.replace(/[^a-zA-Z0-9]/g, "_");
 
-  // Save user data to Firebase
-  saveUserData(userId, name, email);
+    saveUserData(userId, name, email);
 
-  // Save credentials to Local Storage for login (store only email and password)
-  localStorage.setItem("email", email);
-  localStorage.setItem("password", password);
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
 
-  // Show success message
-  let successMessage = document.querySelector(".success-message");
-  if (!successMessage) {
-    successMessage = document.createElement("div");
-    successMessage.className = "success-message";
-    successMessage.textContent = "You signed up successfully";
-    document.body.appendChild(successMessage);
-  }
-  successMessage.classList.add("show");
+    createContact(name, email);
 
-  // Hide the success message after 4 seconds and redirect to the login page
-  setTimeout(() => {
-    successMessage.classList.remove("show");
-    window.location.href = "/index.html"; // Redirect to login page
-  }, 1000);
+    let successMessage = document.querySelector(".success-message");
+    if (!successMessage) {
+        successMessage = document.createElement("div");
+        successMessage.className = "success-message";
+        successMessage.textContent = "You signed up successfully";
+        document.body.appendChild(successMessage);
+    }
+    successMessage.classList.add("show");
+
+    setTimeout(() => {
+        successMessage.classList.remove("show");
+        window.location.href = "/index.html";
+    }, 1000);
 }
 
 /**
- * This function toggles the visibility of a password input field and updates the corresponding icon.
- * @param {string} inputId - The ID of the password input field.
- * @param {HTMLImageElement} imgElement - The image element representing the visibility icon.
+ * This function creates a contact in Firebase and visually adds it to the contact list.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ */
+function createContact(name, email) {
+    const contactsRef = ref(database, 'contacts');
+
+    get(contactsRef)
+        .then((snapshot) => {
+            let contactExists = false;
+            snapshot.forEach((childSnapshot) => {
+                const contact = childSnapshot.val();
+                if (contact.email === email) {
+                    contactExists = true;
+                }
+            });
+
+            if (!contactExists) {
+                push(contactsRef, {
+                    name: name,
+                    email: email
+                })
+                .then(() => {
+                    console.log("Contact created successfully after signup.");
+
+                    // Visually add the contact
+                    const contactList = document.getElementById("contactList");
+                    if (contactList) {
+                        const newContactElement = createContactElement(name, email);
+                        // Find the correct group letter div
+                        const firstLetter = name.charAt(0).toUpperCase();
+                        let groupDiv = contactList.querySelector(`.contact-group:has(.contact-group-letter:contains("${firstLetter}"))`);
+                        if (groupDiv) {
+                            groupDiv.appendChild(newContactElement);
+                        } else {
+                            // Create a new group if it doesn't exist
+                            groupDiv = document.createElement("div");
+                            groupDiv.classList.add("contact-group");
+                            groupDiv.innerHTML = `<div class="contact-group-letter">${firstLetter}</div>`;
+                            groupDiv.appendChild(newContactElement);
+                            contactList.appendChild(groupDiv);
+                        }
+                        // Optionally, sort the contacts list after adding the new contact
+                        sortContactsList();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error creating contact:", error);
+                });
+            } else {
+                console.log("Contact with this email already exists. Not creating a duplicate.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error checking for existing contact:", error);
+        });
+}
+
+/**
+ * This function toggles the visibility of a password field.
+ * @param {string} inputId - The ID of the password field.
+ * @param {HTMLImageElement} imgElement - The image element for the visibility icon.
  */
 function togglePasswordVisibility(inputId, imgElement) {
-  const inputField = document.getElementById(inputId);
-  const isPasswordVisible = inputField.type === "text";
+    const inputField = document.getElementById(inputId);
+    const isPasswordVisible = inputField.type === "text";
 
-  if (isPasswordVisible) {
-    inputField.type = "password";
-    imgElement.src = "../assets/img/eye_closed.png";
-  } else {
-    inputField.type = "text";
-    imgElement.src = "../assets/img/eye.png";
-  }
+    if (isPasswordVisible) {
+        inputField.type = "password";
+        imgElement.src = "../assets/img/eye_closed.png";
+    } else {
+        inputField.type = "text";
+        imgElement.src = "../assets/img/eye.png";
+    }
 }
 
 /**
- * This function updates the password visibility icon based on whether the input field contains text.
- * @param {string} inputId - The ID of the password input field.
- * @param {HTMLImageElement} imgElement - The image element representing the visibility icon.
+ * This function updates the password visibility icon.
+ * @param {string} inputId - The ID of the password field.
+ * @param {HTMLImageElement} imgElement - The image element for the visibility icon.
  */
 function updatePasswordIcon(inputId, imgElement) {
-  const inputField = document.getElementById(inputId);
-  if (inputField.value.length > 0) {
-    imgElement.src = "../assets/img/eye_closed.png";
-  } else {
-    imgElement.src = "../assets/img/lock.png";
-  }
+    const inputField = document.getElementById(inputId);
+    if (inputField.value.length > 0) {
+        imgElement.src = "../assets/img/eye_closed.png";
+    } else {
+        imgElement.src = "../assets/img/lock.png";
+    }
 }
 
-// Expose functions to the global scope for inline event listeners
+/**
+ * This function creates the HTML element for a contact.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact (optional).
+ * @returns {HTMLElement} The HTML element for the contact.
+ */
+function createContactElement(name, email, phone = "") {
+    const firstLetter = name.charAt(0).toUpperCase();
+    const contactDiv = document.createElement("div");
+    contactDiv.classList.add("contact-item");
+    contactDiv.setAttribute("data-name", name);
+    contactDiv.setAttribute("data-email", email);
+    if (phone) {
+        contactDiv.setAttribute("data-phone", phone);
+    }
+
+    contactDiv.innerHTML = `
+        <div class="contact-avatar" data-name="${name}">${firstLetter}</div>
+        <div class="contact-details">
+            <div class="contact-name">${name}</div>
+            <div class="contact-email">${email}</div>
+        </div>
+        <button id="delete" class="delete-btn-contact">
+            <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+            Delete
+        </button>
+    `;
+
+    return contactDiv;
+}
+
+/**
+ * This function sorts the contact list alphabetically by group names and contact names.
+ */
+function sortContactsList() {
+    const contactList = document.getElementById("contactList");
+    if (!contactList) return;
+
+    const contactGroups = Array.from(contactList.querySelectorAll(".contact-group"));
+
+    contactGroups.sort((a, b) => {
+        const letterA = a.querySelector(".contact-group-letter").textContent;
+        const letterB = b.querySelector(".contact-group-letter").textContent;
+        return letterA.localeCompare(letterB);
+    });
+
+    contactGroups.forEach(group => {
+        const contacts = Array.from(group.querySelectorAll(".contact-item"));
+        contacts.sort((a, b) => {
+            const nameA = a.dataset.name.toUpperCase();
+            const nameB = b.dataset.name.toUpperCase();
+            return nameA.localeCompare(nameB);
+        });
+        const groupLetterDiv = group.querySelector(".contact-group-letter");
+        group.innerHTML = "";
+        group.appendChild(groupLetterDiv);
+        contacts.forEach(contact => group.appendChild(contact));
+    });
+
+    contactList.innerHTML = "";
+    contactGroups.forEach(group => contactList.appendChild(group));
+}
+
+// Make functions available for inline event listeners
 window.autoFillFieldsSignUp = autoFillFieldsSignUp;
 window.handleSignUpSubmission = handleSignUpSubmission;
 window.togglePasswordVisibility = togglePasswordVisibility;
 window.updatePasswordIcon = updatePasswordIcon;
 
-/**
- * This function ensures that the sign-up form event listener is properly attached after the DOM is loaded.
- */
 document.addEventListener("DOMContentLoaded", function () {
-  const signUpForm = document.getElementById("signup-form");
-  if (signUpForm) {
-    signUpForm.addEventListener("submit", handleSignUpSubmission);
-  } else {
-    console.error("Sign-up form not found.");
-  }
+    const signUpForm = document.getElementById("signup-form");
+    if (signUpForm) {
+        signUpForm.addEventListener("submit", handleSignUpSubmission);
+    } else {
+        console.error("Sign-up form not found.");
+    }
 });
 
-/**
- * This function changes the eye icon when the password field is focused.
- */
 document.addEventListener("DOMContentLoaded", function () {
-  const passwordField = document.getElementById("password");
-  const confirmPasswordField = document.getElementById("confirm-password");
-  const passwordIcon = document.getElementById("eye-icon-password");
-  const confirmPasswordIcon = document.getElementById("eye-icon-confirm-password");
+    const passwordField = document.getElementById("password");
+    const confirmPasswordField = document.getElementById("confirm-password");
+    const passwordIcon = document.getElementById("eye-icon-password");
+    const confirmPasswordIcon = document.getElementById("eye-icon-confirm-password");
 
-  if (passwordField && passwordIcon) {
-    passwordField.addEventListener("focus", function () {
-      if (passwordField.type === "password") {
-        passwordIcon.src = "../assets/img/eye_closed.png";
-      }
-    });
-  }
+    if (passwordField && passwordIcon) {
+        passwordField.addEventListener("focus", function () {
+            if (passwordField.type === "password") {
+                passwordIcon.src = "../assets/img/eye_closed.png";
+            }
+        });
+    }
 
-  if (confirmPasswordField && confirmPasswordIcon) {
-    confirmPasswordField.addEventListener("focus", function () {
-      if (confirmPasswordField.type === "password") {
-        confirmPasswordIcon.src = "../assets/img/eye_closed.png";
-      }
-    });
-  }
+    if (confirmPasswordField && confirmPasswordIcon) {
+        confirmPasswordField.addEventListener("focus", function () {
+            if (confirmPasswordField.type === "password") {
+                confirmPasswordIcon.src = "../assets/img/eye_closed.png";
+            }
+        });
+    }
 });
 
-// Hide the start element
 document.getElementById("start").style.display = "none";
