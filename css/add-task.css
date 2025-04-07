@@ -120,7 +120,8 @@
   font-family: "Inter", sans-serif !important;
 }
 
-.task-description-text:focus {
+.task-description-text:focus,
+.dropdown-input-wrapper:focus-within {
   border: 1px solid #29abe2;
 }
 
@@ -182,10 +183,6 @@
   border: 1px solid #a8a8a8;
 }
 
-.dropdown-input-wrapper:focus-within {
-  border: 1px solid #29abe2;
-}
-
 .dropdown-input {
   cursor: pointer;
   padding-left: 16px;
@@ -198,6 +195,10 @@
 
 .dropdown-input:focus {
   outline: 0;
+}
+
+.dropdown-input:focus::-webkit-input-placeholder {
+  visibility: hidden;
 }
 
 .dropdown-input:disabled {
