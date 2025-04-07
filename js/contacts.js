@@ -300,7 +300,6 @@ function bindEditButton() {
 document.addEventListener("click", (e) => {
   const overlay = document.getElementById("editContactOverlay");
   const modal = overlay?.querySelector(".add-contact-modal");
-
   if (overlay?.classList.contains("open") && !modal.contains(e.target)) {
     closeEditOverlay();
   }
@@ -310,11 +309,9 @@ document.addEventListener("click", (e) => {
 function startEditMode() {
   const selected = document.querySelector(".contact-item.selected");
   if (!selected) return;
-
   const { name, email, phone } = selected.dataset;
   fillEditForm(name, email, phone);
   setEditAvatar(name);
-
   document.getElementById("editContactOverlay").classList.add("open");
   document.getElementById("editContactOverlay").dataset.current = name;
 }
@@ -346,7 +343,6 @@ function bindEditOverlayButtons() {
   document
     .getElementById("deleteContactEditOverlay")
     ?.addEventListener("click", handleEditDelete);
-  hideEditErrorOnInput();
 }
 
 // handles saving of edited contact: validates inputs and updates the contact
