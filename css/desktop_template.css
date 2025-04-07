@@ -315,13 +315,9 @@ body {
     font-size: 14px;
   }
 
-  .greeting {
-    display: none;
-    width: 1px;
-  }
+
 
   .container {
-    margin-left: -320px;
     display: flex;
     justify-content: center;
     align-items: center;

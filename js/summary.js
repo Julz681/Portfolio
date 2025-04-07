@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-
     /**
      * This function updates the greeting message based on the current time of day.
      */
@@ -19,8 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         greetingElement.innerHTML = `${greetingText}, <br> <span class='highlight'>${userName}</span>`;
     }
-
-
 
     /**
      * This function updates the user profile initials.
@@ -46,6 +43,45 @@ document.addEventListener('DOMContentLoaded', function() {
             userProfileSpan.textContent = "G"; // Standard if there is no name
         }
     }
+
+    const greetingDiv = document.querySelector('.greeting');
+    const containerDiv = document.querySelector('.container');
+
+    function handleScreenClick() {
+        if (window.innerWidth < 1200 && containerDiv) {
+            containerDiv.style.display = 'flex'; // Oder 'block', je nach deinem Layout
+            if (greetingDiv) {
+                greetingDiv.style.display = 'none'; // Greeting ausblenden
+            }
+            // Optional: Entferne den Event Listener, nachdem er einmal ausgelöst wurde
+            document.removeEventListener('click', handleScreenClick);
+        }
+    }
+
+    // Füge den Event Listener nur hinzu, wenn die Bildschirmbreite initial unter 1200px ist
+    if (window.innerWidth < 1200) {
+        document.addEventListener('click', handleScreenClick);
+        // Stelle sicher, dass der Container initial ausgeblendet ist (falls CSS nicht greift)
+        if (containerDiv) {
+            containerDiv.style.display = 'none';
+        }
+    }
+
+    // Optional: Behandle Fenstergrößenänderungen, falls das Layout dynamisch angepasst wird
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1200 && containerDiv) {
+            containerDiv.style.display = 'flex'; // Oder 'block'
+            if (greetingDiv) {
+                greetingDiv.style.display = 'block'; // Greeting wieder anzeigen (optional)
+            }
+            document.removeEventListener('click', handleScreenClick); // Entferne den Klick-Listener
+        } else if (window.innerWidth < 1200 && containerDiv && containerDiv.style.display === 'none') {
+            document.addEventListener('click', handleScreenClick); // Füge den Klick-Listener wieder hinzu
+            if (greetingDiv) {
+                greetingDiv.style.display = 'block'; // Stelle sicher, dass Greeting angezeigt wird
+            }
+        }
+    });
 
     // Call the functions when the page loads
     updateGreeting();

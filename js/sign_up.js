@@ -241,4 +241,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-document.getElementById("start").style.display = "none";
+

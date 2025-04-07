@@ -174,7 +174,7 @@ form {
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 700;
   gap: 10px;
   padding: 15px 24px;
@@ -228,7 +228,6 @@ form {
 
 .start {
   width: 100%; 
-  height: 100%; 
   position: relative;
 }
 
@@ -237,6 +236,7 @@ form {
   #signup-form-container {
     display: flex;
     justify-content: center;
+    padding-top: 20px;
   }
 
   .sign-up-frame {
@@ -273,7 +273,7 @@ form {
     display: flex;
     justify-content: center;
   }
-}
+
 
 .signup-btn{
   background-color: #2A3647;
@@ -286,7 +286,15 @@ form {
   width: 180px;
   height: 51px;
   font-size: 16px;
+}
 
+.signup-data {
+  gap: 24px;
+}
+
+.signup-header hr {
+  width: 88px;
+}
 }
 
 @media (max-width: 410px) {
