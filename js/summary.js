@@ -14,9 +14,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const isGuest = localStorage.getItem("isGuest") === "true";
-        const userName = isGuest ? "Guest" : localStorage.getItem("loggedInUserName") || "User";
+        let greetingHTML = `${greetingText}`;
 
-        greetingElement.innerHTML = `${greetingText}, <br> <span class='highlight'>${userName}</span>`;
+        if (!isGuest) {
+            const userName = localStorage.getItem("loggedInUserName") || "User";
+            greetingHTML += `, <br> <span class='highlight'>${userName}</span>`;
+        }
+
+        greetingElement.innerHTML = greetingHTML;
     }
 
     /**
