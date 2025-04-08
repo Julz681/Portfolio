@@ -1,27 +1,28 @@
-
-
-
-
-
-
-
 // NOT YET ADAPTED TO THE CHANGES.
 // ADAPTED IN THE NEXT DAYS!
 
-
-
-
-
+// binds all buttons inside the edit overlay: save, delete, close
+function bindEditOverlayButtons() {
+  document
+    .getElementById("closeEditOverlayBtn")
+    ?.addEventListener("click", closeEditOverlay);
+  document
+    .getElementById("editContactForm")
+    ?.addEventListener("submit", handleEditSubmit);
+  document
+    .getElementById("deleteContactEditOverlay")
+    ?.addEventListener("click", handleEditDelete);
+}
 
 // show the contacts right - responsive
 window.addEventListener("DOMContentLoaded", () => {
-  const contactItems = document.querySelectorAll(".contact-item");
-
-  contactItems.forEach((item) => {
-    item.addEventListener("click", () => {
+  document.getElementById("contactList")?.addEventListener("click", (e) => {
+    const item = e.target.closest(".contact-item");
+    if (item) {
       openContactDetails();
-    });
+    }
   });
+
   bindEditOverlayButtons();
 });
 
@@ -102,16 +103,55 @@ function toggleDropupMenu() {
   }
 }
 
-// open edit mode and refresh buttons
 function editContact() {
+  let name = document.querySelector(".details-name")?.textContent;
+
+  if (!name) {
+    name = document.querySelector(".contact-item.selected")?.dataset.name;
+    console.log("🛟 fallback name via selected:", name);
+  }
+
+  const item = [...document.querySelectorAll(".contact-item")].find(
+    (i) => i.dataset.name?.trim() === name?.trim()
+  );
+
+  if (item) {
+    document
+      .querySelectorAll(".contact-item")
+      .forEach((el) => el.classList.remove("selected"));
+    item.classList.add("selected");
+  } else {
+  }
+
   startEditMode();
   updateFloatingButtons();
+
   const overlay = document.getElementById("editContactOverlay");
   if (!overlay) return;
+
   overlay.classList.remove("hidden");
-  requestAnimationFrame(() => {
-    overlay.classList.add("open");
-  });
+  requestAnimationFrame(() => overlay.classList.add("open"));
+
+  bindEditOverlayButtons();
+}
+
+let overlayEventsBound = false;
+
+function bindEditOverlayButtons() {
+  if (overlayEventsBound) return;
+  overlayEventsBound = true;
+
+  document
+    .getElementById("closeEditOverlayBtn")
+    ?.addEventListener("click", closeEditOverlay);
+
+  document
+    .getElementById("editContactForm")
+    ?.addEventListener("submit", handleEditSubmit);
+
+  document
+    .getElementById("deleteContactEditOverlay")
+    ?.addEventListener("click", handleEditDelete);
 }
 
 // delete contact and return to list

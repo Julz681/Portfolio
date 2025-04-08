@@ -725,7 +725,6 @@ header {
   gap: 16px;
   padding: 10px;
   cursor: pointer;
-
   transition: background-color 0.2s ease;
 }
 
@@ -746,10 +745,6 @@ header {
 @media (max-width: 1200px) {
   .contact-content {
     margin-left: 0;
-  }
-
-  #cancelAddContact:not(.delete-mode) {
-    display: none !important;
   }
 
   .add-contact-modal {
