@@ -62,9 +62,15 @@
 }
 
 .form-inputs {
+  position: relative;
   width: 440px;
   height: 100%;
   justify-content: flex-start;
+}
+
+.form-inputs-right {
+  position: absolute;
+  top: 0;
 }
 
 /* general  input fields styling */
@@ -549,6 +555,7 @@
 
 .add-task-footer {
   width: 100%;
+  z-index: 50;
 }
 
 .text-container {

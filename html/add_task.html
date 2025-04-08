@@ -123,8 +123,9 @@
           </div>
         </div>
         <div class="separator"></div>
-        <div class="form-inputs d-flex-column gap-24">
-          <div class="priority-wrapper d-flex-column gap-8">
+        <div class="form-inputs">
+          <div class="form-inputs-right d-flex-column gap-24">
+            <div class="priority-wrapper d-flex-column gap-8">
             <label for="priority">Priority</label>
             <div class="d-flex-space-between gap-8">
               <div class="priority-labels d-flex-center gap-8 br-10 default-prio-bg" id="urgent"
@@ -173,21 +174,21 @@
                 </span>
               </div>
             </div>
-          </div>
-          <div class="assigned-to-wrapper d-flex-column gap-8">
-            <label for="assigned-to">Assigned To</label>
-            <div class="d-flex-column">
-              <div class="dropdown-input-wrapper br-10 d-flex-center"
-                onclick="openAssignedToDropdown('assigned-to-dropdown', event)">
-                <input class="dropdown-input size-20" type="text" id="#" name="assigned-to"
+            </div> 
+            <div class="assigned-to-wrapper d-flex-column gap-8">
+              <label for="assigned-to">Assigned To</label>
+              <div class="d-flex-column assigned-to-container">
+                <div class="dropdown-input-wrapper br-10 d-flex-center"
+                  onclick="openAssignedToDropdown('assigned-to-dropdown', event)">
+                  <input class="dropdown-input size-20" type="text" id="#" name="assigned-to"
                   placeholder="Select contacts to assign" />
-                <span class="dropdown-icon-closed" id="assigned-to-dropdown-closed"
+                  <span class="dropdown-icon-closed" id="assigned-to-dropdown-closed"
                   onclick="openAssignedToDropdown('assigned-to-dropdown', event)"></span>
-                <span class="dropdown-icon-open d_none" id="assigned-to-dropdown-open"
+                  <span class="dropdown-icon-open d_none" id="assigned-to-dropdown-open"
                   onclick="closeAssignedToDropdown('assigned-to-dropdown', event)"></span>
-              </div>
-              <div class="dropdown-wrapper d_none" id="assigned-to-dropdown">
-                <ul class="dropdown d-flex-column">
+                </div>
+                <div class="dropdown-wrapper d_none" id="assigned-to-dropdown">
+                  <ul class="dropdown d-flex-column">
                   <li id="US-1" class="single-contact-wrapper d-flex-space-between br-10"
                     onclick="assignContactToTask('US-1', event)">
                     <div class="d-flex-space-between gap-16">
@@ -259,11 +260,11 @@
                     </div>
                     <span class="single-contact-checkbox-unchecked"></span>
                   </li>
-                </ul>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="category-wrapper d-flex-column gap-8">
+            <div class="category-wrapper d-flex-column gap-8">
             <label for="category"><span>Category</span><span class="red">*</span></label>
             <div class="dropdown-input-wrapper br-10 d-flex-center">
               <input class="dropdown-input size-20" type="text" id="category" name="category"
@@ -278,8 +279,8 @@
                 <li class="categories br-10"><span class="size-20">User Story</span></li>
               </ul>
             </div>
-          </div>
-          <div class="subtasks-wrapper d-flex-column gap-8">
+            </div>
+            <div class="subtasks-wrapper d-flex-column gap-8">
             <label for="subtasks">Subtasks</label>
             <div class="subtask-input-wrapper d-flex-space-between br-10 ">
               <input type="text" name="subtasks" id="subtasks" class="subtask-input size-20 br-10"
@@ -320,6 +321,7 @@
                   </div>
                 </li>
               </ul>
+            </div>
             </div>
           </div>
         </div>
