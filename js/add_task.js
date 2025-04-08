@@ -187,26 +187,17 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
     priorityLabel.classList.add("default-prio-bg");
 }
 
-// assigned to dropdown toggle
+// dropdown menus toggle
 
-function openAssignedToDropdown(dropdownContainerId, event) {
+function toggleDropdownSelection(dropdownContainerId, event) {
     let containerDropdownObject = createDropdownContainerObject(dropdownContainerId);
     if(containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
-        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed);
-        toggleDropdownContainerVisibility(containerDropdownObject.iconOpen);
+        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
+    } else {
+        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed)
     }
     event.stopPropagation();
 }
-
-function closeAssignedToDropdown(dropdownContainerId, event) {
-    let containerDropdownObject = createDropdownContainerObject(dropdownContainerId);
-    if(!containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
-        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen);
-        toggleDropdownContainerVisibility(containerDropdownObject.iconClosed);
-    }
-    event.stopPropagation();
-}
-
 
 function createDropdownContainerObject(containerId) {
     let containerDropdownObject = {
@@ -217,17 +208,31 @@ function createDropdownContainerObject(containerId) {
     return containerDropdownObject;
 }
 
-function toggleInputContainerVisibilities(dropdownContainerRef, dropdownIconContainerRef) {
+function toggleInputContainerVisibilities(dropdownContainerRef, dropdownIconContainerClosedRef, dropdownIconContainerOpenRef) {
         toggleDropdownContainerVisibility(dropdownContainerRef);
-        toggleDropdownContainerVisibility(dropdownIconContainerRef);
+        toggleDropdownContainerVisibility(dropdownIconContainerClosedRef);
+        toggleDropdownContainerVisibility(dropdownIconContainerOpenRef);
 }
 
 function toggleDropdownContainerVisibility(dropdownContainerRef) {
     dropdownContainerRef.classList.toggle("d_none");
 }
 
+function closeAllDropdowns(event) {
+    let dropdownContainers = [createDropdownContainerObject('category-dropdown'), createDropdownContainerObject('assigned-to-dropdown')];
+    for(let i = 0; i < dropdownContainers.length; i++) {
+        let dropdownContainerObject = dropdownContainers[i];
+        if(!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
+            toggleInputContainerVisibilities(dropdownContainerObject.dropdownContainer, dropdownContainerObject.iconClosed, dropdownContainerObject.iconOpen)
+        }
+    }
+    event.stopPropagation();
+}
+
 // TODO: search contacts in dropdown
 // TODO: assigned contacts handling
+
+// assign-To section
 
 function assignContactToTask(contactId, event) {
     let contactContainerRef = document.getElementById(contactId);
