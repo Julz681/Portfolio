@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const userName = localStorage.getItem("loggedInUserName");
 
       if (isGuest) {
-          userProfileSpan.textContent = "G"; // Immer "G" für Gäste
+          userProfileSpan.textContent = "G"; // Always use "G" for guests
       } else if (userName) {
           const names = userName.split(" ");
           let initials = "";
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           userProfileSpan.textContent = initials;
       } else {
-          userProfileSpan.textContent = "G"; // Standardinitiale, falls kein Name vorhanden
+          userProfileSpan.textContent = "G"; // Standard if there is no name
       }
   }
 
@@ -93,20 +93,20 @@ document.addEventListener("DOMContentLoaded", () => {
   updateUserProfileInitials();
 });
 
-// Alle Board-Karten (Task-Elemente) abrufen
+// Call all board-cards
 const boardCards = document.querySelectorAll(".board-card");
 
-// Die Spalten, in die die Karten verschoben werden können, abrufen
+// Get the columns where the cards can be moved
 const columns = document.querySelectorAll(".board-columns");
 
-// Durchlaufen Sie alle Karten und fügen Sie Event-Listener für den Drag-Start hinzu
+// Loop through all cards and add event listeners for drag start
 boardCards.forEach((card) => {
-  card.addEventListener("dragstart", (e) => {
-      // Setze den ID-Wert der Karte als Data, die im Drag-and-Drop gespeichert wird
-      e.dataTransfer.setData("text/plain", card.dataset.taskId);
+    card.addEventListener("dragstart", (e) => {
+        // Set the ID value of the card as data stored in the drag and drop
+        e.dataTransfer.setData("text/plain", card.dataset.taskId);
 
-      // Karte um 20 Grad nach rechts drehen
-      card.style.transform = "rotate(20deg)";
-  });
+        // Rotate the card 20 degrees to the right
+        card.style.transform = "rotate(20deg)";
+    });
 });
 

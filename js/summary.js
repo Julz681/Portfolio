@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const userName = localStorage.getItem("loggedInUserName");
 
         if (isGuest) {
-            userProfileSpan.textContent = "G"; // Immer "G" für Gäste
+            userProfileSpan.textContent = "G"; // Always "G" for guests
         } else if (userName) {
             const names = userName.split(" ");
             let initials = "";
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             userProfileSpan.textContent = initials;
         } else {
-            userProfileSpan.textContent = "G"; // Standard if there is no name
+            userProfileSpan.textContent = "G"; // Default if there is no name
         }
     }
 
@@ -54,36 +54,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleScreenClick() {
         if (window.innerWidth < 1200 && containerDiv) {
-            containerDiv.style.display = 'flex'; // Oder 'block', je nach deinem Layout
+            containerDiv.style.display = 'flex'; // Or 'block', depending on your layout
             if (greetingDiv) {
-                greetingDiv.style.display = 'none'; // Greeting ausblenden
+                greetingDiv.style.display = 'none'; // Hide greeting
             }
-            // Optional: Entferne den Event Listener, nachdem er einmal ausgelöst wurde
+            // Optional: Remove the event listener after it's triggered once
             document.removeEventListener('click', handleScreenClick);
         }
     }
 
-    // Füge den Event Listener nur hinzu, wenn die Bildschirmbreite initial unter 1200px ist
+    // Add the event listener only if the initial screen width is less than 1200px
     if (window.innerWidth < 1200) {
         document.addEventListener('click', handleScreenClick);
-        // Stelle sicher, dass der Container initial ausgeblendet ist (falls CSS nicht greift)
+        // Ensure the container is initially hidden (in case CSS doesn't apply)
         if (containerDiv) {
             containerDiv.style.display = 'none';
         }
     }
 
-    // Optional: Behandle Fenstergrößenänderungen, falls das Layout dynamisch angepasst wird
+    // Optional: Handle window resizing if the layout is dynamically adjusted
     window.addEventListener('resize', () => {
         if (window.innerWidth >= 1200 && containerDiv) {
-            containerDiv.style.display = 'flex'; // Oder 'block'
+            containerDiv.style.display = 'flex'; // Or 'block'
             if (greetingDiv) {
-                greetingDiv.style.display = 'block'; // Greeting wieder anzeigen (optional)
+                greetingDiv.style.display = 'block'; // Show greeting again (optional)
             }
-            document.removeEventListener('click', handleScreenClick); // Entferne den Klick-Listener
+            document.removeEventListener('click', handleScreenClick); // Remove the click listener
         } else if (window.innerWidth < 1200 && containerDiv && containerDiv.style.display === 'none') {
-            document.addEventListener('click', handleScreenClick); // Füge den Klick-Listener wieder hinzu
+            document.addEventListener('click', handleScreenClick); // Add the click listener again
             if (greetingDiv) {
-                greetingDiv.style.display = 'block'; // Stelle sicher, dass Greeting angezeigt wird
+                greetingDiv.style.display = 'block'; // Ensure greeting is displayed
             }
         }
     });
