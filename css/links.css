@@ -62,6 +62,8 @@ body {
   display: none !important;
 }
 
+
+
 @media (max-width: 1200px) {
   .main-content {
     margin-left: -320px;
@@ -88,4 +90,5 @@ body {
   #dropdownMenu {
     display: none; 
   }
+
 }
