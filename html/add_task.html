@@ -278,8 +278,10 @@
               <span class="required-error-message d_none" id="task-title-error">This field is required</span>
               <div class="dropdown-wrapper categories-dropdown-wrapper d_none" id="category-dropdown">
                 <ul class="dropdown d-flex-column">
-                  <li class="categories br-10"><span class="size-20">Technical Task</span></li>
-                  <li class="categories br-10"><span class="size-20">User Story</span></li>
+                  <li class="categories br-10" onclick="selectCategory('technical-task')"><span class="size-20"
+                      id="technical-task">Technical Task</span></li>
+                  <li class="categories br-10" onclick="selectCategory('user-story')"><span class="size-20"
+                      id="user-story">User Story</span></li>
                 </ul>
               </div>
             </div>
@@ -289,7 +291,7 @@
                 <input type="text" name="subtasks" id="subtasks" class="subtask-input size-20 br-10"
                   placeholder="Add new Subtask" />
                 <span class="add-subtask-icon"></span>
-                <div class="confirm-input-icons d-flex-space-between d_none">
+                <div class="confirm-input-icons d-flex-space-between d_none" id="confirm-input-icons">
                   <span class="clear-icon"></span>
                   <span class="confirm-input-icons-separator">|</span>
                   <span class="confirm-icon"></span>

@@ -250,6 +250,18 @@ function assignContactToTask(contactId, event) {
     event.stopPropagation();
 }
 
+// category section
+
+function selectCategory(categoryId) {
+    let categoryContainerRef = getInputContainer(categoryId)
+    let selectedCategory = categoryContainerRef.innerHTML;
+    let categoryInputContainerRef = document.getElementById('category');
+    categoryInputContainerRef.placeholder = selectedCategory;
+}
+
+// subtask section
+
+
 //  error message handling
 
 function showValueErrorMessage (valueSizeErrorContainerId) {
