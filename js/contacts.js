@@ -405,6 +405,11 @@ function handleEditDelete() {
   });
   document.querySelector(".contacts-right-bottom").innerHTML = "";
   closeEditOverlay();
+
+  if (window.innerWidth < 900) {
+    closeContactDetails();
+    document.getElementById("editContactOverlay")?.classList.remove("open");
+  }
 }
 
 // removes old contact element and adds the updated one in the correct group

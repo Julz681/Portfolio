@@ -103,38 +103,6 @@ function toggleDropupMenu() {
   }
 }
 
-function editContact() {
-  let name = document.querySelector(".details-name")?.textContent;
-
-  if (!name) {
-    name = document.querySelector(".contact-item.selected")?.dataset.name;
-    console.log("🛟 fallback name via selected:", name);
-  }
-
-  const item = [...document.querySelectorAll(".contact-item")].find(
-    (i) => i.dataset.name?.trim() === name?.trim()
-  );
-
-  if (item) {
-    document
-      .querySelectorAll(".contact-item")
-      .forEach((el) => el.classList.remove("selected"));
-    item.classList.add("selected");
-  } else {
-  }
-
-  startEditMode();
-  updateFloatingButtons();
-
-  const overlay = document.getElementById("editContactOverlay");
-  if (!overlay) return;
-
-  overlay.classList.remove("hidden");
-  requestAnimationFrame(() => overlay.classList.add("open"));
-
-  bindEditOverlayButtons();
-}
-
 let overlayEventsBound = false;
 
 function bindEditOverlayButtons() {
