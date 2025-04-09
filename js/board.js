@@ -137,13 +137,14 @@ function getColumnMap() {
 function renderAllColumns() {
   const map = getColumnMap();
   for (const status in map) {
-    const column = map[status];
-    const list = getTasksByStatus(status);
-    clearColumn(column);
-    list.forEach((task) => renderTask(column, task));
-    toggleEmptyMsg(column, list);
+      const column = map[status];
+      const list = getTasksByStatus(status);
+      clearColumn(column);
+      list.forEach((task) => renderTask(column, task));
+      toggleEmptyMsg(column, list);
   }
   setupCardClick();
+  init(); // Drag & Drop neu initialisieren
 }
 
 // filters all task by they status

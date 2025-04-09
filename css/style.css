@@ -122,6 +122,9 @@ body {
   display: flex;
   align-items: center;
   gap: 35px;
+  opacity: 0;
+  animation: showContent 0.5s ease-in-out 0.5s forwards;
+  pointer-events: auto;
 }
 
 .top-right a {

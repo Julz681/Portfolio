@@ -81,8 +81,11 @@ body {
     font-size: 16px;
   }
 
-  .user-profile,
+  .user-profile {
+    display: block !important;
+  }
+
   #dropdownMenu {
-    display: block;
+    display: none; 
   }
 }
