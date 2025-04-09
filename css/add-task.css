@@ -126,11 +126,6 @@
   font-family: "Inter", sans-serif !important;
 }
 
-.task-description-text:focus,
-.dropdown-input-wrapper:focus-within {
-  border: 1px solid #29abe2;
-}
-
 .task-description-text::-webkit-resizer {
   background: url(../assets/img/icons/resizer.png) no-repeat 100% 100%;
   background-size: 18px;
@@ -210,6 +205,7 @@
 .dropdown-input:disabled {
   cursor: pointer;
   background-color: #ffffff;
+  pointer-events: none;
 }
 
 .dropdown-input::-webkit-input-placeholder {
@@ -272,6 +268,10 @@
   max-height: 240px;
 }
 
+.task-description-text:focus,
+.dropdown-input-wrapper:focus-within {
+  border: 1px solid #29abe2;
+}
 /* checkbox unchecked styling */
 
 .single-contact-wrapper {
@@ -375,6 +375,10 @@
   cursor: pointer;
   background-color: #eeeeee;
 }
+
+/* #category:focus:invalid:not(:placeholder-shown) {
+  visibility: visible;
+} */
 
 /* subtasks styling */
 
