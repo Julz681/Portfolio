@@ -142,6 +142,10 @@
   border: 1px solid #d1d1d1;
 }
 
+#task-title:hover,
+.task-description-text:hover,
+.subtask-input:hover,
+.subtask-input-wrapper:hover,
 .date-picker:hover {
   cursor: pointer;
 }
@@ -375,10 +379,6 @@
   cursor: pointer;
   background-color: #eeeeee;
 }
-
-/* #category:focus:invalid:not(:placeholder-shown) {
-  visibility: visible;
-} */
 
 /* subtasks styling */
 

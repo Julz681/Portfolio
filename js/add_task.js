@@ -190,7 +190,7 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
 // dropdown menus toggle
 
 function toggleDropdownSelection(dropdownContainerId, event) {
-    let containerDropdownObject = createDropdownContainerObject(dropdownContainerId);
+    let containerDropdownObject = createContainerObject(dropdownContainerId);
     if(containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
         toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
     } else {
@@ -199,7 +199,7 @@ function toggleDropdownSelection(dropdownContainerId, event) {
     event.stopPropagation();
 }
 
-function createDropdownContainerObject(containerId) {
+function createContainerObject(containerId) {
     let containerDropdownObject = {
         dropdownContainer: document.getElementById(containerId),
         iconOpen: document.getElementById(`${containerId}-open`),
@@ -219,7 +219,7 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 }
 
 function closeAllDropdowns(event) {
-    let dropdownContainers = [createDropdownContainerObject('category-dropdown'), createDropdownContainerObject('assigned-to-dropdown')];
+    let dropdownContainers = [createContainerObject('category-dropdown'), createContainerObject('assigned-to-dropdown')];
     for(let i = 0; i < dropdownContainers.length; i++) {
         let dropdownContainerObject = dropdownContainers[i];
         if(!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
@@ -261,6 +261,43 @@ function selectCategory(categoryId) {
 
 // subtask section
 
+function moveCursorToSubtaskInput() {
+    let subtaskInputContainerRef = getInputContainer("subtasks");
+    subtaskInputContainerRef.focus();
+}
+
+function evaluateSubtaskInput(valueSizeErrorContainerId) {
+    let confirmInputIconsRef = document.getElementById("confirm-input-icons");
+    let addIconRef = document.getElementById("add-subtask-icon");
+    let subtaskInputContainerRef = getInputContainer("subtasks");
+    let inputValue = getInputValue(subtaskInputContainerRef);
+    if(inputValue.length > 3) {
+        switchIconsOnSubtasks(confirmInputIconsRef, addIconRef);
+        removeErrorMessageOnSubtaskInput(subtaskInputContainerRef.parentElement, valueSizeErrorContainerId)
+    } else if (inputValue.length <= 3 && inputValue.length > 0) {
+        falseInputValueHandling(confirmInputIconsRef, addIconRef, valueSizeErrorContainerId, subtaskInputContainerRef.parentElement);
+    } else {
+        switchIconsOnSubtasks(addIconRef, confirmInputIconsRef);
+        removeErrorMessageOnSubtaskInput(subtaskInputContainerRef.parentElement, valueSizeErrorContainerId)
+    }
+}
+
+function removeErrorMessageOnSubtaskInput(subtaskInputContainer, valueSizeErrorContainerId) {
+    removeValueErrorStylingOnInput(subtaskInputContainer)
+    hideValueErrorMessage(valueSizeErrorContainerId)
+}
+
+function switchIconsOnSubtasks(showIcon1, hideIcon2) {
+    showIcon1.classList.remove("d_none");
+    hideIcon2.classList.add("d_none");
+}
+
+function falseInputValueHandling(confirmInputIconsRef, addIconRef, valueSizeErrorContainerId, InputContainerWrapperRef) {
+    confirmInputIconsRef.classList.add("d_none");
+    addIconRef.classList.remove("d_none");
+    showValueErrorMessage (valueSizeErrorContainerId);
+    addValueErrorStylingOnInput(InputContainerWrapperRef)
+}
 
 //  error message handling
 

@@ -93,7 +93,7 @@
     <section class="add-task-content">
       <form action="#" method="POST" class="add-task-form d-flex-space-between size-20 gap-24">
         <div class="form-inputs d-flex-column gap-24">
-          <div class="task-title-input wrapper d-flex-column gap-8">
+          <div class="task-title-input-wrapper d-flex-column gap-8">
             <label for="task-title"><span>Title</span><span class="red">*</span></label>
             <input class="task-input-fields size-20 br-10" type="text" id="task-title" name="task-title"
               placeholder="Enter a title" minlength="4"
@@ -287,16 +287,19 @@
             </div>
             <div class="subtasks-wrapper d-flex-column gap-8">
               <label for="subtasks">Subtasks</label>
-              <div class="subtask-input-wrapper d-flex-space-between br-10 ">
+              <div class="subtask-input-wrapper d-flex-space-between br-10" onclick="moveCursorToSubtaskInput()">
                 <input type="text" name="subtasks" id="subtasks" class="subtask-input size-20 br-10"
-                  placeholder="Add new Subtask" />
-                <span class="add-subtask-icon"></span>
+                  placeholder="Add new Subtask" oninput="evaluateSubtaskInput('subtask-value-length-error-message')"
+                  onchange="evaluateSubtaskInput('subtask-value-length-error-message')" />
+                <span class="add-subtask-icon" id="add-subtask-icon"></span>
                 <div class="confirm-input-icons d-flex-space-between d_none" id="confirm-input-icons">
                   <span class="clear-icon"></span>
                   <span class="confirm-input-icons-separator">|</span>
                   <span class="confirm-icon"></span>
                 </div>
               </div>
+              <span class="required-error-message d_none" id="subtask-value-length-error-message">Value too
+                short!</span>
               <div class="subtask-list-wrapper d-flex-column d_none">
                 <ul class="subtask-list">
                   <li class="subtask-list-item br-10">
