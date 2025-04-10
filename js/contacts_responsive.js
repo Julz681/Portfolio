@@ -69,18 +69,6 @@ function updateFloatingButtons() {
 
   addBtn.style.display = isMobile && showContact ? "none" : "flex";
   dotsBtn.style.display = isMobile && showContact ? "flex" : "none";
-  if (!showContact && dropup) dropup.classList.remove("show");
-
-  if (cancelBtn && isOverlayOpen) {
-    if (isEditMode) {
-      cancelBtn.style.display =
-        window.innerWidth < 1200 ? "flex" : "inline-flex";
-    } else {
-      cancelBtn.style.display =
-        window.innerWidth < 1200 ? "none" : "inline-flex";
-    }
-  }
-
   document.querySelector(".mobile-only-goback")?.classList.add("visible");
 }
 
