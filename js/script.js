@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Funktion für den Zurück-Button
+    // Function for the back button
     function goBack() {
         window.history.back();
     }
-    window.goBack = goBack; // Stelle die Funktion global zur Verfügung, falls sie direkt im HTML aufgerufen wird
+    window.goBack = goBack; // Make the function globally available in case it's called directly in the HTML
 
-    // Animation am Seitenanfang
+    // Animation at the beginning of the page load
     const startElement = document.querySelector(".start");
     if (startElement) {
         startElement.addEventListener("animationend", function () {
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Element with class 'start' not found!");
     }
 
-    // Hilfe-Button im Header ausblenden/einblenden
+    // Hide/show the help button in the header
     const helpButton = document.querySelector(".help-btn");
     if (helpButton) {
         const isHelpPage = window.location.pathname.includes("help.html");
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Current Path:", window.location.pathname, "Help Button Visible:", !isHelpPage);
     }
 
-    // Aktiven Link in der Sidebar hervorheben
+    // Highlight the active link in the sidebar
     const navLinks = document.querySelectorAll(".main-nav a");
     const currentPage = window.location.pathname.split("/").pop();
 
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Funktion zum Aktualisieren des Benutzerprofils (Icon)
+    // Function to update the user profile icon
     function updateUserProfileIcon() {
         const userProfileSpan = document.querySelector(".user-profile span");
         if (userProfileSpan) {
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Funktion zum Aktualisieren der Benutzerinitialen (detailliert)
+    // Function to update the user profile initials (detailed)
     function updateUserProfileInitials() {
         const userProfileSpan = document.querySelector("#userProfile span");
         const isGuest = localStorage.getItem("isGuest") === "true";
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Rufe die Profil-Update-Funktionen auf
+    // Call the profile update functions
     updateUserProfileIcon();
     updateUserProfileInitials();
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", (event) => {
             const isGuest = localStorage.getItem("isGuest") === "true";
             if (!isGuest) return;
-    
+
             const href = link.getAttribute("href");
             if (href.includes("privacy_policy.html")) {
                 event.preventDefault();
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Drag & Drop für Board-Karten
+    // Drag & Drop for board cards
     const boardCards = document.querySelectorAll(".board-card");
     boardCards.forEach(card => {
         card.addEventListener("dragstart", (e) => {
