@@ -51,42 +51,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const greetingDiv = document.querySelector('.greeting');
     const containerDiv = document.querySelector('.container');
+    let timeoutId; // Variable to store the timeout ID
 
-    function handleScreenClick() {
-        if (window.innerWidth < 1200 && containerDiv) {
-            containerDiv.style.display = 'flex'; // Or 'block', depending on your layout
-            if (greetingDiv) {
-                greetingDiv.style.display = 'none'; // Hide greeting
-            }
-            // Optional: Remove the event listener after it's triggered once
-            document.removeEventListener('click', handleScreenClick);
-        }
-    }
+    function handleScreenLogic() {
+        if (window.innerWidth < 1200 && containerDiv && greetingDiv) {
+            // Clear any existing timeout
+            clearTimeout(timeoutId);
 
-    // Add the event listener only if the initial screen width is less than 1200px
-    if (window.innerWidth < 1200) {
-        document.addEventListener('click', handleScreenClick);
-        // Ensure the container is initially hidden (in case CSS doesn't apply)
-        if (containerDiv) {
+            // Initially hide the container
             containerDiv.style.display = 'none';
+
+            // Fade out the greeting after 2 seconds
+            timeoutId = setTimeout(() => {
+                greetingDiv.style.transition = 'opacity 1s ease-in-out';
+                greetingDiv.style.opacity = '0';
+
+                // After the fade out, hide the greeting and show the container
+                setTimeout(() => {
+                    greetingDiv.style.display = 'none';
+                    greetingDiv.style.opacity = '1'; 
+                    greetingDiv.style.transition = ''; 
+                    containerDiv.style.display = 'flex'; 
+                }, 1000);
+            }, 1000);
+        } else if (window.innerWidth >= 1200 && containerDiv && greetingDiv) {
+            // If the screen is large, ensure greeting is visible and container might be as well
+            clearTimeout(timeoutId); // Clear any pending timeout
+            greetingDiv.style.display = 'block';
+            greetingDiv.style.opacity = '1';
+            greetingDiv.style.transition = '';
+            containerDiv.style.display = 'flex'; 
         }
     }
 
-    // Optional: Handle window resizing if the layout is dynamically adjusted
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 1200 && containerDiv) {
-            containerDiv.style.display = 'flex'; // Or 'block'
-            if (greetingDiv) {
-                greetingDiv.style.display = 'block'; // Show greeting again (optional)
-            }
-            document.removeEventListener('click', handleScreenClick); // Remove the click listener
-        } else if (window.innerWidth < 1200 && containerDiv && containerDiv.style.display === 'none') {
-            document.addEventListener('click', handleScreenClick); // Add the click listener again
-            if (greetingDiv) {
-                greetingDiv.style.display = 'block'; // Ensure greeting is displayed
-            }
-        }
-    });
+    // Call handleScreenLogic on initial load
+    handleScreenLogic();
+
+    // Add event listener for window resizing
+    window.addEventListener('resize', handleScreenLogic);
 
     // Call the functions when the page loads
     updateGreeting();
