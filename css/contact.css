@@ -694,7 +694,7 @@ header {
 }
 
 .dropup-menu {
-  position: absolute;
+  position: fixed;
   bottom: 90px;
   right: 8px;
   background: white;
@@ -741,7 +741,6 @@ header {
   font-weight: bold;
   color: #29abe2;
 }
-
 
 @media (max-width: 1200px) {
   .contact-content {
@@ -931,6 +930,7 @@ header {
 
   .mobile-only-goback {
     display: block;
+    z-index: 99999;
   }
 
   .back-btn {
