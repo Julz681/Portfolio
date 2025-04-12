@@ -742,6 +742,52 @@ header {
   color: #29abe2;
 }
 
+.success-message {
+  position: fixed;
+  width: 326px;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2a3647;
+  color: white;
+  padding: 24px 16px;
+  border-radius: 20px;
+  font-size: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+}
+
+.success-message.show {
+  animation: flyInOut 1.5s ease forwards;
+  pointer-events: auto;
+}
+
+@keyframes flyInOut {
+  0% {
+    transform: translate(-50%, 100px);
+    opacity: 0;
+  }
+  10% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  90% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 100px);
+    opacity: 0;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
 @media (max-width: 1200px) {
   .contact-content {
     margin-left: 0;
