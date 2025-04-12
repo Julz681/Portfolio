@@ -304,13 +304,12 @@ function falseInputValueHandling(confirmInputIconsRef, addIconRef, valueSizeErro
 function addSubtask(id, valueSizeErrorContainerId) {
     let input = getInputContainer(id);
     let inputValue = input.value.trim();
-    let subtaskNumber = (subtasks.length)+1;
+    let subtaskNumber = subtasks.length;
     let subtaskKey = `subtask-${subtaskNumber}`;
     subtasks.push({
         [subtaskKey] : inputValue,
     }
     );
-    console.log(subtasks);
     renderSubtaskList();
     input.value = "";
     evaluateSubtaskInput(valueSizeErrorContainerId);
@@ -330,13 +329,39 @@ function enableSubtaskEdit(id) {
     listItemContainerRef.classList.remove('subtask-list-item', 'br-10');
 }
 
+function confirmEditSubtask(id) {
+    let subtaskInputContainerRef = getInputContainer(id);
+    let subtaskInputValue = getInputValue(subtaskInputContainerRef);
+    let subtaskIndex = extractIndex(id);
+    subtasks[subtaskIndex][id] = subtaskInputValue;
+    renderSubtaskList()
+}
+
+function extractIndex(id) {
+    let index = [];
+    for (let i = 0; i < id.length; i++) {
+        let char = id[i];
+        if (!isNaN(char)) {
+            index.push(parseInt(char));
+        }
+    }
+    return index;
+}
+
+function deleteSubtask(id) {
+    let currentSubtaskIndex = extractIndex(id);
+    subtasks.splice(currentSubtaskIndex, 1);
+    renderSubtaskList();
+}
+
 //  render functions
 
 function renderSubtaskList() {
     let subtaskListContainerRef = document.getElementById('subtask-list');
     subtaskListContainerRef.innerHTML = "";
-    for (let subtaskIndex = 0; subtaskIndex < subtasks.length; subtaskIndex++) {
-        subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtaskIndex, subtasks[subtaskIndex][`subtask-${(subtaskIndex)+1}`]); 
+    for (let subtasksIndex = 0; subtasksIndex < subtasks.length; subtasksIndex++) {
+        let subtaskKey = Object.keys(subtasks[subtasksIndex]);   
+        subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtasksIndex, subtasks[subtasksIndex][subtaskKey]); 
     }
     subtaskListContainerRef.classList.remove("d_none");
 }
@@ -351,9 +376,9 @@ function getSubtaskTemplate(index, subtaskValue) {
                     <div class="d-flex-space-between edit-subtask-icons">
                         <span class="edit-marker" onclick="enableSubtaskEdit('subtask-${index}')"></span>
                         <span class="confirm-input-icons-separator-1">|</span>
-                        <span class="delete-marker"></span>
+                        <span class="delete-marker" onclick="deleteSubtask('subtask-${index}')"></span>
                         <span class="confirm-input-icons-separator-2">|</span>
-                        <span class="confirm-icon"></span>
+                        <span class="confirm-icon" onclick="confirmEditSubtask('subtask-${index}')"></span>
                     </div>
                 </div>
             </li>`
