@@ -183,6 +183,7 @@ function clearForm() {
 }
 
 // handles creation of a new contact from the add-contact form
+//shows success message under 900 px
 function bindCreateButton() {
   document
     .getElementById("createContact")
@@ -196,6 +197,14 @@ function bindCreateButton() {
       const list = document.getElementById("contactList");
       createContactElement(name, email, phone, list);
       resetOverlay();
+      if (window.innerWidth < 900) {
+        document
+          .querySelector(".contacts-right")
+          ?.classList.add("show-contact-right");
+        showSuccessMessage();
+      }
+      updateFloatingButtons();
+      bindEditOverlayButtons();
     });
 }
 
@@ -335,6 +344,7 @@ function startEditMode() {
   fillEditForm(name, email, phone);
   setEditAvatar(name);
   const overlay = document.getElementById("editContactOverlay");
+  overlay.classList.remove("hidden");
   overlay.classList.add("open");
   overlay.dataset.current = name;
 }
@@ -405,11 +415,6 @@ function handleEditDelete() {
   });
   document.querySelector(".contacts-right-bottom").innerHTML = "";
   closeEditOverlay();
-
-  if (window.innerWidth < 900) {
-    closeContactDetails();
-    document.getElementById("editContactOverlay")?.classList.remove("open");
-  }
 }
 
 // removes old contact element and adds the updated one in the correct group

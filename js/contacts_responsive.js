@@ -1,11 +1,20 @@
 // bind all buttons inside the edit overlay
 function bindEditOverlayButtons() {
-  document.getElementById("closeEditOverlayBtn")
+  document
+    .getElementById("closeEditOverlayBtn")
     ?.addEventListener("click", closeEditOverlay);
-  document.getElementById("editContactForm")
+  document
+    .getElementById("editContactForm")
     ?.addEventListener("submit", handleEditSubmit);
-  document.getElementById("deleteContactEditOverlay")
-    ?.addEventListener("click", handleEditDelete);
+    document
+    .getElementById("deleteContactEditOverlay")
+    ?.addEventListener("click", () => {
+      if (window.innerWidth > 1200) {
+        handleEditDelete();  
+      } else {
+        deleteContact();
+      }
+    });
 }
 
 // show or hide floating buttons depending on screen and state
@@ -82,7 +91,8 @@ function deleteContact() {
 
 // close contact details and clear content
 function closeDetailAndMenu() {
-  document.querySelector(".contacts-right")
+  document
+    .querySelector(".contacts-right")
     ?.classList.remove("show-contact-right");
   document.querySelector(".contacts-right-bottom").innerHTML = "";
   closeDropupMenu();
@@ -100,17 +110,18 @@ document.addEventListener("click", (e) => {
 
 // open contact detail view
 function openContactDetails() {
-  document.querySelector(".contacts-right")
+  document
+    .querySelector(".contacts-right")
     ?.classList.add("show-contact-right");
   updateFloatingButtons();
 }
 
 // close contact detail view
 function closeContactDetails() {
-  document.querySelector(".contacts-right")
+  document
+    .querySelector(".contacts-right")
     ?.classList.remove("show-contact-right");
-  document.querySelector(".mobile-only-goback")
-    ?.classList.remove("visible");
+  document.querySelector(".mobile-only-goback")?.classList.remove("visible");
   updateFloatingButtons();
 }
 
@@ -123,13 +134,24 @@ window.addEventListener("resize", updateFloatingButtons);
 
 // set up contact list click and overlay buttons
 window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("contactList")
-    ?.addEventListener("click", (e) => {
-      const item = e.target.closest(".contact-item");
-      if (item) openContactDetails();
-    });
+  document.getElementById("contactList")?.addEventListener("click", (e) => {
+    const item = e.target.closest(".contact-item");
+    if (item) openContactDetails();
+  });
 
   bindEditOverlayButtons();
 });
 
+// shows success message after creating a contact
+function showSuccessMessage() {
+  const msg = document.getElementById("contactSuccessMsg");
+  if (!msg) return;
 
+  msg.classList.remove("hidden");
+  msg.classList.add("show");
+
+  setTimeout(() => {
+    msg.classList.remove("show");
+    msg.classList.add("hidden");
+  }, 2000);
+}
