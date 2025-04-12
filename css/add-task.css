@@ -438,6 +438,7 @@
 .clear-icon:hover {
   background: url(../assets/img/icons/clear_icon_hover.png) no-repeat 50% 50%;
   cursor: pointer;
+  transform: scale(1.05);
 }
 
 .confirm-input-icons-separator,
@@ -468,6 +469,7 @@
 .confirm-icon:hover {
   background: url(../assets/img/icons/confirm_icon_hover.png) no-repeat 50% 50%;
   cursor: pointer;
+  transform: scale(1.05);
 }
 
 .subtask-list {
@@ -533,11 +535,23 @@
   display: flex;
 }
 
+.subtask-list-item-active span:first-child {
+  display: none;
+}
+
 .edit-marker {
   background: url(../assets/img/icons/edit.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   display: none;
+}
+
+.edit-marker:hover {
+  background: url(../assets/img/icons/subtask_edit_hover.png) no-repeat 50% 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .delete-marker {
@@ -553,6 +567,7 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
+  transform: scale(1.05);
 }
 
 /* styling bottom section */

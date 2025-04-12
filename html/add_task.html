@@ -293,15 +293,17 @@
                   onchange="evaluateSubtaskInput('subtask-value-length-error-message')" />
                 <span class="add-subtask-icon" id="add-subtask-icon"></span>
                 <div class="confirm-input-icons d-flex-space-between d_none" id="confirm-input-icons">
-                  <span class="clear-icon"></span>
+                  <span class="clear-icon"
+                    onclick="clearSubtaskInput('subtasks', 'subtask-value-length-error-message')"></span>
                   <span class="confirm-input-icons-separator">|</span>
-                  <span class="confirm-icon"></span>
+                  <span class="confirm-icon"
+                    onclick="addSubtask('subtasks', 'subtask-value-length-error-message')"></span>
                 </div>
               </div>
               <span class="required-error-message d_none" id="subtask-value-length-error-message">Value too
                 short!</span>
-              <div class="subtask-list-wrapper d-flex-column d_none">
-                <ul class="subtask-list">
+              <div class="subtask-list-wrapper d-flex-column">
+                <ul class="subtask-list" id="subtask-list">
                   <li class="subtask-list-item br-10">
                     <span class="d-flex-center">•</span>
                     <div class="subtask-list-item-content-wrapper d-flex-space-between">

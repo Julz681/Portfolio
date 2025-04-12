@@ -18,6 +18,8 @@ const fp = flatpickr("#due-date", {
     }
 });
 
+let subtasks = [];
+
 // title input validation
 
 function checkTitleInputValue(requiredErrorContainerId, valueSizeErrorContainerId,  containerId) {
@@ -297,6 +299,64 @@ function falseInputValueHandling(confirmInputIconsRef, addIconRef, valueSizeErro
     addIconRef.classList.remove("d_none");
     showValueErrorMessage (valueSizeErrorContainerId);
     addValueErrorStylingOnInput(InputContainerWrapperRef)
+}
+
+function addSubtask(id, valueSizeErrorContainerId) {
+    let input = getInputContainer(id);
+    let inputValue = input.value.trim();
+    let subtaskNumber = (subtasks.length)+1;
+    let subtaskKey = `subtask-${subtaskNumber}`;
+    subtasks.push({
+        [subtaskKey] : inputValue,
+    }
+    );
+    console.log(subtasks);
+    renderSubtaskList();
+    input.value = "";
+    evaluateSubtaskInput(valueSizeErrorContainerId);
+}
+
+function clearSubtaskInput(id, valueSizeErrorContainerId) {
+    let input = getInputContainer(id)
+    input.value = "";
+    evaluateSubtaskInput(valueSizeErrorContainerId);
+}
+
+function enableSubtaskEdit(id) {
+    let subtaskInputContainerRef = getInputContainer(id);
+    subtaskInputContainerRef.removeAttribute("disabled");
+    let listItemContainerRef = subtaskInputContainerRef.closest('.subtask-list-item');
+    listItemContainerRef.classList.add('subtask-list-item-active');
+    listItemContainerRef.classList.remove('subtask-list-item', 'br-10');
+}
+
+//  render functions
+
+function renderSubtaskList() {
+    let subtaskListContainerRef = document.getElementById('subtask-list');
+    subtaskListContainerRef.innerHTML = "";
+    for (let subtaskIndex = 0; subtaskIndex < subtasks.length; subtaskIndex++) {
+        subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtaskIndex, subtasks[subtaskIndex][`subtask-${(subtaskIndex)+1}`]); 
+    }
+    subtaskListContainerRef.classList.remove("d_none");
+}
+
+// templates
+
+function getSubtaskTemplate(index, subtaskValue) {
+    return  `<li class="subtask-list-item br-10">
+                <span class="d-flex-center">•</span>
+                <div class="subtask-list-item-content-wrapper d-flex-space-between">
+                    <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" disabled>
+                    <div class="d-flex-space-between edit-subtask-icons">
+                        <span class="edit-marker" onclick="enableSubtaskEdit('subtask-${index}')"></span>
+                        <span class="confirm-input-icons-separator-1">|</span>
+                        <span class="delete-marker"></span>
+                        <span class="confirm-input-icons-separator-2">|</span>
+                        <span class="confirm-icon"></span>
+                    </div>
+                </div>
+            </li>`
 }
 
 //  error message handling
