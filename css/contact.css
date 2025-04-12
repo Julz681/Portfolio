@@ -1012,6 +1012,14 @@ header {
   .contact-group-letter {
     margin-top: 17px;
   }
+
+  .contact-item.selected {
+    background-color: white;
+  }
+
+  .contact-name {
+    color: black !important;
+  }
 }
 
 @media (max-width: 410px) {
@@ -1021,5 +1029,27 @@ header {
 
   .input-field {
     width: 300px;
+  }
+}
+
+@media (max-width: 380px) {
+  .contacts-list {
+    padding: 16px 16px;
+  }
+
+  .contact-item.selected {
+    width: 300px;
+  }
+
+  .contact-group-letter {
+    padding: 8px;
+  }
+
+  .contact-group-letter::after {
+    flex: 1;
+  }
+
+  .contact-avatar {
+    margin-left: 8px;
   }
 }
