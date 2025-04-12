@@ -6,9 +6,15 @@ function bindEditOverlayButtons() {
   document
     .getElementById("editContactForm")
     ?.addEventListener("submit", handleEditSubmit);
-  document
+    document
     .getElementById("deleteContactEditOverlay")
-    ?.addEventListener("click", handleEditDelete);
+    ?.addEventListener("click", () => {
+      if (window.innerWidth > 1200) {
+        handleEditDelete();  
+      } else {
+        deleteContact();
+      }
+    });
 }
 
 // show or hide floating buttons depending on screen and state
