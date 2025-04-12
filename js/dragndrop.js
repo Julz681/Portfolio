@@ -64,7 +64,7 @@ function dragOver(event) {
         }
 
         highlightLine.style.top = `${topPosition}px`; // Position the line below the last card
-        highlightLine.style.left = `${rect.left + rect.width / 2 - 126}px`; // Center the line
+        highlightLine.style.left = `${rect.left + rect.width / 2 - 110}px`; // Center the line
         highlightLine.style.display = 'block'; // Show the line
     }
 }
