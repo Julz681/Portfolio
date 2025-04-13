@@ -354,6 +354,24 @@ function deleteSubtask(id) {
     renderSubtaskList();
 }
 
+function createSubtaskOnKeyPress(id, event, valueSizeErrorContainerId) {
+    if (detectKey(event)) {
+        addSubtask(id, valueSizeErrorContainerId) 
+    }
+}
+
+function editSubtaskOnKeyPress(id, event) {
+    if (detectKey(event)) {
+        confirmEditSubtask(id) 
+    }
+}
+
+function detectKey(event) {
+    if (event.key === "Enter") {
+        return true;
+    }
+}
+
 //  render functions
 
 function renderSubtaskList() {
@@ -369,10 +387,10 @@ function renderSubtaskList() {
 // templates
 
 function getSubtaskTemplate(index, subtaskValue) {
-    return  `<li class="subtask-list-item br-10">
+    return  `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
                 <span class="d-flex-center">•</span>
                 <div class="subtask-list-item-content-wrapper d-flex-space-between">
-                    <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" disabled>
+                    <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" onkeydown="editSubtaskOnKeyPress('subtask-${index}', event)" disabled>
                     <div class="d-flex-space-between edit-subtask-icons">
                         <span class="edit-marker" onclick="enableSubtaskEdit('subtask-${index}')"></span>
                         <span class="confirm-input-icons-separator-1">|</span>

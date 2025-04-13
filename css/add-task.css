@@ -144,6 +144,7 @@
 
 #task-title:hover,
 .task-description-text:hover,
+.subtask-item-input:hover,
 .subtask-input:hover,
 .subtask-input-wrapper:hover,
 .date-picker:hover {
@@ -515,6 +516,7 @@
 
 .subtask-item-input:disabled {
   background: transparent;
+  pointer-events: none;
 }
 
 /* styling icons */

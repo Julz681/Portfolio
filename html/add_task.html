@@ -290,7 +290,8 @@
               <div class="subtask-input-wrapper d-flex-space-between br-10" onclick="moveCursorToSubtaskInput()">
                 <input type="text" name="subtasks" id="subtasks" class="subtask-input size-20 br-10"
                   placeholder="Add new Subtask" oninput="evaluateSubtaskInput('subtask-value-length-error-message')"
-                  onchange="evaluateSubtaskInput('subtask-value-length-error-message')" />
+                  onchange="evaluateSubtaskInput('subtask-value-length-error-message')"
+                  onkeydown="createSubtaskOnKeyPress('subtasks', event, 'subtask-value-length-error-message')" />
                 <span class="add-subtask-icon" id="add-subtask-icon"></span>
                 <div class="confirm-input-icons d-flex-space-between d_none" id="confirm-input-icons">
                   <span class="clear-icon"
