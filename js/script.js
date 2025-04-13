@@ -53,6 +53,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // highlight current nav link logged out responsive
+  window.addEventListener("DOMContentLoaded", () => {
+    if (window.innerWidth < 1200) {
+      const currentFile = window.location.pathname
+        .toLowerCase()
+        .split("/")
+        .pop();
+
+      document
+        .querySelectorAll(".bottom-nav-a, .mobile-nav a")
+        .forEach((link) => {
+          const href = link
+            .getAttribute("href")
+            ?.toLowerCase()
+            .split("/")
+            .pop();
+
+          if (href === currentFile) {
+            link.classList.add("active");
+          }
+        });
+    }
+  });
+
   // Function to update the user profile icon
   function updateUserProfileIcon() {
     const userProfileSpan = document.querySelector(".user-profile span");
