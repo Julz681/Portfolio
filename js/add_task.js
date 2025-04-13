@@ -7,13 +7,13 @@ const fp = flatpickr("#due-date", {
     altInput: true,
     altFormat: "d/m/Y",
     allowInput: true,
-    onOpen: function() {
+    onOpen: function () {
         checkDateInput("due-date");
     },
-    onChange: function() {
+    onChange: function () {
         checkDateInput("due-date");
     },
-    onValueUpdate: function() {
+    onValueUpdate: function () {
         checkDateInput("due-date");
     }
 });
@@ -22,20 +22,20 @@ let subtasks = [];
 
 // title input validation
 
-function checkTitleInputValue(requiredErrorContainerId, valueSizeErrorContainerId,  containerId) {
+function checkTitleInputValue(requiredErrorContainerId, valueSizeErrorContainerId, containerId) {
     let requiredErrorContainer = getErrorContainer(`${requiredErrorContainerId}`);
     let valueSizeErrorContainer = getErrorContainer(`${valueSizeErrorContainerId}`)
     let inputContainer = getInputContainer(`${containerId}`);
-    let inputContainerValue = getInputContainerValue(`${containerId}`);     
+    let inputContainerValue = getInputContainerValue(`${containerId}`);
     titleErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, inputContainerValue);
 }
 
 function titleErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, containerValue) {
-    if(containerValue.length == 0 || containerValue.length <= 3) {
+    if (containerValue.length == 0 || containerValue.length <= 3) {
         showErrorMessage(valueSizeErrorContainer);
         showErrorMessage(requiredErrorContainer);
         addValueErrorStylingOnInput(inputContainer);
-    } else if(!isNaN(containerValue) || containerValue === "") {
+    } else if (!isNaN(containerValue) || containerValue === "") {
         showErrorMessage(requiredErrorContainer);
         addValueErrorStylingOnInput(inputContainer);
         removeErrorMessage(valueSizeErrorContainer);
@@ -48,7 +48,7 @@ function titleErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, in
 
 function checkDescriptionInput(containerId, valueSizeErrorContainerId) {
     let valueSize = getInputContainerValue(containerId);
-    if(valueSize.length <= 3 && valueSize.length > 0) {
+    if (valueSize.length <= 3 && valueSize.length > 0) {
         showValueErrorMessage(`${valueSizeErrorContainerId}`)
     } else if (valueSize.length == 0 || valueSize.length > 3) {
         hideValueErrorMessage(`${valueSizeErrorContainerId}`)
@@ -71,25 +71,25 @@ function checkDateInput(containerId) {
     let requiredErrorContainerRef = getErrorContainer("due-date-required-error-message");
     let invalidInputErrorContainerRef = getErrorContainer("due-date-time-error-message");
     let dateFormatErrorContainerRef = getErrorContainer("date-format-error-message");
-    let formattedDateValue = formatDateValue(dateInputValue).setHours(0,0,0,0);
-    let currentDate = new Date().setHours(0,0,0,0);
-    if(checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef)) {
+    let formattedDateValue = formatDateValue(dateInputValue).setHours(0, 0, 0, 0);
+    let currentDate = new Date().setHours(0, 0, 0, 0);
+    if (checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef)) {
         return
     } else if (checkFormattedDateValue(formattedDateValue, invalidInputErrorContainerRef, requiredErrorContainerRef, dateFormatErrorContainerRef, currentDate)) {
         return
     }
     else {
         removeAllDateErrorUserInteractions(requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef);
-    }    
+    }
 }
 
 function checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef) {
-    if(dateInputValue.length === 0) {
+    if (dateInputValue.length === 0) {
         fp.altInput.classList.add("task-input-fields-invalid");
         showErrorMessage(requiredErrorContainerRef);
         removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputErrorContainerRef)
         return true;
-    } else if (!dateFormat.test(dateInputValue )) {
+    } else if (!dateFormat.test(dateInputValue)) {
         fp.altInput.classList.add("task-input-fields-invalid");
         showErrorMessage(dateFormatErrorContainerRef);
         removeErrorMessage(requiredErrorContainerRef);
@@ -140,7 +140,7 @@ function modifyPriorityLabels(priorityLabels, priorityLabelId) {
         let currentPriorityLabelId = priorityLabels[i].id;
         let priorityIconParts = getPriorityIconParts(currentPriorityLabelId);
         let priorityColor = getPriorityColor(currentPriorityLabelId);
-        if((currentPriorityLabelId != priorityLabelId) || (currentPriorityLabelId == priorityLabelId && priorityLabels[i].classList.contains(`${priorityLabelId}-prio-bg`))) {
+        if ((currentPriorityLabelId != priorityLabelId) || (currentPriorityLabelId == priorityLabelId && priorityLabels[i].classList.contains(`${priorityLabelId}-prio-bg`))) {
             priorityLabels[i].style.color = "#000000";
             switchPriorityIconColor(priorityIconParts, priorityColor);
             setDefaultBackgroundColorOnPriorityLabel(priorityLabels[i], currentPriorityLabelId);
@@ -157,7 +157,7 @@ function activatePriorityLabel(priorityLabelContainerRef, priorityLabelId, prior
 }
 
 function getPriorityColor(priorityLabelId) {
-    switch(priorityLabelId) {
+    switch (priorityLabelId) {
         case "low":
             return "#7AE229"
         case "medium":
@@ -174,7 +174,7 @@ function getPriorityIconParts(priorityLabelId) {
 }
 
 function switchPriorityIconColor(priorityIconParts, color) {
-    for(let i = 0; i < priorityIconParts.length; i++) {
+    for (let i = 0; i < priorityIconParts.length; i++) {
         priorityIconParts[i].style.fill = color;
     };
 }
@@ -193,10 +193,13 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
 
 function toggleDropdownSelection(dropdownContainerId, event) {
     let containerDropdownObject = createContainerObject(dropdownContainerId);
-    if(containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
+    if (containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
         toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
     } else {
         toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed)
+    }
+    if (dropdownContainerId === "assigned-to-dropdown") {
+        showUsersToAssign();
     }
     event.stopPropagation();
 }
@@ -211,9 +214,9 @@ function createContainerObject(containerId) {
 }
 
 function toggleInputContainerVisibilities(dropdownContainerRef, dropdownIconContainerClosedRef, dropdownIconContainerOpenRef) {
-        toggleDropdownContainerVisibility(dropdownContainerRef);
-        toggleDropdownContainerVisibility(dropdownIconContainerClosedRef);
-        toggleDropdownContainerVisibility(dropdownIconContainerOpenRef);
+    toggleDropdownContainerVisibility(dropdownContainerRef);
+    toggleDropdownContainerVisibility(dropdownIconContainerClosedRef);
+    toggleDropdownContainerVisibility(dropdownIconContainerOpenRef);
 }
 
 function toggleDropdownContainerVisibility(dropdownContainerRef) {
@@ -222,9 +225,9 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 
 function closeAllDropdowns(event) {
     let dropdownContainers = [createContainerObject('category-dropdown'), createContainerObject('assigned-to-dropdown')];
-    for(let i = 0; i < dropdownContainers.length; i++) {
+    for (let i = 0; i < dropdownContainers.length; i++) {
         let dropdownContainerObject = dropdownContainers[i];
-        if(!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
+        if (!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
             toggleInputContainerVisibilities(dropdownContainerObject.dropdownContainer, dropdownContainerObject.iconClosed, dropdownContainerObject.iconOpen)
         }
     }
@@ -238,7 +241,7 @@ function closeAllDropdowns(event) {
 
 function assignContactToTask(contactId, event) {
     let contactContainerRef = document.getElementById(contactId);
-    if(contactContainerRef.classList.contains("single-contact-wrapper")) {
+    if (contactContainerRef.classList.contains("single-contact-wrapper")) {
         contactContainerRef.classList.toggle("single-contact-wrapper");
         contactContainerRef.classList.toggle("single-contact-wrapper-checked");
         contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
@@ -273,7 +276,7 @@ function evaluateSubtaskInput(valueSizeErrorContainerId) {
     let addIconRef = document.getElementById("add-subtask-icon");
     let subtaskInputContainerRef = getInputContainer("subtasks");
     let inputValue = getInputValue(subtaskInputContainerRef);
-    if(inputValue.length > 3) {
+    if (inputValue.length > 3) {
         switchIconsOnSubtasks(confirmInputIconsRef, addIconRef);
         removeErrorMessageOnSubtaskInput(subtaskInputContainerRef.parentElement, valueSizeErrorContainerId)
     } else if (inputValue.length <= 3 && inputValue.length > 0) {
@@ -297,7 +300,7 @@ function switchIconsOnSubtasks(showIcon1, hideIcon2) {
 function falseInputValueHandling(confirmInputIconsRef, addIconRef, valueSizeErrorContainerId, InputContainerWrapperRef) {
     confirmInputIconsRef.classList.add("d_none");
     addIconRef.classList.remove("d_none");
-    showValueErrorMessage (valueSizeErrorContainerId);
+    showValueErrorMessage(valueSizeErrorContainerId);
     addValueErrorStylingOnInput(InputContainerWrapperRef)
 }
 
@@ -307,7 +310,7 @@ function addSubtask(id, valueSizeErrorContainerId) {
     let subtaskNumber = subtasks.length;
     let subtaskKey = `subtask-${subtaskNumber}`;
     subtasks.push({
-        [subtaskKey] : inputValue,
+        [subtaskKey]: inputValue,
     }
     );
     renderSubtaskList();
@@ -356,13 +359,13 @@ function deleteSubtask(id) {
 
 function createSubtaskOnKeyPress(id, event, valueSizeErrorContainerId) {
     if (detectKey(event)) {
-        addSubtask(id, valueSizeErrorContainerId) 
+        addSubtask(id, valueSizeErrorContainerId)
     }
 }
 
 function editSubtaskOnKeyPress(id, event) {
     if (detectKey(event)) {
-        confirmEditSubtask(id) 
+        confirmEditSubtask(id)
     }
 }
 
@@ -378,8 +381,8 @@ function renderSubtaskList() {
     let subtaskListContainerRef = document.getElementById('subtask-list');
     subtaskListContainerRef.innerHTML = "";
     for (let subtasksIndex = 0; subtasksIndex < subtasks.length; subtasksIndex++) {
-        let subtaskKey = Object.keys(subtasks[subtasksIndex]);   
-        subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtasksIndex, subtasks[subtasksIndex][subtaskKey]); 
+        let subtaskKey = Object.keys(subtasks[subtasksIndex]);
+        subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtasksIndex, subtasks[subtasksIndex][subtaskKey]);
     }
     subtaskListContainerRef.classList.remove("d_none");
 }
@@ -387,7 +390,7 @@ function renderSubtaskList() {
 // templates
 
 function getSubtaskTemplate(index, subtaskValue) {
-    return  `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
+    return `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
                 <span class="d-flex-center">•</span>
                 <div class="subtask-list-item-content-wrapper d-flex-space-between">
                     <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" onkeydown="editSubtaskOnKeyPress('subtask-${index}', event)" disabled>
@@ -404,7 +407,7 @@ function getSubtaskTemplate(index, subtaskValue) {
 
 //  error message handling
 
-function showValueErrorMessage (valueSizeErrorContainerId) {
+function showValueErrorMessage(valueSizeErrorContainerId) {
     let errorContainer = getErrorContainer(valueSizeErrorContainerId);
     return showErrorMessage(errorContainer);
 }
@@ -422,87 +425,31 @@ function getInputValue(inputContainer) {
     return inputContainer.value;
 }
 
-function getErrorContainer (id) {
+function getErrorContainer(id) {
     return document.getElementById(id);
 }
 
 function showErrorMessage(errorContainer) {
-    if(errorContainer.classList.contains("d_none")) {
+    if (errorContainer.classList.contains("d_none")) {
         errorContainer.classList.remove("d_none");
     }
 }
 
 function addValueErrorStylingOnInput(inputContainer) {
-    if(!inputContainer.classList.contains("task-input-fields-invalid")) {
+    if (!inputContainer.classList.contains("task-input-fields-invalid")) {
         inputContainer.classList.add("task-input-fields-invalid");
     }
 }
 
 function removeErrorMessage(errorContainer) {
-    if(!errorContainer.classList.contains("d_none")) {
+    if (!errorContainer.classList.contains("d_none")) {
         errorContainer.classList.add("d_none");
     }
 }
 
 function removeValueErrorStylingOnInput(inputContainer) {
-    if(inputContainer.classList.contains("task-input-fields-invalid")) {
+    if (inputContainer.classList.contains("task-input-fields-invalid")) {
         inputContainer.classList.remove("task-input-fields-invalid");
     }
 }
-
-
-//commented out, because the header and sidebar would disappear - because of w3 include
-
-
-// import { db } from "../firebase/firebase.js";  // Import Firestore database
-// import { collection, addDoc } from "firebase/firestore";  // Import Firestore functions
-
-// // Wait until the page is fully loaded before executing the script
-// document.addEventListener("DOMContentLoaded", function () {
-  
-//   // Add an event listener for the task form submission
-//   document.querySelector(".add-task-form").addEventListener("submit", async function (event) {
-//       event.preventDefault(); // Prevent the page from reloading after form submission
-
-//       // Get form data from input fields
-//       const title = document.getElementById("task-title").value; // Task title
-//       const description = document.getElementById("task-description").value; // Task description
-//       const dueDate = document.getElementById("due-date").value; // Due date
-//       const priority = document.querySelector(".priority-labels.selected")?.id || "low"; // Task priority (default is "low")
-      
-//       // Get assigned contacts from the selected users in the form
-//       const assignedTo = Array.from(document.querySelectorAll(".single-contact-wrapper.selected span:nth-child(2)"))
-//                               .map(el => el.textContent);
-      
-//       const category = document.getElementById("category").value; // Task category
-      
-//       // Get subtasks from input field (splitting by commas)
-//       const subtasks = document.getElementById("subtasks").value
-//                         .split(",") // Convert string into an array
-//                         .map(sub => ({ name: sub.trim(), done: false })); // Store each subtask as an object
-
-//       // Create a task object to be stored in Firestore
-//       const newTask = {
-//         title,
-//         description,
-//         dueDate,
-//         priority,
-//         assignedTo,
-//         category,
-//         subtasks
-//       };
-
-//       try {
-//         // Save the task in Firestore under the "tasks" collection
-//         await addDoc(collection(db, "tasks"), newTask);
-//         console.log(`Task saved: ${title}`); // Log success message
-//         alert("Task successfully saved!"); // Show success alert
-
-//         // Reset the form after successful submission
-//         document.querySelector(".add-task-form").reset();
-//       } catch (error) {
-//         console.error("Error while saving task:", error); // Log error if saving fails
-//       }
-//   });
-// });
 

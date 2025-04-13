@@ -10,13 +10,15 @@
   <link rel="stylesheet" href="/css/add-task.css">
   <link rel="stylesheet" href="/css/desktop_template.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="/js/add_task.js" defer></script>
-  <script src="/js/dropwdown.js" defer></script>
+  <script src="../js/add_task.js" defer></script>
+  <script src="../js/dropwdown.js" defer></script>
+  <script src="../js/firebase.js" type="module" defer></script>
+  <script src="../js/firebase_functions.js" type="module" defer></script>
 
   <title>Add Task</title>
 </head>
 
-<body onclick="closeAllDropdowns(event)">
+<body onload="init()" onclick="closeAllDropdowns(event)">
 
   <header class="header">
     <img src="../assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
@@ -188,7 +190,7 @@
                     onclick="toggleDropdownSelection('assigned-to-dropdown', event)"></span>
                 </div>
                 <div class="dropdown-wrapper d_none" id="assigned-to-dropdown">
-                  <ul class="dropdown d-flex-column">
+                  <ul class="dropdown d-flex-column" id="assigned-to-users-list">
                     <li id="US-1" class="single-contact-wrapper d-flex-space-between br-10"
                       onclick="assignContactToTask('US-1', event)">
                       <div class="d-flex-space-between gap-16">
