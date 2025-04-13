@@ -6,11 +6,11 @@ function bindEditOverlayButtons() {
   document
     .getElementById("editContactForm")
     ?.addEventListener("submit", handleEditSubmit);
-    document
+  document
     .getElementById("deleteContactEditOverlay")
     ?.addEventListener("click", () => {
       if (window.innerWidth > 1200) {
-        handleEditDelete();  
+        handleEditDelete();
       } else {
         deleteContact();
       }
@@ -79,14 +79,12 @@ function deleteContact() {
   document.querySelectorAll(".contact-group").forEach((group) => {
     if (!group.querySelector(".contact-item")) group.remove();
   });
-
-  closeDetailAndMenu();
-  updateFloatingButtons();
-
   if (window.innerWidth < 1200) {
     closeContactDetails();
     document.getElementById("editContactOverlay")?.classList.remove("open");
   }
+  closeDetailAndMenu();
+  updateFloatingButtons();
 }
 
 // close contact details and clear content
@@ -154,4 +152,43 @@ function showSuccessMessage() {
     msg.classList.remove("show");
     msg.classList.add("hidden");
   }, 2000);
+}
+
+//change animation when the overlay open under 1200px slide in from right becomes slide in from bottom
+function openContactModal() {
+  const overlay = document.querySelector(".overlay");
+  const modal = document.querySelector(".add-contact-modal");
+
+  modal.classList.remove(
+    "slide-from-right",
+    "show-from-right",
+    "slide-from-bottom",
+    "show-from-bottom"
+  );
+
+  overlay.classList.add("open");
+
+  if (window.innerWidth >= 1200) {
+    modal.classList.add("slide-from-right");
+    setTimeout(() => modal.classList.add("show-from-right"), 10);
+  } else {
+    modal.classList.add("slide-from-bottom");
+    setTimeout(() => modal.classList.add("show-from-bottom"), 10);
+  }
+}
+
+//change animation when the overlay close under 1200px slide in from right becomes slide in from bottom
+function closeContactModal() {
+  const overlay = document.querySelector(".overlay");
+  const modal = document.querySelector(".add-contact-modal");
+
+  if (window.innerWidth >= 1200) {
+    modal.classList.remove("show-from-right");
+    modal.classList.add("slide-from-right");
+  } else {
+    modal.classList.remove("show-from-bottom");
+    modal.classList.add("slide-from-bottom");
+  }
+
+  setTimeout(() => overlay.classList.remove("open"), 8000);
 }

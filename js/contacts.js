@@ -167,6 +167,7 @@ function openOverlay() {
   updateFloatingButtons();
 }
 
+
 // closes the add-contact overlay and resets form and state
 function resetOverlay() {
   document.getElementById("addContactOverlay").classList.remove("open");
