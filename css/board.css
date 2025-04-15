@@ -304,15 +304,14 @@ header {
 .highlight-line {
   position: absolute;
   width: 252px;
-  height: 244px; 
-  border: 1px dashed #A8A8A8;
+  height: 244px;
+  border: 1px dashed #a8a8a8;
   z-index: 1000;
   opacity: 0.5;
   display: none;
   border-radius: 30px;
   pointer-events: none;
 }
-
 
 .board-columns {
   position: relative;
@@ -321,21 +320,18 @@ header {
 .board-columns .column-content-wrapper {
   width: 100%;
   height: 100%;
-  min-height: 600px;   /*ANGEPASST*/
+  min-height: 600px; /*ANGEPASST*/
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-
-
 .board-card.dragging {
-  opacity: 0.5; 
+  opacity: 0.5;
 }
 
 .board-card {
-  width: 252px;
   padding: 16px;
   background-color: #ffffff;
   border-radius: 24px;
@@ -1107,4 +1103,89 @@ header {
 
 .only-responsive {
   display: none !important;
+}
+
+@media (max-width: 1400px) {
+  body {
+    height: auto !important;
+  }
+
+  .content-wrapper-board,
+  .column-content-wrapper {
+    height: auto;
+  }
+
+  .board {
+    min-height: auto;
+    width: auto;
+  }
+
+  .board-title {
+    margin-right: 400px;
+  }
+
+  .board-columns {
+    height: auto;
+  }
+}
+
+@media (max-width: 1200px) {
+  .content-wrapper-board {
+    margin-left: -300px;
+    flex: 1;
+    z-index: 0;
+  }
+
+  .board-header-wrapper {
+    margin-top: 45px;
+  }
+
+  .board-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+  }
+
+  .board-title {
+    font-size: 47px;
+    margin-right: auto;
+  }
+
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .add-task-button span:first-child {
+    display: none;
+  }
+
+  .add-task-button {
+    width: 50px;
+  }
+
+  .board {
+    flex-direction: column;
+  }
+
+  .board-columns {
+    width: 100%;
+  }
+
+  .board-columns .column-content-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    gap: 16px;
+    min-height: auto;
+  }
+
+  .board-columns .board-card {
+    min-width: 250px;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex !important;
+  }
 }
