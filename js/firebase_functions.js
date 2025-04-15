@@ -31,17 +31,17 @@ function getUserNames(users) {
 
 // getUsersFromDatabase();
 
-async function showUsersToAssign() {
+async function renderUsersToAssign() {
     let usersListContainerRef = document.getElementById("assigned-to-users-list");
     usersListContainerRef.innerHTML = "";
     for (let index = 0; index < window.userNames.length; index++) {
-        usersListContainerRef.innerHTML += getUsersToAssignTemplate(window.userNames[index]);
+        usersListContainerRef.innerHTML += getUsersToAssignTemplate(window.userNames[index], index);
     }
 }
 
-function getUsersToAssignTemplate(userName) {
-    return `<li id="US-1" class="single-contact-wrapper d-flex-space-between br-10"
-                onclick="assignContactToTask('US-1', event)">
+function getUsersToAssignTemplate(userName, index) {
+    return `<li id="US-${index}" class="single-contact-wrapper d-flex-space-between br-10"
+                onclick="assignContactToTask('US-${index}', event)">
                 <div class="d-flex-space-between gap-16">
                     <span class="single-contact-icon d-flex-center">US</span>
                     <span>${userName}</span>
@@ -50,5 +50,6 @@ function getUsersToAssignTemplate(userName) {
             </li>`
 }
 
-window.showUsersToAssign = showUsersToAssign;
+window.renderUsersToAssign = renderUsersToAssign;
+window.getUsersToAssignTemplate = getUsersToAssignTemplate;
 window.init = init;

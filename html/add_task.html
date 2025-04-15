@@ -18,7 +18,7 @@
   <title>Add Task</title>
 </head>
 
-<body onclick="closeAllDropdowns(event)">
+<body onload="init()" onclick="closeAllDropdowns(event)">
 
   <header class="header">
     <img src="../assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
@@ -182,8 +182,8 @@
               <div class="d-flex-column assigned-to-container">
                 <div class="dropdown-input-wrapper br-10 d-flex-center"
                   onclick="toggleDropdownSelection('assigned-to-dropdown', event)">
-                  <input class="dropdown-input size-20" type="text" id="#" name="assigned-to"
-                    placeholder="Select contacts to assign" />
+                  <input class="dropdown-input size-20" type="text" id="assigned-to-input" name="assigned-to"
+                    placeholder="Select contacts to assign" oninput="searchUsersToAssign('assigned-to-dropdown')" />
                   <span class="dropdown-icon-closed" id="assigned-to-dropdown-closed"
                     onclick="toggleDropdownSelection('assigned-to-dropdown', event)"></span>
                   <span class="dropdown-icon-open d_none" id="assigned-to-dropdown-open"

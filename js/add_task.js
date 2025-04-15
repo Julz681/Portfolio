@@ -19,6 +19,7 @@ const fp = flatpickr("#due-date", {
 });
 
 let subtasks = [];
+let searchResults = [];
 
 // title input validation
 
@@ -198,9 +199,10 @@ function toggleDropdownSelection(dropdownContainerId, event) {
     } else {
         toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed)
     }
-    if (dropdownContainerId === "assigned-to-dropdown") {
-        showUsersToAssign();
+    if (dropdownContainerId === "assigned-to-dropdown" && searchResults.length === 0) {
+        renderUsersToAssign();
     }
+    closeDropdown(event);
     event.stopPropagation();
 }
 
@@ -231,11 +233,13 @@ function closeAllDropdowns(event) {
             toggleInputContainerVisibilities(dropdownContainerObject.dropdownContainer, dropdownContainerObject.iconClosed, dropdownContainerObject.iconOpen)
         }
     }
+    closeDropdown(event);
     event.stopPropagation();
 }
 
-// TODO: search contacts in dropdown
 // TODO: assigned contacts handling
+
+// TODO: import icons
 
 // assign-To section
 
@@ -253,6 +257,42 @@ function assignContactToTask(contactId, event) {
         contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-checked");
     }
     event.stopPropagation();
+}
+
+// search function 
+
+function searchUsersToAssign(containerId) {
+    let searchValue = getSearchValue();
+    searchResults = createSearchResult(searchValue);
+    let containerDropdownObject = createContainerObject(containerId);
+    if (containerDropdownObject.dropdownContainer.classList.contains('d_none')) {
+        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
+    }
+    renderUserSearchResult(searchResults);
+}
+
+function getSearchValue() {
+    let inputRef = document.getElementById("assigned-to-input");
+    let searchValue = inputRef.value.toLowerCase();
+    return searchValue;
+}
+
+function createSearchResult(searchValue) {
+    let results = [];
+    for (let index = 0; index < userNames.length; index++) {
+        if (typeof userNames[index] === "string" && userNames[index].toLowerCase().startsWith(searchValue)) {
+            results.push(userNames[index])
+        }
+    }
+    return results;
+}
+
+function renderUserSearchResult(searchResults) {
+    let usersListContainerRef = document.getElementById("assigned-to-users-list");
+    usersListContainerRef.innerHTML = "";
+    for (let index = 0; index < searchResults.length; index++) {
+        usersListContainerRef.innerHTML += getUsersToAssignTemplate(searchResults[index], index);
+    }
 }
 
 // category section
@@ -452,4 +492,3 @@ function removeValueErrorStylingOnInput(inputContainer) {
         inputContainer.classList.remove("task-input-fields-invalid");
     }
 }
-
