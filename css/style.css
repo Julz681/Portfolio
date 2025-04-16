@@ -25,34 +25,55 @@ button {
 }
 
 .start {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto; 
-  position: relative;
-  background-color: transparent;
-  z-index: 1;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  background-color: #f6f7f8;
+  animation: backgroundExpand 1s ease-out forwards;
+  z-index: 1000;
   pointer-events: auto;
 }
 
+.logo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f6f7f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998; 
+  pointer-events: none;
+  animation: backgroundExpand 1s ease-out forwards;
+}
+
 .start-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 274px;
   height: 344.07px;
   animation: logoAppear 0.5s ease-out 0.5s forwards;
-  z-index: 10;
+  pointer-events: none;
+  z-index: 9999; 
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .start-logo.finished {
-  position: absolute; 
   top: 80px;
   left: 77px;
+  width: 100px;
+  height: 121px;
   transform: none;
 }
+
 
 .only-responsive {
   display: none !important;
@@ -122,9 +143,6 @@ body {
   display: flex;
   align-items: center;
   gap: 35px;
-  opacity: 0;
-  animation: showContent 0.5s ease-in-out 0.5s forwards;
-  pointer-events: auto;
 }
 
 .top-right a {
@@ -157,6 +175,7 @@ body {
   gap: 32px;
   box-shadow: 0px 0px 14px 3px #0000000a;
   padding: 48px 115px;
+  z-index: 1010;
 }
 
 .h1-container {
@@ -193,6 +212,7 @@ label {
   border: 1px solid #d1d1d1;
   border-radius: 10px;
   gap: 8px;
+  z-index: auto;
 }
 
 .input-mail {
@@ -442,11 +462,6 @@ a:hover {
   .login-frame-alignment {
     height: auto;
     padding-top: 20px;
-    padding-bottom: 64px;
-  }
-
-  .start {
-    height: 160px;
   }
 
 }

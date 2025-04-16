@@ -5,15 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.goBack = goBack; // Make the function globally available in case it's called directly in the HTML
 
-  // Animation at the beginning of the page load
+  const startLogo = document.querySelector(".start-logo");
+  const logoOverlay = document.getElementById("logo-overlay");
   const startElement = document.querySelector(".start");
-  if (startElement) {
-    startElement.addEventListener("animationend", function () {
-      this.classList.add("finished");
+  
+  if (startLogo && logoOverlay && startElement) {
+    startLogo.addEventListener("animationend", () => {
+      startLogo.classList.add("finished");
+      logoOverlay.style.backgroundColor = "transparent";
+      startElement.classList.add("finished");
     });
   } else {
-    console.error("Element with class 'start' not found!");
+    console.error("Start-Logo oder Overlay nicht gefunden!");
   }
+  
 
   // Hide/show the help button in the header
   const helpButton = document.querySelector(".help-btn");
