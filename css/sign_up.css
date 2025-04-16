@@ -248,6 +248,8 @@ form {
 
   .sign-up-frame {
     width: 396px;
+    margin-top: 200px;
+    margin-bottom: 20px;
   }
 
   body {
@@ -290,7 +292,7 @@ form {
   align-items: center;
   justify-content: center;
   color: white;
-  width: 180px;
+  width: 140px;
   height: 51px;
   font-size: 16px;
 }
@@ -303,6 +305,15 @@ form {
   width: 88px;
 }
 }
+
+@media (max-width: 550px) {
+  
+  .signup-logo {
+    width: 54px;
+    height: 68px;
+  }
+}
+
 
 @media (max-width: 410px) {
   .sign-up-frame {

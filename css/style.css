@@ -67,10 +67,8 @@ button {
 }
 
 .start-logo.finished {
-  top: 80px;
-  left: 77px;
-  width: 100px;
-  height: 121px;
+  position: absolute; 
+  z-index: 1; 
   transform: none;
 }
 
@@ -133,8 +131,11 @@ body {
 }
 
 .start.finished {
-  pointer-events: none;
-}
+    pointer-events: none;
+    z-index: -1;
+    position: absolute;
+  }
+
 
 .top-right {
   position: absolute;
@@ -153,14 +154,14 @@ body {
 .login-frame-alignment {
   margin: 0 auto;
   width: 100%;
-  height: calc(100vh - 100px);
+  height: auto;
   max-width: 1440px;
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 0;
+  padding-top: 120px;
 }
 
 .login-frame {
@@ -353,9 +354,10 @@ a:hover {
 }
 
 
-@media (max-width: 660px) {
+@media (max-width: 690px) {
   .login-frame {
     width: 550px;
+    margin-top: 120px;
   }
   
   body {
@@ -376,6 +378,12 @@ a:hover {
     gap: 10px;
     font-size: 16px;
   }
+
+  .login-frame-alignment {
+    height: auto;
+    padding-top: 140px;
+  }
+  
 }
 
 
@@ -440,6 +448,7 @@ a:hover {
     width: 180px;
     height: 51px;
     font-size: 16px;
+    z-index: 1099;
 }
 
 .signup-btn1:hover {
@@ -464,9 +473,13 @@ a:hover {
     padding-top: 20px;
   }
 
+  .login-frame {
+    margin-top: 140px;
+
+  }
+
+
 }
-
-
 
 
 @media (max-width: 410px) {
@@ -530,8 +543,10 @@ a:hover {
     margin-top: 120px;
 
   }
-  
 
+  .login-frame {
+    margin-top: 14px;
+  }
 }
 
 
@@ -546,7 +561,4 @@ a:hover {
   .login-data label .input-field { 
     width: 280px; 
 }
-
-
-
 }
