@@ -36,3 +36,51 @@ function closeDropdown(event) {
 
 // This function closes the drop down menu
 document.onclick = closeDropdown;
+
+// add task dropdowns toggle
+
+function toggleDropdownSelection(dropdownContainerId, event) {
+  let containerDropdownObject = createContainerObject(dropdownContainerId);
+  if (containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
+    toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
+  } else {
+    toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed)
+  }
+  // TODO: change this behavior because otherwise every new toggle will trigger the render function
+  if (dropdownContainerId === "assigned-to-dropdown" && searchResults.length === 0) {
+    renderUsersToAssign();
+  }
+  closeDropdown(event);
+  event.stopPropagation();
+}
+
+function createContainerObject(containerId) {
+  let containerDropdownObject = {
+    dropdownContainer: document.getElementById(containerId),
+    iconOpen: document.getElementById(`${containerId}-open`),
+    iconClosed: document.getElementById(`${containerId}-closed`)
+  }
+  return containerDropdownObject;
+}
+
+function toggleInputContainerVisibilities(dropdownContainerRef, dropdownIconContainerClosedRef, dropdownIconContainerOpenRef) {
+  toggleDropdownContainerVisibility(dropdownContainerRef);
+  toggleDropdownContainerVisibility(dropdownIconContainerClosedRef);
+  toggleDropdownContainerVisibility(dropdownIconContainerOpenRef);
+}
+
+function toggleDropdownContainerVisibility(dropdownContainerRef) {
+  dropdownContainerRef.classList.toggle("d_none");
+}
+
+function closeAllDropdowns(event) {
+  let dropdownContainers = [createContainerObject('category-dropdown'), createContainerObject('assigned-to-dropdown')];
+  for (let i = 0; i < dropdownContainers.length; i++) {
+    let dropdownContainerObject = dropdownContainers[i];
+    if (!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
+      toggleInputContainerVisibilities(dropdownContainerObject.dropdownContainer, dropdownContainerObject.iconClosed, dropdownContainerObject.iconOpen)
+    }
+  }
+  closeDropdown(event);
+  event.stopPropagation();
+}

@@ -190,53 +190,6 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
     priorityLabel.classList.add("default-prio-bg");
 }
 
-// dropdown menus toggle
-
-function toggleDropdownSelection(dropdownContainerId, event) {
-    let containerDropdownObject = createContainerObject(dropdownContainerId);
-    if (containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
-        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
-    } else {
-        toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed)
-    }
-    if (dropdownContainerId === "assigned-to-dropdown" && searchResults.length === 0) {
-        renderUsersToAssign();
-    }
-    closeDropdown(event);
-    event.stopPropagation();
-}
-
-function createContainerObject(containerId) {
-    let containerDropdownObject = {
-        dropdownContainer: document.getElementById(containerId),
-        iconOpen: document.getElementById(`${containerId}-open`),
-        iconClosed: document.getElementById(`${containerId}-closed`)
-    }
-    return containerDropdownObject;
-}
-
-function toggleInputContainerVisibilities(dropdownContainerRef, dropdownIconContainerClosedRef, dropdownIconContainerOpenRef) {
-    toggleDropdownContainerVisibility(dropdownContainerRef);
-    toggleDropdownContainerVisibility(dropdownIconContainerClosedRef);
-    toggleDropdownContainerVisibility(dropdownIconContainerOpenRef);
-}
-
-function toggleDropdownContainerVisibility(dropdownContainerRef) {
-    dropdownContainerRef.classList.toggle("d_none");
-}
-
-function closeAllDropdowns(event) {
-    let dropdownContainers = [createContainerObject('category-dropdown'), createContainerObject('assigned-to-dropdown')];
-    for (let i = 0; i < dropdownContainers.length; i++) {
-        let dropdownContainerObject = dropdownContainers[i];
-        if (!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
-            toggleInputContainerVisibilities(dropdownContainerObject.dropdownContainer, dropdownContainerObject.iconClosed, dropdownContainerObject.iconOpen)
-        }
-    }
-    closeDropdown(event);
-    event.stopPropagation();
-}
-
 // TODO: assigned contacts handling
 
 // TODO: import icons
@@ -491,4 +444,48 @@ function removeValueErrorStylingOnInput(inputContainer) {
     if (inputContainer.classList.contains("task-input-fields-invalid")) {
         inputContainer.classList.remove("task-input-fields-invalid");
     }
+}
+
+// capture task
+
+function createTask() {
+    let taskObject = createTaskObject();
+    console.log(taskObject);
+}
+
+function createTaskObject() {
+    let titleInputValue = getInputContainer('task-title').value;
+    let dateInputValue = getInputContainer('due-date').value;
+    let descriptionInputValue = getInputContainer('task-description').value;
+    let priorityValue = getTaskPriority();
+    let categoryInputValue = getInputContainer('category').placeholder;
+    let assignees = getTaskAssignees();
+    let taskObject = {
+        title: titleInputValue,
+        description: descriptionInputValue,
+        dueDate: dateInputValue,
+        priority: priorityValue,
+        category: categoryInputValue,
+        subtasks: subtasksValue,
+    }
+}
+
+function getTaskPriority() {
+    let priorityButtonsRef = document.getElementsByClassName('priority-labels');
+    for (let index = 0; index < priorityButtonsRef.length; index++) {
+        if (!priorityButtonsRef[index].classList.contains('default-prio-bg'))
+            return priorityButtonsRef[index].id;
+    }
+}
+
+let assignees = [];
+
+function getTaskAssignees() {
+    let assigneesContainers = document.getElementById('assigned-to-users-list').children;
+    console.log(assigneesContainers);
+    for (let index = 0; index < assigneesContainers.length; index++) {
+        if (assigneesContainers[index].classList.contains(' single-contact-wrapper-checked'))
+            assignees.push(assigneesContainers[index].getElementsByTagName('span').innerHTML)
+    }
+
 }
