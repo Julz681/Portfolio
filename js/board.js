@@ -1,32 +1,10 @@
-
 //colors for the avatars depending on the letter
 const letterColors = {
-  A: "#D32F2F",
-  B: "#C2185B",
-  C: "#7B1FA2",
-  D: "#512DA8",
-  E: "#1976D2",
-  F: "#0288D1",
-  G: "#00796B",
-  H: "#388E3C",
-  I: "#689F38",
-  J: "#F57C00",
-  K: "#E64A19",
-  L: "#5D4037",
-  M: "#455A64",
-  N: "#263238",
-  O: "#D81B60",
-  P: "#8E24AA",
-  Q: "#673AB7",
-  R: "#303F9F",
-  S: "#0288D1",
-  T: "#0097A7",
-  U: "#00796B",
-  V: "#388E3C",
-  W: "#689F38",
-  X: "#F57C00",
-  Y: "#E64A19",
-  Z: "#5D4037",
+  A: "#D32F2F", B: "#C2185B", C: "#7B1FA2", D: "#512DA8", E: "#1976D2", F: "#0288D1",
+  G: "#00796B", H: "#388E3C", I: "#689F38", J: "#F57C00", K: "#E64A19", L: "#5D4037",
+  M: "#455A64", N: "#263238", O: "#D81B60", P: "#8E24AA", Q: "#673AB7", R: "#303F9F",
+  S: "#0288D1", T: "#0097A7", U: "#00796B", V: "#388E3C", W: "#689F38", X: "#F57C00",
+  Y: "#E64A19", Z: "#5D4037"
 };
 
 // array with objects
@@ -252,6 +230,7 @@ function openModal(task, modal, wrapper) {
   wrapper.classList.remove("slide-out");
   wrapper.classList.add("slide-in");
   modal.setAttribute("data-task-id", task.id);
+  document.body.classList.add("modal-open");
 }
 
 // fills all content in the modal (title, description, user, subtasks, ...) for the passed task
@@ -349,6 +328,7 @@ function closeModal() {
     },
     { once: true }
   );
+  document.body.classList.remove("modal-open"); 
 }
 
 // adds the function to delete a task to the delete button in the modal
@@ -381,11 +361,18 @@ function closeEditOverlay() {
 
 // click event for all priority buttons (Urgent, Medium, Low) in the edit overlay
 function setupPrioritySelection() {
-  const buttons = document.querySelectorAll(".priority-labels");
+  const buttons = document.querySelectorAll("#urgent, #medium, #low");
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      buttons.forEach((btn) => resetPriority(btn));
-      activatePriority(button);
+      const isSelected = button.classList.contains("selected");
+      buttons.forEach((btn) => {
+        resetPriority(btn);
+        btn.classList.remove("selected");
+      });
+      if (!isSelected) {
+        activatePriority(button);
+        button.classList.add("selected");
+      }
     });
   });
 }
