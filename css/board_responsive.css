@@ -108,7 +108,6 @@
     position: fixed;
     width: 100%;
   }
-  
 }
 
 @media (max-width: 800px) {
@@ -265,5 +264,33 @@
     width: 70px;
     padding: 16px;
     font-size: 18px;
+  }
+}
+
+@media (max-width: 450px) {
+  .modal-card-wrapper {
+    height: auto;
+    width: 300px;
+    padding: 24px 14px;
+  }
+
+  .modal-card-content-edit {
+    padding-left: 8px;
+  }
+
+  #urgent span:first-child,
+  #medium span:first-child,
+  #low span:first-child {
+    display: none;
+  }
+
+  .footer-edit-modal {
+    height: 80px;
+  }
+
+  .edit-save-btn {
+    bottom: 16px;
+    right: 24px;
+    padding: 10px;
   }
 }
