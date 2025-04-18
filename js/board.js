@@ -499,34 +499,44 @@ searchInput.addEventListener("input", function () {
 });
 
 function handleSearch(text) {
-  let allCards = document.querySelectorAll(".board-card");
-  let found = 0;
+  const allCards = document.querySelectorAll(".board-card");
+  const normalizedText = text.toLowerCase();
 
-  for (let i = 0; i < allCards.length; i++) {
-    let card = allCards[i];
-    let title = card
-      .querySelector(".board-card-title")
-      .textContent.toLowerCase();
-    let description = card
-      .querySelector(".board-card-description")
-      .textContent.toLowerCase();
-
-    if (text.length < 2 || title.includes(text) || description.includes(text)) {
-      card.style.display = "flex";
-      if (
-        text.length >= 2 &&
-        (title.includes(text) || description.includes(text))
-      ) {
-        found++;
-      }
-    } else {
-      card.style.display = "none";
-    }
-  }
-
-  if (text.length >= 2 && found === 0) {
-    noResults.style.display = "block";
-  } else {
-    noResults.style.display = "none";
-  }
+  const matchingCards = filterCards(allCards, normalizedText);
+  toggleCardsDisplay(allCards, matchingCards, normalizedText);
+  handleNoResultsMessage(normalizedText, matchingCards.length);
 }
+
+function filterCards(cards, text) {
+  return Array.from(cards).filter((card) => {
+    const title = card.querySelector(".board-card-title").textContent.toLowerCase();
+    const description = card.querySelector(".board-card-description").textContent.toLowerCase();
+    return text.length >= 2 && (title.includes(text) || description.includes(text));
+  });
+}
+
+function toggleCardsDisplay(allCards, matchingCards, text) {
+  allCards.forEach((card) => {
+    const isMatch = matchingCards.includes(card);
+    card.style.display = text.length < 2 || isMatch ? "flex" : "none";
+  });
+}
+
+// handle no results message function - no results desktop & mobile version
+function handleNoResultsMessage(text, matchCount) {
+  const noResults = document.getElementById("no-results");
+  const noTaskPlaceholders = document.querySelectorAll(".no-tasks-feedback");
+  const showGlobalNoResults = text.length >= 2 && matchCount === 0 && window.innerWidth >= 1400;
+  const showPerColumnPlaceholder = text.length >= 2 && matchCount === 0 && window.innerWidth < 1400;
+
+  if (noResults) {
+    noResults.style.display = showGlobalNoResults ? "block" : "none";
+  }
+  noTaskPlaceholders.forEach(placeholder => {
+    placeholder.style.display = showPerColumnPlaceholder ? "flex" : "none";
+  });
+}
+
+
+
+
