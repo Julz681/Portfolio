@@ -1,10 +1,31 @@
 //colors for the avatars depending on the letter
 const letterColors = {
-  A: "#D32F2F", B: "#C2185B", C: "#7B1FA2", D: "#512DA8", E: "#1976D2", F: "#0288D1",
-  G: "#00796B", H: "#388E3C", I: "#689F38", J: "#F57C00", K: "#E64A19", L: "#5D4037",
-  M: "#455A64", N: "#263238", O: "#D81B60", P: "#8E24AA", Q: "#673AB7", R: "#303F9F",
-  S: "#0288D1", T: "#0097A7", U: "#00796B", V: "#388E3C", W: "#689F38", X: "#F57C00",
-  Y: "#E64A19", Z: "#5D4037"
+  A: "#D32F2F",
+  B: "#C2185B",
+  C: "#7B1FA2",
+  D: "#512DA8",
+  E: "#1976D2",
+  F: "#0288D1",
+  G: "#00796B",
+  H: "#388E3C",
+  I: "#689F38",
+  J: "#F57C00",
+  K: "#E64A19",
+  L: "#5D4037",
+  M: "#455A64",
+  N: "#263238",
+  O: "#D81B60",
+  P: "#8E24AA",
+  Q: "#673AB7",
+  R: "#303F9F",
+  S: "#0288D1",
+  T: "#0097A7",
+  U: "#00796B",
+  V: "#388E3C",
+  W: "#689F38",
+  X: "#F57C00",
+  Y: "#E64A19",
+  Z: "#5D4037",
 };
 
 // array with objects
@@ -115,11 +136,11 @@ function getColumnMap() {
 function renderAllColumns() {
   const map = getColumnMap();
   for (const status in map) {
-      const column = map[status];
-      const list = getTasksByStatus(status);
-      clearColumn(column);
-      list.forEach((task) => renderTask(column, task));
-      toggleEmptyMsg(column, list);
+    const column = map[status];
+    const list = getTasksByStatus(status);
+    clearColumn(column);
+    list.forEach((task) => renderTask(column, task));
+    toggleEmptyMsg(column, list);
   }
   setupCardClick();
   init(); // Drag & Drop neu initialisieren
@@ -188,7 +209,29 @@ function createTaskHTML(task) {
   return `
     <div class="board-card d-flex-center" data-task-id="${task.id}">
       <div class="board-card-content d-flex-column">
-        <label class="board-card-label br-8 d-flex-center" style="background:${color};">${label}</label>
+      <button class="card-action-btn" onclick="toggleMoveMenu(this, event)">
+          <img src="../assets/img/responsive_frame.png" alt="Aktion" />
+        </button>
+       <div class="move-menu d-none">
+        <span class="menu-title">Move to</span>
+
+        <div class="menu-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-arrow-icon" viewBox="0 0 24 24">
+            <path d="M12 19V5"></path>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+          To-do
+        </div>
+
+        <div class="menu-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-arrow-icon" viewBox="0 0 24 24">
+            <path d="M12 5v14"></path>
+            <polyline points="19 12 12 19 5 12"></polyline>
+          </svg>
+          Review
+        </div>
+      </div>
+              <label class="board-card-label br-8 d-flex-center" style="background:${color};">${label}</label>
         <div class="board-card-text d-flex-column br-10">
           <h4 class="board-card-title">${task.title}</h4>
           <p class="board-card-description">${task.description}</p>
@@ -328,7 +371,7 @@ function closeModal() {
     },
     { once: true }
   );
-  document.body.classList.remove("modal-open"); 
+  document.body.classList.remove("modal-open");
 }
 
 // adds the function to delete a task to the delete button in the modal
@@ -480,15 +523,14 @@ function setupDatePicker() {
   }
 }
 
-// closes the edit overlay and shows the modal again 
+// closes the edit overlay and shows the modal again
 // - This is only a temporary feature!
 function saveEdit() {
   document.getElementById("editTaskOverlay").classList.add("hidden");
   document.getElementById("task-card-modal").classList.add("active");
 }
 
-
-// searches all tasks by title or description 
+// searches all tasks by title or description
 // - shows/hides cards based on the search term
 let searchInput = document.getElementById("task-search");
 let noResults = document.getElementById("no-results");
@@ -509,9 +551,15 @@ function handleSearch(text) {
 
 function filterCards(cards, text) {
   return Array.from(cards).filter((card) => {
-    const title = card.querySelector(".board-card-title").textContent.toLowerCase();
-    const description = card.querySelector(".board-card-description").textContent.toLowerCase();
-    return text.length >= 2 && (title.includes(text) || description.includes(text));
+    const title = card
+      .querySelector(".board-card-title")
+      .textContent.toLowerCase();
+    const description = card
+      .querySelector(".board-card-description")
+      .textContent.toLowerCase();
+    return (
+      text.length >= 2 && (title.includes(text) || description.includes(text))
+    );
   });
 }
 
@@ -526,17 +574,48 @@ function toggleCardsDisplay(allCards, matchingCards, text) {
 function handleNoResultsMessage(text, matchCount) {
   const noResults = document.getElementById("no-results");
   const noTaskPlaceholders = document.querySelectorAll(".no-tasks-feedback");
-  const showGlobalNoResults = text.length >= 2 && matchCount === 0 && window.innerWidth >= 1400;
-  const showPerColumnPlaceholder = text.length >= 2 && matchCount === 0 && window.innerWidth < 1400;
+  const showGlobalNoResults =
+    text.length >= 2 && matchCount === 0 && window.innerWidth >= 1400;
+  const showPerColumnPlaceholder =
+    text.length >= 2 && matchCount === 0 && window.innerWidth < 1400;
 
   if (noResults) {
     noResults.style.display = showGlobalNoResults ? "block" : "none";
   }
-  noTaskPlaceholders.forEach(placeholder => {
+  noTaskPlaceholders.forEach((placeholder) => {
     placeholder.style.display = showPerColumnPlaceholder ? "flex" : "none";
   });
 }
 
+function toggleMoveMenu(button, event) {
+  event.stopPropagation();
+  const card = button.closest(".board-card");
+  const cardContent = card.querySelector(".board-card-content");
+  const menu = card.querySelector(".move-menu");
 
+  document.querySelectorAll(".move-menu").forEach((m) => {
+    if (m !== menu) {
+      m.classList.add("d-none");
+      const otherCard = m.closest(".board-card");
+      otherCard?.classList.remove("menu-open");
+    }
+  });
+  menu.classList.toggle("d-none");
+  if (!menu.classList.contains("d-none")) {
+    card.classList.add("menu-open");
+  } else {
+    card.classList.remove("menu-open");
+  }
+}
 
+document.addEventListener("click", function (e) {
+  const isMenu = e.target.closest(".move-menu");
+  const isButton = e.target.closest(".card-action-btn");
+
+  if (!isMenu && !isButton) {
+    document.querySelectorAll(".move-menu").forEach((menu) => {
+      menu.classList.add("d-none");
+    });
+  }
+});
 
