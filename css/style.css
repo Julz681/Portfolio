@@ -392,6 +392,8 @@ a:hover {
   .login-frame {
     width: 396px;
     height: 475px;
+    margin-top: 200px;
+    margin-bottom: 28px;
   } 
 
   h1 {
@@ -466,6 +468,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 28px;
   }
 
   .login-frame-alignment {
@@ -473,9 +476,13 @@ a:hover {
     padding-top: 20px;
   }
 
-  .login-frame {
-    margin-top: 140px;
 
+  .start-logo.finished {
+    position: absolute; 
+    z-index: 1;
+    transform: none; 
+    top: 80px;
+    left: 77px; 
   }
 
 
@@ -553,12 +560,17 @@ a:hover {
 @media (max-width: 390px) {
 
   .login-frame {
-    width: 310px;
+    width: 100%;
+    max-width: 310px;
     height: 460px;
     padding: 48px 24px;
   }
 
   .login-data label .input-field { 
-    width: 280px; 
+    max-width: 270px; 
+}
+
+.input-container {
+  max-width: 270px;
 }
 }

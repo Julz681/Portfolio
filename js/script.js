@@ -5,20 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.goBack = goBack; // Make the function globally available in case it's called directly in the HTML
 
-  const startLogo = document.querySelector(".start-logo");
-  const logoOverlay = document.getElementById("logo-overlay");
-  const startElement = document.querySelector(".start");
   
-  if (startLogo && logoOverlay && startElement) {
-    startLogo.addEventListener("animationend", () => {
-      startLogo.classList.add("finished");
-      logoOverlay.style.backgroundColor = "transparent";
-      startElement.classList.add("finished");
-    });
-  } else {
-    console.error("Start-Logo oder Overlay nicht gefunden!");
-  }
-  
+// This function starts the logo-animation
+const startLogo = document.querySelector(".start-logo");
+const logoOverlay = document.getElementById("logo-overlay");
+const startElement = document.querySelector(".start");
+
+if (startLogo && logoOverlay && startElement) {
+  startLogo.addEventListener("animationend", () => {
+    startLogo.classList.add("finished");
+    logoOverlay.style.backgroundColor = "transparent";
+    startElement.classList.add("finished");
+  });
+}
+
 
   // Hide/show the help button in the header
   const helpButton = document.querySelector(".help-btn");

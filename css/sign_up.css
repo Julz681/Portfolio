@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 100px;
+  padding-top: 120px;
   flex: 1;
 }
 
@@ -238,6 +238,12 @@ form {
   width: 100%; 
 }
 
+@media (max-width: 1000px) {
+
+  #signup-form-container {
+    padding-top: 220px;
+  }
+}
 
 @media (max-width: 660px) {
   #signup-form-container {
@@ -316,6 +322,16 @@ form {
 
 
 @media (max-width: 410px) {
+  
+  
+  .signup-logo {
+    position: absolute;
+    width: 64px;
+    height: auto;
+    top: 32px;
+    left: 32px;
+  }
+
   .sign-up-frame {
     display: flex;
     flex-direction: column;
@@ -323,7 +339,8 @@ form {
     align-items: center;
     height: 100%;
     padding: 48px 88px;
-    width: 90%;
+    width: 100%;
+    max-width: 310px;
   }
 
   .signup-header {
@@ -398,5 +415,6 @@ form {
   #signup-form-container {
     padding-top: 0px;
   }
+
 
 }
