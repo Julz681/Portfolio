@@ -19,6 +19,7 @@ const fp = flatpickr("#due-date", {
 });
 
 let subtasks = [];
+let assignees = [];
 let searchResults = [];
 
 // title input validation
@@ -190,8 +191,6 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
     priorityLabel.classList.add("default-prio-bg");
 }
 
-// TODO: assigned contacts handling
-
 // TODO: import icons
 
 // assign-To section
@@ -199,20 +198,20 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
 function assignContactToTask(contactId, event) {
     let contactContainerRef = document.getElementById(contactId);
     if (contactContainerRef.classList.contains("single-contact-wrapper")) {
-        contactContainerRef.classList.toggle("single-contact-wrapper");
-        contactContainerRef.classList.toggle("single-contact-wrapper-checked");
-        contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
-        contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-checked");
+        toggleAssigneesStyling(contactContainerRef);
         assignees.push(contactContainerRef.getElementsByTagName('span')[1].innerHTML);
-        console.log(assignees)
     } else {
-        contactContainerRef.classList.toggle("single-contact-wrapper");
-        contactContainerRef.classList.toggle("single-contact-wrapper-checked");
-        contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
-        contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-checked");
+        toggleAssigneesStyling(contactContainerRef);
         removeAssigneeIfExists(contactContainerRef);
     }
     event.stopPropagation();
+}
+
+function toggleAssigneesStyling(assigneeContainer){
+    assigneeContainer.classList.toggle("single-contact-wrapper");
+    assigneeContainer.classList.toggle("single-contact-wrapper-checked");
+    assigneeContainer.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
+    assigneeContainer.lastElementChild.classList.toggle("single-contact-checkbox-checked");
 }
 
 /**
@@ -265,14 +264,14 @@ function renderUserSearchResult(searchResults) {
     }
 }
 
-function checkIsAssigned(value){
+function checkIsAssigned(value) {
     let isAssigned = assignees.includes(value);
     let wrapperClass = isAssigned ? "single-contact-wrapper-checked" : "single-contact-wrapper";
     let checkboxClass = isAssigned ? "single-contact-checkbox-checked" : "single-contact-checkbox-unchecked";
     return stylingObject = {
         wrapperClass : wrapperClass,
         checkboxClass : checkboxClass,
-    }
+        }
 }
 
 // category section
@@ -489,22 +488,18 @@ function removeValueErrorStylingOnInput(inputContainer) {
 function createTask() {
     let taskObject = createTaskObject();
     console.log(taskObject);
+    resetTaskHTML();
 }
 
 function createTaskObject() {
-    let titleInputValue = getInputContainer('task-title').value;
-    let dateInputValue = getInputContainer('due-date').value;
-    let descriptionInputValue = getInputContainer('task-description').value;
-    let priorityValue = getTaskPriority();
-    let categoryInputValue = getInputContainer('category').placeholder;
-    let assignees = getTaskAssignees();
-    let taskObject = {
-        title: titleInputValue,
-        description: descriptionInputValue,
-        dueDate: dateInputValue,
-        priority: priorityValue,
-        category: categoryInputValue,
-        subtasks: subtasksValue,
+    return taskObject = {
+        title: getInputContainer('task-title').value,
+        description: getInputContainer('task-description').value,
+        dueDate: getInputContainer('due-date').value,
+        priority: getTaskPriority(),
+        assignees: assignees,
+        category: getInputContainer('category').placeholder,
+        subtasks: subtasks,
     }
 }
 
@@ -516,14 +511,45 @@ function getTaskPriority() {
     }
 }
 
-let assignees = [];
-
-function getTaskAssignees() {
-    let assigneesContainers = document.getElementById('assigned-to-users-list').children;
-    for (let index = 0; index < assigneesContainers.length; index++) {
-        if (assigneesContainers[index].classList.contains('single-contact-wrapper-checked')) {
-            assignees.push(assigneesContainers[index].getElementsByTagName('span')[1].innerHTML);
-        }
-    }
-    return assignees;
+function resetTaskHTML() {
+    getInputContainer('task-title').value = "";
+    fp.clear();
+    getInputContainer('task-description').value = "";
+    getInputContainer('category').placeholder = "Select Category";
+    resetPriorityLabels();
+    resetSubtasksList();
+    resetAssignees();
 }
+
+function resetPriorityLabels() {
+    let priorityLabels = document.getElementsByClassName('priority-labels');
+    for (let index = 0; index < priorityLabels.length; index++) {
+        priorityLabels[index].classList.add('default-prio-bg');
+        priorityLabels[index].classList.remove('low-prio-bg', 'medium-prio-bg', 'urgent-prio-bg', 'weight-700');
+        priorityLabels[index].style.color = "#000000";
+        resetIconColor(priorityLabels[index]);
+    }
+}
+
+function resetSubtasksList() {
+    subtasks = [];
+    document.getElementById('subtask-list').innerHTML = "";
+    document.getElementById('subtask-list').classList.add('d_none');
+}
+
+function resetIconColor(label){
+    let id = label.id;
+    let color = getPriorityColor(id);
+    let icon = getPriorityIconParts(id);
+    switchPriorityIconColor(icon, color)
+}
+
+function resetAssignees() {
+    assignees = [];
+}
+
+// TODO: Check Task Values
+// TODO: Get UserIcons
+// TODO: Show Assigned Users
+// TODO: Reset Assigned Users on Save
+// TODO: disableRequiredErrorOnClear of flatpickr
