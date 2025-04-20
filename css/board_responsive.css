@@ -263,6 +263,7 @@
   .modal-card-wrapper {
     height: auto;
     width: 396px;
+
   }
 
   .modal-card-label {
@@ -323,11 +324,11 @@
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 415px) {
   .modal-card-wrapper {
     height: auto;
     width: 300px;
-    padding: 24px 14px;
+ 
   }
 
   .modal-card-content-edit {

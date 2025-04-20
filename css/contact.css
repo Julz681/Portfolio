@@ -790,6 +790,10 @@ header {
 }
 
 @media (max-width: 1200px) {
+  .overlay {
+    padding: 8px;
+  }
+
   .add-contact-modal {
     transform: translateY(100%);
   }
