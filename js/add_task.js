@@ -260,7 +260,9 @@ function renderUserSearchResult(searchResults) {
     usersListContainerRef.innerHTML = "";
     for (let index = 0; index < searchResults.length; index++) {
         let stylingObject = checkIsAssigned(searchResults[index]);
-        usersListContainerRef.innerHTML += getUsersToAssignTemplate(searchResults[index], index, stylingObject.wrapperClass, stylingObject.checkboxClass);
+        let initials = getInitials(searchResults[index]);
+        let iconBackgroundColor = getIconBackgroundColor(initials);
+        usersListContainerRef.innerHTML += getUsersToAssignTemplate(searchResults[index], index, stylingObject.wrapperClass, stylingObject.checkboxClass, initials, iconBackgroundColor);
     }
 }
 
@@ -424,11 +426,11 @@ function getSubtaskTemplate(index, subtaskValue) {
             </li>`
 }
 
-function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass) {
+function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass, initials, iconBackgroundColor) {
     return `<li id="US-${index}" class="${wrapperClass} d-flex-space-between br-10"
                     onclick="assignContactToTask('US-${index}', event)">
                     <div class="d-flex-space-between gap-16">
-                        <span class="single-contact-icon d-flex-center">US</span>
+                        <span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>
                         <span>${userName}</span>
                     </div>
                     <span class="${checkboxClass}"></span>
@@ -553,3 +555,16 @@ function resetAssignees() {
 // TODO: Show Assigned Users
 // TODO: Reset Assigned Users on Save
 // TODO: disableRequiredErrorOnClear of flatpickr
+
+function getIconBackgroundColor(initials) {
+    let firstChar = initials[0];
+    return letterColors[firstChar];
+}
+
+function getInitials(username) {
+    return username
+      .split(" ")
+      .map((w) => w[0])
+      .join("")
+      .slice(0, 2);
+  }

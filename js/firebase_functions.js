@@ -187,8 +187,12 @@ function renderUsersToAssign() {
     let usersListContainerRef = document.getElementById("assigned-to-users-list");
     usersListContainerRef.innerHTML = "";
     for (let index = 0; index < window.userNames.length; index++) {
-        let stylingObject = checkIsAssigned(window.userNames[index]);
-        usersListContainerRef.innerHTML += getUsersToAssignTemplate(window.userNames[index], index, stylingObject.wrapperClass, stylingObject.checkboxClass);
+        if(typeof window.userNames[index] === "string") {
+            let initials = getInitials(window.userNames[index]);
+            let stylingObject = checkIsAssigned(window.userNames[index]);
+            let iconBackgroundColor = getIconBackgroundColor(initials);
+            usersListContainerRef.innerHTML += getUsersToAssignTemplate(window.userNames[index], index, stylingObject.wrapperClass, stylingObject.checkboxClass, initials, iconBackgroundColor);
+        }
     }
 }
 
