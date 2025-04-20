@@ -1,4 +1,5 @@
 function init() {
+    // This function makes all tasks in board draggable  
     const tasks = document.querySelectorAll('.board-card');
     tasks.forEach(task => {
         task.setAttribute('draggable', true);
@@ -6,6 +7,7 @@ function init() {
         task.addEventListener('dragend', dragEnd);
     });
 
+    
     const columns = document.querySelectorAll('.board-columns');
     columns.forEach(column => {
         column.addEventListener('dragover', dragOver);
@@ -19,8 +21,11 @@ function init() {
 let draggedTask = null;
 
 /**
- * Starts the dragging process and displays the highlight line.
- * @param {DragEvent} event - The drag start event.
+ * This function starts the dragging process for a task card.
+ * It sets the `draggedTask` variable, adds a 'dragging' class to the dragged element,
+ * applies a slight rotation for visual feedback, sets the data to be transferred during the drag,
+ * and displays the highlight line.
+ * @param {DragEvent} event - The drag start event object.
  */
 function dragStart(event) {
     draggedTask = event.target;
@@ -32,7 +37,9 @@ function dragStart(event) {
 }
 
 /**
- * Removes the dragging effect after releasing the mouse.
+ * This function is called when the dragging process ends.
+ * It removes the rotation and the 'dragging' class from the task card,
+ * hides the highlight line, and updates the visibility of the placeholder text in all columns.
  */
 function dragEnd() {
     draggedTask.style.transform = 'none'; // Reset rotation
@@ -42,8 +49,10 @@ function dragEnd() {
 }
 
 /**
- * Handles the dragover event to position the card correctly and display the highlight line.
- * @param {DragEvent} event - The drag over event.
+ * This function handles the dragover event for a column.
+ * It prevents the default behavior to allow dropping, identifies the target column and its content,
+ * and positions the highlight line to indicate where the dragged task will be dropped.
+ * @param {DragEvent} event - The drag over event object.
  */
 function dragOver(event) {
     event.preventDefault(); // Prevent default behavior (to allow drop)
@@ -70,8 +79,12 @@ function dragOver(event) {
 }
 
 /**
- * Handles the drop event. The drop is now possible in the entire column.
- * @param {DragEvent} event - The drop event.
+ * This function handles the drop event when a task card is dropped onto a column.
+ * It prevents the default behavior, identifies the target column and its content,
+ * appends the dragged task to the end of the column's content, updates the placeholder visibility,
+ * determines the new status based on the column, and updates the task's status in Firebase.
+ * Finally, it hides the highlight line.
+ * @param {DragEvent} event - The drop event object.
  */
 function drop(event) {
     event.preventDefault(); // Prevent default behavior
@@ -83,13 +96,36 @@ function drop(event) {
     if (columnContent && draggedTask) {
         columnContent.appendChild(draggedTask); // Append the card to the end of the column
         updateAllColumnsPlaceholder(); // Update placeholder visibility after drop
+
+        // Ermittle den neuen Status basierend auf der Spalte und speichere ihn in Firebase
+        const taskId = draggedTask.dataset.taskId;
+        const newStatus = getStatusFromColumn(column);
+        if (taskId && newStatus) {
+            window.updateTaskStatusInFirebase(taskId, newStatus);
+        }
     }
 
     removeHighlightLine(); // Hide the highlight line after the drop
 }
 
 /**
- * Creates the highlight line if it doesn't already exist.
+ * This function determines the status of a task based on the class name of the column it is in.
+ * @param {Element} column - The HTML element representing the column.
+ * @returns {string|null} The corresponding status ('to do', 'in progress', 'await feedback', 'done'),
+ * or null if the column's class does not match any known status.
+ */
+function getStatusFromColumn(column) {
+    if (column.classList.contains('to-do-wrapper')) return 'to do';
+    if (column.classList.contains('in-progress-wrapper')) return 'in progress';
+    if (column.classList.contains('await-feedback-wrapper')) return 'await feedback';
+    if (column.classList.contains('done-wrapper')) return 'done';
+    return null;
+}
+
+/**
+ * This function creates the highlight line element and appends it to the document body
+ * if it does not already exist. The highlight line is used to visually indicate
+ * the drop target during drag and drop operations.
  */
 function createHighlightLine() {
     if (!document.querySelector('.highlight-line')) {
@@ -100,14 +136,16 @@ function createHighlightLine() {
 }
 
 /**
- * Removes the highlight line.
+ * This function hides the highlight line by setting its `display` style to 'none'.
  */
 function removeHighlightLine() {
     document.querySelector('.highlight-line').style.display = 'none';
 }
 
 /**
- * Updates the visibility of the "No tasks" feedback in all board columns.
+ * This function updates the visibility of the "No tasks" feedback message in all board columns.
+ * It iterates through each column, checks if there are any task cards (excluding the one being dragged),
+ * and shows or hides the feedback message accordingly.
  */
 function updateAllColumnsPlaceholder() {
     const columns = document.querySelectorAll('.board-columns');
