@@ -203,13 +203,29 @@ function assignContactToTask(contactId, event) {
         contactContainerRef.classList.toggle("single-contact-wrapper-checked");
         contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
         contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-checked");
+        assignees.push(contactContainerRef.getElementsByTagName('span')[1].innerHTML);
+        console.log(assignees)
     } else {
         contactContainerRef.classList.toggle("single-contact-wrapper");
         contactContainerRef.classList.toggle("single-contact-wrapper-checked");
         contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
         contactContainerRef.lastElementChild.classList.toggle("single-contact-checkbox-checked");
+        removeAssigneeIfExists(contactContainerRef);
     }
     event.stopPropagation();
+}
+
+/**
+ * This function checks if the value of `contactContainerRef.getElementsByTagName('span')[1].innerHTML`
+ * is part of the `assignees` array. If it is, the value is removed from the array.
+ * @param {HTMLElement} contactContainerRef The container reference to check.
+ */
+function removeAssigneeIfExists(contactContainerRef) {
+    const contactName = contactContainerRef.getElementsByTagName('span')[1].innerHTML;
+    const index = assignees.indexOf(contactName);
+    if (index !== -1) {
+        assignees.splice(index, 1);
+    }
 }
 
 // search function 
@@ -244,7 +260,18 @@ function renderUserSearchResult(searchResults) {
     let usersListContainerRef = document.getElementById("assigned-to-users-list");
     usersListContainerRef.innerHTML = "";
     for (let index = 0; index < searchResults.length; index++) {
-        usersListContainerRef.innerHTML += getUsersToAssignTemplate(searchResults[index], index);
+        let stylingObject = checkIsAssigned(searchResults[index]);
+        usersListContainerRef.innerHTML += getUsersToAssignTemplate(searchResults[index], index, stylingObject.wrapperClass, stylingObject.checkboxClass);
+    }
+}
+
+function checkIsAssigned(value){
+    let isAssigned = assignees.includes(value);
+    let wrapperClass = isAssigned ? "single-contact-wrapper-checked" : "single-contact-wrapper";
+    let checkboxClass = isAssigned ? "single-contact-checkbox-checked" : "single-contact-checkbox-unchecked";
+    return stylingObject = {
+        wrapperClass : wrapperClass,
+        checkboxClass : checkboxClass,
     }
 }
 
@@ -398,6 +425,17 @@ function getSubtaskTemplate(index, subtaskValue) {
             </li>`
 }
 
+function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass) {
+    return `<li id="US-${index}" class="${wrapperClass} d-flex-space-between br-10"
+                    onclick="assignContactToTask('US-${index}', event)">
+                    <div class="d-flex-space-between gap-16">
+                        <span class="single-contact-icon d-flex-center">US</span>
+                        <span>${userName}</span>
+                    </div>
+                    <span class="${checkboxClass}"></span>
+                </li>`;
+}
+
 //  error message handling
 
 function showValueErrorMessage(valueSizeErrorContainerId) {
@@ -482,10 +520,10 @@ let assignees = [];
 
 function getTaskAssignees() {
     let assigneesContainers = document.getElementById('assigned-to-users-list').children;
-    console.log(assigneesContainers);
     for (let index = 0; index < assigneesContainers.length; index++) {
-        if (assigneesContainers[index].classList.contains(' single-contact-wrapper-checked'))
-            assignees.push(assigneesContainers[index].getElementsByTagName('span').innerHTML)
+        if (assigneesContainers[index].classList.contains('single-contact-wrapper-checked')) {
+            assignees.push(assigneesContainers[index].getElementsByTagName('span')[1].innerHTML);
+        }
     }
-
+    return assignees;
 }

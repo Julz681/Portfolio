@@ -184,40 +184,17 @@ async function updateTaskStatusInFirebase(taskId, newStatus) {
  * by the `getUsersToAssignTemplate` function for each user in the `window.userNames` array.
  */
 function renderUsersToAssign() {
-
     let usersListContainerRef = document.getElementById("assigned-to-users-list");
     usersListContainerRef.innerHTML = "";
     for (let index = 0; index < window.userNames.length; index++) {
-        usersListContainerRef.innerHTML += getUsersToAssignTemplate(window.userNames[index], index);
+        let stylingObject = checkIsAssigned(window.userNames[index]);
+        usersListContainerRef.innerHTML += getUsersToAssignTemplate(window.userNames[index], index, stylingObject.wrapperClass, stylingObject.checkboxClass);
     }
 }
-
-
-/**
- * This function generates the HTML template for a single user item in the assign contacts list.
- * It includes the user's initials, name, and an unchecked checkbox.
- * @param {string} userName The name of the user to be displayed.
- * @param {number} index The index of the user in the `window.userNames` array, used to create a unique ID.
- * @returns {string} The HTML string for a single user list item.
- */
-function getUsersToAssignTemplate(userName, index) {
-
-    return `<li id="US-${index}" class="single-contact-wrapper d-flex-space-between br-10"
-                    onclick="assignContactToTask('US-${index}', event)">
-                    <div class="d-flex-space-between gap-16">
-                        <span class="single-contact-icon d-flex-center">US</span>
-                        <span>${userName}</span>
-                    </div>
-                    <span class="single-contact-checkbox-unchecked"></span>
-                </li>`;
-
-}
-
 
 window.saveEditedTask = saveEditedTask; // Exportiere die Funktion
 window.updateTaskStatusInFirebase = updateTaskStatusInFirebase; // Exportiere die Funktion
 window.renderUsersToAssign = renderUsersToAssign;
-window.getUsersToAssignTemplate = getUsersToAssignTemplate;
 window.init = init;
 
 
