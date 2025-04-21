@@ -408,7 +408,7 @@ function renderSubtaskList() {
 
 function renderAssignees(containerId, container) {
     let assigneesContainerRef = document.getElementById('assignees-list');   
-    if(containerId === 'assigned-to-dropdown' && assignees.length != 0 && container.classList.contains('d_none')) {
+    if((containerId === 'assigned-to-dropdown' && assignees.length != 0 && container.classList.contains('d_none')) || (containerId === 'category-dropdown' && assignees.length != 0) ) {
         assigneesContainerRef.classList.remove('d_none');
         assigneesContainerRef.innerHTML = '';
         for (let index = 0; index < assignees.length; index++) {
