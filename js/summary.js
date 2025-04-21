@@ -1,4 +1,93 @@
+import { database, ref, onValue } from '../js/firebase.js';
+
 document.addEventListener('DOMContentLoaded', function() {
+    const todoCountElement = document.querySelector('.wrapper_todo_done .metric-box:first-child h2');
+    const doneCountElement = document.querySelector('.wrapper_todo_done .metric-box:nth-child(2) h2');
+    const urgentCountElement = document.querySelector('.metric-box-urgent .wrapper_box h2');
+    const tasksInBoardCountElement = document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(1) h2');
+    const inProgressCountElement = document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(2) h2');
+    const awaitingFeedbackCountElement = document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(3) h2');
+    const urgentDeadlineElement = document.querySelector('.metric-box-urgent .deadline-info p:first-child');
+
+    /**
+     * Updates the displayed counts for each task status.
+     * @param {object} tasks - An object containing all tasks from Firebase.
+     */
+    function updateTaskCounts(tasks) {
+        let todoCount = 0;
+        let doneCount = 0;
+        let urgentCount = 0;
+        let inProgressCount = 0;
+        let awaitingFeedbackCount = 0;
+        let allTasksCount = 0;
+        let closestUrgentDeadline = null;
+
+        for (const taskId in tasks) {
+            if (tasks.hasOwnProperty(taskId)) {
+                const task = tasks[taskId];
+                allTasksCount++;
+                switch (task.status) {
+                    case 'to do':
+                        todoCount++;
+                        break;
+                    case 'done':
+                        doneCount++;
+                        break;
+                    case 'in progress':
+                        inProgressCount++;
+                        break;
+                    case 'await feedback':
+                        awaitingFeedbackCount++;
+                        break;
+                }
+                // Counts urgent tasks realted to priority
+                if (task.priority === 'urgent') {
+                    urgentCount++;
+                    if (task.dueDate) {
+                        const dueDate = new Date(task.dueDate);
+                        if (!closestUrgentDeadline || dueDate < closestUrgentDeadline) {
+                            closestUrgentDeadline = dueDate;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (todoCountElement) todoCountElement.textContent = todoCount;
+        if (doneCountElement) doneCountElement.textContent = doneCount;
+        if (urgentCountElement) urgentCountElement.textContent = urgentCount;
+        if (tasksInBoardCountElement) tasksInBoardCountElement.textContent = allTasksCount;
+        if (inProgressCountElement) inProgressCountElement.textContent = inProgressCount;
+        if (awaitingFeedbackCountElement) awaitingFeedbackCountElement.textContent = awaitingFeedbackCount;
+        if (urgentDeadlineElement && closestUrgentDeadline) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            urgentDeadlineElement.textContent = closestUrgentDeadline.toLocaleDateString('en-US', options);
+        } else if (urgentDeadlineElement) {
+            urgentDeadlineElement.textContent = 'No urgent tasks';
+        }
+    }
+
+    // Get a reference to the 'Tasks' node in your Firebase database
+    const tasksRef = ref(database, 'tasks');
+
+    // Set up a listener to be notified whenever there are changes to the data at the tasksRef
+    onValue(tasksRef, (snapshot) => {
+        
+        const tasks = snapshot.val();
+        if (tasks) {
+            updateTaskCounts(tasks);
+        } else {
+            // If there are no tasks, reset the counts to 0
+            if (todoCountElement) todoCountElement.textContent = 0;
+            if (doneCountElement) doneCountElement.textContent = 0;
+            if (urgentCountElement) urgentCountElement.textContent = 0;
+            if (tasksInBoardCountElement) tasksInBoardCountElement.textContent = 0;
+            if (inProgressCountElement) inProgressCountElement.textContent = 0;
+            if (awaitingFeedbackCountElement) awaitingFeedbackCountElement.textContent = 0;
+            if (urgentDeadlineElement) urgentDeadlineElement.textContent = 'No urgent tasks';
+        }
+    });
+
     /**
      * This function updates the greeting message based on the current time of day.
      */
@@ -69,9 +158,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // After the fade out, hide the greeting and show the container
                 setTimeout(() => {
                     greetingDiv.style.display = 'none';
-                    greetingDiv.style.opacity = '1'; 
-                    greetingDiv.style.transition = ''; 
-                    containerDiv.style.display = 'flex'; 
+                    greetingDiv.style.opacity = '1';
+                    greetingDiv.style.transition = '';
+                    containerDiv.style.display = 'flex';
                 }, 1000);
             }, 1000);
         } else if (window.innerWidth >= 1200 && containerDiv && greetingDiv) {
@@ -80,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
             greetingDiv.style.display = 'block';
             greetingDiv.style.opacity = '1';
             greetingDiv.style.transition = '';
-            containerDiv.style.display = 'flex'; 
+            containerDiv.style.display = 'flex';
         }
     }
 
@@ -93,4 +182,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Call the functions when the page loads
     updateGreeting();
     updateUserProfileInitials();
+    updateTaskCounts(tasks);
 });
