@@ -302,6 +302,14 @@
   font-weight: 400;
 }
 
+#assignees-list {
+  justify-content: flex-start;
+  padding-top: 8px;
+  gap: 8px;
+}
+
+/* checkbox unchecked styling */
+
 .single-contact-checkbox-unchecked {
   background: url(../assets/img/icons/checkbox_unchecked.png) no-repeat 50% 50%;
   width: 24px;

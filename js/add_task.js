@@ -191,8 +191,6 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
     priorityLabel.classList.add("default-prio-bg");
 }
 
-// TODO: import icons
-
 // assign-To section
 
 function assignContactToTask(contactId, event) {
@@ -408,6 +406,22 @@ function renderSubtaskList() {
     subtaskListContainerRef.classList.remove("d_none");
 }
 
+function renderAssignees(containerId, container) {
+    let assigneesContainerRef = document.getElementById('assignees-list');   
+    if(containerId === 'assigned-to-dropdown' && assignees.length != 0 && container.classList.contains('d_none')) {
+        assigneesContainerRef.classList.remove('d_none');
+        assigneesContainerRef.innerHTML = '';
+        for (let index = 0; index < assignees.length; index++) {
+            let initials = getInitials(assignees[index]);
+            let iconBackgroundColor = getIconBackgroundColor(initials);
+            assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);            
+        }
+    } else if(!container.classList.contains('d_none') || assignees.length === 0) {
+        assigneesContainerRef.classList.add('d_none');
+        assigneesContainerRef.innerHTML = '';
+    }
+}
+
 // templates
 
 function getSubtaskTemplate(index, subtaskValue) {
@@ -435,6 +449,10 @@ function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass, 
                     </div>
                     <span class="${checkboxClass}"></span>
                 </li>`;
+}
+
+function getAvatarTemplate(initials, iconBackgroundColor) {
+    return `<span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>`
 }
 
 //  error message handling
@@ -488,20 +506,24 @@ function removeValueErrorStylingOnInput(inputContainer) {
 // capture task
 
 function createTask() {
-    let taskObject = createTaskObject();
-    console.log(taskObject);
+    let taskId = "task-"+(tasks.length+1);
+    let taskObject = createTaskObject(taskId);
     resetTaskHTML();
+    tasks.push(taskObject);
+    sendToLocalStorage(tasks);
 }
 
-function createTaskObject() {
+function createTaskObject(taskId) {
     return taskObject = {
+        id: taskId,
         title: getInputContainer('task-title').value,
         description: getInputContainer('task-description').value,
-        dueDate: getInputContainer('due-date').value,
         priority: getTaskPriority(),
-        assignees: assignees,
-        category: getInputContainer('category').placeholder,
+        dueDate: getInputContainer('due-date').value,
+        taskType: getInputContainer('category').placeholder,
+        assignedTo: assignees,
         subtasks: subtasks,
+        status: "to-do",
     }
 }
 
@@ -548,13 +570,17 @@ function resetIconColor(label){
 
 function resetAssignees() {
     assignees = [];
+    let assigneesContainerRef = document.getElementById('assignees-list')
+    renderAssignees('assigned-to-dropdown', assigneesContainerRef);
+}
+
+function sendToLocalStorage(object) {
+    localStorage.setItem('tasks', JSON.stringify(object));
 }
 
 // TODO: Check Task Values
-// TODO: Get UserIcons
-// TODO: Show Assigned Users
-// TODO: Reset Assigned Users on Save
 // TODO: disableRequiredErrorOnClear of flatpickr
+// TODO: Disable TextBoxResize
 
 function getIconBackgroundColor(initials) {
     let firstChar = initials[0];

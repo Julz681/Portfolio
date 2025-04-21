@@ -43,10 +43,11 @@ function toggleDropdownSelection(dropdownContainerId, event) {
   let containerDropdownObject = createContainerObject(dropdownContainerId);
   if (containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
     toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
+    renderAssignees(dropdownContainerId, containerDropdownObject.dropdownContainer);
   } else {
-    toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed)
+    toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed);
+    renderAssignees(dropdownContainerId, containerDropdownObject.dropdownContainer);
   }
-  // TODO: change this behavior because otherwise every new toggle will trigger the render function
   if (dropdownContainerId === "assigned-to-dropdown" && searchResults.length === 0) {
     renderUsersToAssign();
   }
