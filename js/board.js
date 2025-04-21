@@ -45,7 +45,7 @@ function renderAllColumns() {
     toggleEmptyMsg(column, list);
   }
   setupCardClick();
-  init(); // Drag & Drop neu initialisieren
+  init(); // Drag & Drop new
 }
 
 // filters all task by they status
@@ -72,10 +72,10 @@ function toggleEmptyMsg(column, tasks) {
 
 // creates a task card - main function = in the board_template.js
 function renderBoard() {
-  const board = document.getElementById('board');
-  board.innerHTML = '';
+  const board = document.getElementById("board");
+  board.innerHTML = "";
 
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     board.innerHTML += createTaskHTML(task); // <- kommt aus taskTemplates.js
   });
 }
@@ -86,7 +86,8 @@ function setupCardClick() {
   const wrapper = document.querySelector(".modal-card-wrapper");
   const cards = document.querySelectorAll(".board-card");
   cards.forEach((card) => {
-    card.addEventListener("click", () => {
+    card.addEventListener("click", (e) => {
+      if (card.classList.contains("menu-open")) return;
       const id = card.getAttribute("data-task-id");
       const task = tasks.find((t) => t.id === id);
       if (task) openModal(task, modal, wrapper);
@@ -136,10 +137,9 @@ function setModalPriority(task) {
 
 // main function in the template.js
 function openTaskModal(taskId) {
-  const task = tasks.find(t => t.id === taskId);
+  const task = tasks.find((t) => t.id === taskId);
   setModalUsers(task);
   setModalSubtasks(task);
-
 }
 
 // closing function of the modal
@@ -390,34 +390,45 @@ function handleAddTaskClickResponsive() {
   }
 }
 
+// toggles the "Move to" menu on a task card
 function toggleMoveMenu(button, event) {
   event.stopPropagation();
   const card = button.closest(".board-card");
-  const cardContent = card.querySelector(".board-card-content");
   const menu = card.querySelector(".move-menu");
-
-  document.querySelectorAll(".move-menu").forEach((m) => {
-    if (m !== menu) {
-      m.classList.add("d-none");
-      const otherCard = m.closest(".board-card");
-      otherCard?.classList.remove("menu-open");
-    }
-  });
+  closeAllMenus(menu);
   menu.classList.toggle("d-none");
-  if (!menu.classList.contains("d-none")) {
-    card.classList.add("menu-open");
-  } else {
-    card.classList.remove("menu-open");
-  }
+  card.classList.toggle("menu-open", !menu.classList.contains("d-none"));
 }
 
-document.addEventListener("click", function (e) {
-  const isMenu = e.target.closest(".move-menu");
-  const isButton = e.target.closest(".card-action-btn");
+// closes all move menus except the currently open one
+function closeAllMenus(current = null) {
+  document.querySelectorAll(".move-menu").forEach((m) => {
+    if (m !== current) m.classList.add("d-none");
+  });
+  document
+    .querySelectorAll(".board-card.menu-open")
+    .forEach((c) => c.classList.remove("menu-open"));
+}
 
-  if (!isMenu && !isButton) {
-    document.querySelectorAll(".move-menu").forEach((menu) => {
-      menu.classList.add("d-none");
-    });
-  }
+// closes menus when clicking outside
+document.addEventListener("click", (e) => {
+  const insideMenu = e.target.closest(".move-menu");
+  const isButton = e.target.closest(".card-action-btn");
+  if (!insideMenu && !isButton) closeAllMenus();
 });
+
+// moves a task to a different column and re-renders
+function moveTaskToColumn(status, event) {
+  event.stopPropagation();
+
+  const openCard = document.querySelector(".board-card.menu-open");
+  if (!openCard) return;
+
+  const taskId = openCard.dataset.taskId;
+  const task = tasks.find((task) => task.id === taskId);
+  if (!task) return;
+
+  task.status = status;
+  renderAllColumns();
+  closeAllMenus();
+}
