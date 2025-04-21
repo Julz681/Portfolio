@@ -380,6 +380,16 @@ function handleNoResultsMessage(text, matchCount) {
   });
 }
 
+// function for handling onclick + btns under and over 1200px
+function handleAddTaskClickResponsive() {
+  const width = window.innerWidth;
+  if (width < 1200) {
+    window.location.href = "add_task.html";
+  } else {
+    openOverlay();
+  }
+}
+
 function toggleMoveMenu(button, event) {
   event.stopPropagation();
   const card = button.closest(".board-card");
