@@ -1,20 +1,20 @@
 // general variables
 
 let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
-
+let suppressEvents;
 const fp = flatpickr("#due-date", {
     dateFormat: "d/m/Y",
     altInput: true,
     altFormat: "d/m/Y",
     allowInput: true,
     onOpen: function () {
-        checkDateInput("due-date");
+        if (!suppressEvents) checkDateInput("due-date");
     },
     onChange: function () {
-        checkDateInput("due-date");
+        if (!suppressEvents) checkDateInput("due-date");
     },
     onValueUpdate: function () {
-        checkDateInput("due-date");
+        if (!suppressEvents) checkDateInput("due-date");
     }
 });
 
@@ -205,7 +205,7 @@ function assignContactToTask(contactId, event) {
     event.stopPropagation();
 }
 
-function toggleAssigneesStyling(assigneeContainer){
+function toggleAssigneesStyling(assigneeContainer) {
     assigneeContainer.classList.toggle("single-contact-wrapper");
     assigneeContainer.classList.toggle("single-contact-wrapper-checked");
     assigneeContainer.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
@@ -269,9 +269,9 @@ function checkIsAssigned(value) {
     let wrapperClass = isAssigned ? "single-contact-wrapper-checked" : "single-contact-wrapper";
     let checkboxClass = isAssigned ? "single-contact-checkbox-checked" : "single-contact-checkbox-unchecked";
     return stylingObject = {
-        wrapperClass : wrapperClass,
-        checkboxClass : checkboxClass,
-        }
+        wrapperClass: wrapperClass,
+        checkboxClass: checkboxClass,
+    }
 }
 
 // category section
@@ -281,6 +281,17 @@ function selectCategory(categoryId) {
     let selectedCategory = categoryContainerRef.innerHTML;
     let categoryInputContainerRef = document.getElementById('category');
     categoryInputContainerRef.placeholder = selectedCategory;
+}
+
+function checkCategoryInputPlaceholder(requiredErrorContainerId) {
+    let placeholder = getInputContainer('category').placeholder;
+    let dropdownContainerRef = document.getElementById('category-dropdown');
+    let errorContainerRef = getErrorContainer(requiredErrorContainerId)
+    if (placeholder === "Select task category" && dropdownContainerRef.classList.contains('d_none')) {
+        showErrorMessage(errorContainerRef);
+    } else {
+        removeErrorMessage(errorContainerRef)
+    }
 }
 
 // subtask section
@@ -407,52 +418,19 @@ function renderSubtaskList() {
 }
 
 function renderAssignees(containerId, container) {
-    let assigneesContainerRef = document.getElementById('assignees-list');   
-    if((containerId === 'assigned-to-dropdown' && assignees.length != 0 && container.classList.contains('d_none')) || (containerId === 'category-dropdown' && assignees.length != 0) ) {
+    let assigneesContainerRef = document.getElementById('assignees-list');
+    if ((containerId === 'assigned-to-dropdown' && assignees.length != 0 && container.classList.contains('d_none')) || (containerId === 'category-dropdown' && assignees.length != 0)) {
         assigneesContainerRef.classList.remove('d_none');
         assigneesContainerRef.innerHTML = '';
         for (let index = 0; index < assignees.length; index++) {
             let initials = getInitials(assignees[index]);
             let iconBackgroundColor = getIconBackgroundColor(initials);
-            assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);            
+            assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);
         }
-    } else if(!container.classList.contains('d_none') || assignees.length === 0) {
+    } else if (!container.classList.contains('d_none') || assignees.length === 0) {
         assigneesContainerRef.classList.add('d_none');
         assigneesContainerRef.innerHTML = '';
     }
-}
-
-// templates
-
-function getSubtaskTemplate(index, subtaskValue) {
-    return `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
-                <span class="d-flex-center">•</span>
-                <div class="subtask-list-item-content-wrapper d-flex-space-between">
-                    <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" onkeydown="editSubtaskOnKeyPress('subtask-${index}', event)" disabled>
-                    <div class="d-flex-space-between edit-subtask-icons">
-                        <span class="edit-marker" onclick="enableSubtaskEdit('subtask-${index}')"></span>
-                        <span class="confirm-input-icons-separator-1">|</span>
-                        <span class="delete-marker" onclick="deleteSubtask('subtask-${index}')"></span>
-                        <span class="confirm-input-icons-separator-2">|</span>
-                        <span class="confirm-icon" onclick="confirmEditSubtask('subtask-${index}')"></span>
-                    </div>
-                </div>
-            </li>`
-}
-
-function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass, initials, iconBackgroundColor) {
-    return `<li id="US-${index}" class="${wrapperClass} d-flex-space-between br-10"
-                    onclick="assignContactToTask('US-${index}', event)">
-                    <div class="d-flex-space-between gap-16">
-                        <span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>
-                        <span>${userName}</span>
-                    </div>
-                    <span class="${checkboxClass}"></span>
-                </li>`;
-}
-
-function getAvatarTemplate(initials, iconBackgroundColor) {
-    return `<span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>`
 }
 
 //  error message handling
@@ -506,11 +484,15 @@ function removeValueErrorStylingOnInput(inputContainer) {
 // capture task
 
 function createTask() {
-    let taskId = "task-"+(tasks.length+1);
-    let taskObject = createTaskObject(taskId);
-    resetTaskHTML();
-    tasks.push(taskObject);
-    sendToLocalStorage(tasks);
+    if (checkAllRequiredValues() === true) {
+        return
+    } else {
+        let taskId = "task-" + (tasks.length + 1);
+        let taskObject = createTaskObject(taskId);
+        resetTaskHTML();
+        tasks.push(taskObject);
+        sendToLocalStorage(tasks);
+    }
 }
 
 function createTaskObject(taskId) {
@@ -527,6 +509,18 @@ function createTaskObject(taskId) {
     }
 }
 
+function checkAllRequiredValues() {
+    let requiredErrorContainers = [getErrorContainer('task-title-error'), getErrorContainer('due-date-required-error-message'), getErrorContainer('category-error')];
+    checkTitleInputValue(`task-title-error`, `value-length-error`, `task-title`);
+    checkDateInput("due-date");
+    checkCategoryInputPlaceholder('category-error');
+    for (let index = 0; index < requiredErrorContainers.length; index++) {
+        if (!requiredErrorContainers[index].classList.contains('d_none')) {
+            return true
+        }
+    }
+}
+
 function getTaskPriority() {
     let priorityButtonsRef = document.getElementsByClassName('priority-labels');
     for (let index = 0; index < priorityButtonsRef.length; index++) {
@@ -537,7 +531,9 @@ function getTaskPriority() {
 
 function resetTaskHTML() {
     getInputContainer('task-title').value = "";
+    suppressEvents = true;
     fp.clear();
+    suppressEvents = false;
     getInputContainer('task-description').value = "";
     getInputContainer('category').placeholder = "Select Category";
     resetPriorityLabels();
@@ -561,7 +557,7 @@ function resetSubtasksList() {
     document.getElementById('subtask-list').classList.add('d_none');
 }
 
-function resetIconColor(label){
+function resetIconColor(label) {
     let id = label.id;
     let color = getPriorityColor(id);
     let icon = getPriorityIconParts(id);
@@ -578,19 +574,7 @@ function sendToLocalStorage(object) {
     localStorage.setItem('tasks', JSON.stringify(object));
 }
 
-// TODO: Check Task Values
-// TODO: disableRequiredErrorOnClear of flatpickr
-// TODO: Disable TextBoxResize
-
-function getIconBackgroundColor(initials) {
-    let firstChar = initials[0];
-    return letterColors[firstChar];
-}
-
-function getInitials(username) {
-    return username
-      .split(" ")
-      .map((w) => w[0])
-      .join("")
-      .slice(0, 2);
-  }
+//TODO: success messages
+//TODO: Template add-task
+//TODO: Add add-task Template integrations
+//TODO: fix 100vh reset

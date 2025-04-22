@@ -304,3 +304,34 @@ function getOrCreateGroup(letter, list) {
   }
   return group;
 }
+
+function getSubtaskTemplate(index, subtaskValue) {
+  return `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
+              <span class="d-flex-center">•</span>
+              <div class="subtask-list-item-content-wrapper d-flex-space-between">
+                  <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" onkeydown="editSubtaskOnKeyPress('subtask-${index}', event)" disabled>
+                  <div class="d-flex-space-between edit-subtask-icons">
+                      <span class="edit-marker" onclick="enableSubtaskEdit('subtask-${index}')"></span>
+                      <span class="confirm-input-icons-separator-1">|</span>
+                      <span class="delete-marker" onclick="deleteSubtask('subtask-${index}')"></span>
+                      <span class="confirm-input-icons-separator-2">|</span>
+                      <span class="confirm-icon" onclick="confirmEditSubtask('subtask-${index}')"></span>
+                  </div>
+              </div>
+          </li>`
+}
+
+function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass, initials, iconBackgroundColor) {
+  return `<li id="US-${index}" class="${wrapperClass} d-flex-space-between br-10"
+                  onclick="assignContactToTask('US-${index}', event)">
+                  <div class="d-flex-space-between gap-16">
+                      <span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>
+                      <span>${userName}</span>
+                  </div>
+                  <span class="${checkboxClass}"></span>
+              </li>`;
+}
+
+function getAvatarTemplate(initials, iconBackgroundColor) {
+  return `<span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>`
+}

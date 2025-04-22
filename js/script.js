@@ -5,19 +5,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.goBack = goBack; // Make the function globally available in case it's called directly in the HTML
 
-  
-// This function starts the logo-animation
-const startLogo = document.querySelector(".start-logo");
-const logoOverlay = document.getElementById("logo-overlay");
-const startElement = document.querySelector(".start");
 
-if (startLogo && logoOverlay && startElement) {
-  startLogo.addEventListener("animationend", () => {
-    startLogo.classList.add("finished");
-    logoOverlay.style.backgroundColor = "transparent";
-    startElement.classList.add("finished");
-  });
-}
+  // This function starts the logo-animation
+  const startLogo = document.querySelector(".start-logo");
+  const logoOverlay = document.getElementById("logo-overlay");
+  const startElement = document.querySelector(".start");
+
+  if (startLogo && logoOverlay && startElement) {
+    startLogo.addEventListener("animationend", () => {
+      startLogo.classList.add("finished");
+      logoOverlay.style.backgroundColor = "transparent";
+      startElement.classList.add("finished");
+    });
+  }
 
 
   // Hide/show the help button in the header
@@ -143,3 +143,16 @@ if (startLogo && logoOverlay && startElement) {
     });
   });
 });
+
+function getIconBackgroundColor(initials) {
+  let firstChar = initials[0];
+  return letterColors[firstChar];
+}
+
+function getInitials(username) {
+  return username
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2);
+}

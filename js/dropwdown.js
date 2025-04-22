@@ -48,9 +48,7 @@ function toggleDropdownSelection(dropdownContainerId, event) {
     toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed);
     renderAssignees(dropdownContainerId, containerDropdownObject.dropdownContainer);
   }
-  if (dropdownContainerId === "assigned-to-dropdown" && searchResults.length === 0) {
-    renderUsersToAssign();
-  }
+  handleDropdownContainerIds(dropdownContainerId);
   closeDropdown(event);
   event.stopPropagation();
 }
@@ -76,12 +74,25 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 
 function closeAllDropdowns(event) {
   let dropdownContainers = [createContainerObject('category-dropdown'), createContainerObject('assigned-to-dropdown')];
+  if (dropdownContainers[1].dropdownContainer.classList.contains('d_none') && getInputContainer('category').placeholder === "Select task category" && getInputContainer('dropdownMenu').style.display === "none") {
+    showErrorMessage(getErrorContainer('category-error'));
+  }
   for (let i = 0; i < dropdownContainers.length; i++) {
     let dropdownContainerObject = dropdownContainers[i];
     if (!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
       toggleInputContainerVisibilities(dropdownContainerObject.dropdownContainer, dropdownContainerObject.iconClosed, dropdownContainerObject.iconOpen)
     }
   }
+  renderAssignees('assigned-to-dropdown', dropdownContainers[1].dropdownContainer)
   closeDropdown(event);
   event.stopPropagation();
+}
+
+function handleDropdownContainerIds(dropdownContainerId) {
+  if (dropdownContainerId === "assigned-to-dropdown" && searchResults.length === 0) {
+    renderUsersToAssign();
+  }
+  if (dropdownContainerId === "category-dropdown") {
+    checkCategoryInputPlaceholder('category-error');
+  }
 }
