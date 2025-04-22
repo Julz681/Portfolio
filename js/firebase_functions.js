@@ -1,8 +1,9 @@
 import { database, ref, push, set, get, update } from "../js/firebase.js"; //
 
+
+
 window.users = [];
 window.userNames = [];
-let tasksUploaded = false;
 
 
 /**
@@ -11,8 +12,29 @@ let tasksUploaded = false;
  */
 async function init() {
     await getUsersFromDatabase();
-    await syncHardcodedTasksWithFirebase();
-}
+    await uploadTemplateTasksOnce(); 
+  }
+
+async function uploadTemplateTasksOnce() {
+    const tasksRef = ref(database, 'tasks');
+  
+    try {
+      const snapshot = await get(tasksRef);
+      const existingTasks = snapshot.exists() ? snapshot.val() : {};
+  
+      for (const task of tasks) {
+        if (!existingTasks[task.id]) {
+          await set(ref(database, `tasks/${task.id}`), task);
+          console.log(`✅ Task "${task.title}" uploaded.`);
+        } else {
+          console.log(`ℹ️ Task "${task.title}" already exists, skipped.`);
+        }
+      }
+    } catch (error) {
+      console.error("Error uploading tasks:", error);
+    }
+  }
+
 
 
 /**
@@ -54,60 +76,6 @@ function getUserNames(users) {
 
 
 /**
- * This function iterates through all visible board cards in the DOM, extracts task details
- * from their elements, and synchronizes this data with the 'tasks' node in the Firebase database.
- * It either updates an existing task (if a taskId data attribute is present) or creates a new one.
- * A default due date is used if no specific date is found in the HTML.
- */
-async function syncHardcodedTasksWithFirebase() {
-    const allBoardCards = document.querySelectorAll('.board-wrapper .board-columns .column-content-wrapper .board-card:not(.d_none)');
-    const tasksRef = ref(database, 'tasks');
-    const firebaseTasksSnapshot = await get(tasksRef);
-    const firebaseTasks = firebaseTasksSnapshot.exists() ? firebaseTasksSnapshot.val() : {};
-    const defaultDueDate = '01/01/2026';
-
-    allBoardCards.forEach(async taskElement => {
-        const label = taskElement.querySelector('.board-card-label')?.textContent.trim();
-        const title = taskElement.querySelector('.board-card-title')?.textContent.trim();
-        const description = taskElement.querySelector('.board-card-description')?.textContent.trim();
-        const priorityImg = taskElement.querySelector('.priority');
-        let priority = getPriorityFromImageElement(priorityImg);
-        let status = getStatusFromColumnElement(taskElement);
-        const taskId = taskElement.dataset.taskId;
-
-        const taskData = {
-            label: label,
-            title: title,
-            description: description,
-            priority: priority,
-            status: status,
-            dueDate: defaultDueDate
-        };
-
-        if (taskId && firebaseTasks[taskId]) {
-            try {
-                await update(ref(database, `tasks/${taskId}`), taskData);
-                console.log(`Task mit ID ${taskId} erfolgreich synchronisiert.`);
-            } catch (error) {
-                console.error(`Fehler beim Aktualisieren der Task mit ID ${taskId}:`, error);
-            }
-        } else {
-            try {
-                const newSnapshot = await push(tasksRef, taskData);
-                console.log('Neue Task erfolgreich hochgeladen:', title, 'ID:', newSnapshot.key);
-                taskElement.dataset.taskId = newSnapshot.key;
-            } catch (error) {
-                console.error('Fehler beim Hochladen der neuen Task:', title, error);
-            }
-        }
-    });
-
-    console.log('Synchronisation der hard-codierten Board Cards mit Firebase abgeschlossen.');
-    tasksUploaded = true;
-}
-
-
-/**
  * This function determines the priority of a task based on the 'src' attribute
  * of the provided image element.
  * @param {HTMLElement|null} priorityImg The HTML image element representing the priority icon.
@@ -133,47 +101,11 @@ function getPriorityFromImageElement(priorityImg) {
 function getStatusFromColumnElement(taskElement) {
 
     const column = taskElement.closest('.board-columns');
-    if (column?.classList.contains('to-do-wrapper')) return 'to do';
-    if (column?.classList.contains('in-progress-wrapper')) return 'in progress';
-    if (column?.classList.contains('await-feedback-wrapper')) return 'await feedback';
+    if (column?.classList.contains('to-do-wrapper')) return 'to-do';
+    if (column?.classList.contains('in-progress-wrapper')) return 'in-progress';
+    if (column?.classList.contains('await-feedback-wrapper')) return 'await-feedback';
     if (column?.classList.contains('done-wrapper')) return 'done';
     return 'unknown';
-
-}
-
-
-/**
- * This function asynchronously saves the edited data for a specific task to the Firebase database.
- * @param {string} taskId The unique identifier of the task to be updated.
- * @param {object} updatedData An object containing the key-value pairs of the data to be updated for the task.
- */
-async function saveEditedTask(taskId, updatedData) {
-    const taskRef = ref(database, `tasks/${taskId}`);
-    try {
-        await update(taskRef, updatedData);
-        console.log(`Task mit ID ${taskId} erfolgreich aktualisiert.`, updatedData);
-
-    } catch (error) {
-        console.error(`Fehler beim Aktualisieren der Task mit ID ${taskId}:`, error);
-    }
-}
-
-
-/**
- * This function asynchronously updates the status of a specific task in the Firebase database.
- * @param {string} taskId The unique identifier of the task to be updated.
- * @param {string} newStatus The new status to be assigned to the task.
- */
-async function updateTaskStatusInFirebase(taskId, newStatus) {
-
-    const taskRef = ref(database, `tasks/${taskId}`);
-    try {
-        await update(taskRef, { status: newStatus });
-        console.log(`Status der Task mit ID ${taskId} auf "${newStatus}" aktualisiert.`);
-    } catch (error) {
-        console.error(`Fehler beim Aktualisieren des Status der Task mit ID ${taskId}:`, error);
-
-    }
 
 }
 
@@ -196,10 +128,24 @@ function renderUsersToAssign() {
     }
 }
 
-window.saveEditedTask = saveEditedTask; // Exportiere die Funktion
-window.updateTaskStatusInFirebase = updateTaskStatusInFirebase; // Exportiere die Funktion
 window.renderUsersToAssign = renderUsersToAssign;
 window.init = init;
+
+/**
+ * Updates the status of a task in Firebase based on drag & drop movement.
+ * @param {string} taskId - The ID of the task to update.
+ * @param {string} newStatus - The new status (e.g. 'to do', 'in progress', 'done', etc.).
+ */
+function updateTaskStatusInFirebase(taskId, newStatus) {
+    const taskRef = ref(database, `tasks/${taskId}`);
+    update(taskRef, { status: newStatus })
+        .then(() => console.log(`Task ${taskId} updated to "${newStatus}" in Firebase.`))
+        .catch(error => console.error("Error updating task status:", error));
+}
+
+
+window.updateTaskStatusInFirebase = updateTaskStatusInFirebase;
+
 
 
 document.addEventListener('DOMContentLoaded', () => {

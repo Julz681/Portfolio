@@ -27,16 +27,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 const task = tasks[taskId];
                 allTasksCount++;
                 switch (task.status) {
-                    case 'to do':
+                    case 'to-do':
                         todoCount++;
                         break;
                     case 'done':
                         doneCount++;
                         break;
-                    case 'in progress':
+                    case 'in-progress':
                         inProgressCount++;
                         break;
-                    case 'await feedback':
+                    case 'await-feedback':
                         awaitingFeedbackCount++;
                         break;
                 }
@@ -182,5 +182,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Call the functions when the page loads
     updateGreeting();
     updateUserProfileInitials();
-    updateTaskCounts(tasks);
+
 });

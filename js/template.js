@@ -29,7 +29,7 @@ const letterColors = {
 };
 
 // array with objects
-const tasks = [
+window.tasks = [
   {
     id: "task-1",
     title: "Kochwelt Page & Recipe Recommender",

@@ -115,9 +115,9 @@ function drop(event) {
  * or null if the column's class does not match any known status.
  */
 function getStatusFromColumn(column) {
-    if (column.classList.contains('to-do-wrapper')) return 'to do';
-    if (column.classList.contains('in-progress-wrapper')) return 'in progress';
-    if (column.classList.contains('await-feedback-wrapper')) return 'await feedback';
+    if (column.classList.contains('to-do-wrapper')) return 'to-do';
+    if (column.classList.contains('in-progress-wrapper')) return 'in-progress';
+    if (column.classList.contains('await-feedback-wrapper')) return 'await-feedback';
     if (column.classList.contains('done-wrapper')) return 'done';
     return null;
 }
