@@ -46,7 +46,9 @@ function renderAllColumns() {
   }
   setupCardClick();
   init(); // Drag & Drop new
+  setTimeout(syncDOMTaskStatusesWithFirebase, 100); 
 }
+
 
 // filters all task by they status
 function getTasksByStatus(status) {
@@ -178,7 +180,12 @@ function deleteTask() {
   const modal = document.getElementById("task-card-modal");
   const id = modal.getAttribute("data-task-id");
   const index = tasks.findIndex((t) => t.id === id);
-  if (index !== -1) tasks.splice(index, 1);
+
+  if (index !== -1) {
+    tasks.splice(index, 1);
+    deleteTaskFromFirebase(id); 
+  }
+
   renderAllColumns();
   closeModal();
 }

@@ -1,7 +1,5 @@
 import { database, ref, push, set, get, update } from "../js/firebase.js"; //
 
-
-
 window.users = [];
 window.userNames = [];
 
@@ -13,6 +11,7 @@ window.userNames = [];
 async function init() {
     await getUsersFromDatabase();
     await uploadTemplateTasksOnce(); 
+    
   }
 
 async function uploadTemplateTasksOnce() {
@@ -25,9 +24,9 @@ async function uploadTemplateTasksOnce() {
       for (const task of tasks) {
         if (!existingTasks[task.id]) {
           await set(ref(database, `tasks/${task.id}`), task);
-          console.log(`✅ Task "${task.title}" uploaded.`);
+          console.log(`Task "${task.title}" uploaded.`);
         } else {
-          console.log(`ℹ️ Task "${task.title}" already exists, skipped.`);
+          console.log(`Task "${task.title}" already exists, skipped.`);
         }
       }
     } catch (error) {
@@ -146,6 +145,37 @@ function updateTaskStatusInFirebase(taskId, newStatus) {
 
 window.updateTaskStatusInFirebase = updateTaskStatusInFirebase;
 
+/**
+ * This function scans all task cards on the board and updates their status in Firebase
+ * based on their current column in the DOM.
+ */
+function syncDOMTaskStatusesWithFirebase() {
+    const allCards = document.querySelectorAll(".board-card");
+    allCards.forEach(card => {
+        const taskId = card.getAttribute("data-task-id");
+        const newStatus = getStatusFromColumnElement(card);
+        if (taskId && newStatus !== "unknown") {
+            updateTaskStatusInFirebase(taskId, newStatus);
+        }
+    });
+}
+window.syncDOMTaskStatusesWithFirebase = syncDOMTaskStatusesWithFirebase;
+
+
+import { remove } from "../js/firebase.js"; 
+
+/**
+ * This function deletes a task from firebase when it is deleted on board.
+ * @param {string} taskId - 
+ */
+function deleteTaskFromFirebase(taskId) {
+  const taskRef = ref(database, `tasks/${taskId}`);
+  remove(taskRef)
+    .then(() => console.log(`Task ${taskId} erfolgreich aus Firebase gelöscht.`))
+    .catch((error) => console.error("Fehler beim Löschen des Tasks aus Firebase:", error));
+}
+
+window.deleteTaskFromFirebase = deleteTaskFromFirebase;
 
 
 document.addEventListener('DOMContentLoaded', () => {
