@@ -180,11 +180,12 @@
             </div>
             <div class="assigned-to-wrapper d-flex-column gap-8">
               <label for="assigned-to">Assigned To</label>
-              <div class="d-flex-column assigned-to-container">
+              <div class="dropdown-field-wrapper">
                 <div class="dropdown-input-wrapper br-10 d-flex-center"
                   onclick="toggleDropdownSelection('assigned-to-dropdown', event)">
                   <input class="dropdown-input size-20" type="text" id="assigned-to-input" name="assigned-to"
-                    placeholder="Select contacts to assign" oninput="searchUsersToAssign('assigned-to-dropdown')" />
+                    placeholder="Select contacts to assign"
+                    oninput="searchUsersToAssign('assigned-to-dropdown')" />
                   <span class="dropdown-icon-closed" id="assigned-to-dropdown-closed"
                     onclick="toggleDropdownSelection('assigned-to-dropdown', event)"></span>
                   <span class="dropdown-icon-open d_none" id="assigned-to-dropdown-open"
@@ -200,15 +201,16 @@
             </div>
             <div class="category-wrapper d-flex-column gap-8">
               <label for="category"><span>Category</span><span class="red">*</span></label>
-              <div class="dropdown-input-wrapper br-10 d-flex-center"
-                onclick="toggleDropdownSelection('category-dropdown', event)">
-                <input class="dropdown-input size-20" type="text" id="category" name="category"
-                  placeholder="Select task category" disabled required />
-                <span id="category-dropdown-closed" class="dropdown-icon-closed"
-                  onclick="toggleDropdownSelection('category-dropdown', event)"></span>
-                <span id="category-dropdown-open" class="dropdown-icon-open d_none"
-                  onclick="toggleDropdownSelection('category-dropdown', event)"></span>
-              </div>
+              <div class="dropdown-field-wrapper">
+                <div class="dropdown-input-wrapper br-10 d-flex-center"
+                  onclick="toggleDropdownSelection('category-dropdown', event)">
+                  <input class="dropdown-input size-20" type="text" id="category" name="category"
+                    placeholder="Select task category" disabled required />
+                  <span id="category-dropdown-closed" class="dropdown-icon-closed"
+                    onclick="toggleDropdownSelection('category-dropdown', event)"></span>
+                  <span id="category-dropdown-open" class="dropdown-icon-open d_none"
+                    onclick="toggleDropdownSelection('category-dropdown', event)"></span>
+                </div>
               <span class="required-error-message d_none" id="category-error">This field is required</span>
               <div class="dropdown-wrapper categories-dropdown-wrapper d_none" id="category-dropdown">
                 <ul class="dropdown d-flex-column">
