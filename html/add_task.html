@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="/css/board.css">
   <link rel="stylesheet" href="/css/add-task.css">
+  <link rel="stylesheet" href="/css/add-task-responsive.css">
   <link rel="stylesheet" href="/css/desktop_template.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="../js/add_task.js" defer></script>
@@ -247,10 +248,14 @@
           </div>
         </div>
       </form>
+      <div style="display: none;" class="respon-text">
+        <span class="red respon-text">*</span>
+        <span class="text-bottom respon-text">This field ist required</span>
+      </div>
     </section>
     <section class="add-task-footer d-flex-space-between">
       <div class="text-container d-flex-center">
-        <span class="red">*</span>
+        <span class="red respon-d-none">*</span>
         <span class="text-bottom">This field ist required</span>
       </div>
       <div class="d-flex-space-between gap-16">
