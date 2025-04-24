@@ -14,25 +14,21 @@ async function init() {
     
   }
 
-async function uploadTemplateTasksOnce() {
+  async function uploadTemplateTasksOnce() {
     const tasksRef = ref(database, 'tasks');
-  
+
     try {
-      const snapshot = await get(tasksRef);
-      const existingTasks = snapshot.exists() ? snapshot.val() : {};
-  
-      for (const task of tasks) {
-        if (!existingTasks[task.id]) {
-          await set(ref(database, `tasks/${task.id}`), task);
-          console.log(`Task "${task.title}" uploaded.`);
-        } else {
-          console.log(`Task "${task.title}" already exists, skipped.`);
+        const snapshot = await get(tasksRef);
+        const existingTasks = snapshot.exists() ? snapshot.val() : {};
+
+        for (const task of tasks) {
+            await set(ref(database, `tasks/${task.id}`), task);
+            console.log(`Task "${task.title}" uploaded or updated.`);
         }
-      }
     } catch (error) {
-      console.error("Error uploading tasks:", error);
+        console.error("Error uploading tasks:", error);
     }
-  }
+}
 
 
 
