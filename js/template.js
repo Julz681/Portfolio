@@ -38,7 +38,11 @@ window.tasks = [
     taskType: "userStory",
     dueDate: "10/06/2023",
     assignedTo: ["Judtih Lütke", "Bernadette Pöltl"],
-    subtasks: ["Create Recommender", "Get some Recipe", "Implement Backend"],
+    subtasks: [
+      { 'subtask-0': 'Create Recommender' },
+      { 'subtask-1': "Get some Recipe" },
+      { 'subtask-2': "Implement Backend" }
+    ],
     status: "await-feedback",
   },
   {
@@ -49,7 +53,11 @@ window.tasks = [
     taskType: "technical",
     dueDate: "10/06/2023",
     assignedTo: ["Ada Lovelace", "Tobias Fröhler"],
-    subtasks: ["Create Wireframe", "Get Approval", "Implement UI"],
+    subtasks: [
+      { 'subtask-0': "Create Wireframe" },
+      { 'subtask-1': "Get Approval" },
+      { 'subtask-2': "Implement UI" }
+    ],
     status: "done",
   },
   {
@@ -60,7 +68,11 @@ window.tasks = [
     taskType: "technical",
     dueDate: "10/10/2023",
     assignedTo: ["Frances Allen", "Edsger Dijkstra"],
-    subtasks: ["Setup Firebase", "Create Login Form", "Test Auth Flow"],
+    subtasks: [
+      { 'subtask-0': "Setup Firebase" },
+      { 'subtask-1': "Create Login Form" },
+      { 'subtask-2': "Test Auth Flow" }
+    ],
     status: "in-progress",
   },
   {
@@ -72,9 +84,9 @@ window.tasks = [
     dueDate: "15/04/2025",
     assignedTo: ["Ada Lovelace", "Shafi Goldwasser"],
     subtasks: [
-      "Design toggle switch",
-      "Implement dark/light themes",
-      "Store preference in localStorage",
+      { 'subtask-0': "Design toggle switch" },
+      { 'subtask-1': "Implement dark/light themes" },
+      { 'subtask-2': "Store preference in localStorage" },
     ],
     status: "to-do",
   },
@@ -88,9 +100,9 @@ window.tasks = [
     dueDate: "20/04/2025",
     assignedTo: ["Reshma Saujani", "Frances Allen"],
     subtasks: [
-      "Set up drag listeners",
-      "Handle drop zones",
-      "Update task status on drop",
+      { 'subtask - 0': "Set up drag listeners" },
+      { 'subtask - 1': "Handle drop zones" },
+      { 'subtask-2': "Update task status on drop" },
     ],
     status: "to-do",
   },
@@ -201,14 +213,16 @@ function setModalSubtasks(task) {
   const box = document.querySelector(".subtasks-wrapper");
   box.innerHTML = task.subtasks
     .map(
-      (s, i) => `
-      <div class="modal-card-subtask-wrapper d-flex-center">
-        <label class="modal-card-subtask gap-16">
-          <input type="checkbox" id="subtask-${i}" />
-          <span class="checkmark"></span>
-          <span>${s}</span>
-        </label>
-      </div>`
+      (s, i) => {
+        const [key, value] = Object.entries(s)[0];
+        return ` <div class="modal-card-subtask-wrapper d-flex-center">
+                    <label class="modal-card-subtask gap-16">
+                      <input type="checkbox" id="subtask-${key}" />
+                      <span class="checkmark"></span>
+                    <span>${value}</span>
+                    </label>
+                  </div>`
+      }
     )
     .join("");
 }

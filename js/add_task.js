@@ -18,7 +18,7 @@ const fp = flatpickr("#due-date", {
     }
 });
 
-let subtasks = [];
+let subtaskArray = [];
 let assignees = [];
 let searchResults = [];
 let newTasks = [];
@@ -338,9 +338,9 @@ function falseInputValueHandling(confirmInputIconsRef, addIconRef, valueSizeErro
 function addSubtask(id, valueSizeErrorContainerId) {
     let input = getInputContainer(id);
     let inputValue = input.value.trim();
-    let subtaskNumber = subtasks.length;
+    let subtaskNumber = subtaskArray.length;
     let subtaskKey = `subtask-${subtaskNumber}`;
-    subtasks.push({
+    subtaskArray.push({
         [subtaskKey]: inputValue,
     }
     );
@@ -367,7 +367,7 @@ function confirmEditSubtask(id) {
     let subtaskInputContainerRef = getInputContainer(id);
     let subtaskInputValue = getInputValue(subtaskInputContainerRef);
     let subtaskIndex = extractIndex(id);
-    subtasks[subtaskIndex][id] = subtaskInputValue;
+    subtaskArray[subtaskIndex] = { [id]: subtaskInputValue };
     renderSubtaskList()
 }
 
@@ -384,7 +384,7 @@ function extractIndex(id) {
 
 function deleteSubtask(id) {
     let currentSubtaskIndex = extractIndex(id);
-    subtasks.splice(currentSubtaskIndex, 1);
+    subtaskArray.splice(currentSubtaskIndex, 1);
     renderSubtaskList();
 }
 
@@ -411,9 +411,9 @@ function detectKey(event) {
 function renderSubtaskList() {
     let subtaskListContainerRef = document.getElementById('subtask-list');
     subtaskListContainerRef.innerHTML = "";
-    for (let subtasksIndex = 0; subtasksIndex < subtasks.length; subtasksIndex++) {
-        let subtaskKey = Object.keys(subtasks[subtasksIndex]);
-        subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtasksIndex, subtasks[subtasksIndex][subtaskKey]);
+    for (let subtaskArrayIndex = 0; subtaskArrayIndex < subtaskArray.length; subtaskArrayIndex++) {
+        let subtaskKey = Object.keys(subtaskArray[subtaskArrayIndex]);
+        subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtaskArrayIndex, subtaskArray[subtaskArrayIndex][subtaskKey]);
     }
     subtaskListContainerRef.classList.remove("d_none");
 }
@@ -492,8 +492,8 @@ function createTask() {
         let taskObject = createTaskObject(taskId);
         resetTaskHTML();
         newTasks.push(taskObject);
-        sendToLocalStorage(newTasks);
-        showSuccessMessage();
+        sendTaskToLocalStorage(newTasks);
+        showTaskSuccessMessage();
     }
 }
 
@@ -504,10 +504,19 @@ function createTaskObject(taskId) {
         description: getInputContainer('task-description').value,
         priority: getTaskPriority(),
         dueDate: getInputContainer('due-date').value,
-        taskType: getInputContainer('category').placeholder,
+        taskType: getTaskType(),
         assignedTo: assignees,
-        subtasks: subtasks,
+        subtasks: subtaskArray,
         status: "to-do",
+    }
+}
+
+function getTaskType() {
+    let type = getInputContainer('category').placeholder
+    if (type === "User Story") {
+        return 'userStory'
+    } else {
+        return "technical"
     }
 }
 
@@ -554,7 +563,7 @@ function resetPriorityLabels() {
 }
 
 function resetSubtasksList() {
-    subtasks = [];
+    subtaskArray = [];
     document.getElementById('subtask-list').innerHTML = "";
     document.getElementById('subtask-list').classList.add('d_none');
 }
@@ -572,21 +581,20 @@ function resetAssignees() {
     renderAssignees('assigned-to-dropdown', assigneesContainerRef);
 }
 
-function sendToLocalStorage(object) {
+function sendTaskToLocalStorage(object) {
     localStorage.setItem('tasks', JSON.stringify(object));
 }
 
-function showSuccessMessage() {
+function showTaskSuccessMessage() {
     let msg = document.getElementById("success-message");
     msg.classList.remove("d_none");
     msg.classList.add("show");
     setTimeout(() => {
         msg.classList.remove("show");
         msg.classList.add("d_none");
-    }, 2000);
+    }, 1500);
 }
 
 //TODO: Template add-task
 //TODO: Add add-task Template integrations
 //TODO: fix 100vh reset
-// TODO: reset localStorage on Logout?

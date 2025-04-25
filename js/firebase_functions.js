@@ -10,11 +10,11 @@ window.userNames = [];
  */
 async function init() {
     await getUsersFromDatabase();
-    await uploadTemplateTasksOnce(); 
-    
-  }
+    await uploadTemplateTasksOnce();
 
-  async function uploadTemplateTasksOnce() {
+}
+
+async function uploadTemplateTasksOnce() {
     const tasksRef = ref(database, 'tasks');
 
     try {
@@ -30,7 +30,17 @@ async function init() {
     }
 }
 
-
+function getTasksFromLocalStorage() {
+    let newTasks = JSON.parse(localStorage.getItem('tasks'));
+    console.log(newTasks);
+    if (newTasks === null) {
+        return
+    } else {
+        for (let index = 0; index < newTasks.length; index++) {
+            tasks.push(newTasks[index])
+        }
+    }
+}
 
 /**
  * This function asynchronously retrieves user data from the 'users' node in the Firebase database.
@@ -114,7 +124,7 @@ function renderUsersToAssign() {
     let usersListContainerRef = document.getElementById("assigned-to-users-list");
     usersListContainerRef.innerHTML = "";
     for (let index = 0; index < window.userNames.length; index++) {
-        if(typeof window.userNames[index] === "string") {
+        if (typeof window.userNames[index] === "string") {
             let initials = getInitials(window.userNames[index]);
             let stylingObject = checkIsAssigned(window.userNames[index]);
             let iconBackgroundColor = getIconBackgroundColor(initials);
@@ -125,6 +135,7 @@ function renderUsersToAssign() {
 
 window.renderUsersToAssign = renderUsersToAssign;
 window.init = init;
+window.getTasksFromLocalStorage = getTasksFromLocalStorage;
 
 /**
  * Updates the status of a task in Firebase based on drag & drop movement.
@@ -158,17 +169,17 @@ function syncDOMTaskStatusesWithFirebase() {
 window.syncDOMTaskStatusesWithFirebase = syncDOMTaskStatusesWithFirebase;
 
 
-import { remove } from "../js/firebase.js"; 
+import { remove } from "../js/firebase.js";
 
 /**
  * This function deletes a task from firebase when it is deleted on board.
  * @param {string} taskId - 
  */
 function deleteTaskFromFirebase(taskId) {
-  const taskRef = ref(database, `tasks/${taskId}`);
-  remove(taskRef)
-    .then(() => console.log(`Task ${taskId} erfolgreich aus Firebase gelöscht.`))
-    .catch((error) => console.error("Fehler beim Löschen des Tasks aus Firebase:", error));
+    const taskRef = ref(database, `tasks/${taskId}`);
+    remove(taskRef)
+        .then(() => console.log(`Task ${taskId} erfolgreich aus Firebase gelöscht.`))
+        .catch((error) => console.error("Fehler beim Löschen des Tasks aus Firebase:", error));
 }
 
 window.deleteTaskFromFirebase = deleteTaskFromFirebase;

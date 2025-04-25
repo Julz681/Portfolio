@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupAssignedToDropdown();
   setupSubtaskInput();
   setupDatePicker();
+  getTasksFromLocalStorage();
   renderAllColumns();
 });
 
@@ -46,7 +47,7 @@ function renderAllColumns() {
   }
   setupCardClick();
   init(); // Drag & Drop new
-  setTimeout(syncDOMTaskStatusesWithFirebase, 100); 
+  setTimeout(syncDOMTaskStatusesWithFirebase, 100);
 }
 
 
@@ -78,7 +79,7 @@ function renderBoard() {
   board.innerHTML = "";
 
   tasks.forEach((task) => {
-    board.innerHTML += createTaskHTML(task); 
+    board.innerHTML += createTaskHTML(task);
   });
 }
 
@@ -173,13 +174,13 @@ function closeModal() {
 function setupDeleteButton() {
   const editBtn = document.getElementById("edit-task-button");
   editBtn.addEventListener("click", () => {
-      const modal = document.getElementById("task-card-modal");
-      const taskId = modal.getAttribute("data-task-id");
-      const task = tasks.find(t => t.id === taskId);
-      if (task) {
-          populateEditOverlay(task);
-          closeModal(); 
-      }
+    const modal = document.getElementById("task-card-modal");
+    const taskId = modal.getAttribute("data-task-id");
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+      populateEditOverlay(task);
+      closeModal();
+    }
   });
 }
 
@@ -192,7 +193,7 @@ function deleteTask() {
 
   if (index !== -1) {
     tasks.splice(index, 1);
-    deleteTaskFromFirebase(id); 
+    deleteTaskFromFirebase(id);
   }
 
   renderAllColumns();
@@ -262,17 +263,17 @@ function setupAssignedToDropdown() {
   const arrow = document.getElementById("select-arrow");
   const placeholder = document.querySelector(".select-placeholder");
   select.addEventListener("mousedown", () => {
-      toggleArrow(arrow);
-      // fillEditDropdownWithContacts(); // <-- HIER ENTFERNT
+    toggleArrow(arrow);
+    // fillEditDropdownWithContacts(); // <-- HIER ENTFERNT
   });
 
   select.addEventListener("change", () => {
-      placeholder.style.display = select.value ? "none" : "block";
-      resetArrow(arrow);
+    placeholder.style.display = select.value ? "none" : "block";
+    resetArrow(arrow);
   });
   document.addEventListener("click", (e) => {
-      const wrapper = document.querySelector(".select-wrapper");
-      if (!wrapper.contains(e.target)) resetArrow(arrow);
+    const wrapper = document.querySelector(".select-wrapper");
+    if (!wrapper.contains(e.target)) resetArrow(arrow);
   });
 }
 
@@ -340,23 +341,23 @@ function setupDatePicker() {
 // - This is only a temporary feature!
 async function saveEdit() {
   const editOverlay = document.getElementById("editTaskOverlay");
-  const taskId = document.getElementById("task-card-modal").getAttribute("data-task-id"); 
+  const taskId = document.getElementById("task-card-modal").getAttribute("data-task-id");
   const taskIndex = tasks.findIndex(t => t.id === taskId);
 
   if (taskIndex !== -1) {
-      const updatedTask = { ...tasks[taskIndex] }
-      updatedTask.title = editOverlay.querySelector(".edit-input[placeholder='Enter a title']").value;
-      updatedTask.description = editOverlay.querySelector(".edit-textarea[placeholder='Enter a Description']").value;
-      updatedTask.dueDate = editOverlay.querySelector("#due-date").value;
-      updatedTask.priority = editOverlay.querySelector(".priority-labels.selected")?.id || 'not set';
-      updatedTask.assignedTo = Array.from(editOverlay.querySelector("#assigned-select").selectedOptions).map(option => option.value);
+    const updatedTask = { ...tasks[taskIndex] }
+    updatedTask.title = editOverlay.querySelector(".edit-input[placeholder='Enter a title']").value;
+    updatedTask.description = editOverlay.querySelector(".edit-textarea[placeholder='Enter a Description']").value;
+    updatedTask.dueDate = editOverlay.querySelector("#due-date").value;
+    updatedTask.priority = editOverlay.querySelector(".priority-labels.selected")?.id || 'not set';
+    updatedTask.assignedTo = Array.from(editOverlay.querySelector("#assigned-select").selectedOptions).map(option => option.value);
 
 
-      tasks[taskIndex] = updatedTask; 
+    tasks[taskIndex] = updatedTask;
 
-      renderAllColumns();
-      closeEditOverlay();
-      document.getElementById("task-card-modal").classList.remove("active");
+    renderAllColumns();
+    closeEditOverlay();
+    document.getElementById("task-card-modal").classList.remove("active");
   }
 }
 
@@ -410,10 +411,11 @@ function renderSubtasks(task, container) {
   container.innerHTML = '';
   if (task.subtasks && task.subtasks.length > 0) {
     task.subtasks.forEach((subtask, index) => {
+      const [key, value] = Object.entries(subtask)[0]
       const subtaskItem = document.createElement('div');
       subtaskItem.classList.add('subtask-item', 'd-flex-space-between');
       subtaskItem.innerHTML = `
-        <span>• ${subtask}</span>
+        <span>• ${value}</span>
         <div>
           <span class="edit-icon" data-index="${index}"></span>
           <span class="delete-icon" data-index="${index}"></span>
@@ -465,15 +467,16 @@ function populateEditOverlay(task) {
     assignedPlaceholder.style.display = "block";
   }
 
- 
+
   subtaskListContainer.innerHTML = ''; // Remove previous subtasks
 
   if (task.subtasks && task.subtasks.length > 0) {
     task.subtasks.forEach((subtask, index) => {
+      const [key, value] = Object.entries(subtask)[0]
       const subtaskItem = document.createElement('div');
       subtaskItem.classList.add('subtask-item', 'd-flex-space-between');
       subtaskItem.innerHTML = `
-        <span>• ${subtask}</span>
+        <span>• ${value}</span>
         <div>
           <span class="edit-icon" data-index="${index}"></span>
           <span class="delete-icon" data-index="${index}"></span>
@@ -532,7 +535,7 @@ function populateEditOverlay(task) {
 
         const cancelButton = document.createElement('span');
         cancelButton.classList.add('clear-icon');
-        cancelButton.innerHTML = '&#10006;'; 
+        cancelButton.innerHTML = '&#10006;';
 
         const controlsDiv = event.target.parentNode;
         controlsDiv.innerHTML = ''; // Remove icons
@@ -546,7 +549,8 @@ function populateEditOverlay(task) {
         saveButton.addEventListener('click', () => {
           const newText = editInput.value.trim();
           if (newText) {
-            task.subtasks[indexToEdit] = newText; // Update the subtask directly as a string
+            const [key, value] = Object.entries(task.subtasks[indexToEdit]);
+            task.subtasks[indexToEdit] = { key: newText }; // Updates the subtask object directly 
             renderSubtasks(task, subtaskListContainer);
           } else {
             renderSubtasks(task, subtaskListContainer); // Rerender if text is empty

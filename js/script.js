@@ -156,3 +156,7 @@ function getInitials(username) {
     .join("")
     .slice(0, 2);
 }
+
+function clearTasksInLocalStorage() {
+  localStorage.clear();
+}
