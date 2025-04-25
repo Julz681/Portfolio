@@ -21,6 +21,7 @@ const fp = flatpickr("#due-date", {
 let subtasks = [];
 let assignees = [];
 let searchResults = [];
+let newTasks = [];
 
 // title input validation
 
@@ -65,7 +66,7 @@ function getInputContainerValue(containerId) {
 
 // date input validation
 
-// TODO : give date fcts. less variables?
+// TODO: give date fcts. less variables?
 
 function checkDateInput(containerId) {
     let dateInput = getInputContainer(containerId);
@@ -487,11 +488,12 @@ function createTask() {
     if (checkAllRequiredValues() === true) {
         return
     } else {
-        let taskId = "task-" + (tasks.length + 1);
+        let taskId = "task-" + (tasks.length + newTasks.length + 1);
         let taskObject = createTaskObject(taskId);
         resetTaskHTML();
-        tasks.push(taskObject);
-        sendToLocalStorage(tasks);
+        newTasks.push(taskObject);
+        sendToLocalStorage(newTasks);
+        showSuccessMessage();
     }
 }
 
@@ -574,7 +576,17 @@ function sendToLocalStorage(object) {
     localStorage.setItem('tasks', JSON.stringify(object));
 }
 
-//TODO: success messages
+function showSuccessMessage() {
+    let msg = document.getElementById("success-message");
+    msg.classList.remove("d_none");
+    msg.classList.add("show");
+    setTimeout(() => {
+        msg.classList.remove("show");
+        msg.classList.add("d_none");
+    }, 2000);
+}
+
 //TODO: Template add-task
 //TODO: Add add-task Template integrations
 //TODO: fix 100vh reset
+// TODO: reset localStorage on Logout?

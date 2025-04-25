@@ -74,7 +74,7 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 
 function closeAllDropdowns(event) {
   let dropdownContainers = [createContainerObject('category-dropdown'), createContainerObject('assigned-to-dropdown')];
-  if (dropdownContainers[1].dropdownContainer.classList.contains('d_none') && getInputContainer('category').placeholder === "Select task category" && getInputContainer('dropdownMenu').style.display === "none") {
+  if (dropdownContainers[1].dropdownContainer.classList.contains('d_none') && getInputContainer('category').placeholder === "Select task category" && getInputContainer('dropdownMenu').style.display === "none" && !dropdownContainers[0].dropdownContainer.classList.contains('d_none')) {
     showErrorMessage(getErrorContainer('category-error'));
   }
   for (let i = 0; i < dropdownContainers.length; i++) {

@@ -185,8 +185,7 @@
                 <div class="dropdown-input-wrapper br-10 d-flex-center"
                   onclick="toggleDropdownSelection('assigned-to-dropdown', event)">
                   <input class="dropdown-input size-20" type="text" id="assigned-to-input" name="assigned-to"
-                    placeholder="Select contacts to assign"
-                    oninput="searchUsersToAssign('assigned-to-dropdown')" />
+                    placeholder="Select contacts to assign" oninput="searchUsersToAssign('assigned-to-dropdown')" />
                   <span class="dropdown-icon-closed" id="assigned-to-dropdown-closed"
                     onclick="toggleDropdownSelection('assigned-to-dropdown', event)"></span>
                   <span class="dropdown-icon-open d_none" id="assigned-to-dropdown-open"
@@ -212,41 +211,41 @@
                   <span id="category-dropdown-open" class="dropdown-icon-open d_none"
                     onclick="toggleDropdownSelection('category-dropdown', event)"></span>
                 </div>
-              <span class="required-error-message d_none" id="category-error">This field is required</span>
-              <div class="dropdown-wrapper categories-dropdown-wrapper d_none" id="category-dropdown">
-                <ul class="dropdown d-flex-column">
-                  <li class="categories br-10" onclick="selectCategory('technical-task')"><span class="size-20"
-                      id="technical-task">Technical Task</span></li>
-                  <li class="categories br-10" onclick="selectCategory('user-story')"><span class="size-20"
-                      id="user-story">User Story</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="subtasks-wrapper d-flex-column gap-8">
-              <label for="subtasks">Subtasks</label>
-              <div class="subtask-input-wrapper d-flex-space-between br-10" onclick="moveCursorToSubtaskInput()">
-                <input type="text" name="subtasks" id="subtasks" class="subtask-input size-20 br-10"
-                  placeholder="Add new Subtask" oninput="evaluateSubtaskInput('subtask-value-length-error-message')"
-                  onchange="evaluateSubtaskInput('subtask-value-length-error-message')"
-                  onkeydown="createSubtaskOnKeyPress('subtasks', event, 'subtask-value-length-error-message')" />
-                <span class="add-subtask-icon" id="add-subtask-icon"></span>
-                <div class="confirm-input-icons d-flex-space-between d_none" id="confirm-input-icons">
-                  <span class="clear-icon"
-                    onclick="clearSubtaskInput('subtasks', 'subtask-value-length-error-message')"></span>
-                  <span class="confirm-input-icons-separator">|</span>
-                  <span class="confirm-icon"
-                    onclick="addSubtask('subtasks', 'subtask-value-length-error-message')"></span>
+                <span class="required-error-message d_none" id="category-error">This field is required</span>
+                <div class="dropdown-wrapper categories-dropdown-wrapper d_none" id="category-dropdown">
+                  <ul class="dropdown d-flex-column">
+                    <li class="categories br-10" onclick="selectCategory('technical-task')"><span class="size-20"
+                        id="technical-task">Technical Task</span></li>
+                    <li class="categories br-10" onclick="selectCategory('user-story')"><span class="size-20"
+                        id="user-story">User Story</span></li>
+                  </ul>
                 </div>
               </div>
-              <span class="required-error-message d_none" id="subtask-value-length-error-message">Value too
-                short!</span>
-              <div class="subtask-list-wrapper d-flex-column">
-                <ul class="subtask-list" id="subtask-list">
-                </ul>
+              <div class="subtasks-wrapper d-flex-column gap-8">
+                <label for="subtasks">Subtasks</label>
+                <div class="subtask-input-wrapper d-flex-space-between br-10" onclick="moveCursorToSubtaskInput()">
+                  <input type="text" name="subtasks" id="subtasks" class="subtask-input size-20 br-10"
+                    placeholder="Add new Subtask" oninput="evaluateSubtaskInput('subtask-value-length-error-message')"
+                    onchange="evaluateSubtaskInput('subtask-value-length-error-message')"
+                    onkeydown="createSubtaskOnKeyPress('subtasks', event, 'subtask-value-length-error-message')" />
+                  <span class="add-subtask-icon" id="add-subtask-icon"></span>
+                  <div class="confirm-input-icons d-flex-space-between d_none" id="confirm-input-icons">
+                    <span class="clear-icon"
+                      onclick="clearSubtaskInput('subtasks', 'subtask-value-length-error-message')"></span>
+                    <span class="confirm-input-icons-separator">|</span>
+                    <span class="confirm-icon"
+                      onclick="addSubtask('subtasks', 'subtask-value-length-error-message')"></span>
+                  </div>
+                </div>
+                <span class="required-error-message d_none" id="subtask-value-length-error-message">Value too
+                  short!</span>
+                <div class="subtask-list-wrapper d-flex-column">
+                  <ul class="subtask-list" id="subtask-list">
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </form>
       <div style="display: none;" class="respon-text">
         <span class="red respon-text">*</span>
@@ -269,6 +268,9 @@
         </button>
       </div>
     </section>
+    <div id="success-message" class="success-message d_none">
+      Task successfully created ☺️
+    </div>
   </main>
   <nav class="mobile-nav" id="mobile-nav">
     <a href="../html/summary.html">
