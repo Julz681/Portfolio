@@ -549,8 +549,9 @@ function populateEditOverlay(task) {
         saveButton.addEventListener('click', () => {
           const newText = editInput.value.trim();
           if (newText) {
-            const [key, value] = Object.entries(task.subtasks[indexToEdit]);
-            task.subtasks[indexToEdit] = { key: newText }; // Updates the subtask object directly 
+            const key = Object.keys(task.subtasks[indexToEdit]);
+            // const [key, value] = Object.entries(task.subtasks[indexToEdit]);
+            task.subtasks[indexToEdit][key] = newText; // Updates the subtask object directly 
             renderSubtasks(task, subtaskListContainer);
           } else {
             renderSubtasks(task, subtaskListContainer); // Rerender if text is empty
