@@ -570,3 +570,28 @@ function populateEditOverlay(task) {
   });
   console.log('task.subtasks:', task.subtasks);
 }
+
+async function includeTaskHTML() {
+  let modalContainerRef = document.getElementById("task-card-modal");
+  modalContainerRef.innerHTML = "";
+  const fetchAndInclude = async modalContainerRef => {
+    const file = modalContainerRef.getAttribute("w3-include-html");
+    console.log("file:", file);
+
+    if (!file) return;
+
+    try {
+      const response = await fetch(file);
+      if (!response.ok) {
+        throw new Error("Page not found.");
+      }
+      modalContainerRef.innerHTML = await response.text();
+    } catch (error) {
+      modalContainerRef.innerHTML = error.message;
+    } finally {
+      modalContainerRef.classList.add("active");
+    }
+  };
+  await fetchAndInclude(modalContainerRef);
+
+}

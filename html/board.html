@@ -98,7 +98,7 @@
             <div class="search-icon"></div>
           </div>
 
-          <div onclick="handleAddTaskClickResponsive()"class="add-task-button d-flex-space-between br-10">
+          <div onclick="handleAddTaskClickResponsive()" class="add-task-button d-flex-space-between br-10">
             <span>Add Task</span><span class="plus"></span>
           </div>
         </div>
@@ -107,7 +107,7 @@
 
     <section class="board-wrapper">
       <div class="board pd-l-r-64">
-    
+
         <div class="board-columns d-flex-column to-do-wrapper">
           <div class="column-title d-flex-space-between">
             <h3>To do</h3>
@@ -119,7 +119,7 @@
             </div>
           </div>
         </div>
-    
+
         <div class="board-columns d-flex-column in-progress-wrapper">
           <div class="column-title d-flex-space-between">
             <h3>In progress</h3>
@@ -131,7 +131,7 @@
             </div>
           </div>
         </div>
-    
+
         <div class="board-columns d-flex-column await-feedback-wrapper">
           <div class="column-title d-flex-space-between">
             <h3>Await feedback</h3>
@@ -143,7 +143,7 @@
             </div>
           </div>
         </div>
-    
+
         <div class="board-columns d-flex-column done-wrapper">
           <div class="column-title d-flex-space-between">
             <h3>Done</h3>
@@ -154,14 +154,14 @@
             </div>
           </div>
         </div>
-    
+
         <div class="no-results-message">
           <h3 id="no-results" style="display: none;"><span>🧐</span> No tasks found!</h3>
         </div>
-    
+
       </div>
     </section>
-    
+
     <section id="task-card-modal" class="board-card-modal-wrapper d-flex-center d_none">
       <div class="modal-card-wrapper br-30">
         <div class="modal-card-content size-20 d-flex-column">
@@ -343,6 +343,7 @@
       </footer>
     </div>
   </div>
+  <section id="add-task-form" w3-include-html="../assets/templates/task_form.html"></section>
 
   <nav class="mobile-nav" id="mobile-nav">
     <a href="../html/summary.html">

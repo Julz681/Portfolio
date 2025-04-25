@@ -144,6 +144,7 @@ header {
   margin-top: 96px;
   margin-bottom: 64px;
 }
+
 .board-title {
   font-size: 74px;
   font-weight: 700;
@@ -1104,3 +1105,9 @@ header {
   display: none !important;
 }
 
+#add-task-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
