@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../css/board.css" />
   <link rel="stylesheet" href="../css/board_responsive.css" />
   <link rel="stylesheet" href="../css/desktop_template.css" />
+  <link rel="stylesheet" href="../css/add-task.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="icon" type="icon" href="../assets/img/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,7 +99,8 @@
             <div class="search-icon"></div>
           </div>
 
-          <div onclick="handleAddTaskClickResponsive()" class="add-task-button d-flex-space-between br-10">
+          <!-- <div onclick="handleAddTaskClickResponsive()" class="add-task-button d-flex-space-between br-10">  excluded for now // will be included in another function later-->
+          <div onclick="includeTaskHTML()" class="add-task-button d-flex-space-between br-10">
             <span>Add Task</span><span class="plus"></span>
           </div>
         </div>
@@ -343,7 +345,11 @@
       </footer>
     </div>
   </div>
-  <section id="add-task-form" w3-include-html="../assets/templates/task_form.html"></section>
+  <section id="task-form-modal-wrapper" class="task-form-modal-wrapper d-flex-center d_none">
+    <div class="modal-card-wrapper br-30">
+      <div id="task-form-modal" class="task-form-modal" w3-include-html="../assets/templates/task_form.html"></div>
+    </div>
+  </section>
 
   <nav class="mobile-nav" id="mobile-nav">
     <a href="../html/summary.html">

@@ -183,7 +183,7 @@ function setupDeleteButton() {
     }
   });
   const deleteBtn = document.getElementById("delete-task-button");
-  deleteBtn.addEventListener("click", deleteTask); 
+  deleteBtn.addEventListener("click", deleteTask);
 }
 
 
@@ -574,10 +574,11 @@ function populateEditOverlay(task) {
 }
 
 async function includeTaskHTML() {
-  let modalContainerRef = document.getElementById("task-card-modal");
-  modalContainerRef.innerHTML = "";
-  const fetchAndInclude = async modalContainerRef => {
-    const file = modalContainerRef.getAttribute("w3-include-html");
+  let modalWrapperContainerRef = document.getElementById("task-form-modal-wrapper");
+  let taskFormContainerRef = document.getElementById("task-form-modal");
+  taskFormContainerRef.innerHTML = "";
+  const fetchAndInclude = async taskFormContainerRef => {
+    const file = taskFormContainerRef.getAttribute("w3-include-html");
     console.log("file:", file);
 
     if (!file) return;
@@ -587,13 +588,13 @@ async function includeTaskHTML() {
       if (!response.ok) {
         throw new Error("Page not found.");
       }
-      modalContainerRef.innerHTML = await response.text();
+      taskFormContainerRef.innerHTML = await response.text();
     } catch (error) {
-      modalContainerRef.innerHTML = error.message;
+      taskFormContainerRef.innerHTML = error.message;
     } finally {
-      modalContainerRef.classList.add("active");
+      taskFormContainerRef.classList.add("active");
     }
   };
-  await fetchAndInclude(modalContainerRef);
-
+  await fetchAndInclude(taskFormContainerRef);
+  modalWrapperContainerRef.classList.remove("d_none");
 }
