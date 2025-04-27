@@ -182,6 +182,8 @@ function setupDeleteButton() {
       closeModal();
     }
   });
+  const deleteBtn = document.getElementById("delete-task-button");
+  deleteBtn.addEventListener("click", deleteTask); 
 }
 
 
