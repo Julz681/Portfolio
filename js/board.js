@@ -108,6 +108,17 @@ function openModal(task, modal, wrapper) {
   document.body.classList.add("modal-open");
 }
 
+// opens the task card via an animation
+function openTaskCardAnimation(wrapper) {
+  wrapper.classList.remove("slide-out");
+  wrapper.classList.add("slide-in");
+}
+
+function closeTaskCardAnimation(wrapper) {
+  wrapper.classList.remove("slide-in");
+  wrapper.classList.add("slide-out");
+}
+
 // fills all content in the modal (title, description, user, subtasks, ...) for the passed task
 function setModalContent(task) {
   setModalBasics(task);
@@ -573,10 +584,10 @@ function populateEditOverlay(task) {
   console.log('task.subtasks:', task.subtasks);
 }
 
-async function includeTaskHTML() {
+async function openTaskForm() {
   let modalWrapperContainerRef = document.getElementById("task-form-modal-wrapper");
-  let taskFormContainerRef = document.getElementById("task-form-modal");
-  taskFormContainerRef.innerHTML = "";
+  let taskFormWrapperContainerRef = document.getElementById("task-form-wrapper");
+  let taskFormContainerRef = document.getElementById("task-form");
   const fetchAndInclude = async taskFormContainerRef => {
     const file = taskFormContainerRef.getAttribute("w3-include-html");
     console.log("file:", file);
@@ -596,5 +607,8 @@ async function includeTaskHTML() {
     }
   };
   await fetchAndInclude(taskFormContainerRef);
+  console.log(taskFormContainerRef.innerHTML);
+
   modalWrapperContainerRef.classList.remove("d_none");
+  openTaskCardAnimation(taskFormWrapperContainerRef);
 }

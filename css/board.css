@@ -1115,3 +1115,13 @@ header {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1100;
 }
+
+#task-form-wrapper {
+  width: 100%;
+  max-width: 1200px;
+}
+
+#task-form-wrapper .add-task-title,
+#task-form-wrapper .add-task-header-wrapper {
+  margin: 0;
+}
