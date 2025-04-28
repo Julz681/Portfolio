@@ -14,116 +14,149 @@
 }
 
 @media (max-width: 980px) {
-  .form-inputs,
-  .form-inputs-right,
-  .task-description-text {
-    width: 350px;    
-}
-}
-
-
-
-@media (max-width: 800px) {
-  .add-task-content-wrapper {
-    left: 0;
-    margin: 0 auto;
-    padding: 0 16px;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-sizing: border-box;
-
-
-  }
-  .add-task-title {
-    margin-top: 0;
-    font-size: 47px;
-  }
-
-  .add-task-header-wrapper {
-    height: 120px;
-    flex-shrink: 0;
-    z-index: 100;
-    padding: 32px 16px;
-    position: sticky;
-    top: 80px;
-    background-color: #f6f7f8;
-    width: 100%;
-  }
-
-  .add-task-footer {
-    height: 100px;
-    flex-shrink: 0;
-    z-index: 100;
-    padding: 32px 0px;
-    position: sticky;
-    bottom: 80px;
-  }
-
-  .add-task-content {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 24px 16px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .add-task-content::-webkit-scrollbar {
-    display: none;
-  }
-
-  .add-task-form {
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .form-inputs,
-  .form-inputs-right,
-  .task-description-text {
-    max-width: auto;
+    .add-task-content-wrapper {
+      left: 0;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      box-sizing: border-box;
+      width: 100%;
+    }
   
+    .add-task-title {
+      margin-top: 0;
+      font-size: 47px;
+    }
+  
+    .add-task-form {
+      font-size: 16px;
+      font-weight: 400;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    ::placeholder {
+      font-size: 16px;
+    }
+  
+    .add-task-header-wrapper {
+      height: 120px;
+      flex-shrink: 0;
+      z-index: 100;
+      padding: calc(32px + 80px) 16px 32px; /* 80px extra Abstand oben */
+      position: sticky;
+      top: 0;
+      background-color: #f6f7f8;
+      width: 100%;
+    }
+  
+    .add-task-footer {
+      height: 100px;
+      flex-shrink: 0;
+      z-index: 100;
+      padding: 32px 0px calc(32px + 80px); /* 80px extra Abstand unten */
+      position: sticky;
+      bottom: 0;
+      background-color: #f6f7f8;
+      width: 100%;
+    }
+  
+    .add-task-content {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 24px 16px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      width: 100%;
+      margin-top: 0;
+    }
+  
+    .add-task-content::-webkit-scrollbar {
+      display: none;
+    }
+  
+    .add-task-form {
+      flex-direction: column;
+      gap: 32px;
+    }
+  
+    .separator {
+      display: none;
+    }
+  
+    .clearBtn {
+      font-size: 20px;
+    }
+  
+    .text-bottom,
+    .respon-d-none {
+      display: none;
+    }
+  
+    .respon-text {
+      display: flex !important;
+      margin-top: 16px;
+      z-index: 100;
+    }
+  
+    .gap-24 {
+      gap: 16px;
+    }
+  
+    label {
+      margin-top: 16px;
+    }
+  
+    .createBtn {
+      margin-right: 16px;
+    }
+  
+    .form-inputs,
+    .form-inputs-right {
+      flex: none;
+      width: 100%;
+      max-width: 100%;
+    }
+  
+    .task-description-text,
+    .task-input-fields {
+      width: 100% !important;
+      max-width: 100%;
+      min-width: 0;
+    }
+  
+    .task-description-text {
+      width: 100%;
+    }
+  }
+  
+@media (max-width: 480px) {
+  .add-task-content-wrapper {
+    padding: 0;
   }
 
-  .separator {
+  #urgent span:first-child,
+  #medium span:first-child,
+  #low span:first-child {
     display: none;
   }
 
-  .clearBtn {
-    font-size: 20px;
+  .footer-edit-modal {
+    height: 80px;
   }
 
-  .text-bottom {
-    display: none;
-  }
-
-  .respon-d-none {
-    display: none;
-  }
-
-  .respon-text {
-    display: flex !important;
-    margin-top: 8px;
-  }
-
-  .gap-24 {
-    gap: 16px;
-  }
-
-  .form-inputs-right {
-    margin-top: 0px;
-  }
-
-  label {
-    margin-top: 16px;
-  }
-
+  .clearBtn,
   .createBtn {
-    margin-right: 16px;
+    bottom: 16px;
+    right: 24px;
+    padding: 12px;
   }
-  .form-inputs {
-    flex: 2;
-  }
-  .form-inputs-right {
-    flex: 1;
+
+  .clearBtn span,
+  .createBtn span {
+    font-size: 16px;
   }
 }
