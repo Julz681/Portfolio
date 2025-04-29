@@ -305,7 +305,7 @@ function moveCursorToSubtaskInput() {
 function evaluateSubtaskInput(valueSizeErrorContainerId) {
     let confirmInputIconsRef = document.getElementById("confirm-input-icons");
     let addIconRef = document.getElementById("add-subtask-icon");
-    let subtaskInputContainerRef = getInputContainer("subtasks");
+    let subtaskInputContainerRef = getInputContainer('subtasks');
     let inputValue = getInputValue(subtaskInputContainerRef);
     if (inputValue.length > 3) {
         switchIconsOnSubtasks(confirmInputIconsRef, addIconRef);
