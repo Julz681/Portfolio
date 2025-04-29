@@ -50,7 +50,6 @@ function renderAllColumns() {
   setTimeout(syncDOMTaskStatusesWithFirebase, 100);
 }
 
-
 // filters all task by they status
 function getTasksByStatus(status) {
   return tasks.filter((task) => task.status === status);
@@ -187,7 +186,7 @@ function setupDeleteButton() {
   editBtn.addEventListener("click", () => {
     const modal = document.getElementById("task-card-modal");
     const taskId = modal.getAttribute("data-task-id");
-    const task = tasks.find(t => t.id === taskId);
+    const task = tasks.find((t) => t.id === taskId);
     if (task) {
       populateEditOverlay(task);
       closeModal();
@@ -196,7 +195,6 @@ function setupDeleteButton() {
   const deleteBtn = document.getElementById("delete-task-button");
   deleteBtn.addEventListener("click", deleteTask);
 }
-
 
 // deletes the current task from the array, re-renders the board, and closes the modal
 function deleteTask() {
@@ -354,17 +352,25 @@ function setupDatePicker() {
 // - This is only a temporary feature!
 async function saveEdit() {
   const editOverlay = document.getElementById("editTaskOverlay");
-  const taskId = document.getElementById("task-card-modal").getAttribute("data-task-id");
-  const taskIndex = tasks.findIndex(t => t.id === taskId);
+  const taskId = document
+    .getElementById("task-card-modal")
+    .getAttribute("data-task-id");
+  const taskIndex = tasks.findIndex((t) => t.id === taskId);
 
   if (taskIndex !== -1) {
-    const updatedTask = { ...tasks[taskIndex] }
-    updatedTask.title = editOverlay.querySelector(".edit-input[placeholder='Enter a title']").value;
-    updatedTask.description = editOverlay.querySelector(".edit-textarea[placeholder='Enter a Description']").value;
+    const updatedTask = { ...tasks[taskIndex] };
+    updatedTask.title = editOverlay.querySelector(
+      ".edit-input[placeholder='Enter a title']"
+    ).value;
+    updatedTask.description = editOverlay.querySelector(
+      ".edit-textarea[placeholder='Enter a Description']"
+    ).value;
     updatedTask.dueDate = editOverlay.querySelector("#due-date").value;
-    updatedTask.priority = editOverlay.querySelector(".priority-labels.selected")?.id || 'not set';
-    updatedTask.assignedTo = Array.from(editOverlay.querySelector("#assigned-select").selectedOptions).map(option => option.value);
-
+    updatedTask.priority =
+      editOverlay.querySelector(".priority-labels.selected")?.id || "not set";
+    updatedTask.assignedTo = Array.from(
+      editOverlay.querySelector("#assigned-select").selectedOptions
+    ).map((option) => option.value);
 
     tasks[taskIndex] = updatedTask;
 
@@ -421,12 +427,12 @@ function toggleCardsDisplay(allCards, matchingCards, text) {
  * @param {HTMLElement} container - The HTML element where the subtasks will be rendered.
  */
 function renderSubtasks(task, container) {
-  container.innerHTML = '';
+  container.innerHTML = "";
   if (task.subtasks && task.subtasks.length > 0) {
     task.subtasks.forEach((subtask, index) => {
-      const [key, value] = Object.entries(subtask)[0]
-      const subtaskItem = document.createElement('div');
-      subtaskItem.classList.add('subtask-item', 'd-flex-space-between');
+      const [key, value] = Object.entries(subtask)[0];
+      const subtaskItem = document.createElement("div");
+      subtaskItem.classList.add("subtask-item", "d-flex-space-between");
       subtaskItem.innerHTML = `
         <span>• ${value}</span>
         <div>
@@ -447,8 +453,12 @@ function renderSubtasks(task, container) {
  */
 function populateEditOverlay(task) {
   const editOverlay = document.getElementById("editTaskOverlay");
-  const titleInput = editOverlay.querySelector(".edit-input[placeholder='Enter a title']");
-  const descriptionTextarea = editOverlay.querySelector(".edit-textarea[placeholder='Enter a Description']");
+  const titleInput = editOverlay.querySelector(
+    ".edit-input[placeholder='Enter a title']"
+  );
+  const descriptionTextarea = editOverlay.querySelector(
+    ".edit-textarea[placeholder='Enter a Description']"
+  );
   const dueDateInput = editOverlay.querySelector("#due-date");
   const priorityButtons = editOverlay.querySelectorAll(".priority-labels");
   const assignedSelect = editOverlay.querySelector("#assigned-select");
@@ -461,7 +471,7 @@ function populateEditOverlay(task) {
   descriptionTextarea.value = task.description;
   dueDateInput.value = task.dueDate;
 
-  priorityButtons.forEach(button => {
+  priorityButtons.forEach((button) => {
     resetPriority(button);
     button.classList.remove("selected");
     if (button.id === task.priority) {
@@ -470,8 +480,10 @@ function populateEditOverlay(task) {
     }
   });
 
-  Array.from(assignedSelect.options).forEach(option => {
-    option.selected = task.assignedTo ? task.assignedTo.includes(option.value) : false;
+  Array.from(assignedSelect.options).forEach((option) => {
+    option.selected = task.assignedTo
+      ? task.assignedTo.includes(option.value)
+      : false;
   });
 
   if (task.assignedTo && task.assignedTo.length > 0) {
@@ -480,14 +492,13 @@ function populateEditOverlay(task) {
     assignedPlaceholder.style.display = "block";
   }
 
-
-  subtaskListContainer.innerHTML = ''; // Remove previous subtasks
+  subtaskListContainer.innerHTML = ""; // Remove previous subtasks
 
   if (task.subtasks && task.subtasks.length > 0) {
     task.subtasks.forEach((subtask, index) => {
-      const [key, value] = Object.entries(subtask)[0]
-      const subtaskItem = document.createElement('div');
-      subtaskItem.classList.add('subtask-item', 'd-flex-space-between');
+      const [key, value] = Object.entries(subtask)[0];
+      const subtaskItem = document.createElement("div");
+      subtaskItem.classList.add("subtask-item", "d-flex-space-between");
       subtaskItem.innerHTML = `
         <span>• ${value}</span>
         <div>
@@ -503,7 +514,7 @@ function populateEditOverlay(task) {
   openEditOverlay();
 
   // Event Listener for adding a new subtask
-  addSubtaskIcon.addEventListener('click', () => {
+  addSubtaskIcon.addEventListener("click", () => {
     const newSubtaskTitle = subtaskInput.value.trim();
     if (newSubtaskTitle) {
       if (!task.subtasks) {
@@ -511,47 +522,55 @@ function populateEditOverlay(task) {
       }
       task.subtasks.push(newSubtaskTitle); // Store new subtasks as simple strings
       renderSubtasks(task, subtaskListContainer); // Function to display the subtasks
-      subtaskInput.value = ''; // Clear the input field
+      subtaskInput.value = ""; // Clear the input field
     }
   });
 
-  // Event Listener for deleting subtasks 
-  subtaskListContainer.addEventListener('click', (event) => {
-    if (event.target.classList.contains('delete-icon')) {
+  // Event Listener for deleting subtasks
+  subtaskListContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete-icon")) {
       const indexToDelete = parseInt(event.target.dataset.index);
-      if (task.subtasks && indexToDelete >= 0 && indexToDelete < task.subtasks.length) {
+      if (
+        task.subtasks &&
+        indexToDelete >= 0 &&
+        indexToDelete < task.subtasks.length
+      ) {
         task.subtasks.splice(indexToDelete, 1);
         renderSubtasks(task, subtaskListContainer); // Rerender the subtasks
       }
     }
   });
 
-  // Event Listener for editing subtasks 
-  subtaskListContainer.addEventListener('click', (event) => {
-    if (event.target.classList.contains('edit-icon')) {
+  // Event Listener for editing subtasks
+  subtaskListContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("edit-icon")) {
       const indexToEdit = parseInt(event.target.dataset.index);
-      if (task.subtasks && indexToEdit >= 0 && indexToEdit < task.subtasks.length) {
-        const subtaskItem = event.target.closest('.subtask-item');
-        const subtaskTextElement = subtaskItem.querySelector('span');
+      if (
+        task.subtasks &&
+        indexToEdit >= 0 &&
+        indexToEdit < task.subtasks.length
+      ) {
+        const subtaskItem = event.target.closest(".subtask-item");
+        const subtaskTextElement = subtaskItem.querySelector("span");
         const originalText = subtaskTextElement.textContent.substring(2);
 
         // Create input field for editing
-        const editInput = document.createElement('input');
-        editInput.type = 'text';
-        editInput.classList.add('edit-subtask-input');
+        const editInput = document.createElement("input");
+        editInput.type = "text";
+        editInput.classList.add("edit-subtask-input");
         editInput.value = originalText;
 
         // Create save and cancel buttons
-        const saveButton = document.createElement('span');
-        saveButton.classList.add('confirm-icon');
-        saveButton.innerHTML = '&#10004;'; // Check
+        const saveButton = document.createElement("span");
+        saveButton.classList.add("confirm-icon");
+        saveButton.innerHTML = "&#10004;"; // Check
 
-        const cancelButton = document.createElement('span');
-        cancelButton.classList.add('clear-icon');
-        cancelButton.innerHTML = '&#10006;';
+        const cancelButton = document.createElement("span");
+        cancelButton.classList.add("clear-icon");
+        cancelButton.innerHTML = "&#10006;";
 
         const controlsDiv = event.target.parentNode;
-        controlsDiv.innerHTML = ''; // Remove icons
+        controlsDiv.innerHTML = ""; // Remove icons
         controlsDiv.appendChild(saveButton);
         controlsDiv.appendChild(cancelButton);
 
@@ -559,12 +578,12 @@ function populateEditOverlay(task) {
         editInput.focus();
 
         // Event Listener for saving
-        saveButton.addEventListener('click', () => {
+        saveButton.addEventListener("click", () => {
           const newText = editInput.value.trim();
           if (newText) {
             const key = Object.keys(task.subtasks[indexToEdit]);
             // const [key, value] = Object.entries(task.subtasks[indexToEdit]);
-            task.subtasks[indexToEdit][key] = newText; // Updates the subtask object directly 
+            task.subtasks[indexToEdit][key] = newText; // Updates the subtask object directly
             renderSubtasks(task, subtaskListContainer);
           } else {
             renderSubtasks(task, subtaskListContainer); // Rerender if text is empty
@@ -572,25 +591,38 @@ function populateEditOverlay(task) {
         });
 
         // Event Listener for canceling
-        cancelButton.addEventListener('click', () => {
+        cancelButton.addEventListener("click", () => {
           renderSubtasks(task, subtaskListContainer);
         });
 
         // Prevent clicks inside the edit input from triggering the delegation event
-        editInput.addEventListener('click', (e) => e.stopPropagation());
+        editInput.addEventListener("click", (e) => e.stopPropagation());
       }
     }
   });
-  console.log('task.subtasks:', task.subtasks);
+  console.log("task.subtasks:", task.subtasks);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const openTaskFormBtn = document.getElementById("openTaskForm");
+
+  if (openTaskFormBtn) {
+    openTaskFormBtn.addEventListener("click", () => {
+      openTaskForm();
+    });
+  }
+});
+
 async function openTaskForm() {
-  let modalWrapperContainerRef = document.getElementById("task-form-modal-wrapper");
-  let taskFormWrapperContainerRef = document.getElementById("task-form-wrapper");
-  let taskFormContainerRef = document.getElementById("task-form");
-  const fetchAndInclude = async taskFormContainerRef => {
-    const file = taskFormContainerRef.getAttribute("w3-include-html");
-    console.log("file:", file);
+  const modalWrapperContainerRef = document.getElementById(
+    "task-form-modal-wrapper"
+  );
+  const taskFormWrapperContainerRef =
+    document.getElementById("task-form-wrapper");
+  const taskFormContainerRef = document.getElementById("task-form");
+
+  const fetchAndInclude = async (container) => {
+    const file = container.getAttribute("w3-include-html");
 
     if (!file) return;
 
@@ -599,15 +631,15 @@ async function openTaskForm() {
       if (!response.ok) {
         throw new Error("Page not found.");
       }
-      taskFormContainerRef.innerHTML = await response.text();
+      container.innerHTML = await response.text();
     } catch (error) {
-      taskFormContainerRef.innerHTML = error.message;
+      container.innerHTML = error.message;
     } finally {
-      taskFormContainerRef.classList.add("active");
+      container.classList.add("active");
     }
   };
+
   await fetchAndInclude(taskFormContainerRef);
-  console.log(taskFormContainerRef.innerHTML);
 
   modalWrapperContainerRef.classList.remove("d_none");
   openTaskCardAnimation(taskFormWrapperContainerRef);
