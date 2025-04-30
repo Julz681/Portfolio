@@ -302,7 +302,7 @@ function resetArrow(arrow) {
 
 // binds buttons for adding or canceling subtask inputs in the overlay
 function setupSubtaskInput() {
-  const input = document.getElementById("subtasks");
+  const input = document.getElementById("subtasks-edit");
   const addBtn = document.getElementById("add-subtask-icon");
   const confirmWrap = document.getElementById("confirm-icons");
   const confirmBtn = document.getElementById("confirm-icon");
@@ -463,7 +463,7 @@ function populateEditOverlay(task) {
   const priorityButtons = editOverlay.querySelectorAll(".priority-labels");
   const assignedSelect = editOverlay.querySelector("#assigned-select");
   const assignedPlaceholder = editOverlay.querySelector(".select-placeholder");
-  const subtaskInput = editOverlay.querySelector("#subtasks");
+  const subtaskInput = editOverlay.querySelector("#subtasks-edit");
   const addSubtaskIcon = document.getElementById("add-subtask-icon");
   const subtaskListContainer = document.getElementById("subtaskList");
 
