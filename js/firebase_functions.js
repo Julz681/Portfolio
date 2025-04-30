@@ -10,7 +10,6 @@ window.userNames = [];
 async function init() {
   await getUsersFromDatabase();
   await uploadTemplateTasksOnce();
-  intitiateDatePicker();
 }
 
 async function uploadTemplateTasksOnce() {
@@ -31,7 +30,6 @@ async function uploadTemplateTasksOnce() {
 
 function getTasksFromLocalStorage() {
   let newTasks = JSON.parse(localStorage.getItem("tasks"));
-  console.log(newTasks);
   if (newTasks === null) {
     return;
   } else {

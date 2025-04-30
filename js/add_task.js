@@ -412,14 +412,14 @@ function checkCategoryInputPlaceholder(requiredErrorContainerId) {
 // subtask section
 
 function moveCursorToSubtaskInput() {
-  let subtaskInputContainerRef = getInputContainer("subtasks");
+  let subtaskInputContainerRef = getInputContainer("subtasks-task-form");
   subtaskInputContainerRef.focus();
 }
 
 function evaluateSubtaskInput(valueSizeErrorContainerId) {
   let confirmInputIconsRef = document.getElementById("confirm-input-icons");
   let addIconRef = document.getElementById("add-subtask-icon");
-  let subtaskInputContainerRef = getInputContainer("subtasks");
+  let subtaskInputContainerRef = getInputContainer("subtasks-task-form");
   let inputValue = getInputValue(subtaskInputContainerRef);
   if (inputValue.length > 3) {
     switchIconsOnSubtasks(confirmInputIconsRef, addIconRef);
@@ -480,6 +480,8 @@ function addSubtask(id, valueSizeErrorContainerId) {
   input.value = "";
   evaluateSubtaskInput(valueSizeErrorContainerId);
 }
+
+// TODO: BLOCK creation of Subtasks due to value shortage
 
 function clearSubtaskInput(id, valueSizeErrorContainerId) {
   let input = getInputContainer(id);
@@ -755,6 +757,4 @@ function showTaskSuccessMessage() {
   }, 1500);
 }
 
-//TODO: Template add-task
 //TODO: Add add-task Template integrations
-//TODO: fix 100vh reset

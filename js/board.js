@@ -636,6 +636,7 @@ async function openTaskForm() {
       container.innerHTML = error.message;
     } finally {
       container.classList.add("active");
+      intitiateDatePicker();
     }
   };
 
@@ -643,5 +644,4 @@ async function openTaskForm() {
 
   modalWrapperContainerRef.classList.remove("d_none");
   openTaskCardAnimation(taskFormWrapperContainerRef);
-  initiateDatePicker();
 }

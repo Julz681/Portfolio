@@ -161,18 +161,18 @@
                 <div class="subtasks-wrapper d-flex-column gap-8">
                     <label for="subtasks">Subtasks</label>
                     <div class="subtask-input-wrapper d-flex-space-between br-10" onclick="moveCursorToSubtaskInput()">
-                        <input type="text" name="subtasks" id="subtasks" class="subtask-input size-20 br-10"
+                        <input type="text" name="subtasks" id="subtasks-task-form" class="subtask-input size-20 br-10"
                             placeholder="Add new Subtask"
                             oninput="evaluateSubtaskInput('subtask-value-length-error-message')"
                             onchange="evaluateSubtaskInput('subtask-value-length-error-message')"
-                            onkeydown="createSubtaskOnKeyPress('subtasks', event, 'subtask-value-length-error-message')" />
+                            onkeydown="createSubtaskOnKeyPress('subtasks-task-form', event, 'subtask-value-length-error-message')" />
                         <span id="add-subtask-icon" class="add-subtask-icon"></span>
                         <div id="confirm-input-icons" class="confirm-input-icons d-flex-space-between d_none">
                             <span class="clear-icon"
-                                onclick="clearSubtaskInput('subtasks', 'subtask-value-length-error-message')"></span>
+                                onclick="clearSubtaskInput('subtasks-task-form', 'subtask-value-length-error-message')"></span>
                             <span class="confirm-input-icons-separator">|</span>
                             <span class="confirm-icon"
-                                onclick="addSubtask('subtasks', 'subtask-value-length-error-message')"></span>
+                                onclick="addSubtask('subtasks-task-form', 'subtask-value-length-error-message')"></span>
                         </div>
                     </div>
                     <span id="subtask-value-length-error-message" class="required-error-message d_none">Value too
