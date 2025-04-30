@@ -3,43 +3,42 @@ import { database, ref, push, set, get, update } from "../js/firebase.js"; //
 window.users = [];
 window.userNames = [];
 
-
 /**
  * This function initializes the board by fetching users from the database
  * and then synchronizing hardcoded tasks with Firebase.
  */
 async function init() {
-    await getUsersFromDatabase();
-    await uploadTemplateTasksOnce();
-
+  await getUsersFromDatabase();
+  await uploadTemplateTasksOnce();
+  intitiateDatePicker();
 }
 
 async function uploadTemplateTasksOnce() {
-    const tasksRef = ref(database, 'tasks');
+  const tasksRef = ref(database, "tasks");
 
-    try {
-        const snapshot = await get(tasksRef);
-        const existingTasks = snapshot.exists() ? snapshot.val() : {};
+  try {
+    const snapshot = await get(tasksRef);
+    const existingTasks = snapshot.exists() ? snapshot.val() : {};
 
-        for (const task of tasks) {
-            await set(ref(database, `tasks/${task.id}`), task);
-            console.log(`Task "${task.title}" uploaded or updated.`);
-        }
-    } catch (error) {
-        console.error("Error uploading tasks:", error);
+    for (const task of tasks) {
+      await set(ref(database, `tasks/${task.id}`), task);
+      console.log(`Task "${task.title}" uploaded or updated.`);
     }
+  } catch (error) {
+    console.error("Error uploading tasks:", error);
+  }
 }
 
 function getTasksFromLocalStorage() {
-    let newTasks = JSON.parse(localStorage.getItem('tasks'));
-    console.log(newTasks);
-    if (newTasks === null) {
-        return
-    } else {
-        for (let index = 0; index < newTasks.length; index++) {
-            tasks.push(newTasks[index])
-        }
+  let newTasks = JSON.parse(localStorage.getItem("tasks"));
+  console.log(newTasks);
+  if (newTasks === null) {
+    return;
+  } else {
+    for (let index = 0; index < newTasks.length; index++) {
+      tasks.push(newTasks[index]);
     }
+  }
 }
 
 /**
@@ -49,22 +48,21 @@ function getTasksFromLocalStorage() {
  * or null if there's no data or an error occurs during fetching.
  */
 async function getUsersFromDatabase() {
-    const usersRef = ref(database, 'users');
-    try {
-        const snapshot = await get(usersRef);
-        if (snapshot.exists()) {
-            window.users = snapshot.val();
-            return getUserNames(window.users);
-        } else {
-            console.log("No data available");
-            return null;
-        }
-    } catch (error) {
-        console.error("Error fetching users:", error);
-        return null;
+  const usersRef = ref(database, "users");
+  try {
+    const snapshot = await get(usersRef);
+    if (snapshot.exists()) {
+      window.users = snapshot.val();
+      return getUserNames(window.users);
+    } else {
+      console.log("No data available");
+      return null;
     }
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return null;
+  }
 }
-
 
 /**
  * This function takes an object of users and extracts their names into a new array,
@@ -74,11 +72,9 @@ async function getUsersFromDatabase() {
  * @returns {Array<string>} An array containing the names of all users from the input object.
  */
 function getUserNames(users) {
-    let names = Object.values(users).map(user => user.name);
-    return window.userNames = names;
-
+  let names = Object.values(users).map((user) => user.name);
+  return (window.userNames = names);
 }
-
 
 /**
  * This function determines the priority of a task based on the 'src' attribute
@@ -87,14 +83,11 @@ function getUserNames(users) {
  * @returns {string} A string representing the priority ('low', 'medium', 'urgent', or 'not set' if the source doesn't match).
  */
 function getPriorityFromImageElement(priorityImg) {
-
-    if (priorityImg?.src.includes('low-icon')) return 'low';
-    if (priorityImg?.src.includes('medium-icon')) return 'medium';
-    if (priorityImg?.src.includes('urgent')) return 'urgent';
-    return 'not set';
-
+  if (priorityImg?.src.includes("low-icon")) return "low";
+  if (priorityImg?.src.includes("medium-icon")) return "medium";
+  if (priorityImg?.src.includes("urgent")) return "urgent";
+  return "not set";
 }
-
 
 /**
  * This function determines the status of a task by checking the class list of its closest
@@ -104,16 +97,14 @@ function getPriorityFromImageElement(priorityImg) {
  * 'await feedback', 'done', or 'unknown' if the column class is not recognized).
  */
 function getStatusFromColumnElement(taskElement) {
-
-    const column = taskElement.closest('.board-columns');
-    if (column?.classList.contains('to-do-wrapper')) return 'to-do';
-    if (column?.classList.contains('in-progress-wrapper')) return 'in-progress';
-    if (column?.classList.contains('await-feedback-wrapper')) return 'await-feedback';
-    if (column?.classList.contains('done-wrapper')) return 'done';
-    return 'unknown';
-
+  const column = taskElement.closest(".board-columns");
+  if (column?.classList.contains("to-do-wrapper")) return "to-do";
+  if (column?.classList.contains("in-progress-wrapper")) return "in-progress";
+  if (column?.classList.contains("await-feedback-wrapper"))
+    return "await-feedback";
+  if (column?.classList.contains("done-wrapper")) return "done";
+  return "unknown";
 }
-
 
 /**
  * This function dynamically renders a list of users to assign to a task in the UI.
@@ -121,16 +112,23 @@ function getStatusFromColumnElement(taskElement) {
  * by the `getUsersToAssignTemplate` function for each user in the `window.userNames` array.
  */
 function renderUsersToAssign() {
-    let usersListContainerRef = document.getElementById("assigned-to-users-list");
-    usersListContainerRef.innerHTML = "";
-    for (let index = 0; index < window.userNames.length; index++) {
-        if (typeof window.userNames[index] === "string") {
-            let initials = getInitials(window.userNames[index]);
-            let stylingObject = checkIsAssigned(window.userNames[index]);
-            let iconBackgroundColor = getIconBackgroundColor(initials);
-            usersListContainerRef.innerHTML += getUsersToAssignTemplate(window.userNames[index], index, stylingObject.wrapperClass, stylingObject.checkboxClass, initials, iconBackgroundColor);
-        }
+  let usersListContainerRef = document.getElementById("assigned-to-users-list");
+  usersListContainerRef.innerHTML = "";
+  for (let index = 0; index < window.userNames.length; index++) {
+    if (typeof window.userNames[index] === "string") {
+      let initials = getInitials(window.userNames[index]);
+      let stylingObject = checkIsAssigned(window.userNames[index]);
+      let iconBackgroundColor = getIconBackgroundColor(initials);
+      usersListContainerRef.innerHTML += getUsersToAssignTemplate(
+        window.userNames[index],
+        index,
+        stylingObject.wrapperClass,
+        stylingObject.checkboxClass,
+        initials,
+        iconBackgroundColor
+      );
     }
+  }
 }
 
 window.renderUsersToAssign = renderUsersToAssign;
@@ -143,12 +141,13 @@ window.getTasksFromLocalStorage = getTasksFromLocalStorage;
  * @param {string} newStatus - The new status (e.g. 'to do', 'in progress', 'done', etc.).
  */
 function updateTaskStatusInFirebase(taskId, newStatus) {
-    const taskRef = ref(database, `tasks/${taskId}`);
-    update(taskRef, { status: newStatus })
-        .then(() => console.log(`Task ${taskId} updated to "${newStatus}" in Firebase.`))
-        .catch(error => console.error("Error updating task status:", error));
+  const taskRef = ref(database, `tasks/${taskId}`);
+  update(taskRef, { status: newStatus })
+    .then(() =>
+      console.log(`Task ${taskId} updated to "${newStatus}" in Firebase.`)
+    )
+    .catch((error) => console.error("Error updating task status:", error));
 }
-
 
 window.updateTaskStatusInFirebase = updateTaskStatusInFirebase;
 
@@ -157,34 +156,36 @@ window.updateTaskStatusInFirebase = updateTaskStatusInFirebase;
  * based on their current column in the DOM.
  */
 function syncDOMTaskStatusesWithFirebase() {
-    const allCards = document.querySelectorAll(".board-card");
-    allCards.forEach(card => {
-        const taskId = card.getAttribute("data-task-id");
-        const newStatus = getStatusFromColumnElement(card);
-        if (taskId && newStatus !== "unknown") {
-            updateTaskStatusInFirebase(taskId, newStatus);
-        }
-    });
+  const allCards = document.querySelectorAll(".board-card");
+  allCards.forEach((card) => {
+    const taskId = card.getAttribute("data-task-id");
+    const newStatus = getStatusFromColumnElement(card);
+    if (taskId && newStatus !== "unknown") {
+      updateTaskStatusInFirebase(taskId, newStatus);
+    }
+  });
 }
 window.syncDOMTaskStatusesWithFirebase = syncDOMTaskStatusesWithFirebase;
-
 
 import { remove } from "../js/firebase.js";
 
 /**
  * This function deletes a task from firebase when it is deleted on board.
- * @param {string} taskId - 
+ * @param {string} taskId -
  */
 function deleteTaskFromFirebase(taskId) {
-    const taskRef = ref(database, `tasks/${taskId}`);
-    remove(taskRef)
-        .then(() => console.log(`Task ${taskId} erfolgreich aus Firebase gelöscht.`))
-        .catch((error) => console.error("Fehler beim Löschen des Tasks aus Firebase:", error));
+  const taskRef = ref(database, `tasks/${taskId}`);
+  remove(taskRef)
+    .then(() =>
+      console.log(`Task ${taskId} erfolgreich aus Firebase gelöscht.`)
+    )
+    .catch((error) =>
+      console.error("Fehler beim Löschen des Tasks aus Firebase:", error)
+    );
 }
 
 window.deleteTaskFromFirebase = deleteTaskFromFirebase;
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    init();
+document.addEventListener("DOMContentLoaded", () => {
+  init();
 });

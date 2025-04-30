@@ -643,4 +643,5 @@ async function openTaskForm() {
 
   modalWrapperContainerRef.classList.remove("d_none");
   openTaskCardAnimation(taskFormWrapperContainerRef);
+  initiateDatePicker();
 }

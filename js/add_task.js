@@ -2,24 +2,25 @@
 
 let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
 let suppressEvents;
+let fp;
 
-const fp = flatpickr("#due-date-task", {
-  dateFormat: "d/m/Y",
-  altInput: true,
-  altFormat: "d/m/Y",
-  allowInput: true,
-  onOpen: function () {
-    if (!suppressEvents) checkDateInput("due-date-task");
-  },
-  onChange: function () {
-    if (!suppressEvents) checkDateInput("due-date-task");
-  },
-  onValueUpdate: function () {
-    if (!suppressEvents) checkDateInput("due-date-task");
-  },
-});
-
-console.log(fp);
+function intitiateDatePicker() {
+  fp = flatpickr("#due-date-task", {
+    dateFormat: "d/m/Y",
+    altInput: true,
+    altFormat: "d/m/Y",
+    allowInput: true,
+    onOpen: function () {
+      if (!suppressEvents) checkDateInput("due-date-task");
+    },
+    onChange: function () {
+      if (!suppressEvents) checkDateInput("due-date-task");
+    },
+    onValueUpdate: function () {
+      if (!suppressEvents) checkDateInput("due-date-task");
+    },
+  });
+}
 
 let subtaskArray = [];
 let assignees = [];
