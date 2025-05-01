@@ -376,8 +376,9 @@ header {
   width: 100%;
   height: 16px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 8px; 
 }
 
 .progress {
@@ -395,7 +396,7 @@ header {
 }
 
 .subtasks {
-  width: 75px;
+  width: 80px;
   font-size: 12px;
 }
 

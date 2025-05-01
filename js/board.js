@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupDatePicker();
   getTasksFromLocalStorage();
   renderAllColumns();
+  setupTaskFormCloseButton();
 });
 
 // this funktion ensures that clicking outside the task detail card closes the modal
@@ -761,35 +762,67 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+function setupTaskFormCloseButton() {
+  const closeBtn = document.getElementById("modalCloseTaskForm");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeTaskForm);
+  }
+}
+
+let overlayIsOpen = false;
+
 async function openTaskForm() {
-  const modalWrapperContainerRef = document.getElementById(
-    "task-form-modal-wrapper"
+  if (overlayIsOpen) return;
+  overlayIsOpen = true;
+
+  const modalWrapper = document.getElementById("task-form-modal-wrapper");
+  const formWrapper = document.getElementById("task-form-wrapper");
+  const formContainer = document.getElementById("task-form");
+
+  const file = formContainer.getAttribute("w3-include-html");
+  if (!file) return;
+
+  try {
+    const response = await fetch(file);
+    if (!response.ok) throw new Error("Page not found.");
+    formContainer.innerHTML = await response.text();
+  } catch (error) {
+    formContainer.innerHTML = error.message;
+  } finally {
+    formContainer.classList.add("active");
+    modalWrapper.classList.remove("d_none");
+
+    formWrapper.classList.remove("slide-out");
+    void formWrapper.offsetWidth;
+    formWrapper.classList.add("slide-in");
+
+    setupTaskFormCloseButton();
+  }
+}
+
+function closeTaskForm() {
+  const modal = document.getElementById("task-form-modal-wrapper");
+  const wrapper = document.getElementById("task-form-wrapper");
+  const container = document.getElementById("task-form");
+
+  if (!modal || !wrapper || !container) return;
+
+  wrapper.classList.remove("slide-in");
+  wrapper.classList.add("slide-out");
+  modal.classList.add("fade-out");
+
+  wrapper.addEventListener(
+    "transitionend",
+    function end() {
+      modal.classList.remove("active", "fade-out");
+      modal.classList.add("d_none");
+      wrapper.classList.remove("slide-out");
+      container.innerHTML = "";
+      wrapper.removeEventListener("transitionend", end);
+      overlayIsOpen = false;
+    },
+    { once: true }
   );
-  const taskFormWrapperContainerRef =
-    document.getElementById("task-form-wrapper");
-  const taskFormContainerRef = document.getElementById("task-form");
 
-  const fetchAndInclude = async (container) => {
-    const file = container.getAttribute("w3-include-html");
-
-    if (!file) return;
-
-    try {
-      const response = await fetch(file);
-      if (!response.ok) {
-        throw new Error("Page not found.");
-      }
-      container.innerHTML = await response.text();
-    } catch (error) {
-      container.innerHTML = error.message;
-    } finally {
-      container.classList.add("active");
-      intitiateDatePicker();
-    }
-  };
-
-  await fetchAndInclude(taskFormContainerRef);
-
-  modalWrapperContainerRef.classList.remove("d_none");
-  openTaskCardAnimation(taskFormWrapperContainerRef);
+  document.body.classList.remove("modal-open");
 }
