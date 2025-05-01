@@ -104,6 +104,24 @@ function getStatusFromColumnElement(taskElement) {
   return "unknown";
 }
 
+function renderUsersToSelect() {
+  const select = document.getElementById("assigned-select");
+  if (!select || !Array.isArray(window.userNames)) return;
+
+  select.innerHTML = `<option value="" disabled selected hidden></option>`;
+
+  window.userNames.forEach((name, index) => {
+    if (typeof name === "string") {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = name;
+      select.appendChild(option);
+    }
+  });
+}
+
+
+
 /**
  * This function dynamically renders a list of users to assign to a task in the UI.
  * It clears the existing content of the container and then appends HTML generated
@@ -127,7 +145,11 @@ function renderUsersToAssign() {
       );
     }
   }
+
+  renderUsersToSelect();
 }
+
+
 
 window.renderUsersToAssign = renderUsersToAssign;
 window.init = init;

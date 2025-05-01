@@ -212,9 +212,15 @@ function deleteTask() {
 }
 
 // shows the editing overlay
-function openEditOverlay() {
+function openEditOverlay(taskId) {
   const overlay = document.getElementById("editTaskOverlay");
   overlay.classList.remove("hidden");
+
+  renderUsersToAssignEdit();
+  setupEditDropdownEvents();
+
+  const dropdown = document.getElementById("assigned-to-dropdown-edit");
+  renderAssignees("assigned-to-dropdown-edit", dropdown);
 }
 
 // hides the editing overlay
@@ -270,34 +276,133 @@ function activatePriority(button) {
 
 // controls the dropdown for "Assigned to" in the edit overlay including the arrow behavior
 function setupAssignedToDropdown() {
-  const select = document.getElementById("assigned-select");
-  const arrow = document.getElementById("select-arrow");
-  const placeholder = document.querySelector(".select-placeholder");
-  select.addEventListener("mousedown", () => {
-    toggleArrow(arrow);
-    // fillEditDropdownWithContacts(); // <-- HIER ENTFERNT
+  if (!window.userNames || window.userNames.length === 0) {
+    window.userNames = ["Max Mustermann", "Erika Musterfrau"];
+  }
+}
+
+function setupEditDropdownEvents() {
+  const arrow = document.getElementById("select-arrow-edit");
+  const wrapper = document.querySelector(".dropdown-field-wrapper");
+  const dropdown = document.getElementById("assigned-to-dropdown-edit");
+
+  if (!arrow || !wrapper || !dropdown) return;
+
+  arrow.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = !dropdown.classList.contains("d_none");
+
+    if (isOpen) {
+      closeEditDropdown(dropdown, arrow);
+    } else {
+      openEditDropdown(dropdown, arrow);
+    }
   });
 
-  select.addEventListener("change", () => {
-    placeholder.style.display = select.value ? "none" : "block";
-    resetArrow(arrow);
-  });
   document.addEventListener("click", (e) => {
-    const wrapper = document.querySelector(".select-wrapper");
-    if (!wrapper.contains(e.target)) resetArrow(arrow);
+    if (!wrapper.contains(e.target)) {
+      closeEditDropdown(dropdown, arrow);
+    }
   });
 }
 
-// toggles the dropdown arrow icon (opens/closes)
-function toggleArrow(arrow) {
-  arrow.classList.toggle("open");
-  arrow.classList.toggle("closed");
+function openEditDropdown(dropdown, arrow) {
+  dropdown.classList.remove("d_none");
+  arrow.classList.remove("closed");
+  arrow.classList.add("open");
 }
 
-// sets the dropdown arrow icon to the closed state
-function resetArrow(arrow) {
+function closeEditDropdown(dropdown, arrow) {
+  dropdown.classList.add("d_none");
   arrow.classList.remove("open");
   arrow.classList.add("closed");
+}
+
+function renderAssignees(containerId, container) {
+  const assigneesContainerId =
+    containerId === "assigned-to-dropdown-edit"
+      ? "assignees-list-edit"
+      : "assignees-list";
+
+  let assigneesContainerRef = document.getElementById(assigneesContainerId);
+
+  if (
+    (container.classList.contains("d_none") === false &&
+      assignees.length > 0) ||
+    (containerId.includes("category-dropdown") && assignees.length > 0)
+  ) {
+    assigneesContainerRef.classList.remove("d_none");
+    assigneesContainerRef.innerHTML = "";
+
+    assignees.forEach((name) => {
+      let initials = getInitials(name);
+      let iconBackgroundColor = getIconBackgroundColor(initials);
+      assigneesContainerRef.innerHTML += getAvatarTemplate(
+        initials,
+        iconBackgroundColor
+      );
+    });
+  } else {
+    assigneesContainerRef.classList.add("d_none");
+    assigneesContainerRef.innerHTML = "";
+  }
+}
+
+function toggleDropdownSelection(dropdownId, event) {
+  event.stopPropagation();
+
+  const dropdown = document.getElementById(dropdownId);
+  const arrowClosed = document.getElementById(`${dropdownId}-closed`);
+  const arrowOpen = document.getElementById(`${dropdownId}-open`);
+
+  const isOpen = !dropdown.classList.contains("d_none");
+
+  if (isOpen) {
+    dropdown.classList.add("d_none");
+    arrowClosed.classList.remove("d_none");
+    arrowOpen.classList.add("d_none");
+  } else {
+    dropdown.classList.remove("d_none");
+    arrowClosed.classList.add("d_none");
+    arrowOpen.classList.remove("d_none");
+  }
+}
+
+function toggleAssigned(name, containerId) {
+  const index = assignees.indexOf(name);
+  if (index > -1) {
+    assignees.splice(index, 1);
+  } else {
+    assignees.push(name);
+  }
+
+  const dropdown = document.getElementById(containerId);
+  renderAssignees(containerId, dropdown);
+  renderUsersToAssignEdit();
+}
+
+function renderUsersToAssignEdit() {
+  const usersList = document.getElementById("assigned-to-users-list-edit");
+  if (!usersList || !window.userNames) return;
+
+  usersList.innerHTML = "";
+
+  window.userNames.forEach((name, index) => {
+    if (typeof name === "string") {
+      const initials = getInitials(name);
+      const bgColor = getIconBackgroundColor(initials);
+      const styling = checkIsAssigned(name);
+
+      usersList.innerHTML += getUsersToAssignTemplate(
+        name,
+        index,
+        styling.wrapperClass,
+        styling.checkboxClass,
+        initials,
+        bgColor
+      );
+    }
+  });
 }
 
 // binds buttons for adding or canceling subtask inputs in the overlay
@@ -344,12 +449,6 @@ function setupDatePicker() {
   }
 }
 
-// closes the edit overlay and shows the modal again
-// - This is only a temporary feature!
-// closes the edit overlay and shows the modal again
-// - This is only a temporary feature!
-// closes the edit overlay and shows the modal again
-// - This is only a temporary feature!
 async function saveEdit() {
   const editOverlay = document.getElementById("editTaskOverlay");
   const taskId = document

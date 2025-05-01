@@ -309,18 +309,43 @@
             </div>
           </div>
           <label class="edit-label">Assigned to</label>
-          <div class="select-wrapper">
-            <span class="select-placeholder">Select contacts to assign</span>
-            <select class="edit-select" id="assigned-select">
-              <option value="" disabled selected hidden></option>
-              <option value="1">Contact 1</option>
-              <option value="2">Contact 2</option>
-            </select>
-            <label for="assigned-select" class="select-arrow closed" id="select-arrow"></label>
+
+          <div class="dropdown-field-wrapper">
+            <div class="dropdown-input-wrapper br-10 d-flex-center"
+              onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)">
+              
+              <input
+                class="dropdown-input size-20"
+                type="text"
+                id="assigned-to-input-edit"
+                name="assigned-to-edit"
+                placeholder="Select contacts to assign"
+                oninput="searchUsersToAssign('assigned-to-dropdown-edit', 'assigned-to-users-list-edit')" />
+          
+              <span
+                class="dropdown-icon dropdown-icon-closed"
+                id="assigned-to-dropdown-edit-closed"
+                onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)"></span>
+          
+              <span
+                class="dropdown-icon dropdown-icon-open d_none"
+                id="assigned-to-dropdown-edit-open"
+                onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)"></span>
+            </div>
+
+            <div class="dropdown-wrapper d_none" id="assigned-to-dropdown-edit">
+              <ul class="dropdown d-flex-column" id="assigned-to-users-list-edit">
+              </ul>
+            </div>
+          
+            <div class="d-flex-center d_none" id="assignees-list"></div>
           </div>
+          
+          
+          
 
           <label class="edit-label" for="subtasks">Subtasks</label>
-          <div class="subtask-input-wrapper">
+          <div class="subtask-input-wrapper d-flex-space-between br-10">
             <input type="text" name="subtasks" id="subtasks-edit" class="subtask-input edit-input"
               placeholder="Add new subtask">
 
