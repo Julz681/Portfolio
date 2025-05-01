@@ -20,8 +20,9 @@ async function uploadTemplateTasksOnce() {
     const existingTasks = snapshot.exists() ? snapshot.val() : {};
 
     for (const task of tasks) {
-      await set(ref(database, `tasks/${task.id}`), task);
-      console.log(`Task "${task.title}" uploaded or updated.`);
+      if (!existingTasks[task.id]) {
+        await set(ref(database, `tasks/${task.id}`), task);
+      }
     }
   } catch (error) {
     console.error("Error uploading tasks:", error);
@@ -29,14 +30,15 @@ async function uploadTemplateTasksOnce() {
 }
 
 function getTasksFromLocalStorage() {
-  let newTasks = JSON.parse(localStorage.getItem("tasks"));
-  if (newTasks === null) {
-    return;
-  } else {
-    for (let index = 0; index < newTasks.length; index++) {
-      tasks.push(newTasks[index]);
+  const saved = JSON.parse(localStorage.getItem("tasks"));
+  if (!saved) return;
+
+  const existingIds = new Set(tasks.map((t) => t.id));
+  saved.forEach((task) => {
+    if (!existingIds.has(task.id)) {
+      tasks.push(task);
     }
-  }
+  });
 }
 
 /**
@@ -120,8 +122,6 @@ function renderUsersToSelect() {
   });
 }
 
-
-
 /**
  * This function dynamically renders a list of users to assign to a task in the UI.
  * It clears the existing content of the container and then appends HTML generated
@@ -148,8 +148,6 @@ function renderUsersToAssign() {
 
   renderUsersToSelect();
 }
-
-
 
 window.renderUsersToAssign = renderUsersToAssign;
 window.init = init;

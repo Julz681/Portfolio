@@ -167,13 +167,14 @@ function createTaskHTML(task) {
             <p class="board-card-description">${task.description}</p>
           </div>
           <div class="status d-flex-center">
-            <div class="progress" role="progressbar">
-              <div class="progress-bar" style="width: 60%"></div>
-            </div>
-            <div class="d-flex-center subtasks">
-              <span>0</span> / <span>${task.subtasks.length}</span> Subtasks
-            </div>
+          <div class="progress" role="progressbar">
+            <div class="progress-bar" id="progress-bar-${task.id}" style="width: 0%"></div>
           </div>
+          <div class="d-flex-center subtasks" id="subtask-count-${task.id}">
+            0 / ${task.subtasks.length} Subtasks
+          </div>
+        </div>
+
           <div class="d-flex-space-between board-card-footer">
             <div class="user-icons-wrapper d-flex-center">${users}</div>
             <img src="../assets/img/icons/${task.priority}-icon.png" class="priority" />
@@ -212,20 +213,28 @@ function setModalUsers(task) {
 function setModalSubtasks(task) {
   const box = document.querySelector(".subtasks-wrapper");
   box.innerHTML = task.subtasks
-    .map(
-      (s, i) => {
-        const [key, value] = Object.entries(s)[0];
-        return ` <div class="modal-card-subtask-wrapper d-flex-center">
-                    <label class="modal-card-subtask gap-16">
-                      <input type="checkbox" id="subtask-${key}" />
-                      <span class="checkmark"></span>
-                    <span>${value}</span>
-                    </label>
-                  </div>`
-      }
-    )
+    .map((s, i) => {
+      const [key, value] = Object.entries(s)[0];
+      const isChecked = value.startsWith("[x]");
+      const label = isChecked ? value.replace("[x] ", "") : value;
+
+      return `
+        <div class="modal-card-subtask-wrapper d-flex-center">
+          <label class="modal-card-subtask gap-16">
+            <input 
+              type="checkbox" 
+              id="subtask-${key}" 
+              ${isChecked ? "checked" : ""} 
+              onchange="toggleSubtaskCheckbox('${task.id}', ${i})"
+            />
+            <span class="checkmark"></span>
+            <span>${label}</span>
+          </label>
+        </div>`;
+    })
     .join("");
 }
+
 
 // shows the contact details on the right side
 function showContactDetails(name, email, phone) {

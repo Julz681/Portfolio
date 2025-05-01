@@ -38,16 +38,22 @@ function getColumnMap() {
 // renders all columns in the board
 function renderAllColumns() {
   const map = getColumnMap();
+
   for (const status in map) {
     const column = map[status];
-    const list = getTasksByStatus(status);
+    const tasksByStatus = getTasksByStatus(status);
+
     clearColumn(column);
-    list.forEach((task) => renderTask(column, task));
-    toggleEmptyMsg(column, list);
+    tasksByStatus.forEach((task) => {
+      renderTask(column, task);
+      renderSubtaskProgress(task);
+    });
+
+    toggleEmptyMsg(column, tasksByStatus);
   }
+
   setupCardClick();
-  init(); // Drag & Drop new
-  setTimeout(syncDOMTaskStatusesWithFirebase, 100);
+  init();
 }
 
 // filters all task by they status
@@ -72,14 +78,57 @@ function toggleEmptyMsg(column, tasks) {
   if (msg) msg.classList.toggle("d_none", tasks.length > 0);
 }
 
-// creates a task card - main function = in the board_template.js
-function renderBoard() {
-  const board = document.getElementById("board");
-  board.innerHTML = "";
+// updates the progress bar and subtask count display for a given task
+function renderSubtaskProgress(task) {
+  const progressBar = document.getElementById(`progress-bar-${task.id}`);
+  const countDisplay = document.getElementById(`subtask-count-${task.id}`);
 
-  tasks.forEach((task) => {
-    board.innerHTML += createTaskHTML(task);
+  const total = task.subtasks.length;
+  let completed = 0;
+
+  task.subtasks.forEach((subtask) => {
+    const key = Object.keys(subtask)[0];
+    const value = subtask[key];
+
+    if (typeof value === "string" && value.startsWith("[x]")) {
+      completed++;
+    }
   });
+
+  const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  if (progressBar) {
+    progressBar.style.width = `${percentage}%`;
+  }
+
+  if (countDisplay) {
+    countDisplay.innerHTML = `${completed} / ${total} Subtasks`;
+  }
+}
+
+// toggles the checkbox state of a subtask and updates progress + storage
+function toggleSubtaskCheckbox(taskId, subtaskIndex) {
+  const task = window.tasks.find((t) => t.id === taskId);
+  if (!task) return;
+
+  const subtask = task.subtasks[subtaskIndex];
+  const key = Object.keys(subtask)[0];
+  const currentValue = subtask[key];
+
+  const isChecked = currentValue.startsWith("[x]");
+  const label = isChecked ? currentValue.replace("[x] ", "") : currentValue;
+  const newValue = isChecked ? label : `[x] ${label}`;
+
+  task.subtasks[subtaskIndex][key] = newValue;
+
+  renderSubtaskProgress(task);
+
+  saveTasksToStorageOrFirebase();
+}
+
+// saves the current tasks array to localStorage
+function saveTasksToStorageOrFirebase() {
+  localStorage.setItem("tasks", JSON.stringify(window.tasks));
 }
 
 //  adds a click listener to all task cards so that they open the modal when clicked
