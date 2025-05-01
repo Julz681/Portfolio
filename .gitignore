@@ -9,3 +9,4 @@ firestore.rules
 js/add_contact.js
 js/firebase.js
 package-lock.json
+package.json

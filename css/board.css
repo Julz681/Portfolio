@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Figtree", serif;
-  src: url(../assets/font/Figtree-Oxanium-Ubuntu/Figtree/Figtree-Italic-VariableFont_wght.ttf);
+  src: url(/assets/font/Figtree-Oxanium-Ubuntu/Figtree/Figtree-Italic-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Inter", sans-serif;
-  src: url(../assets/font/Inter/Inter-VariableFont_opsz\wght.ttf);
+  src: url(/assets/font/Inter/Inter-VariableFont_opsz\wght.ttf);
 }
 
 * {
@@ -195,14 +195,14 @@ header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-image: url(../assets/img/icons/search.png);
+  background-image: url(/assets/img/icons/search.png);
   background-repeat: no-repeat;
   background-position: 80% 50%;
   cursor: pointer;
 }
 
 .search-icon:hover {
-  background-image: url(../assets/img/icons/search-hover.png);
+  background-image: url(/assets/img/icons/search-hover.png);
   background-repeat: no-repeat;
   background-position: 100% 50%;
 }
@@ -228,7 +228,7 @@ header {
 }
 
 .plus {
-  background-image: url(../assets/img/icons/add.png);
+  background-image: url(/assets/img/icons/add.png);
   background-repeat: no-repeat;
   background-size: 18px 18px;
   background-position: 50% 50%;
@@ -280,7 +280,7 @@ header {
 }
 
 .add-task-icon {
-  background-image: url(../assets/img/icons/add-task-icon-default.png);
+  background-image: url(/assets/img/icons/add-task-icon-default.png);
   width: 24px;
   height: 24px;
   background-repeat: no-repeat;
@@ -288,7 +288,7 @@ header {
 }
 
 .add-task-icon:hover {
-  background-image: url(../assets/img/icons/add-task-icon-hover.png);
+  background-image: url(/assets/img/icons/add-task-icon-hover.png);
 }
 
 .no-tasks-feedback {
@@ -605,7 +605,7 @@ header {
 }
 
 .delete-icon {
-  background: url(../assets/img/icons/delete.png);
+  background: url(/assets/img/icons/delete.png);
   width: 16px;
   height: 18px;
   background-repeat: no-repeat;
@@ -614,7 +614,7 @@ header {
 }
 
 .edit-icon {
-  background: url(../assets/img/icons/edit.png);
+  background: url(/assets/img/icons/edit.png);
   width: 18px;
   height: 18px;
   background-repeat: no-repeat;
@@ -630,12 +630,12 @@ header {
 }
 
 .edit-area button:hover .delete-icon {
-  background: url(../assets/img/icons/delete-hover.png);
+  background: url(/assets/img/icons/delete-hover.png);
   transform: scale(1.02);
 }
 
 .edit-area button:hover .edit-icon {
-  background: url(../assets/img/icons/edit-hover.png);
+  background: url(/assets/img/icons/edit-hover.png);
   transform: scale(1.02);
 }
 
@@ -843,7 +843,7 @@ header {
   right: 10px;
   width: 16px;
   height: 16px;
-  background: url(../assets/img/icons/resizer.png) no-repeat 100% 100%;
+  background: url(/assets/img/icons/resizer.png) no-repeat 100% 100%;
   background-size: cover;
   pointer-events: none;
 }
@@ -856,7 +856,7 @@ header {
   height: 24px;
   transform: translateY(-50%);
   pointer-events: none;
-  background: url("../assets/img/icons/date-picker.png") no-repeat center;
+  background: url("/assets/img/icons/date-picker.png") no-repeat center;
 }
 
 .priority-labels {
@@ -994,11 +994,11 @@ header {
 }
 
 .select-arrow.closed {
-  background-image: url("../assets/img/icons/arrow_drop_down.png");
+  background-image: url("/assets/img/icons/arrow_drop_down.png");
 }
 
 .select-arrow.open {
-  background-image: url("../assets/img/icons/arrow_drop_down_reverse.png");
+  background-image: url("/assets/img/icons/arrow_drop_down_reverse.png");
 }
 
 .select-arrow:hover {
@@ -1054,15 +1054,15 @@ header {
 }
 
 .add-subtask-icon {
-  background-image: url("../assets/img/icons/add_subtask_icon.png");
+  background-image: url("/assets/img/icons/add_subtask_icon.png");
 }
 
 .clear-icon {
-  background-image: url("../assets/img/icons/cancel_click.png");
+  background-image: url("/assets/img/icons/cancel_click.png");
 }
 
 .confirm-icon {
-  background-image: url("../assets/img/icons/confirm_icon.png");
+  background-image: url("/assets/img/icons/confirm_icon.png");
 }
 
 .add-subtask-icon:hover,

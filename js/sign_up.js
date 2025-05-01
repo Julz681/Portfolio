@@ -118,10 +118,10 @@ function togglePasswordVisibility(inputId, imgElement) {
 
     if (isPasswordVisible) {
         inputField.type = "password";
-        imgElement.src = "../assets/img/eye_closed.png";
+        imgElement.src = "/assets/img/eye_closed.png";
     } else {
         inputField.type = "text";
-        imgElement.src = "../assets/img/eye.png";
+        imgElement.src = "/assets/img/eye.png";
     }
 }
 
@@ -133,9 +133,9 @@ function togglePasswordVisibility(inputId, imgElement) {
 function updatePasswordIcon(inputId, imgElement) {
     const inputField = document.getElementById(inputId);
     if (inputField.value.length > 0) {
-        imgElement.src = "../assets/img/eye_closed.png";
+        imgElement.src = "/assets/img/eye_closed.png";
     } else {
-        imgElement.src = "../assets/img/lock.png";
+        imgElement.src = "/assets/img/lock.png";
     }
 }
 
@@ -163,7 +163,7 @@ function createContactElement(name, email, phone = "") {
             <div class="contact-email">${email}</div>
         </div>
         <button id="delete" class="delete-btn-contact">
-            <img class="actions-img" src="../assets/img/delete.png" alt="delete">
+            <img class="actions-img" src="/assets/img/delete.png" alt="delete">
             Delete
         </button>
     `;
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (passwordField && passwordIcon) {
         passwordField.addEventListener("focus", function () {
             if (passwordField.type === "password") {
-                passwordIcon.src = "../assets/img/eye_closed.png";
+                passwordIcon.src = "/assets/img/eye_closed.png";
             }
         });
     }
@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (confirmPasswordField && confirmPasswordIcon) {
         confirmPasswordField.addEventListener("focus", function () {
             if (confirmPasswordField.type === "password") {
-                confirmPasswordIcon.src = "../assets/img/eye_closed.png";
+                confirmPasswordIcon.src = "/assets/img/eye_closed.png";
             }
         });
     }

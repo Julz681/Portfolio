@@ -195,7 +195,7 @@ function setModalPriority(task) {
   const img = document.querySelector(".prio-label img");
   span.textContent =
     task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
-  img.src = `../assets/img/icons/${task.priority}-icon.png`;
+  img.src = `/assets/img/icons/${task.priority}-icon.png`;
 }
 
 // main function in the template.js

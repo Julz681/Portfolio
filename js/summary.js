@@ -1,4 +1,4 @@
-import { database, ref, onValue } from '../js/firebase.js';
+import { database, ref, onValue } from '/js/firebase.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const todoCountElement = document.querySelector('.wrapper_todo_done .metric-box:first-child h2');

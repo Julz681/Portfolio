@@ -21,10 +21,10 @@ function togglePasswordVisibility(inputId, imgElement) {
 
     if (isPasswordVisible) {
         inputField.type = "password";
-        imgElement.src = "../assets/img/eye_closed.png";
+        imgElement.src = "/assets/img/eye_closed.png";
     } else {
         inputField.type = "text";
-        imgElement.src = "../assets/img/eye.png";
+        imgElement.src = "/assets/img/eye.png";
     }
 }
 
@@ -36,11 +36,11 @@ function togglePasswordVisibility(inputId, imgElement) {
 function updatePasswordIcon(inputId, imgElement) {
     const inputField = document.getElementById(inputId);
     if (inputField.value.length > 0 && inputField.type === "password") {
-        imgElement.src = "../assets/img/eye_closed.png";
+        imgElement.src = "/assets/img/eye_closed.png";
     } else if (inputField.value.length === 0 && inputField.type === "password") {
-        imgElement.src = "../assets/img/lock.png";
+        imgElement.src = "/assets/img/lock.png";
     } else if (inputField.type === "text") {
-        imgElement.src = "../assets/img/eye.png";
+        imgElement.src = "/assets/img/eye.png";
     }
 }
 
@@ -84,7 +84,7 @@ async function normalLogin(event) {
                     localStorage.removeItem("password");
                     localStorage.setItem("rememberMe", "false");
                 }
-                window.location.href = '../html/summary.html';
+                window.location.href = '/html/summary.html';
             } else {
                 alert("Incorrect password.");
             }
@@ -104,7 +104,7 @@ async function normalLogin(event) {
 function guestLogin(event) {
     event.preventDefault();
     localStorage.setItem("isGuest", "true");
-    window.location.href = '../html/summary.html';
+    window.location.href = '/html/summary.html';
 }
 
 /**
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     passwordInput.addEventListener('focus', () => {
         if (firstFocus) {
-            togglePasswordImg.src = "../assets/img/eye_closed.png";
+            togglePasswordImg.src = "/assets/img/eye_closed.png";
             firstFocus = false;
         }
     });
@@ -159,11 +159,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const signupBtn1 = document.querySelector('.signup-btn1');
     
     signupBtn.addEventListener('click', () => {
-        window.location.href = '../html/sign_up.html'; // Redirect to Sign-Up-Seite
+        window.location.href = '/html/sign_up.html'; // Redirect to Sign-Up-Seite
     });
     
     signupBtn1.addEventListener('click', () => {
-        window.location.href = '../html/sign_up.html'; // Redirect to Sign-Up-Seite
+        window.location.href = '/html/sign_up.html'; // Redirect to Sign-Up-Seite
     });
 
     restoreLogin();

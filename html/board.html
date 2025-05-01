@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../css/board.css" />
-  <link rel="stylesheet" href="../css/board_responsive.css" />
-  <link rel="stylesheet" href="../css/desktop_template.css" />
-  <link rel="stylesheet" href="../css/add-task.css" />
+  <link rel="stylesheet" href="/css/board.css" />
+  <link rel="stylesheet" href="/css/board_responsive.css" />
+  <link rel="stylesheet" href="/css/desktop_template.css" />
+  <link rel="stylesheet" href="/css/add-task.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <link rel="icon" type="icon" href="../assets/img/favicon.png" />
+  <link rel="icon" type="icon" href="/assets/img/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -19,25 +19,25 @@
 </head>
 
 <body>
-  <!-- <aside id="general-frame" w3-include-html="../assets/templates/desktop_template.html"></aside> -->
+  <!-- <aside id="general-frame" w3-include-html="/assets/templates/desktop_template.html"></aside> -->
 
   <header class="header">
-    <img src="../assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
+    <img src="/assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
     <span class="headline">Kanban Project Management Tool</span>
 
     <div class="nav-right">
-      <a href="../html/help.html" class="help-btn" title="Help">
-        <img src="../assets/img/help.png" alt="Help" />
+      <a href="/html/help.html" class="help-btn" title="Help">
+        <img src="/assets/img/help.png" alt="Help" />
       </a>
       <div class="user-profile" id="userProfile" onclick="toggleDropdown()">
-        <img src="../assets/img/ellipse.png" alt="Profile">
+        <img src="/assets/img/ellipse.png" alt="Profile">
         <span></span>
       </div>
       <div class="dropdown-menu" id="dropdownMenu">
-        <a class="only-responsive" href="../html/help.html">Help</a>
-        <a href="../html/legal_notice.html">Legal Notice</a>
-        <a href="../html/privacy_policy.html">Privacy Policy</a>
-        <a href="../index.html">Log out</a>
+        <a class="only-responsive" href="/html/help.html">Help</a>
+        <a href="/html/legal_notice.html">Legal Notice</a>
+        <a href="/html/privacy_policy.html">Privacy Policy</a>
+        <a href="/index.html">Log out</a>
       </div>
     </div>
   </header>
@@ -47,7 +47,7 @@
     <div class="top-section">
       <div class="sidebar-logo">
         <a href="/index.html" class="start">
-          <img src="../assets/img/logo_sidemenu.png" alt="logo">
+          <img src="/assets/img/logo_sidemenu.png" alt="logo">
         </a>
       </div>
 
@@ -55,25 +55,25 @@
         <ul>
           <li class="main-nav-size">
             <a href="/html/summary.html">
-              <img class="img-main-nav" src="../assets/img/summary.png" alt="Summary Icon">
+              <img class="img-main-nav" src="/assets/img/summary.png" alt="Summary Icon">
               <span>Summary</span>
             </a>
           </li>
           <li class="main-nav-size">
             <a href="/html/add_task.html">
-              <img class="img-main-nav" src="../assets/img/addtask.png" alt="Add Task Icon">
+              <img class="img-main-nav" src="/assets/img/addtask.png" alt="Add Task Icon">
               <span>Add Task</span>
             </a>
           </li>
           <li class="main-nav-size">
             <a href="/html/board.html">
-              <img class="img-main-nav" src="../assets/img/board.png" alt="Board Icon">
+              <img class="img-main-nav" src="/assets/img/board.png" alt="Board Icon">
               <span>Board</span>
             </a>
           </li>
           <li class="main-nav-size">
             <a href="/html/contacts.html">
-              <img class="img-main-nav" src="../assets/img/contacts.png" alt="Contacts Icon">
+              <img class="img-main-nav" src="/assets/img/contacts.png" alt="Contacts Icon">
               <span>Contacts</span>
             </a>
           </li>
@@ -180,7 +180,7 @@
           <div class="d-flex-space-between priority">
             <span>Priority:</span>
             <div class="d-flex-space-between prio-label">
-              <span>Medium</span><img src="../assets/img/icons/medium-icon.png" alt="Medium Icon" />
+              <span>Medium</span><img src="/assets/img/icons/medium-icon.png" alt="Medium Icon" />
             </div>
           </div>
           <div class="assignments d-flex-column">
@@ -365,7 +365,7 @@
       <footer class="footer-edit-modal">
         <button class="edit-save-btn" onclick="saveEdit()">
           <span class="ok-text">Ok</span>
-          <img class="ok-btn-icon" src="../assets/img/icons/check-mark-icon.png" alt="icon">
+          <img class="ok-btn-icon" src="/assets/img/icons/check-mark-icon.png" alt="icon">
         </button>
       </footer>
     </div>
@@ -373,48 +373,48 @@
   <section id="task-form-modal-wrapper" class="task-form-modal-wrapper d-flex-center d_none"
     onclick="closeAllDropdowns(event)">
     <div id="task-form-wrapper" class="modal-card-wrapper br-30">
-      <div id="task-form" class="task-form" w3-include-html="../assets/templates/task_form.html"></div>
+      <div id="task-form" class="task-form" w3-include-html="/assets/templates/task_form.html"></div>
     </div>
   </section>
 
   <nav class="mobile-nav" id="mobile-nav">
-    <a href="../html/summary.html">
+    <a href="/html/summary.html">
       <div class="nav-icon-wrap">
-        <img src="../assets/img/summary.png" alt="Summary" />
+        <img src="/assets/img/summary.png" alt="Summary" />
         <span>Summary</span>
       </div>
     </a>
-    <a href="../html/board.html">
+    <a href="/html/board.html">
       <div class="nav-icon-wrap">
-        <img src="../assets/img/board.png" alt="Board" />
+        <img src="/assets/img/board.png" alt="Board" />
         <span>Board</span>
       </div>
     </a>
-    <a href="../html/add_task.html">
+    <a href="/html/add_task.html">
       <div class="nav-icon-wrap">
-        <img src="../assets/img/addtask.png" alt="Add Task" />
+        <img src="/assets/img/addtask.png" alt="Add Task" />
         <span>Add Tasks</span>
       </div>
     </a>
-    <a href="../html/contacts.html">
+    <a href="/html/contacts.html">
       <div class="nav-icon-wrap">
-        <img src="../assets/img/contacts.png" alt="Contacts" />
+        <img src="/assets/img/contacts.png" alt="Contacts" />
         <span>Contacts</span>
       </div>
     </a>
   </nav>
 
-  <script src="../js/add_task.js" defer></script>
-  <script src="../js/script.js" defer></script>
-  <script src="../js/dropwdown.js"></script>
-  <script src="../js/firebase_functions.js" type="module"></script>
-  <script src="../js/firebase.js" type="module"></script>
-  <script src="../js/template.js"></script>
-  <script src="../js/board.js"></script>
-  <script src="../js/board_edit.js"></script>
-  <script src="../js/board_responsive.js"></script>
+  <script src="/js/add_task.js" defer></script>
+  <script src="/js/script.js" defer></script>
+  <script src="/js/dropwdown.js"></script>
+  <script src="/js/firebase_functions.js" type="module"></script>
+  <script src="/js/firebase.js" type="module"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/board.js"></script>
+  <script src="/js/board_edit.js"></script>
+  <script src="/js/board_responsive.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../js/dragndrop.js"></script>
+  <script src="/js/dragndrop.js"></script>
 </body>
 
 </html>
