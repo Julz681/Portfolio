@@ -207,3 +207,4 @@ window.deleteTaskFromFirebase = deleteTaskFromFirebase;
 document.addEventListener("DOMContentLoaded", () => {
   init();
 });
+

@@ -1,16 +1,14 @@
 {
-  "name": "join-backend",  
-  "version": "1.0.0", 
-  "description": "Backend für Join", 
-  "type": "module", 
+  "name": "join-backend",
+  "version": "1.0.0",
+  "description": "Backend für Join",
+  "type": "module",
   "main": "firebase.js",
   "scripts": {
-    "start": "node uploadContacts.js"  
+    "start": "node uploadContacts.js"
   },
   "dependencies": {
-    "firebase": "^10.0.0" 
+    "firebase": "^10.0.0",
+    "firebase-admin": "^13.3.0"
   }
 }
-
-
-

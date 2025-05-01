@@ -233,7 +233,7 @@
                 <span class="delete-icon"></span>
                 <span>Delete</span>
               </button>
-              <button onclick="openEditOverlay()" id="edit-task-button" class="d-flex-space-between">
+              <button onclick="openEditOverlay(getTaskById('abc123'))" id="edit-task-button" class="d-flex-space-between">
                 <span class="edit-icon"></span>
                 <span>Edit</span>
               </button>
@@ -411,6 +411,7 @@
   <script src="../js/firebase.js" type="module"></script>
   <script src="../js/template.js"></script>
   <script src="../js/board.js"></script>
+  <script src="../js/board_edit.js"></script>
   <script src="../js/board_responsive.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="../js/dragndrop.js"></script>
