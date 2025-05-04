@@ -334,20 +334,29 @@ async function openTaskForm() {
   try {
     const response = await fetch(file);
     if (!response.ok) throw new Error("Page not found.");
-    formContainer.innerHTML = await response.text();
+    const html = await response.text();
+    formContainer.innerHTML = html;
+
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+
+    renderUsersToAssignForm(); 
+
   } catch (error) {
     formContainer.innerHTML = error.message;
-  } finally {
-    formContainer.classList.add("active");
-    modalWrapper.classList.remove("d_none");
-
-    formWrapper.classList.remove("slide-out");
-    void formWrapper.offsetWidth;
-    formWrapper.classList.add("slide-in");
-
-    setupTaskFormCloseButton();
+    return;
   }
+
+  formContainer.classList.add("active");
+  modalWrapper.classList.remove("d_none");
+
+  formWrapper.classList.remove("slide-out");
+  void formWrapper.offsetWidth;
+  formWrapper.classList.add("slide-in");
+
+  setupTaskFormCloseButton();
 }
+
 
 function closeTaskForm() {
   const modal = document.getElementById("task-form-modal-wrapper");
@@ -374,4 +383,66 @@ function closeTaskForm() {
   );
 
   document.body.classList.remove("modal-open");
+}
+
+let assigneesTaskForm = [];
+
+function renderUsersToAssignForm() {
+  const list = document.getElementById("assigned-to-users-list");
+  if (!list) {
+    return;
+  }
+
+  list.innerHTML = "";
+
+  window.userNames.forEach((name, index) => {
+    const initials = getInitials(name);
+    const bgColor = getIconBackgroundColor(initials);
+    const isSelected = assigneesTaskForm.includes(name);
+
+    list.innerHTML += getUsersToAssignTemplateForTaskForm(
+      name,
+      index,
+      isSelected,
+      initials,
+      bgColor
+    );
+  });
+}
+
+function assignContactToTaskForm(id, event) {
+  event.stopPropagation();
+
+  const index = parseInt(id.split("-")[1]);
+  const name = window.userNames[index];
+  if (!name) return;
+
+  const i = assigneesTaskForm.indexOf(name);
+  if (i > -1) {
+    assigneesTaskForm.splice(i, 1);
+  } else {
+    assigneesTaskForm.push(name);
+  }
+
+  renderUsersToAssignForm();     
+  renderAssigneesTaskForm();     
+}
+
+function renderAssigneesTaskForm() {
+  const container = document.getElementById("assignees-list-task-form");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (assigneesTaskForm.length > 0) {
+    container.classList.remove("d_none");
+
+    assigneesTaskForm.forEach(name => {
+      const initials = getInitials(name);
+      const color = getIconBackgroundColor(initials);
+      container.innerHTML += getAvatarTemplate(initials, color);
+    });
+  } else {
+    container.classList.add("d_none");
+  }
 }

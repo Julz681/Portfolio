@@ -53,7 +53,9 @@ async function getUsersFromDatabase() {
     const snapshot = await get(usersRef);
     if (snapshot.exists()) {
       window.users = snapshot.val();
-      return getUserNames(window.users);
+      const names = getUserNames(window.users);
+      window.userNames = names;
+      return names;
     } else {
       console.log("No data available");
       return null;
@@ -64,6 +66,7 @@ async function getUsersFromDatabase() {
   }
 }
 
+
 /**
  * This function takes an object of users and extracts their names into a new array,
  * which is then assigned to the global `window.userNames` variable.
@@ -72,9 +75,9 @@ async function getUsersFromDatabase() {
  * @returns {Array<string>} An array containing the names of all users from the input object.
  */
 function getUserNames(users) {
-  let names = Object.values(users).map((user) => user.name);
-  return (window.userNames = names);
+  return Object.values(users).map((user) => user.name);
 }
+
 
 /**
  * This function determines the priority of a task based on the 'src' attribute
@@ -127,9 +130,15 @@ function renderUsersToSelect() {
  * It clears the existing content of the container and then appends HTML generated
  * by the `getUsersToAssignTemplate` function for each user in the `window.userNames` array.
  */
-function renderUsersToAssign() {
-  let usersListContainerRef = document.getElementById("assigned-to-users-list");
+function renderUsersToAssign(listId = "assigned-to-users-list") {
+  let usersListContainerRef = document.getElementById(listId);
+  if (!usersListContainerRef) {
+    console.warn(`Element mit ID "${listId}" nicht gefunden.`);
+    return;
+  }
+
   usersListContainerRef.innerHTML = "";
+
   for (let index = 0; index < window.userNames.length; index++) {
     if (typeof window.userNames[index] === "string") {
       let initials = getInitials(window.userNames[index]);
@@ -146,7 +155,7 @@ function renderUsersToAssign() {
     }
   }
 
-  renderUsersToSelect();
+  renderUsersToSelect(); 
 }
 
 window.renderUsersToAssign = renderUsersToAssign;

@@ -261,8 +261,7 @@
 }
 
 .dropdown-icon-closed:hover {
-  background: url(/assets/img/icons/arrow_drop_down_hover.png) no-repeat 50%
-    50%;
+  background: url(/assets/img/icons/arrow_drop_down_hover.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -280,8 +279,8 @@
 }
 
 .dropdown-icon-open:hover {
-  background: url(/assets/img/icons/arrow_drop_down_reverse_hover.png)
-    no-repeat 50% 50%;
+  background: url(/assets/img/icons/arrow_drop_down_reverse_hover.png) no-repeat
+    50% 50%;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -357,8 +356,7 @@
 }
 
 .single-contact-checkbox-checked {
-  background: url(/assets/img/icons/check-button-checked.png) no-repeat 50%
-    50%;
+  background: url(/assets/img/icons/check-button-checked.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
 }
@@ -727,4 +725,32 @@
     bottom: 50%;
     opacity: 1;
   }
+}
+
+.d-flex {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.assignees-list-task-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#assigned-to-dropdown {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
 }

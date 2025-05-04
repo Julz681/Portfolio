@@ -1130,3 +1130,14 @@ header {
 #task-form-wrapper .add-task-header-wrapper {
   margin: 0;
 }
+
+
+#assignees-list-edit {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+

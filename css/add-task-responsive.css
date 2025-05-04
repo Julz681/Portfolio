@@ -38,10 +38,6 @@
     flex-direction: column;
   }
 
-  ::placeholder {
-    font-size: 16px;
-  }
-
   .add-task-header-wrapper {
     height: 140px;
     flex-shrink: 0;

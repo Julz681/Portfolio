@@ -18,7 +18,7 @@
   <title>Board</title>
 </head>
 
-<body>
+<body onload="init()" onclick="closeAllDropdowns(event)">
   <!-- <aside id="general-frame" w3-include-html="/assets/templates/desktop_template.html"></aside> -->
 
   <header class="header">
@@ -337,13 +337,8 @@
               <ul class="dropdown d-flex-column" id="assigned-to-users-list-edit">
               </ul>
             </div>
-          
-            <div class="d-flex-center d_none" id="assignees-list"></div>
+            <div class="d-flex" id="assignees-list-edit"></div>
           </div>
-          
-          
-          
-
           <label class="edit-label" for="subtasks">Subtasks</label>
           <div class="subtask-input-wrapper d-flex-space-between br-10">
             <input type="text" name="subtasks" id="subtasks-edit" class="subtask-input edit-input"

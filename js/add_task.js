@@ -86,8 +86,6 @@ function getInputContainerValue(containerId) {
 
 // date input validation
 
-// TODO: give date fcts. less variables?
-
 function checkDateInput(containerId) {
   let dateInput = getInputContainer(containerId);
   let dateInputValue = getInputValue(dateInput);
@@ -757,4 +755,3 @@ function showTaskSuccessMessage() {
   }, 1500);
 }
 
-//TODO: Add add-task Template integrations

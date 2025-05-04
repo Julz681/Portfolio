@@ -36,7 +36,7 @@ window.tasks = [
     description: "Build start page with recipe recommendation",
     priority: "urgent",
     taskType: "userStory",
-    dueDate: "10/06/2023",
+    dueDate: "06/10/2023",
     assignedTo: ["Judtih Lütke", "Bernadette Pöltl"],
     subtasks: [
       { 'subtask-0': 'Create Recommender' },
@@ -51,7 +51,7 @@ window.tasks = [
     description: "Create a wireframe for the main landing page.",
     priority: "medium",
     taskType: "technical",
-    dueDate: "10/06/2023",
+    dueDate: "15/06/2025",
     assignedTo: ["Ada Lovelace", "Tobias Fröhler"],
     subtasks: [
       { 'subtask-0': "Create Wireframe" },
@@ -66,7 +66,7 @@ window.tasks = [
     description: "Develop authentication using Firebase Auth.",
     priority: "low",
     taskType: "technical",
-    dueDate: "10/10/2023",
+    dueDate: "10/10/2025",
     assignedTo: ["Frances Allen", "Edsger Dijkstra"],
     subtasks: [
       { 'subtask-0': "Setup Firebase" },
@@ -81,7 +81,7 @@ window.tasks = [
     description: "As a user, I want to switch between dark and light mode.",
     priority: "medium",
     taskType: "userStory",
-    dueDate: "15/04/2025",
+    dueDate: "15/06/2025",
     assignedTo: ["Ada Lovelace", "Shafi Goldwasser"],
     subtasks: [
       { 'subtask-0': "Design toggle switch" },
@@ -97,7 +97,7 @@ window.tasks = [
       "Enable drag and drop functionality to move tasks across different columns.",
     priority: "low",
     taskType: "technical",
-    dueDate: "20/04/2025",
+    dueDate: "20/07/2025",
     assignedTo: ["Reshma Saujani", "Frances Allen"],
     subtasks: [
       { 'subtask - 0': "Set up drag listeners" },
@@ -358,3 +358,50 @@ function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass, 
 function getAvatarTemplate(initials, iconBackgroundColor) {
   return `<span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>`
 }
+
+function getUsersToAssignTemplateForTaskForm(userName, index, isSelected, initials, iconBackgroundColor) {
+  const wrapperClass = isSelected
+    ? "single-contact-wrapper-checked d-flex-space-between br-10"
+    : "single-contact-wrapper d-flex-space-between br-10";
+
+  const checkboxClass = isSelected
+    ? "single-contact-checkbox-checked"
+    : "single-contact-checkbox-unchecked";
+
+  return `
+    <li id="TF-${index}" class="${wrapperClass}"
+        onclick="assignContactToTaskForm('TF-${index}', event)">
+      <div class="d-flex-space-between gap-16">
+        <span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>
+        <span>${userName}</span>
+      </div>
+      <span class="${checkboxClass}"></span>
+    </li>`;
+}
+
+function getUsersToAssignTemplateForEditTaskForm(userName, index, isSelected, initials, iconBackgroundColor) {
+  const wrapperClass = isSelected
+    ? "single-contact-wrapper-checked d-flex-space-between br-10"
+    : "single-contact-wrapper d-flex-space-between br-10";
+
+  const checkboxClass = isSelected
+    ? "single-contact-checkbox-checked"
+    : "single-contact-checkbox-unchecked";
+
+  return `
+    <li id="EDIT-${index}" class="${wrapperClass}"
+        onclick="toggleAssigned('${userName}', 'assigned-to-dropdown-edit')">
+      <div class="d-flex-space-between gap-16">
+        <span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>
+        <span>${userName}</span>
+      </div>
+      <span class="${checkboxClass}"></span>
+    </li>`;
+}
+
+function renderTaskCard(task) {
+  return `
+    <button onclick="openEditOverlay(getTaskById('${task.id}'))">Edit</button>
+  `;
+}
+
