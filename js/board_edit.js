@@ -319,17 +319,7 @@ function resetInput(input, confirm, add) {
   add.classList.remove("d-none");
 }
 
-// initializes the calendar field (Flatpickr) for the due date
-function setupDatePicker() {
-  if (window.flatpickr) {
-    flatpickr("#due-date", {
-      dateFormat: "d/m/Y",
-      altInput: true,
-      altFormat: "d/m/Y",
-      allowInput: true,
-    });
-  }
-}
+
 
 function saveEdit() {
   const overlay = document.getElementById("editTaskOverlay");

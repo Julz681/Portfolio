@@ -355,8 +355,14 @@ async function openTaskForm() {
   formWrapper.classList.add("slide-in");
 
   setupTaskFormCloseButton();
-}
 
+  flatpickr("#due-date-form", {
+    dateFormat: "d/m/Y",
+    altInput: true,
+    altFormat: "d/m/Y",
+    allowInput: true,
+  });
+}
 
 function closeTaskForm() {
   const modal = document.getElementById("task-form-modal-wrapper");

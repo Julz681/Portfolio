@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="/css/add-task-responsive.css">
   <link rel="stylesheet" href="/css/desktop_template.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="/js/date_picker.js"></script>
 
   <title>Add Task</title>
 </head>
@@ -115,7 +116,7 @@
             <input
             class="date-picker size-20 br-10"
             type="text"
-            id="due-date-task"
+            id="due-date-add-task"
             name="due-date"
             placeholder="dd/mm/yyyy"
             maxlength="10"
@@ -302,7 +303,6 @@
     </a>
   </nav>
 
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="/js/script.js"></script>
   <script src="/js/add_task.js" defer></script>
   <script src="/js/dropwdown.js" defer></script>
