@@ -319,8 +319,6 @@ function resetInput(input, confirm, add) {
   add.classList.remove("d-none");
 }
 
-
-
 function saveEdit() {
   const overlay = document.getElementById("editTaskOverlay");
   const taskId = document
@@ -363,18 +361,29 @@ function saveEdit() {
  */
 function renderSubtasks(task, container) {
   container.innerHTML = "";
+
   if (Array.isArray(task.subtasks)) {
     task.subtasks.forEach((subtask, index) => {
       const [key, value] = Object.entries(subtask)[0];
+
       const subtaskItem = document.createElement("div");
-      subtaskItem.classList.add("subtask-item", "d-flex-space-between");
+      subtaskItem.classList.add("subtask-list-item");
+      subtaskItem.style.listStyle = "none";
+      subtaskItem.style.display = "flex";
+      subtaskItem.style.justifyContent = "space-between";
+      subtaskItem.style.alignItems = "center";
+      subtaskItem.style.padding = "6px 16px";
+
       subtaskItem.innerHTML = `
-        <span>• ${value}</span>
-        <div>
+        <div class="subtask-list-item-content-wrapper" style="width: 100%;">
+          <span>• ${value}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
           <span class="edit-icon" data-index="${index}"></span>
           <span class="delete-icon" data-index="${index}"></span>
         </div>
       `;
+
       container.appendChild(subtaskItem);
     });
   }
@@ -389,89 +398,126 @@ function populateEditOverlay(task) {
     ".edit-textarea[placeholder='Enter a Description']"
   );
   const dueDateInput = overlay.querySelector("#due-date");
-  const priorityButtons = overlay.querySelectorAll(".priority-labels");
-  // const assignedSelect = overlay.querySelector("#assigned-select");
-  // const assignedPlaceholder = overlay.querySelector(".select-placeholder");
   const subtaskInput = overlay.querySelector("#subtasks-edit");
   const addSubtaskIcon = document.getElementById("edit-add-subtask-icon");
   const subtaskListContainer = document.getElementById("subtaskList");
+  const priorityButtons = overlay.querySelectorAll(".priority-labels");
 
+  fillFormFields(task, titleInput, descriptionTextarea, dueDateInput);
+  updatePrioritySelection(task.priority, priorityButtons);
+  renderSubtasks(task, subtaskListContainer);
+  subtaskInput.value = "";
+  openEditOverlay(task);
+  setupSubtaskAdd(addSubtaskIcon, subtaskInput, task, subtaskListContainer);
+  setupSubtaskListEvents(subtaskListContainer, task);
+}
+
+function fillFormFields(task, titleInput, descriptionTextarea, dueDateInput) {
   titleInput.value = task.title;
   descriptionTextarea.value = task.description;
   dueDateInput.value = task.dueDate;
+}
 
-  priorityButtons.forEach((btn) => {
+function updatePrioritySelection(priority, buttons) {
+  buttons.forEach((btn) => {
     resetPriority(btn);
     btn.classList.remove("selected");
-    if (btn.id === task.priority) {
+    if (btn.id === priority) {
       activatePriority(btn);
       btn.classList.add("selected");
     }
   });
+}
 
-  // Array.from(assignedSelect.options).forEach((option) => {
-  //   option.selected = task.assignedTo?.includes(option.value);
-  // });
-
-  // assignedPlaceholder.style.display = task.assignedTo?.length ? "none" : "block";
-
-  renderSubtasks(task, subtaskListContainer);
-  subtaskInput.value = "";
-  openEditOverlay(task);
-
-  addSubtaskIcon.addEventListener("click", () => {
-    const newTitle = subtaskInput.value.trim();
+function setupSubtaskAdd(addBtn, input, task, container) {
+  addBtn.addEventListener("click", () => {
+    const newTitle = input.value.trim();
     if (newTitle) {
       if (!Array.isArray(task.subtasks)) task.subtasks = [];
       task.subtasks.push({ [newTitle]: newTitle });
-      renderSubtasks(task, subtaskListContainer);
-      subtaskInput.value = "";
+      renderSubtasks(task, container);
+      input.value = "";
     }
   });
+}
 
-  subtaskListContainer.addEventListener("click", (e) => {
+function setupSubtaskListEvents(container, task) {
+  container.addEventListener("click", (e) => {
     const index = parseInt(e.target.dataset.index);
     if (e.target.classList.contains("delete-icon")) {
       task.subtasks.splice(index, 1);
-      renderSubtasks(task, subtaskListContainer);
+      renderSubtasks(task, container);
     } else if (e.target.classList.contains("edit-icon")) {
-      const item = e.target.closest(".subtask-item");
-      const textEl = item.querySelector("span");
-      const oldText = textEl.textContent.slice(2);
-
-      const input = document.createElement("input");
-      input.type = "text";
-      input.value = oldText;
-      input.classList.add("edit-subtask-input");
-
-      const saveBtn = document.createElement("span");
-      saveBtn.classList.add("confirm-icon");
-      saveBtn.innerHTML = "&#10004;";
-
-      const cancelBtn = document.createElement("span");
-      cancelBtn.classList.add("clear-icon");
-      cancelBtn.innerHTML = "&#10006;";
-
-      const controls = e.target.parentNode;
-      controls.innerHTML = "";
-      controls.append(saveBtn, cancelBtn);
-      textEl.replaceWith(input);
-      input.focus();
-
-      saveBtn.addEventListener("click", () => {
-        const newText = input.value.trim();
-        if (newText) {
-          const key = Object.keys(task.subtasks[index])[0];
-          task.subtasks[index] = { [key]: newText };
-          renderSubtasks(task, subtaskListContainer);
-        }
-      });
-
-      cancelBtn.addEventListener("click", () => {
-        renderSubtasks(task, subtaskListContainer);
-      });
-
-      input.addEventListener("click", (ev) => ev.stopPropagation());
+      startEditingSubtask(e, task, index, container);
     }
   });
+}
+
+function startEditingSubtask(e, task, index, container) {
+  const item = e.target.closest(".subtask-list-item");
+  const textWrapper = item.querySelector(".subtask-list-item-content-wrapper");
+  const textEl = textWrapper.querySelector("span");
+  const oldText = textEl.textContent.slice(2);
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = oldText;
+  input.classList.add("subtask-item-input");
+  item.classList.add("subtask-list-item-active");
+
+  const controls = e.target.parentNode;
+  const [editIcon, deleteIcon] = controls.querySelectorAll("span");
+
+  const clickedIcon = e.target;
+  const otherIcon = clickedIcon.nextElementSibling;
+
+  clickedIcon.classList.remove("edit-icon");
+  clickedIcon.classList.add("delete-icon");
+  clickedIcon.innerHTML =
+    '<img src="/assets/img/icons/delete_icon.png" alt="Delete" style="width: 16px; height: 16px;" />';
+
+  otherIcon.classList.remove("delete-icon");
+  otherIcon.classList.add("confirm-icon");
+  otherIcon.innerHTML =
+    '<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" style="width: 16px; height: 16px;" />';
+
+  textWrapper.innerHTML = "";
+  textWrapper.appendChild(input);
+  input.focus();
+
+  bindEditSaveCancel(input, deleteIcon, editIcon, task, index, container, item);
+}
+
+function createIcon(className, content) {
+  const span = document.createElement("span");
+  span.classList.add(className);
+  span.innerHTML = content;
+  return span;
+}
+
+function bindEditSaveCancel(
+  input,
+  confirmBtn,
+  cancelBtn,
+  task,
+  index,
+  container,
+  item
+) {
+  confirmBtn.addEventListener("click", () => {
+    const newText = input.value.trim();
+    if (newText) {
+      const key = Object.keys(task.subtasks[index])[0];
+      task.subtasks[index] = { [key]: newText };
+      renderSubtasks(task, container);
+    }
+    item.classList.remove("subtask-list-item-active");
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    renderSubtasks(task, container);
+    item.classList.remove("subtask-list-item-active");
+  });
+
+  input.addEventListener("click", (ev) => ev.stopPropagation());
 }

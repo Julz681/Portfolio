@@ -1140,4 +1140,8 @@ header {
   margin-top: 8px;
 }
 
+.subtask-input:focus {
+  border: none !important;
+}
+
 
