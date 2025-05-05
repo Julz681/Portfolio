@@ -7,9 +7,8 @@ let fp;
 function intitiateDatePicker() {
   fp = flatpickr("#due-date-task", {
     dateFormat: "d/m/Y",
-    altInput: true,
-    altFormat: "d/m/Y",
     allowInput: true,
+    disableMobile: true,
     onOpen: function () {
       if (!suppressEvents) checkDateInput("due-date-task");
     },
@@ -523,6 +522,7 @@ function removeValueErrorStylingOnInput(inputContainer) {
 // capture task
 
 function createTask() {
+  console.log("createTask() triggered");
   if (checkAllRequiredValues() === true) {
     return;
   } else {

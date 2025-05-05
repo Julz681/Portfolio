@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   getTasksFromLocalStorage();
   renderAllColumns();
   setupTaskFormCloseButton();
+
 });
 
 // this funktion ensures that clicking outside the task detail card closes the modal
@@ -358,9 +359,8 @@ async function openTaskForm() {
 
   flatpickr("#due-date-form", {
     dateFormat: "d/m/Y",
-    altInput: true,
-    altFormat: "d/m/Y",
     allowInput: true,
+    disableMobile: true 
   });
 }
 

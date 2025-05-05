@@ -3,9 +3,8 @@ function setupDatePicker() {
     if (window.flatpickr) {
       flatpickr("#due-date", {
         dateFormat: "d/m/Y",
-        altInput: true,
-        altFormat: "d/m/Y",
         allowInput: true,
+        disableMobile: true 
       });
     }
   }
@@ -24,9 +23,8 @@ function setupDatePicker() {
       if (element) {
         flatpickr(element, {
           dateFormat: "d/m/Y",
-          altInput: true,
-          altFormat: "d/m/Y",
           allowInput: true,
+          disableMobile: true 
         });
       }
     });
