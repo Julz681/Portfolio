@@ -445,7 +445,9 @@ function renderSubtaskList() {
 }
 
 function renderAssignees(containerId, container) {
-  let assigneesContainerRef = document.getElementById("assignees-list");
+  let assigneesContainerRef = document.getElementById(
+    "assignees-list-task-form"
+  );
   if (
     (containerId === "assigned-to-dropdown" &&
       assignees.length != 0 &&
@@ -624,7 +626,9 @@ function resetIconColor(label) {
 
 function resetAssignees() {
   assignees = [];
-  let assigneesContainerRef = document.getElementById("assignees-list");
+  let assigneesContainerRef = document.getElementById(
+    "assignees-list-task-form"
+  );
   renderAssignees("assigned-to-dropdown", assigneesContainerRef);
 }
 
@@ -641,4 +645,3 @@ function showTaskSuccessMessage() {
     msg.classList.add("d_none");
   }, 1500);
 }
-

@@ -12,7 +12,6 @@ function toggleDropdown() {
     dropdownMenu.classList.remove("dropdown-slide-in");
   } else {
     dropdownMenu.style.display = "block";
-
   }
 }
 
@@ -42,11 +41,25 @@ document.onclick = closeDropdown;
 function toggleDropdownSelection(dropdownContainerId, event) {
   let containerDropdownObject = createContainerObject(dropdownContainerId);
   if (containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
-    toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
-    renderAssignees(dropdownContainerId, containerDropdownObject.dropdownContainer);
+    toggleInputContainerVisibilities(
+      containerDropdownObject.dropdownContainer,
+      containerDropdownObject.iconClosed,
+      containerDropdownObject.iconOpen
+    );
+    renderAssignees(
+      dropdownContainerId,
+      containerDropdownObject.dropdownContainer
+    );
   } else {
-    toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconOpen, containerDropdownObject.iconClosed);
-    renderAssignees(dropdownContainerId, containerDropdownObject.dropdownContainer);
+    toggleInputContainerVisibilities(
+      containerDropdownObject.dropdownContainer,
+      containerDropdownObject.iconOpen,
+      containerDropdownObject.iconClosed
+    );
+    renderAssignees(
+      dropdownContainerId,
+      containerDropdownObject.dropdownContainer
+    );
   }
   handleDropdownContainerIds(dropdownContainerId);
   closeDropdown(event);
@@ -57,12 +70,16 @@ function createContainerObject(containerId) {
   let containerDropdownObject = {
     dropdownContainer: document.getElementById(containerId),
     iconOpen: document.getElementById(`${containerId}-open`),
-    iconClosed: document.getElementById(`${containerId}-closed`)
-  }
+    iconClosed: document.getElementById(`${containerId}-closed`),
+  };
   return containerDropdownObject;
 }
 
-function toggleInputContainerVisibilities(dropdownContainerRef, dropdownIconContainerClosedRef, dropdownIconContainerOpenRef) {
+function toggleInputContainerVisibilities(
+  dropdownContainerRef,
+  dropdownIconContainerClosedRef,
+  dropdownIconContainerOpenRef
+) {
   toggleDropdownContainerVisibility(dropdownContainerRef);
   toggleDropdownContainerVisibility(dropdownIconContainerClosedRef);
   toggleDropdownContainerVisibility(dropdownIconContainerOpenRef);
@@ -73,26 +90,53 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 }
 
 function closeAllDropdowns(event) {
-  let dropdownContainers = [createContainerObject('category-dropdown'), createContainerObject('assigned-to-dropdown')];
-  if (dropdownContainers[1].dropdownContainer.classList.contains('d_none') && getInputContainer('category').placeholder === "Select task category" && getInputContainer('dropdownMenu').style.display === "none" && !dropdownContainers[0].dropdownContainer.classList.contains('d_none')) {
-    showErrorMessage(getErrorContainer('category-error'));
-  }
-  for (let i = 0; i < dropdownContainers.length; i++) {
-    let dropdownContainerObject = dropdownContainers[i];
-    if (!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
-      toggleInputContainerVisibilities(dropdownContainerObject.dropdownContainer, dropdownContainerObject.iconClosed, dropdownContainerObject.iconOpen)
+  let dropdownContainers = [
+    createContainerObject("category-dropdown"),
+    createContainerObject("assigned-to-dropdown"),
+  ];
+  dropdownContainers.forEach((container) => {
+    if (container.dropdownContainer != null) {
+      checkForCategoryErrorCondition(dropdownContainers);
+      closeSingleDropdown(container);
+      renderAssignees(
+        "assigned-to-dropdown",
+        dropdownContainers[1].dropdownContainer
+      );
     }
-  }
-  renderAssignees('assigned-to-dropdown', dropdownContainers[1].dropdownContainer)
+  });
   closeDropdown(event);
   event.stopPropagation();
 }
 
+function closeSingleDropdown(dropdownContainerObject) {
+  if (!dropdownContainerObject.dropdownContainer.classList.contains("d_none")) {
+    toggleInputContainerVisibilities(
+      dropdownContainerObject.dropdownContainer,
+      dropdownContainerObject.iconClosed,
+      dropdownContainerObject.iconOpen
+    );
+  }
+}
+
+function checkForCategoryErrorCondition(dropdownContainers) {
+  if (
+    dropdownContainers[1].dropdownContainer.classList.contains("d_none") &&
+    getInputContainer("category").placeholder === "Select task category" &&
+    getInputContainer("dropdownMenu").style.display === "none" &&
+    !dropdownContainers[0].dropdownContainer.classList.contains("d_none")
+  ) {
+    showErrorMessage(getErrorContainer("category-error"));
+  }
+}
+
 function handleDropdownContainerIds(dropdownContainerId) {
-  if (dropdownContainerId === "assigned-to-dropdown" && searchResults.length === 0) {
+  if (
+    dropdownContainerId === "assigned-to-dropdown" &&
+    searchResults.length === 0
+  ) {
     renderUsersToAssign();
   }
   if (dropdownContainerId === "category-dropdown") {
-    checkCategoryInputPlaceholder('category-error');
+    checkCategoryInputPlaceholder("category-error");
   }
 }
