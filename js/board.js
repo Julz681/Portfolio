@@ -341,7 +341,7 @@ async function openTaskForm() {
     await new Promise(resolve => setTimeout(resolve, 0));
 
 
-    renderUsersToAssignForm(); 
+    renderUsersToAssign();
 
   } catch (error) {
     formContainer.innerHTML = error.message;
@@ -360,7 +360,7 @@ async function openTaskForm() {
   flatpickr("#due-date-form", {
     dateFormat: "d/m/Y",
     allowInput: true,
-    disableMobile: true 
+    disableMobile: true
   });
 }
 
@@ -389,32 +389,33 @@ function closeTaskForm() {
   );
 
   document.body.classList.remove("modal-open");
+  assignees = [];
 }
 
 let assigneesTaskForm = [];
 
-function renderUsersToAssignForm() {
-  const list = document.getElementById("assigned-to-users-list");
-  if (!list) {
-    return;
-  }
+// function renderUsersToAssignForm() {
+//   const list = document.getElementById("assigned-to-users-list");
+//   if (!list) {
+//     return;
+//   }
 
-  list.innerHTML = "";
+//   list.innerHTML = "";
 
-  window.userNames.forEach((name, index) => {
-    const initials = getInitials(name);
-    const bgColor = getIconBackgroundColor(initials);
-    const isSelected = assigneesTaskForm.includes(name);
+//   window.userNames.forEach((name, index) => {
+//     const initials = getInitials(name);
+//     const bgColor = getIconBackgroundColor(initials);
+//     const isSelected = assigneesTaskForm.includes(name);
 
-    list.innerHTML += getUsersToAssignTemplateForTaskForm(
-      name,
-      index,
-      isSelected,
-      initials,
-      bgColor
-    );
-  });
-}
+//     list.innerHTML += getUsersToAssignTemplateForTaskForm(
+//       name,
+//       index,
+//       isSelected,
+//       initials,
+//       bgColor
+//     );
+//   });
+// }
 
 function assignContactToTaskForm(id, event) {
   event.stopPropagation();
@@ -430,8 +431,8 @@ function assignContactToTaskForm(id, event) {
     assigneesTaskForm.push(name);
   }
 
-  renderUsersToAssignForm();     
-  renderAssigneesTaskForm();     
+  renderUsersToAssignForm();
+  renderAssigneesTaskForm();
 }
 
 function renderAssigneesTaskForm() {

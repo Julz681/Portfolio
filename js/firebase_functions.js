@@ -155,7 +155,7 @@ function renderUsersToAssign(listId = "assigned-to-users-list") {
     }
   }
 
-  renderUsersToSelect(); 
+  renderUsersToSelect();
 }
 
 window.renderUsersToAssign = renderUsersToAssign;

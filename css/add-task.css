@@ -739,7 +739,7 @@
   position: relative;
 }
 
-.assignees-list-task-form {
+#assignees-list-task-form {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -754,5 +754,3 @@
   width: 100%;
   z-index: 10000;
 }
-
-

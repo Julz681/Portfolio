@@ -28,31 +28,15 @@ let newTasks = [];
 
 // title input validation
 
-function checkTitleInputValue(
-  requiredErrorContainerId,
-  valueSizeErrorContainerId,
-  containerId
-) {
+function checkTitleInputValue(requiredErrorContainerId, valueSizeErrorContainerId, containerId) {
   let requiredErrorContainer = getErrorContainer(`${requiredErrorContainerId}`);
-  let valueSizeErrorContainer = getErrorContainer(
-    `${valueSizeErrorContainerId}`
-  );
+  let valueSizeErrorContainer = getErrorContainer(`${valueSizeErrorContainerId}`);
   let inputContainer = getInputContainer(`${containerId}`);
   let inputContainerValue = getInputContainerValue(`${containerId}`);
-  titleErrorsHandling(
-    requiredErrorContainer,
-    valueSizeErrorContainer,
-    inputContainer,
-    inputContainerValue
-  );
+  titleErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, inputContainerValue);
 }
 
-function titleErrorsHandling(
-  requiredErrorContainer,
-  valueSizeErrorContainer,
-  inputContainer,
-  containerValue
-) {
+function titleErrorsHandling(requiredErrorContainer, valueSizeErrorContainer, inputContainer, containerValue) {
   if (containerValue.length == 0 || containerValue.length <= 3) {
     showErrorMessage(valueSizeErrorContainer);
     showErrorMessage(requiredErrorContainer);
@@ -116,11 +100,7 @@ function modifyPriorityLabels(priorityLabels, priorityLabelId) {
   }
 }
 
-function activatePriorityLabel(
-  priorityLabelContainerRef,
-  priorityLabelId,
-  priorityIcon
-) {
+function activatePriorityLabel(priorityLabelContainerRef, priorityLabelId, priorityIcon) {
   priorityLabelContainerRef.style.color = "#ffffff";
   setPriorityBackgroundColor(priorityLabelContainerRef, priorityLabelId);
   switchPriorityIconColor(priorityIcon, "#ffffff");
@@ -154,10 +134,7 @@ function setPriorityBackgroundColor(priorityLabel, priorityLabelId) {
   priorityLabel.classList.remove("default-prio-bg");
 }
 
-function setDefaultBackgroundColorOnPriorityLabel(
-  priorityLabel,
-  priorityLabelId
-) {
+function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId) {
   priorityLabel.classList.remove(`${priorityLabelId}-prio-bg`, "weight-700");
   priorityLabel.classList.add("default-prio-bg");
 }
@@ -181,12 +158,8 @@ function assignContactToTask(contactId, event) {
 function toggleAssigneesStyling(assigneeContainer) {
   assigneeContainer.classList.toggle("single-contact-wrapper");
   assigneeContainer.classList.toggle("single-contact-wrapper-checked");
-  assigneeContainer.lastElementChild.classList.toggle(
-    "single-contact-checkbox-unchecked"
-  );
-  assigneeContainer.lastElementChild.classList.toggle(
-    "single-contact-checkbox-checked"
-  );
+  assigneeContainer.lastElementChild.classList.toggle("single-contact-checkbox-unchecked");
+  assigneeContainer.lastElementChild.classList.toggle("single-contact-checkbox-checked");
 }
 
 /**
@@ -195,8 +168,7 @@ function toggleAssigneesStyling(assigneeContainer) {
  * @param {HTMLElement} contactContainerRef The container reference to check.
  */
 function removeAssigneeIfExists(contactContainerRef) {
-  const contactName =
-    contactContainerRef.getElementsByTagName("span")[1].innerHTML;
+  const contactName = contactContainerRef.getElementsByTagName("span")[1].innerHTML;
   const index = assignees.indexOf(contactName);
   if (index !== -1) {
     assignees.splice(index, 1);
@@ -210,11 +182,7 @@ function searchUsersToAssign(containerId) {
   searchResults = createSearchResult(searchValue);
   let containerDropdownObject = createContainerObject(containerId);
   if (containerDropdownObject.dropdownContainer.classList.contains("d_none")) {
-    toggleInputContainerVisibilities(
-      containerDropdownObject.dropdownContainer,
-      containerDropdownObject.iconClosed,
-      containerDropdownObject.iconOpen
-    );
+    toggleInputContainerVisibilities(containerDropdownObject.dropdownContainer, containerDropdownObject.iconClosed, containerDropdownObject.iconOpen);
   }
   renderUserSearchResult(searchResults);
 }
@@ -245,25 +213,14 @@ function renderUserSearchResult(searchResults) {
     let stylingObject = checkIsAssigned(searchResults[index]);
     let initials = getInitials(searchResults[index]);
     let iconBackgroundColor = getIconBackgroundColor(initials);
-    usersListContainerRef.innerHTML += getUsersToAssignTemplate(
-      searchResults[index],
-      index,
-      stylingObject.wrapperClass,
-      stylingObject.checkboxClass,
-      initials,
-      iconBackgroundColor
-    );
+    usersListContainerRef.innerHTML += getUsersToAssignTemplate(searchResults[index], index, stylingObject.wrapperClass, stylingObject.checkboxClass, initials, iconBackgroundColor);
   }
 }
 
 function checkIsAssigned(value) {
   let isAssigned = assignees.includes(value);
-  let wrapperClass = isAssigned
-    ? "single-contact-wrapper-checked"
-    : "single-contact-wrapper";
-  let checkboxClass = isAssigned
-    ? "single-contact-checkbox-checked"
-    : "single-contact-checkbox-unchecked";
+  let wrapperClass = isAssigned ? "single-contact-wrapper-checked" : "single-contact-wrapper";
+  let checkboxClass = isAssigned ? "single-contact-checkbox-checked" : "single-contact-checkbox-unchecked";
   return (stylingObject = {
     wrapperClass: wrapperClass,
     checkboxClass: checkboxClass,
@@ -307,30 +264,16 @@ function evaluateSubtaskInput(valueSizeErrorContainerId) {
   let inputValue = getInputValue(subtaskInputContainerRef);
   if (inputValue.length > 3) {
     switchIconsOnSubtasks(confirmInputIconsRef, addIconRef);
-    removeErrorMessageOnSubtaskInput(
-      subtaskInputContainerRef.parentElement,
-      valueSizeErrorContainerId
-    );
+    removeErrorMessageOnSubtaskInput(subtaskInputContainerRef.parentElement, valueSizeErrorContainerId);
   } else if (inputValue.length <= 3 && inputValue.length > 0) {
-    falseInputValueHandling(
-      confirmInputIconsRef,
-      addIconRef,
-      valueSizeErrorContainerId,
-      subtaskInputContainerRef.parentElement
-    );
+    falseInputValueHandling(confirmInputIconsRef, addIconRef, valueSizeErrorContainerId, subtaskInputContainerRef.parentElement);
   } else {
     switchIconsOnSubtasks(addIconRef, confirmInputIconsRef);
-    removeErrorMessageOnSubtaskInput(
-      subtaskInputContainerRef.parentElement,
-      valueSizeErrorContainerId
-    );
+    removeErrorMessageOnSubtaskInput(subtaskInputContainerRef.parentElement, valueSizeErrorContainerId);
   }
 }
 
-function removeErrorMessageOnSubtaskInput(
-  subtaskInputContainer,
-  valueSizeErrorContainerId
-) {
+function removeErrorMessageOnSubtaskInput(subtaskInputContainer, valueSizeErrorContainerId) {
   removeValueErrorStylingOnInput(subtaskInputContainer);
   hideValueErrorMessage(valueSizeErrorContainerId);
 }
@@ -340,12 +283,7 @@ function switchIconsOnSubtasks(showIcon1, hideIcon2) {
   hideIcon2.classList.add("d_none");
 }
 
-function falseInputValueHandling(
-  confirmInputIconsRef,
-  addIconRef,
-  valueSizeErrorContainerId,
-  InputContainerWrapperRef
-) {
+function falseInputValueHandling(confirmInputIconsRef, addIconRef, valueSizeErrorContainerId, InputContainerWrapperRef) {
   confirmInputIconsRef.classList.add("d_none");
   addIconRef.classList.remove("d_none");
   showValueErrorMessage(valueSizeErrorContainerId);
@@ -436,38 +374,22 @@ function renderSubtaskList() {
     subtaskArrayIndex++
   ) {
     let subtaskKey = Object.keys(subtaskArray[subtaskArrayIndex]);
-    subtaskListContainerRef.innerHTML += getSubtaskTemplate(
-      subtaskArrayIndex,
-      subtaskArray[subtaskArrayIndex][subtaskKey]
-    );
+    subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtaskArrayIndex, subtaskArray[subtaskArrayIndex][subtaskKey]);
   }
   subtaskListContainerRef.classList.remove("d_none");
 }
 
 function renderAssignees(containerId, container) {
-  let assigneesContainerRef = document.getElementById(
-    "assignees-list-task-form"
-  );
-  if (
-    (containerId === "assigned-to-dropdown" &&
-      assignees.length != 0 &&
-      container.classList.contains("d_none")) ||
-    (containerId === "category-dropdown" && assignees.length != 0)
-  ) {
+  let assigneesContainerRef = document.getElementById("assignees-list-task-form");
+  if ((containerId === "assigned-to-dropdown" && assignees.length != 0 && container.classList.contains("d_none")) || (containerId === "category-dropdown" && assignees.length != 0)) {
     assigneesContainerRef.classList.remove("d_none");
     assigneesContainerRef.innerHTML = "";
     for (let index = 0; index < assignees.length; index++) {
       let initials = getInitials(assignees[index]);
       let iconBackgroundColor = getIconBackgroundColor(initials);
-      assigneesContainerRef.innerHTML += getAvatarTemplate(
-        initials,
-        iconBackgroundColor
-      );
+      assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);
     }
-  } else if (
-    !container.classList.contains("d_none") ||
-    assignees.length === 0
-  ) {
+  } else if (!container.classList.contains("d_none") || assignees.length === 0) {
     assigneesContainerRef.classList.add("d_none");
     assigneesContainerRef.innerHTML = "";
   }
@@ -561,11 +483,7 @@ function getTaskType() {
 }
 
 function checkAllRequiredValues() {
-  let requiredErrorContainers = [
-    getErrorContainer("task-title-error"),
-    getErrorContainer("due-date-required-error-message"),
-    getErrorContainer("category-error"),
-  ];
+  let requiredErrorContainers = [getErrorContainer("task-title-error"), getErrorContainer("due-date-required-error-message"), getErrorContainer("category-error"),];
   checkTitleInputValue(`task-title-error`, `value-length-error`, `task-title`);
   checkDateInput("due-date-task");
   checkCategoryInputPlaceholder("category-error");
@@ -600,12 +518,7 @@ function resetPriorityLabels() {
   let priorityLabels = document.getElementsByClassName("priority-labels");
   for (let index = 0; index < priorityLabels.length; index++) {
     priorityLabels[index].classList.add("default-prio-bg");
-    priorityLabels[index].classList.remove(
-      "low-prio-bg",
-      "medium-prio-bg",
-      "urgent-prio-bg",
-      "weight-700"
-    );
+    priorityLabels[index].classList.remove("low-prio-bg", "medium-prio-bg", "urgent-prio-bg", "weight-700");
     priorityLabels[index].style.color = "#000000";
     resetIconColor(priorityLabels[index]);
   }
@@ -626,9 +539,7 @@ function resetIconColor(label) {
 
 function resetAssignees() {
   assignees = [];
-  let assigneesContainerRef = document.getElementById(
-    "assignees-list-task-form"
-  );
+  let assigneesContainerRef = document.getElementById("assignees-list-task-form");
   renderAssignees("assigned-to-dropdown", assigneesContainerRef);
 }
 

@@ -15,8 +15,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
     rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="/js/date_picker.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="/js/date_picker.js"></script>
   <title>Board</title>
 </head>
 
@@ -104,7 +104,7 @@
           <div onclick="handleAddTaskClickResponsive()" class="add-task-button d-flex-space-between br-10">
             <span>Add Task</span><span class="plus"></span>
           </div>
-          
+
         </div>
       </div>
     </section>
@@ -235,7 +235,8 @@
                 <span class="delete-icon"></span>
                 <span>Delete</span>
               </button>
-              <button onclick="openEditOverlay(getTaskById('abc123'))" id="edit-task-button" class="d-flex-space-between">
+              <button onclick="openEditOverlay(getTaskById('abc123'))" id="edit-task-button"
+                class="d-flex-space-between">
                 <span class="edit-icon"></span>
                 <span>Edit</span>
               </button>
@@ -315,23 +316,15 @@
           <div class="dropdown-field-wrapper">
             <div class="dropdown-input-wrapper br-10 d-flex-center"
               onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)">
-              
-              <input
-                class="dropdown-input size-20"
-                type="text"
-                id="assigned-to-input-edit"
-                name="assigned-to-edit"
+
+              <input class="dropdown-input size-20" type="text" id="assigned-to-input-edit" name="assigned-to-edit"
                 placeholder="Select contacts to assign"
                 oninput="searchUsersToAssign('assigned-to-dropdown-edit', 'assigned-to-users-list-edit')" />
-          
-              <span
-                class="dropdown-icon dropdown-icon-closed"
-                id="assigned-to-dropdown-edit-closed"
+
+              <span class="dropdown-icon dropdown-icon-closed" id="assigned-to-dropdown-edit-closed"
                 onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)"></span>
-          
-              <span
-                class="dropdown-icon dropdown-icon-open d_none"
-                id="assigned-to-dropdown-edit-open"
+
+              <span class="dropdown-icon dropdown-icon-open d_none" id="assigned-to-dropdown-edit-open"
                 onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)"></span>
             </div>
 
