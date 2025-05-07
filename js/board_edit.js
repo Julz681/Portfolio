@@ -2,6 +2,12 @@
 async function openEditOverlay(task) {
   if (!task) return;
 
+  if (!window.userNames || window.userNames.length === 0) {
+    window.userNames = await getUsersFromDatabase();
+  }
+
+  window.assignees = Array.isArray(task.assignedTo) ? [...task.assignedTo] : [];
+
   const overlay = document.getElementById("editTaskOverlay");
   if (!overlay) return;
   overlay.classList.remove("hidden");
@@ -16,14 +22,6 @@ async function openEditOverlay(task) {
   const priorityButtons = overlay.querySelectorAll(".priority-labels");
   const subtaskListContainer = document.getElementById("subtaskList");
 
-  if (
-    !titleInput ||
-    !descriptionTextarea ||
-    !dueDateInput ||
-    !subtaskListContainer
-  )
-    return;
-
   titleInput.value = task.title || "";
   descriptionTextarea.value = task.description || "";
   dueDateInput.value = task.dueDate || "";
@@ -37,47 +35,39 @@ async function openEditOverlay(task) {
     }
   });
 
-  window.assignees = Array.isArray(task.assignedTo) ? [...task.assignedTo] : [];
+  renderUsersToAssignEdit();
+  renderAssignees(
+    "assigned-to-dropdown-edit",
+    document.getElementById("assigned-to-dropdown-edit")
+  );
 
   renderSubtasks(task, subtaskListContainer);
   setupEditDropdownEvents();
   setupPrioritySelection();
   setupSubtaskInput();
   setupDatePicker();
-
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
-  const assignedToDropdownEdit = document.getElementById(
-    "assigned-to-dropdown-edit"
-  );
-  const assigneesListEdit = document.getElementById("assignees-list-edit");
-  if (!assignedToDropdownEdit || !assigneesListEdit) return;
-
-  if (!window.userNames || window.userNames.length === 0) {
-    window.userNames = (await getUsersFromDatabase()) || [];
-  }
-
-  renderUsersToAssignEdit();
-  renderAssignees("assigned-to-dropdown-edit", assignedToDropdownEdit);
 }
 
-function renderAssignees(containerId) {
+function renderAssignees(containerId, container) {
   const assigneesContainerId =
     containerId === "assigned-to-dropdown-edit"
       ? "assignees-list-edit"
       : "assignees-list";
 
   const assigneesContainerRef = document.getElementById(assigneesContainerId);
-  if (!assigneesContainerRef) return;
 
-  assigneesContainerRef.innerHTML = "";
-
-  if (Array.isArray(assignees) && assignees.length > 0) {
+  if (assignees.length > 0) {
+    assigneesContainerRef.classList.remove("d_none");
     assignees.forEach((name) => {
-      const initials = getInitials(name);
-      const bgColor = getIconBackgroundColor(initials);
-      assigneesContainerRef.innerHTML += getAvatarTemplate(initials, bgColor);
+      let initials = getInitials(name);
+      let iconBackgroundColor = getIconBackgroundColor(initials);
+      assigneesContainerRef.innerHTML += getAvatarTemplate(
+        initials,
+        iconBackgroundColor
+      );
     });
+  } else {
+    assigneesContainerRef.classList.add("d_none");
   }
 }
 
@@ -200,56 +190,6 @@ function closeEditDropdown(dropdown, arrow) {
   arrow.classList.add("closed");
 }
 
-function renderAssignees(containerId, container) {
-  const assigneesContainerId =
-    containerId === "assigned-to-dropdown-edit"
-      ? "assignees-list-edit"
-      : "assignees-list";
-
-  let assigneesContainerRef = document.getElementById(assigneesContainerId);
-
-  if (
-    (container.classList.contains("d_none") === false &&
-      assignees.length > 0) ||
-    (containerId.includes("category-dropdown") && assignees.length > 0)
-  ) {
-    assigneesContainerRef.classList.remove("d_none");
-    assigneesContainerRef.innerHTML = "";
-
-    assignees.forEach((name) => {
-      let initials = getInitials(name);
-      let iconBackgroundColor = getIconBackgroundColor(initials);
-      assigneesContainerRef.innerHTML += getAvatarTemplate(
-        initials,
-        iconBackgroundColor
-      );
-    });
-  } else {
-    assigneesContainerRef.classList.add("d_none");
-    assigneesContainerRef.innerHTML = "";
-  }
-}
-
-function toggleDropdownSelection(dropdownId, event) {
-  event.stopPropagation();
-
-  const dropdown = document.getElementById(dropdownId);
-  const arrowClosed = document.getElementById(`${dropdownId}-closed`);
-  const arrowOpen = document.getElementById(`${dropdownId}-open`);
-
-  const isOpen = !dropdown.classList.contains("d_none");
-
-  if (isOpen) {
-    dropdown.classList.add("d_none");
-    arrowClosed.classList.remove("d_none");
-    arrowOpen.classList.add("d_none");
-  } else {
-    dropdown.classList.remove("d_none");
-    arrowClosed.classList.add("d_none");
-    arrowOpen.classList.remove("d_none");
-  }
-}
-
 function toggleAssigned(name, containerId) {
   const index = assignees.indexOf(name);
   if (index > -1) {
@@ -287,6 +227,61 @@ function renderUsersToAssignEdit() {
   });
 }
 
+function renderAssignees(containerId, container) {
+  const assigneesContainerId =
+    containerId === "assigned-to-dropdown-edit"
+      ? "assignees-list-edit"
+      : "assignees-list";
+
+  const assigneesContainerRef = document.getElementById(assigneesContainerId);
+  if (!assigneesContainerRef) return;
+
+  assigneesContainerRef.innerHTML = "";
+
+  if (Array.isArray(assignees) && assignees.length > 0) {
+    assigneesContainerRef.classList.remove("d_none");
+
+    assignees.forEach((name) => {
+      const initials = getInitials(name);
+      const bgColor = getIconBackgroundColor(initials);
+      const avatarHTML = getAvatarTemplate(initials, bgColor);
+
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = avatarHTML;
+      assigneesContainerRef.appendChild(wrapper.firstElementChild);
+    });
+  } else {
+    assigneesContainerRef.classList.add("d_none");
+  }
+}
+
+function getInitials(name) {
+  if (!name) return "?";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+function toggleDropdownSelection(dropdownId, event) {
+  event.stopPropagation();
+
+  const dropdown = document.getElementById(dropdownId);
+  const arrowClosed = document.getElementById(`${dropdownId}-closed`);
+  const arrowOpen = document.getElementById(`${dropdownId}-open`);
+
+  const isOpen = !dropdown.classList.contains("d_none");
+
+  if (isOpen) {
+    dropdown.classList.add("d_none");
+    arrowClosed.classList.remove("d_none");
+    arrowOpen.classList.add("d_none");
+  } else {
+    dropdown.classList.remove("d_none");
+    arrowClosed.classList.add("d_none");
+    arrowOpen.classList.remove("d_none");
+  }
+}
+
 // binds buttons for adding or canceling subtask inputs in the overlay
 function setupSubtaskInput() {
   const input = document.getElementById("subtasks-edit");
@@ -319,40 +314,6 @@ function resetInput(input, confirm, add) {
   add.classList.remove("d-none");
 }
 
-function saveEdit() {
-  const overlay = document.getElementById("editTaskOverlay");
-  const taskId = document
-    .getElementById("task-card-modal")
-    .getAttribute("data-task-id");
-  const taskIndex = tasks.findIndex((t) => t.id === taskId);
-  if (taskIndex === -1) return;
-
-  const updatedTask = { ...tasks[taskIndex] };
-  updatedTask.title = overlay
-    .querySelector(".edit-input[placeholder='Enter a title']")
-    .value.trim();
-  updatedTask.description = overlay
-    .querySelector(".edit-textarea[placeholder='Enter a Description']")
-    .value.trim();
-  updatedTask.dueDate = overlay.querySelector("#due-date").value;
-  updatedTask.priority =
-    overlay.querySelector(".priority-labels.selected")?.id || "";
-  updatedTask.assignedTo = [...assignees];
-
-  const subtaskItems = overlay.querySelectorAll(
-    "#subtaskList .subtask-item span:first-child"
-  );
-  updatedTask.subtasks = Array.from(subtaskItems).map((el) => {
-    const label = el.textContent.replace(/^\u2022\s*/, "").trim();
-    return { [label]: label };
-  });
-
-  tasks[taskIndex] = updatedTask;
-  saveTasksToStorageOrFirebase();
-  renderAllColumns();
-  closeEditOverlay();
-}
-
 /**
  * Rendert die Subtasks eines Tasks in das angegebene Container-Element.
  *
@@ -376,7 +337,7 @@ function renderSubtasks(task, container) {
 
       subtaskItem.innerHTML = `
         <div class="subtask-list-item-content-wrapper" style="width: 100%;">
-          <span>• ${value}</span>
+          <span> ${value}</span>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
           <span class="edit-icon" data-index="${index}"></span>
@@ -457,35 +418,47 @@ function startEditingSubtask(e, task, index, container) {
   const item = e.target.closest(".subtask-list-item");
   const textWrapper = item.querySelector(".subtask-list-item-content-wrapper");
   const textEl = textWrapper.querySelector("span");
-  const oldText = textEl.textContent.slice(2);
+  const oldText = textEl.textContent.trim();
 
   const input = document.createElement("input");
   input.type = "text";
   input.value = oldText;
   input.classList.add("subtask-item-input");
-  item.classList.add("subtask-list-item-active");
 
-  const controls = e.target.parentNode;
-  const [editIcon, deleteIcon] = controls.querySelectorAll("span");
+  const iconWrapper = document.createElement("div");
+  iconWrapper.classList.add("edit-subtask-icons", "d-flex-space-between");
 
-  const clickedIcon = e.target;
-  const otherIcon = clickedIcon.nextElementSibling;
+  const cancelBtn = createIcon(
+    "cancel-icon",
+    `<img src="/assets/img/icons/delete_icon.png" alt="Cancel" width="16">`
+  );
+  const confirmBtn = createIcon(
+    "confirm-icon",
+    `<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" width="16">`
+  );
 
-  clickedIcon.classList.remove("edit-icon");
-  clickedIcon.classList.add("delete-icon");
-  clickedIcon.innerHTML =
-    '<img src="/assets/img/icons/delete_icon.png" alt="Delete" style="width: 16px; height: 16px;" />';
-
-  otherIcon.classList.remove("delete-icon");
-  otherIcon.classList.add("confirm-icon");
-  otherIcon.innerHTML =
-    '<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" style="width: 16px; height: 16px;" />';
+  iconWrapper.appendChild(cancelBtn);
+  iconWrapper.appendChild(confirmBtn);
 
   textWrapper.innerHTML = "";
   textWrapper.appendChild(input);
+  textWrapper.appendChild(iconWrapper);
   input.focus();
 
-  bindEditSaveCancel(input, deleteIcon, editIcon, task, index, container, item);
+  item.classList.add("subtask-list-item-active");
+
+  cancelBtn.onclick = () => {
+    renderSubtasks(task, container);
+  };
+
+  confirmBtn.onclick = () => {
+    const newText = input.value.trim();
+    if (newText) {
+      const key = Object.keys(task.subtasks[index])[0];
+      task.subtasks[index] = { [key]: newText };
+      renderSubtasks(task, container);
+    }
+  };
 }
 
 function createIcon(className, content) {
@@ -520,4 +493,38 @@ function bindEditSaveCancel(
   });
 
   input.addEventListener("click", (ev) => ev.stopPropagation());
+}
+
+function saveEdit() {
+  const overlay = document.getElementById("editTaskOverlay");
+  const taskId = document
+    .getElementById("task-card-modal")
+    .getAttribute("data-task-id");
+  const taskIndex = tasks.findIndex((t) => t.id === taskId);
+  if (taskIndex === -1) return;
+
+  const updatedTask = { ...tasks[taskIndex] };
+  updatedTask.title = overlay
+    .querySelector(".edit-input[placeholder='Enter a title']")
+    .value.trim();
+  updatedTask.description = overlay
+    .querySelector(".edit-textarea[placeholder='Enter a Description']")
+    .value.trim();
+  updatedTask.dueDate = overlay.querySelector("#due-date").value;
+  updatedTask.priority =
+    overlay.querySelector(".priority-labels.selected")?.id || "";
+  updatedTask.assignedTo = [...assignees];
+
+  const subtaskItems = overlay.querySelectorAll(
+    "#subtaskList .subtask-item span:first-child"
+  );
+  updatedTask.subtasks = Array.from(subtaskItems).map((el) => {
+    const label = el.textContent.replace(/^\u2022\s*/, "").trim();
+    return { [label]: label };
+  });
+
+  tasks[taskIndex] = updatedTask;
+  saveTasksToStorageOrFirebase();
+  renderAllColumns();
+  closeEditOverlay();
 }

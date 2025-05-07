@@ -235,7 +235,7 @@
                 <span class="delete-icon"></span>
                 <span>Delete</span>
               </button>
-              <button onclick="openEditOverlay(getTaskById('abc123'))" id="edit-task-button"
+              <button onclick="populateEditOverlay(getTaskById('abc123'))" data-task-id="task-1" id="edit-task-button"
                 class="d-flex-space-between">
                 <span class="edit-icon"></span>
                 <span>Edit</span>
@@ -334,6 +334,7 @@
             </div>
             <div class="d-flex" id="assignees-list-edit"></div>
           </div>
+
           <label class="edit-label" for="subtasks">Subtasks</label>
           <div class="subtask-input-wrapper d-flex-space-between br-10">
             <input type="text" name="subtasks" id="subtasks-edit" class="subtask-input edit-input"

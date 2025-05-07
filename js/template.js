@@ -392,11 +392,15 @@ function getUsersToAssignTemplateForEditTaskForm(userName, index, isSelected, in
     <li id="EDIT-${index}" class="${wrapperClass}"
         onclick="toggleAssigned('${userName}', 'assigned-to-dropdown-edit')">
       <div class="d-flex-space-between gap-16">
-        <span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>
+        <span class="single-contact-icon d-flex-center" style="background-color:${iconBackgroundColor}">${initials}</span>
         <span>${userName}</span>
       </div>
       <span class="${checkboxClass}"></span>
     </li>`;
+}
+
+function getAvatarTemplate(initials, bgColor) {
+  return `<span class="single-contact-icon d-flex-center" style="background-color: ${bgColor}; margin-right: 8px;">${initials}</span>`;
 }
 
 function renderTaskCard(task) {
