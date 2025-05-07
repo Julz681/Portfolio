@@ -61,11 +61,7 @@ function createContainerObject(containerId) {
   return containerDropdownObject;
 }
 
-function toggleInputContainerVisibilities(
-  dropdownContainerRef,
-  dropdownIconContainerClosedRef,
-  dropdownIconContainerOpenRef
-) {
+function toggleInputContainerVisibilities(dropdownContainerRef, dropdownIconContainerClosedRef, dropdownIconContainerOpenRef) {
   toggleDropdownContainerVisibility(dropdownContainerRef);
   toggleDropdownContainerVisibility(dropdownIconContainerClosedRef);
   toggleDropdownContainerVisibility(dropdownIconContainerOpenRef);
@@ -76,18 +72,19 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 }
 
 function closeAllDropdowns(event) {
-  let dropdownContainers = [
-    createContainerObject("category-dropdown"),
-    createContainerObject("assigned-to-dropdown"),
-  ];
+  // if (window.location.pathname === "/html/board.html") {
+  //   let assignedToDropdownContainerId = "assigned-to-dropdown-task-form";
+  // let dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown-task-form"),];
+  // } else {
+  let assignedToDropdownContainerId = "assigned-to-dropdown";
+  let dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown"),];
+  // }
   dropdownContainers.forEach((container) => {
     if (container.dropdownContainer != null) {
       checkForCategoryErrorCondition(dropdownContainers);
       closeSingleDropdown(container);
-      renderAssignees(
-        "assigned-to-dropdown",
-        dropdownContainers[1].dropdownContainer
-      );
+      // renderAssignees("assigned-to-dropdown", dropdownContainers[1].dropdownContainer);
+      renderAssignees(assignedToDropdownContainerId, dropdownContainers[1].dropdownContainer);
     }
   });
   closeDropdown(event);
