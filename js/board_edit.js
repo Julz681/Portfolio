@@ -2,46 +2,50 @@
 async function openEditOverlay(task) {
   if (!task) return;
 
+  await loadUserNamesIfNeeded();
+  prepareOverlay(task);
+  renderSubtasks(task, document.getElementById("subtaskList"));
+  setupEditOverlayUI();
+}
+
+async function loadUserNamesIfNeeded() {
   if (!window.userNames || window.userNames.length === 0) {
     window.userNames = await getUsersFromDatabase();
   }
+}
 
+function prepareOverlay(task) {
   window.assignees = Array.isArray(task.assignedTo) ? [...task.assignedTo] : [];
 
   const overlay = document.getElementById("editTaskOverlay");
   if (!overlay) return;
   overlay.classList.remove("hidden");
 
-  const titleInput = overlay.querySelector(
-    ".edit-input[placeholder='Enter a title']"
-  );
-  const descriptionTextarea = overlay.querySelector(
-    ".edit-textarea[placeholder='Enter a Description']"
-  );
-  const dueDateInput = overlay.querySelector("#due-date");
-  const priorityButtons = overlay.querySelectorAll(".priority-labels");
-  const subtaskListContainer = document.getElementById("subtaskList");
+  fillBasicTaskInfo(overlay, task);
+  updatePrioritySelection(task.priority, overlay);
+  renderUsersToAssignEdit();
+  renderAssignees("assigned-to-dropdown-edit", document.getElementById("assigned-to-dropdown-edit"));
+}
 
-  titleInput.value = task.title || "";
-  descriptionTextarea.value = task.description || "";
-  dueDateInput.value = task.dueDate || "";
+function fillBasicTaskInfo(overlay, task) {
+  overlay.querySelector(".edit-input[placeholder='Enter a title']").value = task.title || "";
+  overlay.querySelector(".edit-textarea[placeholder='Enter a Description']").value = task.description || "";
+  overlay.querySelector("#due-date").value = task.dueDate || "";
+}
 
-  priorityButtons.forEach((btn) => {
+function updatePrioritySelection(priority, overlay) {
+  const buttons = overlay.querySelectorAll(".priority-labels");
+  buttons.forEach((btn) => {
     resetPriority(btn);
     btn.classList.remove("selected");
-    if (btn.id === task.priority) {
+    if (btn.id === priority) {
       activatePriority(btn);
       btn.classList.add("selected");
     }
   });
+}
 
-  renderUsersToAssignEdit();
-  renderAssignees(
-    "assigned-to-dropdown-edit",
-    document.getElementById("assigned-to-dropdown-edit")
-  );
-
-  renderSubtasks(task, subtaskListContainer);
+function setupEditOverlayUI() {
   setupEditDropdownEvents();
   setupPrioritySelection();
   setupSubtaskInput();
@@ -55,22 +59,20 @@ function renderAssignees(containerId, container) {
       : "assignees-list";
 
   const assigneesContainerRef = document.getElementById(assigneesContainerId);
+  if (!assigneesContainerRef) return;
 
   if (assignees.length > 0) {
     assigneesContainerRef.classList.remove("d_none");
+    assigneesContainerRef.innerHTML = "";
     assignees.forEach((name) => {
       let initials = getInitials(name);
       let iconBackgroundColor = getIconBackgroundColor(initials);
-      assigneesContainerRef.innerHTML += getAvatarTemplate(
-        initials,
-        iconBackgroundColor
-      );
+      assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);
     });
   } else {
     assigneesContainerRef.classList.add("d_none");
   }
 }
-
 function renderUsersToAssignEdit() {
   const usersList = document.getElementById("assigned-to-users-list-edit");
   if (!usersList || !window.userNames) return;
@@ -416,6 +418,22 @@ function setupSubtaskListEvents(container, task) {
 
 function startEditingSubtask(e, task, index, container) {
   const item = e.target.closest(".subtask-list-item");
+  const input = createSubtaskEditInput(item);
+  const iconWrapper = getIconWrapper(item);
+  if (!iconWrapper) return;
+
+  prepareIconsForEditing(iconWrapper);
+  const deleteIcon = ensureDeleteIconVisible(iconWrapper);
+  const confirmBtn = createConfirmButton();
+
+  replaceIcons(iconWrapper, deleteIcon, confirmBtn);
+  bindEditActions(input, confirmBtn, deleteIcon, task, index, container);
+
+  input.focus();
+  item.classList.add("subtask-list-item-active");
+}
+
+function createSubtaskEditInput(item) {
   const textWrapper = item.querySelector(".subtask-list-item-content-wrapper");
   const textEl = textWrapper.querySelector("span");
   const oldText = textEl.textContent.trim();
@@ -425,29 +443,54 @@ function startEditingSubtask(e, task, index, container) {
   input.value = oldText;
   input.classList.add("subtask-item-input");
 
-  const iconWrapper = document.createElement("div");
-  iconWrapper.classList.add("edit-subtask-icons", "d-flex-space-between");
-
-  const cancelBtn = createIcon(
-    "cancel-icon",
-    `<img src="/assets/img/icons/delete_icon.png" alt="Cancel" width="16">`
-  );
-  const confirmBtn = createIcon(
-    "confirm-icon",
-    `<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" width="16">`
-  );
-
-  iconWrapper.appendChild(cancelBtn);
-  iconWrapper.appendChild(confirmBtn);
-
   textWrapper.innerHTML = "";
   textWrapper.appendChild(input);
-  textWrapper.appendChild(iconWrapper);
-  input.focus();
 
-  item.classList.add("subtask-list-item-active");
+  return input;
+}
 
-  cancelBtn.onclick = () => {
+function getIconWrapper(item) {
+  return item.querySelector("div:nth-child(2)");
+}
+
+function prepareIconsForEditing(iconWrapper) {
+  const editIcon = iconWrapper.querySelector(".edit-icon");
+  if (editIcon) editIcon.remove();
+}
+
+function ensureDeleteIconVisible(iconWrapper) {
+  const deleteIcon = iconWrapper.querySelector(".delete-icon");
+  if (deleteIcon) {
+    deleteIcon.style.display = "flex";
+    deleteIcon.style.visibility = "visible";
+    deleteIcon.style.opacity = "1";
+    deleteIcon.style.pointerEvents = "auto";
+  }
+  return deleteIcon;
+}
+
+function createConfirmButton() {
+  return createIcon(
+    "confirm-icon",
+    `<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" width="16" style="cursor: pointer; display: none;">`
+  );
+}
+
+function replaceIcons(iconWrapper, deleteIcon, confirmBtn) {
+  iconWrapper.innerHTML = "";
+  iconWrapper.appendChild(deleteIcon);
+  iconWrapper.appendChild(confirmBtn);
+}
+
+function bindEditActions(
+  input,
+  confirmBtn,
+  deleteIcon,
+  task,
+  index,
+  container
+) {
+  deleteIcon.onclick = () => {
     renderSubtasks(task, container);
   };
 
@@ -504,27 +547,41 @@ function saveEdit() {
   if (taskIndex === -1) return;
 
   const updatedTask = { ...tasks[taskIndex] };
-  updatedTask.title = overlay
-    .querySelector(".edit-input[placeholder='Enter a title']")
-    .value.trim();
-  updatedTask.description = overlay
-    .querySelector(".edit-textarea[placeholder='Enter a Description']")
-    .value.trim();
+  updatedTask.title = getOverlayValue(
+    overlay,
+    ".edit-input[placeholder='Enter a title']"
+  );
+  updatedTask.description = getOverlayValue(
+    overlay,
+    ".edit-textarea[placeholder='Enter a Description']"
+  );
   updatedTask.dueDate = overlay.querySelector("#due-date").value;
   updatedTask.priority =
     overlay.querySelector(".priority-labels.selected")?.id || "";
   updatedTask.assignedTo = [...assignees];
-
-  const subtaskItems = overlay.querySelectorAll(
-    "#subtaskList .subtask-item span:first-child"
-  );
-  updatedTask.subtasks = Array.from(subtaskItems).map((el) => {
-    const label = el.textContent.replace(/^\u2022\s*/, "").trim();
-    return { [label]: label };
-  });
+  updatedTask.subtasks = extractSubtasksFromDOM();
 
   tasks[taskIndex] = updatedTask;
   saveTasksToStorageOrFirebase();
   renderAllColumns();
   closeEditOverlay();
+}
+
+function getOverlayValue(overlay, selector) {
+  const element = overlay.querySelector(selector);
+  return element ? element.value.trim() : "";
+}
+
+function extractSubtasksFromDOM() {
+  const subtaskWrappers = document.querySelectorAll(
+    "#subtaskList .subtask-list-item-content-wrapper"
+  );
+  return Array.from(subtaskWrappers)
+    .map((wrapper) => {
+      const input = wrapper.querySelector("input");
+      const span = wrapper.querySelector("span");
+      const text = input ? input.value.trim() : span?.textContent.trim() || "";
+      return { [text]: text };
+    })
+    .filter((subtask) => Object.keys(subtask)[0] !== "");
 }
