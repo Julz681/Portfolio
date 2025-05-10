@@ -2,57 +2,53 @@
 async function openEditOverlay(task) {
   if (!task) return;
 
-  await loadUserNamesIfNeeded();
-  prepareOverlay(task);
-  renderSubtasks(task, document.getElementById("subtaskList"));
-  setupEditOverlayUI();
-}
-
-async function loadUserNamesIfNeeded() {
   if (!window.userNames || window.userNames.length === 0) {
     window.userNames = await getUsersFromDatabase();
   }
-}
 
-function prepareOverlay(task) {
   window.assignees = Array.isArray(task.assignedTo) ? [...task.assignedTo] : [];
 
   const overlay = document.getElementById("editTaskOverlay");
   if (!overlay) return;
   overlay.classList.remove("hidden");
 
-  fillBasicTaskInfo(overlay, task);
-  updatePrioritySelection(task.priority, overlay);
-  renderUsersToAssignEdit();
-  renderAssignees("assigned-to-dropdown-edit", document.getElementById("assigned-to-dropdown-edit"));
-}
+  const titleInput = overlay.querySelector(
+    ".edit-input[placeholder='Enter a title']"
+  );
+  const descriptionTextarea = overlay.querySelector(
+    ".edit-textarea[placeholder='Enter a Description']"
+  );
+  const dueDateInput = overlay.querySelector("#due-date");
+  const priorityButtons = overlay.querySelectorAll(".priority-labels");
+  const subtaskListContainer = document.getElementById("subtaskList");
 
-function fillBasicTaskInfo(overlay, task) {
-  overlay.querySelector(".edit-input[placeholder='Enter a title']").value = task.title || "";
-  overlay.querySelector(".edit-textarea[placeholder='Enter a Description']").value = task.description || "";
-  overlay.querySelector("#due-date").value = task.dueDate || "";
-}
+  titleInput.value = task.title || "";
+  descriptionTextarea.value = task.description || "";
+  dueDateInput.value = task.dueDate || "";
 
-function updatePrioritySelection(priority, overlay) {
-  const buttons = overlay.querySelectorAll(".priority-labels");
-  buttons.forEach((btn) => {
+  priorityButtons.forEach((btn) => {
     resetPriority(btn);
     btn.classList.remove("selected");
-    if (btn.id === priority) {
+    if (btn.id === task.priority) {
       activatePriority(btn);
       btn.classList.add("selected");
     }
   });
-}
 
-function setupEditOverlayUI() {
+  renderUsersToAssignEdit();
+  renderAssigneesEdit(
+    "assigned-to-dropdown-edit",
+    document.getElementById("assigned-to-dropdown-edit")
+  );
+
+  renderSubtasks(task, subtaskListContainer);
   setupEditDropdownEvents();
   setupPrioritySelection();
   setupSubtaskInput();
   setupDatePicker();
 }
 
-function renderAssignees(containerId, container) {
+function renderAssigneesEdit(containerId, container) {
   const assigneesContainerId =
     containerId === "assigned-to-dropdown-edit"
       ? "assignees-list-edit"
@@ -61,28 +57,43 @@ function renderAssignees(containerId, container) {
   const assigneesContainerRef = document.getElementById(assigneesContainerId);
   if (!assigneesContainerRef) return;
 
-  if (assignees.length > 0) {
+  assigneesContainerRef.innerHTML = "";
+
+  if (!Array.isArray(window.assignees)) return;
+
+  if (window.assignees.length > 0) {
     assigneesContainerRef.classList.remove("d_none");
-    assigneesContainerRef.innerHTML = "";
-    assignees.forEach((name) => {
-      let initials = getInitials(name);
-      let iconBackgroundColor = getIconBackgroundColor(initials);
-      assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);
+
+    window.assignees.forEach((name) => {
+      const initials = getInitials(name);
+      const bgColor = getIconBackgroundColor(initials);
+      const avatarHTML = getAvatarTemplate(initials, bgColor);
+
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = avatarHTML;
+      assigneesContainerRef.appendChild(wrapper.firstElementChild);
     });
   } else {
     assigneesContainerRef.classList.add("d_none");
   }
 }
+
 function renderUsersToAssignEdit() {
   const usersList = document.getElementById("assigned-to-users-list-edit");
   if (!usersList || !window.userNames) return;
 
   usersList.innerHTML = "";
 
-  window.userNames.forEach((name, index) => {
+  const sortedUsers = [...window.userNames].sort((a, b) => {
+    const aAssigned = window.assignees?.includes(a) ? -1 : 1;
+    const bAssigned = window.assignees?.includes(b) ? -1 : 1;
+    return aAssigned - bAssigned;
+  });
+
+  sortedUsers.forEach((name, index) => {
     const initials = getInitials(name);
     const bgColor = getIconBackgroundColor(initials);
-    const isSelected = assignees.includes(name);
+    const isSelected = window.assignees?.includes(name);
 
     usersList.innerHTML += getUsersToAssignTemplateForEditTaskForm(
       name,
@@ -92,6 +103,46 @@ function renderUsersToAssignEdit() {
       bgColor
     );
   });
+}
+
+function toggleAssigned(name, containerId) {
+  const index = window.assignees.indexOf(name);
+  if (index > -1) {
+    window.assignees.splice(index, 1);
+  } else {
+    window.assignees.push(name);
+  }
+
+  const dropdown = document.getElementById(containerId);
+  renderAssigneesEdit(containerId, dropdown);
+  renderUsersToAssignEdit();
+}
+
+function getInitials(name) {
+  if (!name) return "?";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+function toggleDropdownSelection(dropdownId, event) {
+  event.stopPropagation();
+
+  const dropdown = document.getElementById(dropdownId);
+  const arrowClosed = document.getElementById(`${dropdownId}-closed`);
+  const arrowOpen = document.getElementById(`${dropdownId}-open`);
+
+  const isOpen = !dropdown.classList.contains("d_none");
+
+  if (isOpen) {
+    dropdown.classList.add("d_none");
+    arrowClosed.classList.remove("d_none");
+    arrowOpen.classList.add("d_none");
+  } else {
+    dropdown.classList.remove("d_none");
+    arrowClosed.classList.add("d_none");
+    arrowOpen.classList.remove("d_none");
+  }
 }
 
 function getTaskById(id) {
@@ -108,43 +159,44 @@ function setupPrioritySelection() {
   const buttons = document.querySelectorAll("#urgent, #medium, #low");
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      const isSelected = button.classList.contains("selected");
       buttons.forEach((btn) => {
-        resetPriority(btn);
         btn.classList.remove("selected");
+        resetPriority(btn);
       });
-      if (!isSelected) {
-        activatePriority(button);
-        button.classList.add("selected");
-      }
+
+      button.classList.add("selected");
+      activatePriority(button);
     });
   });
 }
 
-// resets the color and style of a priority button
 function resetPriority(button) {
   button.style.backgroundColor = "#ffffff";
   button.style.color = "#000000";
   button.style.fontWeight = "normal";
+
   const paths = button.querySelectorAll("svg path");
   paths.forEach((path) => setDefaultColor(path, button.id));
 }
 
-// colors the icons in the button again according to the priority (if inactive)
 function setDefaultColor(path, id) {
   if (id === "urgent") path.setAttribute("fill", "#FF3D00");
   if (id === "medium") path.setAttribute("fill", "#FFA800");
   if (id === "low") path.setAttribute("fill", "#7AE229");
 }
 
-// activates the clicked priority button (color, style, icon white)
 function activatePriority(button) {
-  const paths = button.querySelectorAll("svg path");
-  button.style.fontWeight = "bold";
+  button.style.backgroundColor =
+    button.id === "urgent"
+      ? "#FF3D00"
+      : button.id === "medium"
+      ? "#FFA800"
+      : "#7AE229";
+
   button.style.color = "#ffffff";
-  if (button.id === "urgent") button.style.backgroundColor = "#FF3D00";
-  if (button.id === "medium") button.style.backgroundColor = "#FFA800";
-  if (button.id === "low") button.style.backgroundColor = "#7AE229";
+  button.style.fontWeight = "bold";
+
+  const paths = button.querySelectorAll("svg path");
   paths.forEach((path) => path.setAttribute("fill", "#ffffff"));
 }
 
@@ -190,98 +242,6 @@ function closeEditDropdown(dropdown, arrow) {
   dropdown.classList.add("d_none");
   arrow.classList.remove("open");
   arrow.classList.add("closed");
-}
-
-function toggleAssigned(name, containerId) {
-  const index = assignees.indexOf(name);
-  if (index > -1) {
-    assignees.splice(index, 1);
-  } else {
-    assignees.push(name);
-  }
-
-  const dropdown = document.getElementById(containerId);
-  renderAssignees(containerId, dropdown);
-  renderUsersToAssignEdit();
-}
-
-function renderUsersToAssignEdit() {
-  const usersList = document.getElementById("assigned-to-users-list-edit");
-  if (!usersList || !window.userNames) return;
-
-  usersList.innerHTML = "";
-
-  window.userNames.forEach((name, index) => {
-    if (typeof name === "string") {
-      const initials = getInitials(name);
-      const bgColor = getIconBackgroundColor(initials);
-      const styling = checkIsAssigned(name);
-
-      usersList.innerHTML += getUsersToAssignTemplate(
-        name,
-        index,
-        styling.wrapperClass,
-        styling.checkboxClass,
-        initials,
-        bgColor
-      );
-    }
-  });
-}
-
-function renderAssignees(containerId, container) {
-  const assigneesContainerId =
-    containerId === "assigned-to-dropdown-edit"
-      ? "assignees-list-edit"
-      : "assignees-list";
-
-  const assigneesContainerRef = document.getElementById(assigneesContainerId);
-  if (!assigneesContainerRef) return;
-
-  assigneesContainerRef.innerHTML = "";
-
-  if (Array.isArray(assignees) && assignees.length > 0) {
-    assigneesContainerRef.classList.remove("d_none");
-
-    assignees.forEach((name) => {
-      const initials = getInitials(name);
-      const bgColor = getIconBackgroundColor(initials);
-      const avatarHTML = getAvatarTemplate(initials, bgColor);
-
-      const wrapper = document.createElement("div");
-      wrapper.innerHTML = avatarHTML;
-      assigneesContainerRef.appendChild(wrapper.firstElementChild);
-    });
-  } else {
-    assigneesContainerRef.classList.add("d_none");
-  }
-}
-
-function getInitials(name) {
-  if (!name) return "?";
-  const parts = name.trim().split(" ");
-  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-  return (parts[0][0] + parts[1][0]).toUpperCase();
-}
-
-function toggleDropdownSelection(dropdownId, event) {
-  event.stopPropagation();
-
-  const dropdown = document.getElementById(dropdownId);
-  const arrowClosed = document.getElementById(`${dropdownId}-closed`);
-  const arrowOpen = document.getElementById(`${dropdownId}-open`);
-
-  const isOpen = !dropdown.classList.contains("d_none");
-
-  if (isOpen) {
-    dropdown.classList.add("d_none");
-    arrowClosed.classList.remove("d_none");
-    arrowOpen.classList.add("d_none");
-  } else {
-    dropdown.classList.remove("d_none");
-    arrowClosed.classList.add("d_none");
-    arrowOpen.classList.remove("d_none");
-  }
 }
 
 // binds buttons for adding or canceling subtask inputs in the overlay
@@ -558,7 +518,7 @@ function saveEdit() {
   updatedTask.dueDate = overlay.querySelector("#due-date").value;
   updatedTask.priority =
     overlay.querySelector(".priority-labels.selected")?.id || "";
-  updatedTask.assignedTo = [...assignees];
+  updatedTask.assignedTo = [...window.assignees];
   updatedTask.subtasks = extractSubtasksFromDOM();
 
   tasks[taskIndex] = updatedTask;
