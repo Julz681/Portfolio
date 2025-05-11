@@ -746,7 +746,8 @@
   padding-top: 8px;
 }
 
-#assigned-to-dropdown {
+#assigned-to-dropdown,
+#assigned-to-dropdown-task-form {
   position: absolute;
   top: 50px;
   left: 0;

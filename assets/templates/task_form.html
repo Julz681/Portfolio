@@ -116,18 +116,18 @@
           <div class="dropdown-field-wrapper">
 
             <div class="dropdown-input-wrapper br-10 d-flex-center"
-              onclick="toggleDropdownSelection('assigned-to-dropdown', event)">
+              onclick="toggleDropdownSelection('assigned-to-dropdown-task-form', event)">
               <input class="dropdown-input size-20" type="text" id="assigned-to-input" name="assigned-to"
                 placeholder="Select contacts to assign" oninput="searchUsersToAssign('assigned-to-dropdown')" />
 
-              <span class="dropdown-icon-closed" id="assigned-to-dropdown-closed"
-                onclick="toggleDropdownSelection('assigned-to-dropdown', event)"></span>
+              <span class="dropdown-icon-closed" id="assigned-to-dropdown-task-form-closed"
+                onclick="toggleDropdownSelection('assigned-to-dropdown-task-form', event)"></span>
 
-              <span class="dropdown-icon-open d_none" id="assigned-to-dropdown-open"
-                onclick="toggleDropdownSelection('assigned-to-dropdown', event)"></span>
+              <span class="dropdown-icon-open d_none" id="assigned-to-dropdown-task-form-open"
+                onclick="toggleDropdownSelection('assigned-to-dropdown-task-form', event)"></span>
             </div>
 
-            <div class="dropdown-wrapper d_none" id="assigned-to-dropdown">
+            <div class="dropdown-wrapper d_none" id="assigned-to-dropdown-task-form">
               <ul class="dropdown d-flex-column" id="assigned-to-users-list"></ul>
             </div>
 

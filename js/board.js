@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupPrioritySelection();
   setupAssignedToDropdown();
   setupSubtaskInput();
-  setupDatePicker();
+  // setupDatePicker();
   getTasksFromLocalStorage();
   renderAllColumns();
   setupTaskFormCloseButton();
@@ -357,11 +357,12 @@ async function openTaskForm() {
 
   setupTaskFormCloseButton();
 
-  flatpickr("#due-date-form", {
-    dateFormat: "d/m/Y",
-    allowInput: true,
-    disableMobile: true
-  });
+  // flatpickr("#due-date-form", {
+  //   dateFormat: "d/m/Y",
+  //   allowInput: true,
+  //   disableMobile: true,
+  // });
+  setupAllDatePickers();
 }
 
 function closeTaskForm() {

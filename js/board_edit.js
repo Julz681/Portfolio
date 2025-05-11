@@ -125,7 +125,7 @@ function getInitials(name) {
   return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
-function toggleDropdownSelection(dropdownId, event) {
+function toggleDropdownSelectionInEdit(dropdownId, event) {
   event.stopPropagation();
 
   const dropdown = document.getElementById(dropdownId);
@@ -190,8 +190,8 @@ function activatePriority(button) {
     button.id === "urgent"
       ? "#FF3D00"
       : button.id === "medium"
-      ? "#FFA800"
-      : "#7AE229";
+        ? "#FFA800"
+        : "#7AE229";
 
   button.style.color = "#ffffff";
   button.style.fontWeight = "bold";

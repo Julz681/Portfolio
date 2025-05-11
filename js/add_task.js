@@ -4,22 +4,22 @@ let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regula
 let suppressEvents;
 let fp;
 
-function intitiateDatePicker() {
-  fp = flatpickr("#due-date-task", {
-    dateFormat: "d/m/Y",
-    allowInput: true,
-    disableMobile: true,
-    onOpen: function () {
-      if (!suppressEvents) checkDateInput("due-date-task");
-    },
-    onChange: function () {
-      if (!suppressEvents) checkDateInput("due-date-task");
-    },
-    onValueUpdate: function () {
-      if (!suppressEvents) checkDateInput("due-date-task");
-    },
-  });
-}
+// function intitiateDatePicker() {
+//   fp = flatpickr("#due-date-task", {
+//     dateFormat: "d/m/Y",
+//     allowInput: true,
+//     disableMobile: true,
+//     onOpen: function () {
+//       if (!suppressEvents) checkDateInput("due-date-task");
+//     },
+//     onChange: function () {
+//       if (!suppressEvents) checkDateInput("due-date-task");
+//     },
+//     onValueUpdate: function () {
+//       if (!suppressEvents) checkDateInput("due-date-task");
+//     },
+//   });
+// }
 
 let subtaskArray = [];
 let assignees = [];
@@ -381,7 +381,7 @@ function renderSubtaskList() {
 
 function renderAssignees(containerId, container) {
   let assigneesContainerRef = document.getElementById("assignees-list-task-form");
-  if ((containerId === "assigned-to-dropdown" && assignees.length != 0 && container.classList.contains("d_none")) || (containerId === "category-dropdown" && assignees.length != 0)) {
+  if (((containerId === "assigned-to-dropdown" || containerId === "assigned-to-dropdown-task-form") && assignees.length != 0 && container.classList.contains("d_none")) || (containerId === "category-dropdown" && assignees.length != 0)) {
     assigneesContainerRef.classList.remove("d_none");
     assigneesContainerRef.innerHTML = "";
     for (let index = 0; index < assignees.length; index++) {

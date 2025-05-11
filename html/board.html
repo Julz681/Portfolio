@@ -315,17 +315,17 @@
 
           <div class="dropdown-field-wrapper">
             <div class="dropdown-input-wrapper br-10 d-flex-center"
-              onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)">
+              onclick="toggleDropdownSelectionInEdit('assigned-to-dropdown-edit', event)">
 
               <input class="dropdown-input size-20" type="text" id="assigned-to-input-edit" name="assigned-to-edit"
                 placeholder="Select contacts to assign"
                 oninput="searchUsersToAssign('assigned-to-dropdown-edit', 'assigned-to-users-list-edit')" />
 
               <span class="dropdown-icon dropdown-icon-closed" id="assigned-to-dropdown-edit-closed"
-                onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)"></span>
+                onclick="toggleDropdownSelectionInEdit('assigned-to-dropdown-edit', event)"></span>
 
               <span class="dropdown-icon dropdown-icon-open d_none" id="assigned-to-dropdown-edit-open"
-                onclick="toggleDropdownSelection('assigned-to-dropdown-edit', event)"></span>
+                onclick="toggleDropdownSelectionInEdit('assigned-to-dropdown-edit', event)"></span>
             </div>
 
             <div class="dropdown-wrapper-edit d_none" id="assigned-to-dropdown-edit">

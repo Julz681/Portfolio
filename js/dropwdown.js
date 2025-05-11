@@ -72,18 +72,19 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 }
 
 function closeAllDropdowns(event) {
-  // if (window.location.pathname === "/html/board.html") {
-  //   let assignedToDropdownContainerId = "assigned-to-dropdown-task-form";
-  // let dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown-task-form"),];
-  // } else {
-  let assignedToDropdownContainerId = "assigned-to-dropdown";
-  let dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown"),];
-  // }
+  let assignedToDropdownContainerId;
+  let dropdownContainers = [];
+  if (window.location.pathname === "/html/board.html") {
+    assignedToDropdownContainerId = "assigned-to-dropdown-task-form";
+    dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown-task-form"),];
+  } else {
+    assignedToDropdownContainerId = "assigned-to-dropdown";
+    dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown"),];
+  }
   dropdownContainers.forEach((container) => {
     if (container.dropdownContainer != null) {
       checkForCategoryErrorCondition(dropdownContainers);
       closeSingleDropdown(container);
-      // renderAssignees("assigned-to-dropdown", dropdownContainers[1].dropdownContainer);
       renderAssignees(assignedToDropdownContainerId, dropdownContainers[1].dropdownContainer);
     }
   });
@@ -102,18 +103,13 @@ function closeSingleDropdown(dropdownContainerObject) {
 }
 
 function checkForCategoryErrorCondition(dropdownContainers) {
-  if (
-    dropdownContainers[1].dropdownContainer.classList.contains("d_none") &&
-    getInputContainer("category").placeholder === "Select task category" &&
-    getInputContainer("dropdownMenu").style.display === "none" &&
-    !dropdownContainers[0].dropdownContainer.classList.contains("d_none")
-  ) {
+  if (dropdownContainers[1].dropdownContainer.classList.contains("d_none") && getInputContainer("category").placeholder === "Select task category" && getInputContainer("dropdownMenu").style.display === "none" && !dropdownContainers[0].dropdownContainer.classList.contains("d_none")) {
     showErrorMessage(getErrorContainer("category-error"));
   }
 }
 
 function handleDropdownContainerIds(dropdownContainerId) {
-  if (dropdownContainerId === "assigned-to-dropdown" && searchResults.length === 0) {
+  if ((dropdownContainerId === "assigned-to-dropdown" || dropdownContainerId === "assigned-to-dropdown-task-form") && searchResults.length === 0) {
     renderUsersToAssign();
   }
   if (dropdownContainerId === "category-dropdown") {
