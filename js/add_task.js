@@ -3,24 +3,6 @@
 let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
 let suppressEvents;
 let fp;
-
-// function intitiateDatePicker() {
-//   fp = flatpickr("#due-date-task", {
-//     dateFormat: "d/m/Y",
-//     allowInput: true,
-//     disableMobile: true,
-//     onOpen: function () {
-//       if (!suppressEvents) checkDateInput("due-date-task");
-//     },
-//     onChange: function () {
-//       if (!suppressEvents) checkDateInput("due-date-task");
-//     },
-//     onValueUpdate: function () {
-//       if (!suppressEvents) checkDateInput("due-date-task");
-//     },
-//   });
-// }
-
 let subtaskArray = [];
 let assignees = [];
 let searchResults = [];
@@ -445,27 +427,29 @@ function removeValueErrorStylingOnInput(inputContainer) {
 
 // capture task
 
-function createTask() {
-  console.log("createTask() triggered");
-  if (checkAllRequiredValues() === true) {
+function createTask(dateFieldId) {
+  if (checkAllRequiredValues(dateFieldId) === true) {
     return;
   } else {
     let taskId = "task-" + (tasks.length + newTasks.length + 1);
-    let taskObject = createTaskObject(taskId);
+    let taskObject = createTaskObject(taskId, dateFieldId);
     resetTaskHTML();
     newTasks.push(taskObject);
     sendTaskToLocalStorage(newTasks);
+    if (window.location.pathname === "/html/board.html") {
+      closeTaskForm();
+    }
     showTaskSuccessMessage();
   }
 }
 
-function createTaskObject(taskId) {
+function createTaskObject(taskId, dateFieldId) {
   return (taskObject = {
     id: taskId,
     title: getInputContainer("task-title").value,
     description: getInputContainer("task-description").value,
     priority: getTaskPriority(),
-    dueDate: getInputContainer("due-date-task").value,
+    dueDate: getInputContainer(dateFieldId).value,
     taskType: getTaskType(),
     assignedTo: assignees,
     subtasks: subtaskArray,
@@ -482,10 +466,10 @@ function getTaskType() {
   }
 }
 
-function checkAllRequiredValues() {
+function checkAllRequiredValues(dateFieldId) {
   let requiredErrorContainers = [getErrorContainer("task-title-error"), getErrorContainer("due-date-required-error-message"), getErrorContainer("category-error"),];
   checkTitleInputValue(`task-title-error`, `value-length-error`, `task-title`);
-  checkDateInput("due-date-task");
+  checkDateInput(dateFieldId);
   checkCategoryInputPlaceholder("category-error");
   for (let index = 0; index < requiredErrorContainers.length; index++) {
     if (!requiredErrorContainers[index].classList.contains("d_none")) {
@@ -554,5 +538,5 @@ function showTaskSuccessMessage() {
   setTimeout(() => {
     msg.classList.remove("show");
     msg.classList.add("d_none");
-  }, 1500);
+  }, 2000);
 }

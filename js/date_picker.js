@@ -50,9 +50,18 @@ function setupAllDatePickers() {
 function checkDateInput(containerId) {
   let dateInput = getInputContainer(containerId);
   let dateInputValue = getInputValue(dateInput);
-  let requiredErrorContainerRef = getErrorContainer("due-date-required-error-message");
-  let invalidInputErrorContainerRef = getErrorContainer("due-date-time-error-message");
-  let dateFormatErrorContainerRef = getErrorContainer("date-format-error-message");
+  let requiredErrorContainerRef;
+  let invalidInputErrorContainerRef;
+  let dateFormatErrorContainerRef;
+  if (containerId === "due-date-add-task" || containerId === "due-date-form") {
+    requiredErrorContainerRef = getErrorContainer("due-date-required-error-message");
+    invalidInputErrorContainerRef = getErrorContainer("due-date-time-error-message");
+    dateFormatErrorContainerRef = getErrorContainer("date-format-error-message");
+  } else {
+    requiredErrorContainerRef = getErrorContainer("due-date-edit-required-error-message");
+    invalidInputErrorContainerRef = getErrorContainer("due-date-edit-time-error-message");
+    dateFormatErrorContainerRef = getErrorContainer("due-date-edit-format-error-message");
+  }
   let formattedDateValue = formatDateValue(dateInputValue).setHours(0, 0, 0, 0);
   let currentDate = new Date().setHours(0, 0, 0, 0);
   if (checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef)) {

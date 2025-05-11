@@ -45,7 +45,7 @@ async function openEditOverlay(task) {
   setupEditDropdownEvents();
   setupPrioritySelection();
   setupSubtaskInput();
-  setupDatePicker();
+  // setupDatePicker();
 }
 
 function renderAssigneesEdit(containerId, container) {

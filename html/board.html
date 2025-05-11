@@ -164,6 +164,9 @@
         </div>
 
       </div>
+      <div id="success-message" class="success-message d_none">
+        Task successfully added to the board ! ☺️
+      </div>
     </section>
 
     <section id="task-card-modal" class="board-card-modal-wrapper d-flex-center d_none">
@@ -265,7 +268,12 @@
             <input class="edit-input edit-input-error" type="text" id="due-date" placeholder="dd/mm/yyyy" required />
             <span class="date-picker-icon"></span>
           </div>
-          <span class="required-error-message d_none" id="task-title-error">This field is required</span>
+          <span class="required-error-message d_none" id="due-date-edit-required-error-message">This field is
+            required</span>
+          <span class="required-error-message d_none" id="due-date-edit-time-error-message">Date must be in the
+            future!</span>
+          <span class="required-error-message d_none" id="due-date-edit-format-error-message">Expected format
+            dd/mm/yyyy!</span>
         </div>
 
         <div class="priority-wrapper d-flex-column gap-8">

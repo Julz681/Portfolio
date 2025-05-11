@@ -23,8 +23,7 @@
   </section>
 
   <section class="add-task-content">
-    <form onsubmit="createTask(); return false;" method="POST"
-      class="add-task-form d-flex-space-between size-20 gap-24">
+    <form class="add-task-form d-flex-space-between size-20 gap-24">
       <div class="form-inputs d-flex-column gap-24">
         <div class="task-title-input-wrapper d-flex-column gap-8">
           <label for="task-title">Title <span class="red">*</span></label>
@@ -197,10 +196,9 @@
       <button type="button" class="clearBtn d-flex-space-between size-20 br-10" onclick="resetTaskHTML()">
         <span>Clear</span><span class="cancel-icon"></span>
       </button>
-      <button type="button" class="createBtn d-flex-space-between size-20 br-10" onclick="createTask()">
+      <button type="button" class="createBtn d-flex-space-between size-20 br-10" onclick="createTask('due-date-form')">
         <span>Create Task</span><span class="checkmark-icon"></span>
       </button>
-
     </div>
   </section>
   <script src="/js/firebase.js" type="module" defer></script>
