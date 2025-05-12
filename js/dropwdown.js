@@ -81,6 +81,12 @@ function closeAllDropdowns(event) {
     assignedToDropdownContainerId = "assigned-to-dropdown";
     dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown"),];
   }
+  checkDropdownContainersArray(assignedToDropdownContainerId, dropdownContainers);
+  closeDropdown(event);
+  event.stopPropagation();
+}
+
+function checkDropdownContainersArray(assignedToDropdownContainerId, dropdownContainers) {
   dropdownContainers.forEach((container) => {
     if (container.dropdownContainer != null) {
       checkForCategoryErrorCondition(dropdownContainers);
@@ -88,8 +94,6 @@ function closeAllDropdowns(event) {
       renderAssignees(assignedToDropdownContainerId, dropdownContainers[1].dropdownContainer);
     }
   });
-  closeDropdown(event);
-  event.stopPropagation();
 }
 
 function closeSingleDropdown(dropdownContainerObject) {

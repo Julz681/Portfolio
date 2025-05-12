@@ -296,8 +296,7 @@ function clearSubtaskInput(id, valueSizeErrorContainerId) {
 function enableSubtaskEdit(id) {
   let subtaskInputContainerRef = getInputContainer(id);
   subtaskInputContainerRef.removeAttribute("disabled");
-  let listItemContainerRef =
-    subtaskInputContainerRef.closest(".subtask-list-item");
+  let listItemContainerRef = subtaskInputContainerRef.closest(".subtask-list-item");
   listItemContainerRef.classList.add("subtask-list-item-active");
   listItemContainerRef.classList.remove("subtask-list-item", "br-10");
 }
@@ -350,11 +349,7 @@ function detectKey(event) {
 function renderSubtaskList() {
   let subtaskListContainerRef = document.getElementById("subtask-list");
   subtaskListContainerRef.innerHTML = "";
-  for (
-    let subtaskArrayIndex = 0;
-    subtaskArrayIndex < subtaskArray.length;
-    subtaskArrayIndex++
-  ) {
+  for (let subtaskArrayIndex = 0; subtaskArrayIndex < subtaskArray.length; subtaskArrayIndex++) {
     let subtaskKey = Object.keys(subtaskArray[subtaskArrayIndex]);
     subtaskListContainerRef.innerHTML += getSubtaskTemplate(subtaskArrayIndex, subtaskArray[subtaskArrayIndex][subtaskKey]);
   }
@@ -433,24 +428,22 @@ function createTask(dateFieldId) {
   } else {
     let taskId = "task-" + (tasks.length + newTasks.length + 1);
     let taskObject = createTaskObject(taskId, dateFieldId);
-
     resetTaskHTML();
     newTasks.push(taskObject);
     sendTaskToLocalStorage(newTasks);
-
-   
-    if (window.location.pathname === "/html/board.html") {
-      if (!window.tasks) window.tasks = [];
-      window.tasks.push(taskObject);
-
-      if (typeof renderAllColumns === "function") {
-        renderAllColumns();
-      }
-
-      closeTaskForm(); 
-    }
-
+    checkWindowLocation(taskObject);
     showTaskSuccessMessage();
+  }
+}
+
+function checkWindowLocation(taskObject) {
+  if (window.location.pathname === "/html/board.html") {
+    if (!window.tasks) window.tasks = [];
+    window.tasks.push(taskObject);
+    if (typeof renderAllColumns === "function") {
+      renderAllColumns();
+    }
+    closeTaskForm();
   }
 }
 
