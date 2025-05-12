@@ -24,8 +24,9 @@ async function openEditOverlay(task) {
 
   titleInput.value = task.title || "";
   descriptionTextarea.value = task.description || "";
-  dueDateInput.value = task.dueDate || "";
-
+  if (dueDateInput._flatpickr && task.dueDate) {
+    dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
+  }
   priorityButtons.forEach((btn) => {
     resetPriority(btn);
     btn.classList.remove("selected");
@@ -34,18 +35,15 @@ async function openEditOverlay(task) {
       btn.classList.add("selected");
     }
   });
-
   renderUsersToAssignEdit();
   renderAssigneesEdit(
     "assigned-to-dropdown-edit",
     document.getElementById("assigned-to-dropdown-edit")
   );
-
   renderSubtasks(task, subtaskListContainer);
   setupEditDropdownEvents();
   setupPrioritySelection();
   setupSubtaskInput();
-  // setupDatePicker();
 }
 
 function renderAssigneesEdit(containerId, container) {
@@ -190,8 +188,8 @@ function activatePriority(button) {
     button.id === "urgent"
       ? "#FF3D00"
       : button.id === "medium"
-        ? "#FFA800"
-        : "#7AE229";
+      ? "#FFA800"
+      : "#7AE229";
 
   button.style.color = "#ffffff";
   button.style.fontWeight = "bold";

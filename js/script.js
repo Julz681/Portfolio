@@ -25,12 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (helpButton) {
     const isHelpPage = window.location.pathname.includes("help.html");
     helpButton.style.display = isHelpPage ? "none" : "block";
-    console.log(
-      "Current Path:",
-      window.location.pathname,
-      "Help Button Visible:",
-      !isHelpPage
-    );
+    
   }
 
   // Highlight the active link in the sidebar
