@@ -306,7 +306,10 @@ function confirmEditSubtask(id) {
   let subtaskInputValue = getInputValue(subtaskInputContainerRef);
   let subtaskIndex = extractIndex(id);
   subtaskArray[subtaskIndex] = { [id]: subtaskInputValue };
-  renderSubtaskList();
+  let listItemContainerRef = subtaskInputContainerRef.closest(".subtask-list-item-active");
+  listItemContainerRef.classList.remove("subtask-list-item-active");
+  listItemContainerRef.classList.add("subtask-list-item", "br-10");
+  subtaskInputContainerRef.setAttribute("disabled", true);
 }
 
 function extractIndex(id) {
