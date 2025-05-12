@@ -399,9 +399,7 @@ function getUsersToAssignTemplateForEditTaskForm(userName, index, isSelected, in
     </li>`;
 }
 
-function getAvatarTemplate(initials, bgColor) {
-  return `<span class="single-contact-icon d-flex-center" style="background-color: ${bgColor}; margin-right: 8px;">${initials}</span>`;
-}
+
 
 function renderTaskCard(task) {
   return `

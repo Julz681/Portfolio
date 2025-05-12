@@ -99,7 +99,7 @@
             <input class="task-input-fields size-20 br-10" type="text" id="task-title" name="task-title"
               placeholder="Enter a title" minlength="4"
               onfocus="checkTitleInputValue(`task-title-error`, `value-length-error`, `task-title`)"
-              oninput="checkTitleInputValue(`task-title-error`,`value-length-error`, `task-title`)" required />
+              oninput="checkTitleInputValue(`task-title-error`,`value-length-error`, `task-title`)" />
             <span class="required-error-message d_none" id="task-title-error">This field is required!</span>
             <span class="required-error-message d_none" id="value-length-error">Value too short!</span>
           </div>
@@ -114,7 +114,7 @@
           <div class="date-picker-wrapper d-flex-column gap-8">
             <label for="date"><span>Due date</span><span class="red">*</span></label>
             <input class="date-picker size-20 br-10" type="text" id="due-date-add-task" name="due-date"
-              placeholder="dd/mm/yyyy" maxlength="10" required />
+              placeholder="dd/mm/yyyy"/>
             <span class="required-error-message d_none" id="due-date-required-error-message">This field is
               required!</span>
             <span class="required-error-message d_none" id="due-date-time-error-message">Date needs to be in the
@@ -201,7 +201,7 @@
               <div class="dropdown-input-wrapper br-10 d-flex-center"
                 onclick="toggleDropdownSelection('category-dropdown', event)">
                 <input class="dropdown-input size-20" type="text" id="category" name="category"
-                  placeholder="Select task category" disabled required />
+                  placeholder="Select task category" />
                 <span id="category-dropdown-closed" class="dropdown-icon-closed"
                   onclick="toggleDropdownSelection('category-dropdown', event)"></span>
                 <span id="category-dropdown-open" class="dropdown-icon-open d_none"

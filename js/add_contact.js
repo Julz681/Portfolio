@@ -38,55 +38,81 @@ function createFirebaseContactElement(name, email, phone = "", contactId = "") {
  * This function loads contacts from the Firebase Realtime Database and displays them in the contact list.
  */
 function loadContactsFromFirebase() {
-    get(ref(database, 'contacts')) // Use the 'database' reference from firebase.js
-        .then((snapshot) => {
-            const firebaseContacts = snapshot.val();
-            if (firebaseContacts) {
-                const contactList = document.getElementById("contactList");
-                if (!contactList) return;
+  get(ref(database, "contacts"))
+    .then((snapshot) => {
+      const firebaseContacts = snapshot.val();
+      if (!firebaseContacts) return;
 
-                const contactsArray = Object.entries(firebaseContacts).map(([contactId, contactData]) => ({
-                    id: contactId,
-                    ...contactData
-                }));
+      const contactList = document.getElementById("contactList");
+      if (!contactList) return;
 
-                contactsArray.sort((a, b) => a.name.localeCompare(b.name));
+      const contactsArray = Object.entries(firebaseContacts).map(([contactId, contactData]) => ({
+        id: contactId,
+        ...contactData,
+      }));
 
-                contactsArray.forEach(contactData => {
-                    const existingContact = document.querySelector(`.contact-item[data-firebase-id="${contactData.id}"]`);
-                    if (!existingContact) {
-                        const newContactElement = createFirebaseContactElement(contactData.name, contactData.email, contactData.phone, contactData.id);
-                        const groupLetter = contactData.name[0].toUpperCase();
-                        let group = [...document.querySelectorAll(".contact-group")].find(
-                            (g) => g.querySelector(".contact-group-letter")?.textContent === groupLetter
-                        );
-                        if (!group) {
-                            group = document.createElement("div");
-                            group.className = "contact-group";
-                            group.innerHTML = `<div class="contact-group-letter">${groupLetter}</div>`;
-                            contactList.appendChild(group);
-                        }
-                        group.appendChild(newContactElement);
-                    } else {
-                        existingContact.dataset.name = contactData.name;
-                        existingContact.dataset.email = contactData.email;
-                        existingContact.dataset.phone = contactData.phone;
-                        existingContact.querySelector(".contact-avatar").dataset.name = contactData.name;
-                        existingContact.querySelector(".contact-avatar").textContent = contactData.name.split(" ").map((w) => w[0]).join("").slice(0, 2);
-                        existingContact.querySelector(".contact-name").textContent = contactData.name;
-                        existingContact.querySelector(".contact-email").textContent = contactData.email;
-                    }
-                });
+      contactsArray.sort((a, b) => a.name.localeCompare(b.name));
+      contactsArray.forEach(renderContactFromFirebase);
 
-                sortContacts();
-                bindContactClicks();
-                setAvatarColors();
-            }
-        })
-        .catch((error) => {
-            console.error("Fehler beim Laden der Kontakte aus Firebase:", error);
-        });
+      sortContacts();
+      bindContactClicks();
+      setAvatarColors();
+    })
+    .catch((error) => {
+      console.error("Fehler beim Laden der Kontakte aus Firebase:", error);
+    });
 }
+
+function renderContactFromFirebase(contactData) {
+  const existingContact = document.querySelector(`.contact-item[data-firebase-id="${contactData.id}"]`);
+
+  if (existingContact) {
+    updateExistingContactElement(existingContact, contactData);
+    return;
+  }
+
+  const newContactElement = createFirebaseContactElement(
+    contactData.name,
+    contactData.email,
+    contactData.phone,
+    contactData.id
+  );
+
+  const group = groupLetterContainer(contactData.name[0].toUpperCase());
+  group.appendChild(newContactElement);
+}
+
+function groupLetterContainer(letter) {
+  const contactList = document.getElementById("contactList");
+  let group = [...document.querySelectorAll(".contact-group")].find(
+    (g) => g.querySelector(".contact-group-letter")?.textContent === letter
+  );
+
+  if (!group) {
+    group = document.createElement("div");
+    group.className = "contact-group";
+    group.innerHTML = `<div class="contact-group-letter">${letter}</div>`;
+    contactList.appendChild(group);
+  }
+
+  return group;
+}
+
+function updateExistingContactElement(el, data) {
+  el.dataset.name = data.name;
+  el.dataset.email = data.email;
+  el.dataset.phone = data.phone;
+
+  const avatar = el.querySelector(".contact-avatar");
+  const initials = data.name.split(" ").map(w => w[0]).join("").slice(0, 2);
+
+  avatar.dataset.name = data.name;
+  avatar.textContent = initials;
+
+  el.querySelector(".contact-name").textContent = data.name;
+  el.querySelector(".contact-email").textContent = data.email;
+}
+
 
 /**
  * This function updates a contact's data in the Firebase Realtime Database.

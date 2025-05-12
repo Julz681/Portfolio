@@ -43,7 +43,7 @@
                 type="text"
                 placeholder="Name"
                 onclick="autoFillFieldsSignUp()"
-                required
+                
               />
               <img
                 class="imgs-input_signup"
@@ -58,7 +58,7 @@
                 id="email"
                 type="email"
                 placeholder="E-Mail"
-                required
+                
                 autocomplete="username"
               />
               <img
@@ -74,7 +74,7 @@
                   id="password"
                   type="password"
                   placeholder="Password"
-                  required
+                  
                   autocomplete="new-password"
                   oninput="updatePasswordIcon('password', this.nextElementSibling)"
               />
@@ -93,7 +93,7 @@
                   id="confirm-password"
                   type="password"
                   placeholder="Confirm Password"
-                  required
+            
                   autocomplete="new-password"
                   oninput="updatePasswordIcon('confirm-password', this.nextElementSibling)"
               />
@@ -130,9 +130,10 @@
       <a href="/html/legal_notice_logged_out.html">Legal notice</a>
     </footer>
 
-    <script type="module" src="/js/firebase.js"></script>
-    <script type="module" src="/js/firebase_functions.js"></script>
-    <script type="module" src="/js/sign_up.js"></script>
+  <script type="module" src="/js/firebase.js"></script>
+  <script type="module" src="/js/template.js"></script>  
+  <script type="module" src="/js/firebase_functions.js"></script>
+  <script type="module" src="/js/sign_up.js"></script>
 
   </body>
 </html>
