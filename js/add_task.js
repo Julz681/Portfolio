@@ -433,15 +433,27 @@ function createTask(dateFieldId) {
   } else {
     let taskId = "task-" + (tasks.length + newTasks.length + 1);
     let taskObject = createTaskObject(taskId, dateFieldId);
+
     resetTaskHTML();
     newTasks.push(taskObject);
     sendTaskToLocalStorage(newTasks);
+
+   
     if (window.location.pathname === "/html/board.html") {
-      closeTaskForm();
+      if (!window.tasks) window.tasks = [];
+      window.tasks.push(taskObject);
+
+      if (typeof renderAllColumns === "function") {
+        renderAllColumns();
+      }
+
+      closeTaskForm(); 
     }
+
     showTaskSuccessMessage();
   }
 }
+
 
 function createTaskObject(taskId, dateFieldId) {
   return (taskObject = {
