@@ -106,6 +106,7 @@ body {
   width: 204px;
   padding: 10px;
   transition-duration: 1s;
+  z-index: 9999;
 }
 
 .dropdown-menu a {
@@ -236,6 +237,10 @@ body {
 }
 
 @media (max-width: 1200px) {
+
+  .max-width {
+    z-index: 9999;
+  }
   .sidebar {
     display: none;
   }
@@ -263,7 +268,6 @@ body {
 
   .dropdown-menu {
     top: 80px;
-    right: 8px;
     width: 150px;
   }
 
