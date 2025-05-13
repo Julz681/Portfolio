@@ -8,9 +8,9 @@
   .add-task-content-wrapper {
     left: 40px;
   }
-  .add-task-header-wrapper {
+  /*.add-task-header-wrapper {
     margin-top: 38px;
-  }
+  }*/
 }
 
 @media (max-width: 980px) {

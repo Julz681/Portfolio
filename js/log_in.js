@@ -1,7 +1,34 @@
 import { getUserDataByEmail } from './firebase.js';
 
 /**
- * This function automatically fills the login form fields with predefined values for testing or demonstration purposes.
+ * Shows an error message visually in the user interface by updating the text content
+ * and removing the 'd_none' class of the designated error message element.
+ * @param {string} message - The error message string to be displayed to the user.
+ */
+function showError(message) {
+    const errorBox = document.getElementById("error-message");
+    if (errorBox) {
+        errorBox.textContent = message;
+        errorBox.classList.remove("d_none");
+    }
+}
+
+/**
+ * Hides the visual error message by clearing the text content and adding the 'd_none'
+ * class back to the designated error message element, effectively making it invisible.
+ */
+function hideError() {
+    const errorBox = document.getElementById("error-message");
+    if (errorBox) {
+        errorBox.textContent = "";
+        errorBox.classList.add("d_none");
+    }
+}
+
+/**
+ * Automatically fills the email and password input fields with predefined values.
+ * This function is primarily intended for testing and development purposes to quickly
+ * populate the login form.
  */
 function autoFillFields() {
     const email = "SofiaMueller@gmail.com";
@@ -11,9 +38,13 @@ function autoFillFields() {
 }
 
 /**
- * This function toggles the visibility of a password input field and updates the corresponding icon.
- * @param {string} inputId - The ID of the password input field.
- * @param {HTMLImageElement} imgElement - The image element representing the visibility icon.
+ * Toggles the visibility of the text in a password input field. When called, it switches
+ * the 'type' attribute of the input field between 'password' (obscured) and 'text' (visible).
+ * It also updates the source of the associated image element to reflect the current visibility state.
+ * @param {string} inputId - The ID of the password input field whose visibility is to be toggled.
+ * @param {HTMLImageElement} imgElement - The image element that serves as the toggle control.
+ * Its 'src' attribute is updated to 'eye.png' (visible) or
+ * 'eye_closed.png' (obscured).
  */
 function togglePasswordVisibility(inputId, imgElement) {
     const inputField = document.getElementById(inputId);
@@ -29,9 +60,13 @@ function togglePasswordVisibility(inputId, imgElement) {
 }
 
 /**
- * This function updates the password visibility icon based on whether the input field contains text.
- * @param {string} inputId - The ID of the password input field.
- * @param {HTMLImageElement} imgElement - The image element representing the visibility icon.
+ * Updates the visual icon associated with a password input field to indicate whether the
+ * field is currently displaying obscured text (password type) or visible text (text type).
+ * When the input field has content and is of type 'password', the icon is set to 'eye_closed.png'.
+ * If the input field is empty and of type 'password', the icon is set back to 'lock.png'.
+ * If the input field is of type 'text', the icon is set to 'eye.png'.
+ * @param {string} inputId - The ID of the password input field being observed.
+ * @param {HTMLImageElement} imgElement - The image element that visually represents the password visibility.
  */
 function updatePasswordIcon(inputId, imgElement) {
     const inputField = document.getElementById(inputId);
@@ -45,36 +80,39 @@ function updatePasswordIcon(inputId, imgElement) {
 }
 
 /**
- * This function handles the normal login process, verifies user credentials, 
- * and redirects the user upon successful authentication.
- * @param {Event} event - The event object to prevent default form submission.
+ * Asynchronously handles the normal login submission. It prevents the default form submission,
+ * hides any existing error messages, retrieves the entered email and password, and then
+ * attempts to authenticate the user by querying Firebase for user data based on the email.
+ * If a user is found and the entered password matches the stored (though this implementation
+ * directly compares plain text, which is not secure for production), it stores the user's
+ * name and login status in local storage and redirects the user to the summary page.
+ * It also handles the 'remember me' functionality by storing or removing email and password
+ * from local storage based on the checkbox state. If authentication fails (user not found or
+ * incorrect password), it displays an appropriate error message.
+ * @async
+ * @param {Event} event - The submit event triggered by the login form.
  */
 async function normalLogin(event) {
     event.preventDefault();
-
-    console.log("normalLogin function called!");
+    hideError();
 
     const rememberMe = document.getElementById("rememberMe").checked;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    console.log("Email:", email, "Password:", password, "Remember Me:", rememberMe);
-
     if (!email || !password) {
-        alert("Please enter both email and password.");
+        showError("Please enter both email and password.");
         return;
     }
 
     try {
-        console.log("Calling getUserDataByEmail...");
         const userData = await getUserDataByEmail(email);
-        console.log("getUserDataByEmail returned:", userData);
 
         if (userData) {
             if (password === document.getElementById("password").value) {
-                console.log("Password matches (INSECURE CHECK)!");
                 localStorage.setItem("loggedInUserName", userData.name);
                 localStorage.setItem("isGuest", "false");
+
                 if (rememberMe) {
                     localStorage.setItem("email", email);
                     localStorage.setItem("password", password);
@@ -84,31 +122,36 @@ async function normalLogin(event) {
                     localStorage.removeItem("password");
                     localStorage.setItem("rememberMe", "false");
                 }
+
                 window.location.href = '/html/summary.html';
             } else {
-                alert("Incorrect password.");
+                showError("Incorrect password.");
             }
         } else {
-            alert("User not found. Please sign up.");
+            showError("User not found. Please sign up.");
         }
     } catch (error) {
-        console.error("Login error:", error);
-        alert("Login failed. Please try again.");
+        showError("Login failed. Please try again.");
     }
 }
 
 /**
- * This function handles the guest login, allowing access without authentication.
- * @param {Event} event - The event object to prevent default form submission.
+ * Handles the guest login action. It prevents the default action of the button click,
+ * hides any visible error messages, sets a flag in local storage indicating that the
+ * user is logged in as a guest, and then redirects the browser to the summary page.
+ * @param {Event} event - The click event triggered by the guest login button.
  */
 function guestLogin(event) {
     event.preventDefault();
+    hideError();
     localStorage.setItem("isGuest", "true");
     window.location.href = '/html/summary.html';
 }
 
 /**
- * This function restores saved credentials if the "Remember Me" option was previously selected.
+ * Restores the email and password in the login form from local storage if the user
+ * had previously checked the "remember me" option. This function is typically called
+ * when the page is loaded to provide a persistent login experience.
  */
 function restoreLogin() {
     const rememberMe = localStorage.getItem("rememberMe") === "true";
@@ -125,14 +168,33 @@ function restoreLogin() {
     }
 }
 
-// Add event listeners after the DOM content is loaded
-document.addEventListener('DOMContentLoaded', function() {
+/**
+ * Adds event listeners to various elements on the page once the DOM is fully loaded.
+ * These listeners handle user interactions such as clicking the email field for autofill,
+ * focusing and typing in the password field to update the visibility icon, clicking the
+ * toggle password image to show/hide the password, and clicking the login and guest login buttons
+ * to initiate the respective login processes. It also attaches listeners to the signup buttons
+ * to navigate to the signup page and calls the `restoreLogin` function to check for and
+ * restore any saved login credentials.
+ */
+document.addEventListener('DOMContentLoaded', function () {
     const passwordInput = document.getElementById('password');
     const togglePasswordImg = document.querySelector('.toggle-password');
     let firstFocus = true;
 
+    /**
+     * Event listener attached to the email input field. When the field is clicked,
+     * the `autoFillFields` function is called to populate the email and password
+     * fields with predefined testing values.
+     */
     document.getElementById('email').addEventListener('click', autoFillFields);
 
+    /**
+     * Event listener attached to the password input field. When the field receives focus
+     * for the first time after the page load, it sets the password visibility icon to
+     * the 'eye_closed.png' to indicate that the password is initially hidden. The `firstFocus`
+     * flag ensures this action is only performed once per page load.
+     */
     passwordInput.addEventListener('focus', () => {
         if (firstFocus) {
             togglePasswordImg.src = "/assets/img/eye_closed.png";
@@ -140,31 +202,64 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    /**
+     * Event listener attached to the password input field. Whenever the content of the
+     * input field changes (on 'input' event), the `updatePasswordIcon` function is called
+     * to adjust the visibility icon based on whether the field has content and its type.
+     */
     passwordInput.addEventListener('input', () => updatePasswordIcon('password', togglePasswordImg));
 
-    passwordInput.addEventListener('blur', () => {
+    /**
+     * Event listener attached to the password input field. When the field loses focus ('blur' event),
+     * the `updatePasswordIcon` function is called to ensure the visibility icon reflects the
+     * current state of the password field (e.g., showing a lock if the field is now empty and of password type).
+     */
+    passwordInput.addEventListener('blur', () => updatePasswordIcon('password', togglePasswordImg));
+
+    /**
+     * Event listener attached to the toggle password image. When clicked, it calls the
+     * `togglePasswordVisibility` function to switch the visibility of the password text
+     * and then updates the icon using `updatePasswordIcon` to reflect the new state.
+     */
+    togglePasswordImg.addEventListener('click', () => {
+        togglePasswordVisibility('password', togglePasswordImg);
         updatePasswordIcon('password', togglePasswordImg);
     });
 
-    togglePasswordImg.addEventListener('click', () => {
-        togglePasswordVisibility('password', togglePasswordImg);
-        updatePasswordIcon('password', togglePasswordImg); // Update icon after toggle
-    });
-
+    /**
+     * Event listener attached to the login button. When clicked, it triggers the `normalLogin`
+     * function, which handles the user authentication process against Firebase.
+     */
     document.getElementById('loginButton').addEventListener('click', normalLogin);
+
+    /**
+     * Event listener attached to the guest login button. When clicked, it calls the `guestLogin`
+     * function, which sets the user as a guest in local storage and redirects to the summary page.
+     */
     document.getElementById('guestLoginButton').addEventListener('click', guestLogin);
 
-    // Redirection for Sign-up Buttons
     const signupBtn = document.querySelector('.signup-btn');
     const signupBtn1 = document.querySelector('.signup-btn1');
-    
+
+    /**
+     * Event listener attached to the primary signup button. When clicked, it navigates the
+     * browser to the '/html/sign_up.html' page, allowing the user to create a new account.
+     */
     signupBtn.addEventListener('click', () => {
-        window.location.href = '/html/sign_up.html'; // Redirect to Sign-Up-Seite
-    });
-    
-    signupBtn1.addEventListener('click', () => {
-        window.location.href = '/html/sign_up.html'; // Redirect to Sign-Up-Seite
+        window.location.href = '/html/sign_up.html';
     });
 
+    /**
+     * Event listener attached to the secondary signup button (if it exists). When clicked,
+     * it also navigates the browser to the '/html/sign_up.html' page.
+     */
+    signupBtn1.addEventListener('click', () => {
+        window.location.href = '/html/sign_up.html';
+    });
+
+    /**
+     * Calls the `restoreLogin` function when the DOM is loaded to check if there are any
+     * saved login credentials in local storage and, if so, pre-fills the login form.
+     */
     restoreLogin();
 });

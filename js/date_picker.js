@@ -1,14 +1,8 @@
-// initializes the calendar field (Flatpickr) for the due date
-// function setupDatePicker() {
-//   if (window.flatpickr) {
-//     flatpickr("#due-date", {
-//       dateFormat: "d/m/Y",
-//       allowInput: true,
-//       disableMobile: true,
-//     });
-//   }
-// }
-
+/**
+ * Initializes all Flatpickr date picker fields for various due date inputs.
+ * Applies date constraints (min/max), custom formatting, and event handlers to
+ * trigger validation whenever the date input is interacted with.
+ */
 function setupAllDatePickers() {
   const datePickerIDs = [
     "#due-date",
@@ -44,15 +38,22 @@ function setupAllDatePickers() {
   });
 }
 
-
-// date input validation
-
+/**
+ * Validates the date input field. Handles both "add task" and "edit task" forms by checking:
+ * - if the date is empty
+ * - if the date format is invalid
+ * - if the selected date is in the past or today
+ * Applies and removes error messages and styling accordingly.
+ *
+ * @param {string} containerId - The ID of the container holding the date input field.
+ */
 function checkDateInput(containerId) {
   let dateInput = getInputContainer(containerId);
   let dateInputValue = getInputValue(dateInput);
   let requiredErrorContainerRef;
   let invalidInputErrorContainerRef;
   let dateFormatErrorContainerRef;
+
   if (containerId === "due-date-add-task" || containerId === "due-date-form") {
     requiredErrorContainerRef = getErrorContainer("due-date-required-error-message");
     invalidInputErrorContainerRef = getErrorContainer("due-date-time-error-message");
@@ -62,18 +63,33 @@ function checkDateInput(containerId) {
     invalidInputErrorContainerRef = getErrorContainer("due-date-edit-time-error-message");
     dateFormatErrorContainerRef = getErrorContainer("due-date-edit-format-error-message");
   }
+
   let formattedDateValue = formatDateValue(dateInputValue).setHours(0, 0, 0, 0);
   let currentDate = new Date().setHours(0, 0, 0, 0);
+
   if (checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef)) {
     return;
   } else if (
-    checkFormattedDateValue(formattedDateValue, invalidInputErrorContainerRef, requiredErrorContainerRef, dateFormatErrorContainerRef, currentDate)) {
+    checkFormattedDateValue(formattedDateValue, invalidInputErrorContainerRef, requiredErrorContainerRef, dateFormatErrorContainerRef, currentDate)
+  ) {
     return;
   } else {
     removeAllDateErrorUserInteractions(requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef);
   }
 }
 
+/**
+ * Checks if the raw date input is valid:
+ * - Not empty
+ * - Matches the expected dd/mm/yyyy format
+ * If invalid, displays appropriate error messages and styling.
+ *
+ * @param {string} dateInputValue - The raw input value from the user.
+ * @param {HTMLElement} requiredErrorContainerRef - Error element for empty input.
+ * @param {HTMLElement} dateFormatErrorContainerRef - Error element for invalid format.
+ * @param {HTMLElement} invalidInputErrorContainerRef - Error element for other invalid input.
+ * @returns {boolean} - True if the input is invalid; false otherwise.
+ */
 function checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef) {
   if (dateInputValue.length === 0) {
     fp.altInput.classList.add("task-input-fields-invalid");
@@ -89,6 +105,17 @@ function checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateF
   }
 }
 
+/**
+ * Validates the parsed date against the current date. If it's today or in the past,
+ * shows an error and applies invalid styling.
+ *
+ * @param {Date} formattedDateValue - The parsed date from user input.
+ * @param {HTMLElement} invalidInputErrorContainerRef - Error element for invalid past/today date.
+ * @param {HTMLElement} requiredErrorContainerRef - Error element for empty field.
+ * @param {HTMLElement} dateFormatErrorContainerRef - Error element for format mismatch.
+ * @param {Date} currentDate - The current date, normalized to midnight.
+ * @returns {boolean} - True if the date is invalid; false otherwise.
+ */
 function checkFormattedDateValue(formattedDateValue, invalidInputErrorContainerRef, requiredErrorContainerRef, dateFormatErrorContainerRef, currentDate) {
   if (formattedDateValue < currentDate || formattedDateValue == currentDate) {
     showErrorMessage(invalidInputErrorContainerRef);
@@ -99,6 +126,12 @@ function checkFormattedDateValue(formattedDateValue, invalidInputErrorContainerR
   }
 }
 
+/**
+ * Converts a date string from dd/mm/yyyy to a native JavaScript Date object.
+ *
+ * @param {string} dateInputValue - The date string in dd/mm/yyyy format.
+ * @returns {Date} - Parsed Date object.
+ */
 function formatDateValue(dateInputValue) {
   let dateParts = dateInputValue.split("/");
   let day = dateParts[0];
@@ -107,6 +140,14 @@ function formatDateValue(dateInputValue) {
   return new Date(year, month - 1, day);
 }
 
+/**
+ * Clears all date-related error messages and removes any invalid styling
+ * from the Flatpickr input.
+ *
+ * @param {HTMLElement} requiredErrorContainerRef - Error element for empty field.
+ * @param {HTMLElement} dateFormatErrorContainerRef - Error element for format mismatch.
+ * @param {HTMLElement} invalidInputErrorContainerRef - Error element for invalid value.
+ */
 function removeAllDateErrorUserInteractions(
   requiredErrorContainerRef,
   dateFormatErrorContainerRef,
@@ -118,15 +159,21 @@ function removeAllDateErrorUserInteractions(
   removeValueErrorStylingOnInput(fp.altInput);
 }
 
+/**
+ * Hides all error messages related to date format or invalid values.
+ *
+ * @param {HTMLElement} dateFormatErrorContainerRef - Error element for format issue.
+ * @param {HTMLElement} invalidInputErrorContainerRef - Error element for invalid date.
+ */
 function removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputErrorContainerRef) {
   removeErrorMessage(dateFormatErrorContainerRef);
   removeErrorMessage(invalidInputErrorContainerRef);
 }
 
+/**
+ * Initializes all date pickers when the DOM is fully loaded.
+ */
 window.addEventListener("DOMContentLoaded", () => {
-  // setupDatePicker();
+  // setupDatePicker(); // optional legacy single-picker init
   setupAllDatePickers();
 });
-
-
-
