@@ -14,16 +14,14 @@ body {
 }
 
 .header {
-  position: absolute;
-  left: 0;
-  right: 0;
+  margin-left: -340px;
 }
 
 .headline_2 {
     display: flex;
     align-items: center;
     gap: 32px;
-    padding-top: 180px;
+    padding-top: 100px;
 }
   
 .headline_2 h1 {
@@ -56,6 +54,7 @@ body {
 .wrapper_content_greeting {
   display: flex;
   flex-direction: row;
+  max-width: 1920px;
 }
 
 .wrapper_todo_done {

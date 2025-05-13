@@ -20,14 +20,30 @@ body {
   cursor: pointer;
 }
 
+header {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1920px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
 button {
   cursor: pointer;
 }
 
 .start {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: absolute;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -39,7 +55,7 @@ button {
 }
 
 .logo-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -59,7 +75,7 @@ button {
   animation: logoAppear 0.5s ease-out 0.5s forwards;
   pointer-events: none;
   z-index: 9999; 
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -161,6 +177,7 @@ body {
   align-items: center;
   flex-direction: column;
   padding-top: 120px;
+  max-width: 1920px;
 }
 
 .login-frame {
