@@ -286,6 +286,8 @@ function addSubtask(id, valueSizeErrorContainerId) {
 }
 
 // TODO: BLOCK creation of Subtasks due to value shortage
+// TODO: multiple subtask edit
+// TODO: board subtask empty on clear
 
 function clearSubtaskInput(id, valueSizeErrorContainerId) {
   let input = getInputContainer(id);

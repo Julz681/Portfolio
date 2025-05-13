@@ -369,13 +369,10 @@ function closeTaskForm() {
   const modal = document.getElementById("task-form-modal-wrapper");
   const wrapper = document.getElementById("task-form-wrapper");
   const container = document.getElementById("task-form");
-
   if (!modal || !wrapper || !container) return;
-
   wrapper.classList.remove("slide-in");
   wrapper.classList.add("slide-out");
   modal.classList.add("fade-out");
-
   wrapper.addEventListener(
     "transitionend",
     function end() {
@@ -391,6 +388,7 @@ function closeTaskForm() {
 
   document.body.classList.remove("modal-open");
   assignees = [];
+  subtasks = [];
 }
 
 let assigneesTaskForm = [];
