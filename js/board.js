@@ -504,32 +504,10 @@ function closeTaskForm() {
 
   document.body.classList.remove("modal-open");
   assignees = [];
+  subtasks = [];
 }
 
 let assigneesTaskForm = [];
-
-// function renderUsersToAssignForm() {
-//   const list = document.getElementById("assigned-to-users-list");
-//   if (!list) {
-//     return;
-//   }
-
-//   list.innerHTML = "";
-
-//   window.userNames.forEach((name, index) => {
-//     const initials = getInitials(name);
-//     const bgColor = getIconBackgroundColor(initials);
-//     const isSelected = assigneesTaskForm.includes(name);
-
-//     list.innerHTML += getUsersToAssignTemplateForTaskForm(
-//       name,
-//       index,
-//       isSelected,
-//       initials,
-//       bgColor
-//     );
-//   });
-// }
 
 /**
  * Assigns or unassigns a contact to the task form based on the clicked user item.
