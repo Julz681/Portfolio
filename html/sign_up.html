@@ -1,140 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="icon" href="/assets/img/favicon.png" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/sign_up.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <title>Join</title>
-  </head>
-  <body>
-    <div class="width-max">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="icon" href="/assets/img/favicon.png" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/sign_up.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oxanium:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <title>Join</title>
+</head>
+<body>
+  <div class="width-max">
     <img class="signup-logo" src="/assets/img/logo.png" alt="logo" />
   </div>
 
-    <div id="signup-form-container">
-      <div class="sign-up-frame">
-        <div class="signup-header">
-          <div class="header-row">
-            <a href="/index.html">
-              <img
-                class="back-arrow"
-                src="/assets/img/arrow-left-line.png"
-                alt="Back to Log-In"
-              />
-            </a>
-            <div class="spacer"></div>
-            <h1>Sign up</h1>
-            <div class="spacer"></div>
-          </div>
-          <hr />
+  <!-- Error Message -->
+  <div id="error-message" class="error-message d_none"></div>
+
+  <div id="signup-form-container">
+    <div class="sign-up-frame">
+      <div class="signup-header">
+        <div class="header-row">
+          <a href="/index.html">
+            <img class="back-arrow" src="/assets/img/arrow-left-line.png" alt="Back to Log-In" />
+          </a>
+          <div class="spacer"></div>
+          <h1>Sign up</h1>
+          <div class="spacer"></div>
+        </div>
+        <hr />
+      </div>
+
+      <!-- Form with novalidate to disable HTML5 validation -->
+      <form id="signup-form" novalidate>
+        <div class="signup-data">
+          <label for="name">
+            <input
+              class="input-field"
+              id="name"
+              type="text"
+              placeholder="Name"
+              onclick="autoFillFieldsSignUp()" />
+            <img class="imgs-input_signup" src="/assets/img/user.png" alt="user" />
+          </label>
+
+          <label for="email">
+            <input
+              class="input-field"
+              id="email"
+              type="text"
+              placeholder="E-Mail"
+              autocomplete="username" />
+            <img class="imgs-input_signup" src="/assets/img/mail.png" alt="email" />
+          </label>
+
+          <label for="password">
+            <input
+              class="input-field"
+              id="password"
+              type="password"
+              placeholder="Password"
+              autocomplete="new-password"
+              oninput="updatePasswordIcon('password', this.nextElementSibling)" />
+            <img
+              class="imgs-input_signup toggle-password"
+              id="eye-icon-password"
+              src="/assets/img/lock.png"
+              alt="Toggle Password Visibility"
+              onclick="togglePasswordVisibility('password', this)" />
+          </label>
+
+          <label for="confirm-password">
+            <input
+              class="input-field"
+              id="confirm-password"
+              type="password"
+              placeholder="Confirm Password"
+              autocomplete="new-password"
+              oninput="updatePasswordIcon('confirm-password', this.nextElementSibling)" />
+            <img
+              class="imgs-input_signup toggle-password"
+              id="eye-icon-confirm-password"
+              src="/assets/img/lock.png"
+              alt="Toggle Password Visibility"
+              onclick="togglePasswordVisibility('confirm-password', this)" />
+          </label>
         </div>
 
-
-        <form id="signup-form">
-          <div class="signup-data">
-            <label for="name">
-              <input
-                class="input-field"
-                id="name"
-                type="text"
-                placeholder="Name"
-                onclick="autoFillFieldsSignUp()"
-                
-              />
-              <img
-                class="imgs-input_signup"
-                src="/assets/img/user.png"
-                alt="user"
-              />
-            </label>
-
-            <label for="email">
-              <input
-                class="input-field"
-                id="email"
-                type="email"
-                placeholder="E-Mail"
-                
-                autocomplete="username"
-              />
-              <img
-                class="imgs-input_signup"
-                src="/assets/img/mail.png"
-                alt="email"
-              />
-            </label>
-
-            <label for="password">
-              <input
-                  class="input-field"
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  
-                  autocomplete="new-password"
-                  oninput="updatePasswordIcon('password', this.nextElementSibling)"
-              />
-              <img
-                  class="imgs-input_signup toggle-password"
-                  id="eye-icon-password"
-                  src="/assets/img/lock.png"
-                  alt="Toggle Password Visibility"
-                  onclick="togglePasswordVisibility('password', this)"
-              />
-          </label>
-          
-          <label for="confirm-password">
-              <input
-                  class="input-field"
-                  id="confirm-password"
-                  type="password"
-                  placeholder="Confirm Password"
-            
-                  autocomplete="new-password"
-                  oninput="updatePasswordIcon('confirm-password', this.nextElementSibling)"
-              />
-              <img
-                  class="imgs-input_signup toggle-password"
-                  id="eye-icon-confirm-password"
-                  src="/assets/img/lock.png"
-                  alt="Toggle Password Visibility"
-                  onclick="togglePasswordVisibility('confirm-password', this)"
-              />
-          </label>
-          </div>
-          <div class="wrapper">
+        <div class="wrapper">
           <div class="privacy-policy">
-            <input type="checkbox" id="privacy-policy" required />
-            <label for="privacy-policy"
-              >I accept the
-              <a href="/html/privacy_policy_logged_out.html"
-                >Privacy Policy</a
-              ></label
-            >
+            <input type="checkbox" id="privacy-policy" />
+            <label for="privacy-policy">
+              I accept the
+              <a href="/html/privacy_policy_logged_out.html">Privacy Policy</a>
+            </label>
           </div>
 
           <div class="btn_center">
             <button type="submit" class="signup-btn">Sign up</button>
           </div>
         </div>
-        </form>
-      </div>
+      </form>
     </div>
+  </div>
 
-    <footer class="footer-start">
-      <a href="/html/privacy_policy_logged_out.html">Privacy Policy</a>
-      <a href="/html/legal_notice_logged_out.html">Legal notice</a>
-    </footer>
+  <footer class="footer-start">
+    <a href="/html/privacy_policy_logged_out.html">Privacy Policy</a>
+    <a href="/html/legal_notice_logged_out.html">Legal notice</a>
+  </footer>
 
   <script type="module" src="/js/firebase.js"></script>
   <script type="module" src="/js/template.js"></script>  
   <script type="module" src="/js/firebase_functions.js"></script>
   <script type="module" src="/js/sign_up.js"></script>
-
-  </body>
+</body>
 </html>

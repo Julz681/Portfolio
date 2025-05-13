@@ -10,8 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const urgentDeadlineElement = document.querySelector('.metric-box-urgent .deadline-info p:first-child');
 
     /**
-     * Updates the displayed counts for each task status.
-     * @param {object} tasks - An object containing all tasks from Firebase.
+     * Updates the displayed counts for each task status on the dashboard.
+     * It iterates through the provided tasks object, counts the number of tasks in 'to-do',
+     * 'done', 'in-progress', and 'await-feedback' statuses, as well as the total number of tasks
+     * and the number of 'urgent' priority tasks. It also finds the closest due date among the urgent tasks.
+     * Finally, it updates the text content of the corresponding HTML elements with these counts and the urgent deadline.
+     * @param {object} tasks - An object where each key is a task ID and the value is the task object from Firebase.
      */
     function updateTaskCounts(tasks) {
         let todoCount = 0;
@@ -40,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         awaitingFeedbackCount++;
                         break;
                 }
-                // Counts urgent tasks realted to priority
+                // Counts urgent tasks realted to priority and finds the closest deadline
                 if (task.priority === 'urgent') {
                     urgentCount++;
                     if (task.dueDate) {
@@ -72,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Set up a listener to be notified whenever there are changes to the data at the tasksRef
     onValue(tasksRef, (snapshot) => {
-        
+
         const tasks = snapshot.val();
         if (tasks) {
             updateTaskCounts(tasks);
@@ -89,7 +93,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /**
-     * This function updates the greeting message based on the current time of day.
+     * Updates the greeting message displayed on the dashboard based on the current hour of the day.
+     * It sets the greeting to "Good morning" for the hours before noon, "Good afternoon" for the hours
+     * between noon and 6 PM, and "Good evening" for the hours from 6 PM to midnight and after midnight until 5 AM.
+     * If the user is not a guest (checked via localStorage), it also appends the user's name to the greeting,
+     * retrieved from localStorage and styled with a highlight class.
      */
     function updateGreeting() {
         const greetingElement = document.querySelector(".greeting p");
@@ -114,7 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * This function updates the user profile initials.
+     * Updates the initials displayed in the user profile icon.
+     * If the user is a guest (checked via localStorage), it sets the icon text to "G".
+     * If the user is logged in and their name is stored in localStorage, it extracts the first letter
+     * of the first and last names (if available) and sets them as the icon text in uppercase.
+     * If no username is found for a logged-in user, it defaults to "G".
      */
     function updateUserProfileInitials() {
         const userProfileSpan = document.querySelector("#userProfile span");
@@ -142,6 +154,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const containerDiv = document.querySelector('.container');
     let timeoutId; // Variable to store the timeout ID
 
+    /**
+     * Handles the logic for displaying the greeting and the main container based on the screen width.
+     * On smaller screens (width < 1200px), it initially hides the main container, then fades out the greeting
+     * after 1 second, and after the fade out (another 1 second), it hides the greeting and makes the main
+     * container visible. This creates a delayed transition effect for smaller viewports.
+     * On larger screens (width >= 1200px), it ensures the greeting and container are both visible without any delay or fade.
+     * It also clears any existing timeouts when the screen size changes.
+     */
     function handleScreenLogic() {
         if (window.innerWidth < 1200 && containerDiv && greetingDiv) {
             // Clear any existing timeout
@@ -150,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Initially hide the container
             containerDiv.style.display = 'none';
 
-            // Fade out the greeting after 2 seconds
+            // Fade out the greeting after 1 second
             timeoutId = setTimeout(() => {
                 greetingDiv.style.transition = 'opacity 1s ease-in-out';
                 greetingDiv.style.opacity = '0';

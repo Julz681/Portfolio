@@ -1,3 +1,18 @@
+.error-message {
+  color: #b00020;
+  background-color: #ffe6e6;
+  padding: 10px 14px;
+  border: 1px solid #b00020;
+  border-radius: 5px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+
+.d_none {
+  display: none;
+}
+
 #signup-form-container {
   margin: 0 auto;
   width: 100%;
