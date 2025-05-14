@@ -786,7 +786,7 @@ function resetTaskHTML() {
     fp.clear();
     suppressEvents = false;
     getInputContainer("task-description").value = "";
-    getInputContainer("category").placeholder = "Select Category";
+    getInputContainer("category").placeholder = "Select task category";
     // const categorySelect = getInputContainer("category");
     // categorySelect.selectedIndex = 0;
 
@@ -802,11 +802,22 @@ function resetTaskHTML() {
 function resetPriorityLabels() {
     let priorityLabels = document.getElementsByClassName("priority-labels");
     for (let index = 0; index < priorityLabels.length; index++) {
-        priorityLabels[index].classList.add("default-prio-bg");
-        priorityLabels[index].classList.remove("low-prio-bg", "medium-prio-bg", "urgent-prio-bg", "weight-700");
-        priorityLabels[index].style.color = "#000000";
-        resetIconColor(priorityLabels[index]);
+        if (priorityLabels[index].id != 'medium') {
+            resetLabelToDefault(priorityLabels[index]);
+        } else {
+            priorityLabels[index].classList.add("medium-prio-bg");
+            priorityLabels[index].style.color = "#ffffff";
+            let priorityIconParts = getPriorityIconParts(priorityLabels[index].id);
+            switchPriorityIconColor(priorityIconParts, "#ffffff")
+        }
     }
+}
+
+function resetLabelToDefault(priorityLabel) {
+    priorityLabel.classList.add("default-prio-bg");
+    priorityLabel.classList.remove("low-prio-bg", "medium-prio-bg", "urgent-prio-bg", "weight-700");
+    priorityLabel.style.color = "#000000";
+    resetIconColor(priorityLabel);
 }
 
 /**
@@ -856,5 +867,13 @@ function showTaskSuccessMessage() {
     setTimeout(() => {
         msg.classList.remove("show");
         msg.classList.add("d_none");
+        redirectToBoard();
     }, 2000);
+}
+
+function redirectToBoard() {
+    const currentPath = window.location.pathname.replace(/\\/g, '/');
+    if (currentPath !== '/html/board.html' && currentPath !== '/board.html') {
+        window.location.href = '/html/board.html';
+    }
 }
