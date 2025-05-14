@@ -12,15 +12,16 @@ body {
 }
 
 .header {
-  position: fixed;
+  margin-left: -340px;
   left: 0;
   right: 0;
 }
 
 .main-content {
-  padding-top: 180px;
+  padding-top: 84px;
   padding-right: 50px;
   padding-bottom: 60px;
+  max-width: 1440px;
 }
 .main-content h1 {
   font-size: 56px;
@@ -61,8 +62,6 @@ body {
 .only-responsive {
   display: none !important;
 }
-
-
 
 @media (max-width: 1200px) {
   .main-content {
