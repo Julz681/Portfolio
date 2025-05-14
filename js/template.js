@@ -55,7 +55,7 @@ window.tasks = [
         description: "Build start page with recipe recommendation",
         priority: "urgent",
         taskType: "userStory",
-        dueDate: "06/10/2023",
+        dueDate: "06/10/2025",
         assignedTo: ["Judtih Lütke", "Bernadette Pöltl"],
         subtasks: [
             { 'subtask-0': 'Create Recommender' },
