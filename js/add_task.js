@@ -339,15 +339,22 @@ function selectCategory(categoryId) {
  * @param {string} requiredErrorContainerId - The ID of the element to display the required error message.
  */
 function checkCategoryInputPlaceholder(requiredErrorContainerId) {
-    let categoryValue = getInputContainer("category").value;
+    let placeholder = getInputContainer("category").placeholder;
+    let dropdownContainerRef = document.getElementById("category-dropdown");
+    // let categoryValue = getInputContainer("category").value;
     let errorContainerRef = getErrorContainer(requiredErrorContainerId);
-    if (!categoryValue) {
+    if (placeholder === "Select task category" && dropdownContainerRef.classList.contains("d_none")) {
         showErrorMessage(errorContainerRef);
     } else {
         removeErrorMessage(errorContainerRef);
     }
-}
+    // if (!categoryValue) {
+    //     showErrorMessage(errorContainerRef);
+    // } else {
+    //     removeErrorMessage(errorContainerRef);
+    // }
 
+}
 
 // subtask section
 
@@ -727,7 +734,14 @@ function createTaskObject(taskId, dateFieldId) {
  * @returns {string} The type of the task ("userStory" or "technical").
  */
 function getTaskType() {
-    return getInputContainer("category").value;
+    // return getInputContainer("category").value;
+    let type = getInputContainer("category").placeholder;
+    if (type === "User Story") {
+        return "userStory";
+    } else {
+        return "technical";
+    }
+
 }
 
 
@@ -772,8 +786,9 @@ function resetTaskHTML() {
     fp.clear();
     suppressEvents = false;
     getInputContainer("task-description").value = "";
-    const categorySelect = getInputContainer("category");
-categorySelect.selectedIndex = 0;
+    getInputContainer("category").placeholder = "Select Category";
+    // const categorySelect = getInputContainer("category");
+    // categorySelect.selectedIndex = 0;
 
     resetPriorityLabels();
     resetSubtasksList();

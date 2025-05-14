@@ -207,13 +207,33 @@
             </div>
           </div>
           <div class="category-wrapper d-flex-column gap-8">
-            <label for="category"><span>Category</span><span class="red">*</span></label>
+            <!-- <label for="category"><span>Category</span><span class="red">*</span></label>
             <select id="category" name="category" class="dropdown-input size-20 br-10">
               <option value="" disabled selected>Select task category</option>
               <option value="technical">Technical Task</option>
               <option value="userStory">User Story</option>
             </select>
-            <span class="required-error-message d_none" id="category-error">This field is required</span>
+            <span class="required-error-message d_none" id="category-error">This field is required</span> -->
+            <div class="dropdown-field-wrapper">
+              <div class="dropdown-input-wrapper br-10 d-flex-center"
+                onclick="toggleDropdownSelection('category-dropdown', event)">
+                <input id="category" class="dropdown-input size-20" type="text" placeholder="Select task category"
+                  disabled required />
+                <span id="category-dropdown-closed" class="dropdown-icon-closed"></span>
+                <span id="category-dropdown-open" class="dropdown-icon-open d_none"></span>
+              </div>
+              <span id="category-error" class="required-error-message d_none">This field is required</span>
+              <div id="category-dropdown" class="dropdown-wrapper categories-dropdown-wrapper d_none">
+                <ul class="dropdown d-flex-column">
+                  <li class="categories br-10" onclick="selectCategory('technical-task')">
+                    <span class="size-20" id="technical-task">Technical Task</span>
+                  </li>
+                  <li class="categories br-10" onclick="selectCategory('user-story')">
+                    <span class="size-20" id="user-story">User Story</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
 
 
