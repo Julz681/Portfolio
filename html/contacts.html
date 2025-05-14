@@ -39,12 +39,17 @@
               <img class="imgs-input_contact" src="/assets/img/user.png" alt="User Icon">
             </label>
             <label for="contactEmail">
-              <input class="input-field" id="contactEmail" type="email" placeholder="Email" required>
+              <input class="input-field" id="contactEmail" type="email" placeholder="Email" oninput="validateEmail()"
+                onchange="validateEmail()" required>
               <img class="imgs-input_contact" src="/assets/img/mail.png" alt="Mail Icon">
+              <span class="validate-error-message hidden" id="email-error-message">Please enter a valid email!</span>
             </label>
             <label for="contactPhone">
-              <input class="input-field" id="contactPhone" type="tel" placeholder="Phone" required>
+              <input class="input-field" id="contactPhone" type="tel" placeholder="Phone"
+                oninput="validatePhoneNumber()" onchange="validatePhoneNumber()" required>
               <img class="imgs-input_contact" src="/assets/img/call.png" alt="Phone Icon">
+              <span class="validate-error-message hidden" id="phone-error-message">Please enter a valid phone
+                number!</span>
             </label>
         </div>
         <p id="error-message" style="color: red; display: none;">Please fill in all fields!</p>
@@ -76,7 +81,7 @@
       <div class="add-contact-drawer-right">
         <div class="alignment-right alignment-right-edit">
           <div id="editOverlayAvatar" class="add-contact-avatar">
-        
+
             <div class="avatar-initials">AB</div>
           </div>
           <form class="contact-data" id="editContactForm" action="#" method="POST">
@@ -107,28 +112,28 @@
       </div>
     </div>
   </div>
-  
+
   <div class="max-width">
-  <header class="header">
-    <img src="/assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
-    <span class="headline">Kanban Project Management Tool</span>
-    <div class="nav-right">
-      <a href="/html/help.html" class="help-btn" title="Help">
-        <img src="/assets/img/help.png" alt="Help" />
-      </a>
-      <div class="user-profile" id="userProfile" onclick="toggleDropdown()">
-        <img src="/assets/img/ellipse.png" alt="Profile">
-        <span></span>
+    <header class="header">
+      <img src="/assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
+      <span class="headline">Kanban Project Management Tool</span>
+      <div class="nav-right">
+        <a href="/html/help.html" class="help-btn" title="Help">
+          <img src="/assets/img/help.png" alt="Help" />
+        </a>
+        <div class="user-profile" id="userProfile" onclick="toggleDropdown()">
+          <img src="/assets/img/ellipse.png" alt="Profile">
+          <span></span>
+        </div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a class="only-responsive" href="/html/help.html">Help</a>
+          <a href="/html/legal_notice.html">Legal Notice</a>
+          <a href="/html/privacy_policy.html">Privacy Policy</a>
+          <a href="/index.html">Log out</a>
+        </div>
       </div>
-      <div class="dropdown-menu" id="dropdownMenu">
-        <a class="only-responsive" href="/html/help.html">Help</a>
-        <a href="/html/legal_notice.html">Legal Notice</a>
-        <a href="/html/privacy_policy.html">Privacy Policy</a>
-        <a href="/index.html">Log out</a>
-      </div>
-    </div>
-  </header>
-</div>
+    </header>
+  </div>
   <aside class="sidebar">
     <div class="top-section">
       <div class="sidebar-logo">
@@ -187,7 +192,7 @@
           <img src="/assets/img/responsive_dot_menu.png" alt="menu" />
         </button>
         <div id="dropupMenu" class="dropup-menu">
-          <div id="edit" class="menu-item" >
+          <div id="edit" class="menu-item">
             <img src="/assets/img/edit.png" alt="edit" />
             <span>Edit</span>
           </div>
@@ -196,7 +201,7 @@
             <span>Delete</span>
           </div>
         </div>
-        
+
         <div class="contacts-list" id="contactList">
           <div class="contact-group">
             <div class="contact-group-letter">A</div>
@@ -372,7 +377,8 @@
           <div class="vertical-line"></div>
           <p class="contacts-subtitle">Better with a team</p>
         </div>
-        <a id="mobile-only-goback" href="javascript:void(0);" onclick="closeContactDetails()" class="mobile-only-goback back-btn">
+        <a id="mobile-only-goback" href="javascript:void(0);" onclick="closeContactDetails()"
+          class="mobile-only-goback back-btn">
           <img class="help-arrow" src="/assets/img/help-arrow.png" alt="back arrow" />
         </a>
         <div class="background-color-contacts">
@@ -443,12 +449,12 @@
           </div>
         </a>
       </nav>
-      
+
 
       <div id="contactSuccessMsg" class="success-message hidden">
         Contact successfully created ☺️
       </div>
-      
+
       <script src="/js/template.js"></script>
       <script src="/js/contacts.js"></script>
       <script src="/js/contacts_responsive.js"></script>
@@ -457,4 +463,5 @@
       <script type="module" src="/js/add_contact.js"></script>
       <script src="/js/script.js" type="module"></script>
 </body>
+
 </html>

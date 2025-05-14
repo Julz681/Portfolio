@@ -430,19 +430,19 @@ function getValue(id) {
  * example data for "Mark Zuckerberg". This action is performed only once.
  */
 function enableAutofill() {
-  const name = document.getElementById("contactName");
-  const email = document.getElementById("contactEmail");
-  const phone = document.getElementById("contactPhone");
-  if (!name || !email || !phone) return;
-  let used = false;
-  const fill = () => {
-    if (used || name.value || email.value || phone.value) return;
-    name.value = "Mark Zuckerberg";
-    email.value = "mark@facebook.com";
-    phone.value = "+1 650 550 450";
-    used = true;
-  };
-  [name, email, phone].forEach((f) => f.addEventListener("focus", fill));
+    const name = document.getElementById("contactName");
+    const email = document.getElementById("contactEmail");
+    const phone = document.getElementById("contactPhone");
+    if (!name || !email || !phone) return;
+    let used = false;
+    const fill = () => {
+        if (used || name.value || email.value || phone.value) return;
+        name.value = "Mark Zuckerberg";
+        email.value = "mark@facebook.com";
+        phone.value = "+1 650 550 450";
+        used = true;
+    };
+    [name, email, phone].forEach((f) => f.addEventListener("focus", fill));
 }
 
 /**
@@ -460,4 +460,26 @@ function closeErrorOnInput() {
         }
     };
     [name, email, phone].forEach((f) => f.addEventListener("input", check));
+}
+
+function validateEmail() {
+    let emailInputValue = document.getElementById("contactEmail").value;
+    let errorMessage = document.getElementById("email-error-message");
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/
+    showValidationError(emailPattern, emailInputValue, errorMessage);
+}
+
+function validatePhoneNumber() {
+    let phoneInputValue = document.getElementById("contactPhone").value;
+    let errorMessage = document.getElementById("phone-error-message");
+    const phonePattern = /^(\+?\d{1,4}[\s-]?)?(\(?\d{1,5}\)?[\s-]?)?[\d\s\-\.]{5,15}$/;
+    showValidationError(phonePattern, phoneInputValue, errorMessage);
+}
+
+function showValidationError(pattern, value, errorMessage) {
+    if (pattern.test(value) === false) {
+        errorMessage.classList.remove("hidden");
+    } else {
+        errorMessage.classList.add("hidden");
+    };
 }
