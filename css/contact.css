@@ -541,6 +541,10 @@ header {
   display: block;
 }
 
+.contact-input-field-container {
+  position: relative;
+}
+
 .input-field {
   width: 422px;
   padding: 10px 40px 10px 10px;

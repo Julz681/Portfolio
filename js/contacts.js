@@ -126,27 +126,24 @@ function clearForm() {
  * shows a success message on smaller screens, updates floating buttons, and re-binds edit overlay buttons.
  */
 function bindCreateButton() {
-    document
-        .getElementById("createContact")
-        .addEventListener("click", function (e) {
-            e.preventDefault();
-            const name = getValue("contactName");
-            const email = getValue("contactEmail");
-            const phone = getValue("contactPhone");
-            if (!name || !email || !phone) return showError();
-            hideError();
-            const list = document.getElementById("contactList");
-            createContactElement(name, email, phone, list);
-            resetOverlay();
-            if (window.innerWidth < 900) {
-                document
-                    .querySelector(".contacts-right")
-                    ?.classList.add("show-contact-right");
-                showSuccessMessage();
-            }
-            updateFloatingButtons();
-            bindEditOverlayButtons();
-        });
+    document.getElementById("createContact").addEventListener("click", function (e) {
+        e.preventDefault();
+        const name = getValue("contactName");
+        const email = getValue("contactEmail");
+        const phone = getValue("contactPhone");
+        if (!name || !email || !phone) return showError();
+        hideError();
+        const list = document.getElementById("contactList");
+        createContactElement(name, email, phone, list);
+        resetOverlay();
+        if (window.innerWidth < 900) {
+            document.querySelector(".contacts-right")?.classList.add("show-contact-right");
+            showSuccessMessage();
+        }
+        updateFloatingButtons();
+        bindEditOverlayButtons();
+        // sendContactToLocalStorage(name, email, phone);
+    });
 }
 
 /**
@@ -184,6 +181,10 @@ function createContactElement(name, email, phone, contactList) {
     bindContactClicks();
     sortContacts();
 }
+
+// function sendContactToLocalStorage(name, email, phone) {
+//     localStorage.setItem("tasks", JSON.stringify(object))
+// }
 
 /**
  * Extracts the first letter of each word in a name and returns the first two initials in uppercase.

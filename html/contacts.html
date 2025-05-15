@@ -39,17 +39,21 @@
               <img class="imgs-input_contact" src="/assets/img/user.png" alt="User Icon">
             </label>
             <label for="contactEmail">
-              <input class="input-field" id="contactEmail" type="email" placeholder="Email"
-                oninput="validateEmail('contactEmail','email-error-message')"
-                onchange="validateEmail('contactEmail','email-error-message')" required>
-              <img class="imgs-input_contact" src="/assets/img/mail.png" alt="Mail Icon">
+              <div class="contact-input-field-container">
+                <input class="input-field" id="contactEmail" type="email" placeholder="Email"
+                  oninput="validateEmail('contactEmail','email-error-message')"
+                  onchange="validateEmail('contactEmail','email-error-message')" required>
+                <img class="imgs-input_contact" src="/assets/img/mail.png" alt="Mail Icon">
+              </div>
               <span class="validate-error-message hidden" id="email-error-message">Please enter a valid email!</span>
             </label>
             <label for="contactPhone">
-              <input class="input-field" id="contactPhone" type="tel" placeholder="Phone"
-                oninput="validatePhoneNumber('contactPhone', 'phone-error-message')"
-                onchange="validatePhoneNumber('contactPhone', 'phone-error-message')" required>
-              <img class="imgs-input_contact" src="/assets/img/call.png" alt="Phone Icon">
+              <div class="contact-input-field-container">
+                <input class="input-field" id="contactPhone" type="tel" placeholder="Phone"
+                  oninput="validatePhoneNumber('contactPhone', 'phone-error-message')"
+                  onchange="validatePhoneNumber('contactPhone', 'phone-error-message')" required>
+                <img class="imgs-input_contact" src="/assets/img/call.png" alt="Phone Icon">
+              </div>
               <span class="validate-error-message hidden" id="phone-error-message">Please enter a valid phone
                 number!</span>
             </label>
@@ -92,18 +96,22 @@
               <img class="imgs-input_contact" src="/assets/img/user.png" alt="User Icon">
             </label>
             <label for="editContactEmail">
-              <input class="input-field" id="editContactEmail" type="email" placeholder="Email"
-                oninput="validateEmail('editContactEmail','email-edit-error-message')"
-                onchange="validateEmail('editContactEmail','email-edit-error-message')" required>
-              <img class="imgs-input_contact" src="/assets/img/mail.png" alt="Mail Icon">
+              <div class="contact-input-field-container">
+                <input class="input-field" id="editContactEmail" type="email" placeholder="Email"
+                  oninput="validateEmail('editContactEmail','email-edit-error-message')"
+                  onchange="validateEmail('editContactEmail','email-edit-error-message')" required>
+                <img class="imgs-input_contact" src="/assets/img/mail.png" alt="Mail Icon">
+              </div>
               <span class="validate-error-message hidden" id="email-edit-error-message">Please enter a valid
                 email!</span>
             </label>
             <label for="editContactPhone">
-              <input class="input-field" id="editContactPhone" type="tel" placeholder="Phone"
-                oninput="validatePhoneNumber('editContactPhone','phone-edit-error-message')"
-                onchange="validatePhoneNumber('editContactPhone','phone-edit-error-message')" required>
-              <img class="imgs-input_contact" src="/assets/img/call.png" alt="Phone Icon">
+              <div class="contact-input-field-container">
+                <input class="input-field" id="editContactPhone" type="tel" placeholder="Phone"
+                  oninput="validatePhoneNumber('editContactPhone','phone-edit-error-message')"
+                  onchange="validatePhoneNumber('editContactPhone','phone-edit-error-message')" required>
+                <img class="imgs-input_contact" src="/assets/img/call.png" alt="Phone Icon">
+              </div>
               <span class="validate-error-message hidden" id="phone-edit-error-message">Please enter a valid phone
                 number!</span>
             </label>
