@@ -105,6 +105,8 @@ function resetOverlay() {
     clearForm();
     isEditing = false;
     currentEditingContact = null;
+    document.getElementById('email-error-message').classList.add('hidden');
+    document.getElementById('phone-error-message').classList.add('hidden');
 }
 
 /**
@@ -413,6 +415,8 @@ function closeEditOverlay() {
     const overlay = document.getElementById("editContactOverlay");
     overlay.classList.remove("open");
     overlay.dataset.current = "";
+    document.getElementById('email-edit-error-message').classList.add('hidden');
+    document.getElementById('phone-edit-error-message').classList.add('hidden');
 }
 
 /**
@@ -462,16 +466,16 @@ function closeErrorOnInput() {
     [name, email, phone].forEach((f) => f.addEventListener("input", check));
 }
 
-function validateEmail() {
-    let emailInputValue = document.getElementById("contactEmail").value;
-    let errorMessage = document.getElementById("email-error-message");
+function validateEmail(id, errorMessageId) {
+    let emailInputValue = document.getElementById(id).value;
+    let errorMessage = document.getElementById(errorMessageId);
     const emailPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/
     showValidationError(emailPattern, emailInputValue, errorMessage);
 }
 
-function validatePhoneNumber() {
-    let phoneInputValue = document.getElementById("contactPhone").value;
-    let errorMessage = document.getElementById("phone-error-message");
+function validatePhoneNumber(id, errorMessageId) {
+    let phoneInputValue = document.getElementById(id).value;
+    let errorMessage = document.getElementById(errorMessageId);
     const phonePattern = /^(\+?\d{1,4}[\s-]?)?(\(?\d{1,5}\)?[\s-]?)?[\d\s\-\.]{5,15}$/;
     showValidationError(phonePattern, phoneInputValue, errorMessage);
 }
