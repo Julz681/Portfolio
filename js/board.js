@@ -120,14 +120,10 @@ function renderSubtaskProgress(task) {
   const total = task.subtasks.length;
   let completed = 0;
 
-  task.subtasks.forEach((subtask) => {
-    const key = Object.keys(subtask)[0];
-    const value = subtask[key];
+task.subtasks.forEach(subtask => {
+  if (subtask.checked) completed++;
+});
 
-    if (typeof value === "string" && value.startsWith("[x]")) {
-      completed++;
-    }
-  });
 
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
@@ -171,14 +167,32 @@ function toggleSubtaskCheckbox(taskId, subtaskIndex) {
 
 
 function saveTasksToStorageOrFirebase() {
-
   localStorage.setItem("tasks", JSON.stringify(window.tasks));
 
   window.tasks.forEach(task => {
+    // Fallbacks für fehlende Pflichtfelder
+    if (!task.status) task.status = 'to-do';
+    if (!task.priority) task.priority = 'low';
+
+    // Subtasks korrekt formatieren
+    if (Array.isArray(task.subtasks)) {
+      task.subtasks = task.subtasks.map(subtask => {
+        if (typeof subtask === "object" && 'title' in subtask && 'checked' in subtask) {
+          return subtask;
+        } else if (typeof subtask === "string") {
+          return { title: subtask, checked: false };
+        } else {
+          const key = Object.keys(subtask)[0];
+          return { title: key, checked: false };
+        }
+      });
+    }
+
     const taskRef = ref(database, `tasks/${task.id}`);
     set(taskRef, task);
   });
 }
+
 
 
 /**
@@ -516,7 +530,8 @@ function closeTaskForm() {
 
   document.body.classList.remove("modal-open");
   assignees = [];
-  subtasks = [];
+ subtaskArray = [];
+
 }
 
 let assigneesTaskForm = [];
@@ -571,3 +586,4 @@ function renderAssigneesTaskForm() {
 
 window.saveTasksToStorageOrFirebase = saveTasksToStorageOrFirebase;
 window.renderAllColumns = renderAllColumns;
+window.openTaskForm = openTaskForm;

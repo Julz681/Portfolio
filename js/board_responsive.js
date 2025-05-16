@@ -1,3 +1,5 @@
+import { database, ref, set } from "/js/firebase.js";
+
 /**
  * Handles the display of a "no results" message based on the search text length,
  * the count of matching results, and the current window width.
@@ -85,17 +87,31 @@ document.addEventListener("click", (e) => {
  * @param {Event} event - The click event.
  */
 function moveTaskToColumn(status, event) {
-    event.stopPropagation();
+  event.stopPropagation();
 
-    const openCard = document.querySelector(".board-card.menu-open");
-    if (!openCard) return;
+  const openCard = document.querySelector(".board-card.menu-open");
+  if (!openCard) return;
 
-    const taskId = openCard.dataset.taskId;
-    const task = tasks.find((task) => task.id === taskId);
-    if (!task) return;
+  const taskId = openCard.dataset.taskId;
+  const task = tasks.find((task) => task.id === taskId);
+  if (!task) return;
 
-    task.status = status;
-    renderAllColumns();
-    closeAllMenus();
+  // Erst den Status setzen, DANN speichern
+  task.status = status;
+
+const taskRef = ref(database, `tasks/${task.id}`);
+set(taskRef, task);
+
+
+  renderAllColumns();
+  closeAllMenus();
 }
+
+window.toggleMoveMenu = toggleMoveMenu;
+window.handleAddTaskClickResponsive = handleAddTaskClickResponsive;
+window.moveTaskToColumn = moveTaskToColumn;
+
+
+
+
   

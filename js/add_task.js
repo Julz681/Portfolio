@@ -476,7 +476,8 @@ function confirmEditSubtask(id) {
     let subtaskInputContainerRef = getInputContainer(id);
     let subtaskInputValue = getInputValue(subtaskInputContainerRef);
     let subtaskIndex = extractIndex(id);
-    subtaskArray[subtaskIndex] = { [id]: subtaskInputValue };
+    subtaskArray[subtaskIndex].title = subtaskInputValue;
+
     let listItemContainerRef = subtaskInputContainerRef.closest(".subtask-list-item-active");
     listItemContainerRef.classList.remove("subtask-list-item-active");
     listItemContainerRef.classList.add("subtask-list-item", "br-10");
@@ -724,7 +725,7 @@ function createTaskObject(taskId, dateFieldId) {
         dueDate: getInputContainer(dateFieldId).value,
         taskType: getTaskType(),
         assignedTo: assignees,
-        subtasks: subtaskArray,
+        subtasks: subtaskArray.map(s => ({ title: Object.values(s)[0], checked: false })),
         status: "to-do",
     });
 }
@@ -877,3 +878,6 @@ function redirectToBoard() {
         window.location.href = '/html/board.html';
     }
 }
+
+window.subtaskArray = subtaskArray;
+
