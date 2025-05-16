@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", () => {
     bindContactClicks(); // add click events to contact items for selection
     bindOverlayButtons(); // add functionality to open/close the contact overlay
     bindCreateButton(); // enable creating or editing a contact
+    loadContactsFromLocalStorage();
     bindDeleteButton(); // enable deleting a selected contact
     bindEditButton(); // enable editing an existing contact
     enableAutofill(); // automatically fill in example contact -> Mark Zuckerberg
@@ -135,6 +136,10 @@ function bindCreateButton() {
         hideError();
         const list = document.getElementById("contactList");
         createContactElement(name, email, phone, list);
+
+        // Local Storage speichern
+        saveContactToLocalStorage(name, email, phone);
+
         resetOverlay();
         if (window.innerWidth < 900) {
             document.querySelector(".contacts-right")?.classList.add("show-contact-right");
@@ -142,9 +147,78 @@ function bindCreateButton() {
         }
         updateFloatingButtons();
         bindEditOverlayButtons();
-        // sendContactToLocalStorage(name, email, phone);
     });
 }
+
+/**
+ * Saves a new contact to the browser's localStorage.
+ * If there are existing contacts, it adds the new one to the list.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email address of the contact.
+ * @param {string} phone - The phone number of the contact.
+ */
+function saveContactToLocalStorage(name, email, phone) {
+    // Retrieve existing contacts or initialize as empty array
+    const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+
+    // Add the new contact to the array
+    contacts.push({ name, email, phone });
+
+    // Save the updated contact list back to localStorage
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+}
+
+/**
+ * Loads all saved contacts from localStorage and adds them to the contact list in the UI.
+ * This is typically called when the page is first loaded.
+ */
+function loadContactsFromLocalStorage() {
+    // Retrieve saved contacts or use empty array if none exist
+    const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+
+    // Get the container element for the contact list
+    const contactList = document.getElementById("contactList");
+
+    // For each saved contact, create and add it to the UI
+    contacts.forEach(({ name, email, phone }) => {
+        createContactElement(name, email, phone, contactList);
+    });
+}
+
+/**
+ * Updates an existing contact in localStorage based on the previous name.
+ * If the contact is found, its details are updated.
+ * @param {string} previousName - The name of the contact before editing.
+ * @param {string} newName - The updated name of the contact.
+ * @param {string} newEmail - The updated email address.
+ * @param {string} newPhone - The updated phone number.
+ */
+function updateContactInLocalStorage(previousName, newName, newEmail, newPhone) {
+    const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+
+    // Find and update the contact by previous name
+    const index = contacts.findIndex(contact => contact.name === previousName);
+    if (index !== -1) {
+        contacts[index] = { name: newName, email: newEmail, phone: newPhone };
+        localStorage.setItem("contacts", JSON.stringify(contacts));
+    }
+}
+
+/**
+ * Deletes a contact from localStorage by name.
+ * If the contact exists, it is removed from the saved list.
+ * @param {string} nameToDelete - The name of the contact to delete.
+ */
+function deleteContactFromLocalStorage(nameToDelete) {
+    let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+
+    // Filter out the contact to be deleted
+    contacts = contacts.filter(contact => contact.name !== nameToDelete);
+
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+}
+
+
 
 /**
  * Returns the trimmed value of a form input field specified by its ID.
@@ -247,21 +321,27 @@ function updateEditedContact(name, email, phone, list) {
  * and clears the contact details view.
  */
 function bindDeleteButton() {
-    document
-        .querySelector(".contacts-right-bottom")
-        ?.addEventListener("click", (e) => {
-            const btn = e.target.closest("#deleteBtn");
-            if (!btn) return;
-            const name = document.querySelector(".details-name")?.textContent;
-            document.querySelectorAll(".contact-item").forEach((item) => {
-                if (item.dataset.name === name) item.remove();
-            });
-            document.querySelectorAll(".contact-group").forEach((group) => {
-                if (!group.querySelector(".contact-item")) group.remove();
-            });
-            document.querySelector(".contacts-right-bottom").innerHTML = "";
+document
+    .querySelector(".contacts-right-bottom")
+    ?.addEventListener("click", (e) => {
+        const btn = e.target.closest("#deleteBtn");
+        if (!btn) return;
+        const name = document.querySelector(".details-name")?.textContent;
+
+        // Remove from DOM
+        document.querySelectorAll(".contact-item").forEach((item) => {
+            if (item.dataset.name === name) item.remove();
         });
+        document.querySelectorAll(".contact-group").forEach((group) => {
+            if (!group.querySelector(".contact-item")) group.remove();
+        });
+        document.querySelector(".contacts-right-bottom").innerHTML = "";
+
+        // Remove from localStorage
+        deleteContactFromLocalStorage(name);
+    });
 }
+
 
 /**
  * Adds a click event listener to the document to detect clicks on the "Edit" button
@@ -371,6 +451,8 @@ function handleEditSubmit(e) {
     }
     updateEditedContact(name, email, phone, list, selected);
     closeEditOverlay();
+    updateContactInLocalStorage(currentName, name, email, phone);
+
 }
 
 /**
