@@ -1,3 +1,6 @@
+import { database, ref, set } from "/js/firebase.js";
+
+
 document.addEventListener("DOMContentLoaded", function () {
   setupModalOverlay();
   setupModalCloseButton();
@@ -165,9 +168,18 @@ function toggleSubtaskCheckbox(taskId, subtaskIndex) {
 /**
  * Saves the current `window.tasks` array to local storage as a JSON string.
  */
+
+
 function saveTasksToStorageOrFirebase() {
+
   localStorage.setItem("tasks", JSON.stringify(window.tasks));
+
+  window.tasks.forEach(task => {
+    const taskRef = ref(database, `tasks/${task.id}`);
+    set(taskRef, task);
+  });
 }
+
 
 /**
  * Adds a click event listener to each task card on the board.
@@ -556,3 +568,6 @@ function renderAssigneesTaskForm() {
     container.classList.add("d_none");
   }
 }
+
+window.saveTasksToStorageOrFirebase = saveTasksToStorageOrFirebase;
+window.renderAllColumns = renderAllColumns;
