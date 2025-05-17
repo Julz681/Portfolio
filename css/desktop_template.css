@@ -21,7 +21,6 @@ body {
   padding: 0 32px;
   z-index: 999;
   width: auto;
-  max-width: 1920px;
 }
 
 .max-width {
