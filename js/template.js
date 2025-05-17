@@ -134,43 +134,35 @@ window.tasks = [
  * @param {Array<string>} assignedTo - An array of names of users assigned to a task.
  * @returns {string} A string containing the HTML for all user avatars assigned to the task.
  */
-function getUserAvatarsHTML(assignedTo) {
-    const MAX_VISIBLE = 4;
-    const visibleUsers = assignedTo.slice(0, MAX_VISIBLE);
-    const hiddenCount = assignedTo.length - MAX_VISIBLE;
+function getUserAvatarsHTML(assignedTo, maxVisible = null) {
+    const limit = maxVisible ?? assignedTo.length;
+    const visibleUsers = assignedTo.slice(0, limit);
+    const hiddenCount = assignedTo.length - limit;
 
-    let avatarsHTML = visibleUsers
-        .map((name) => {
-            const contactEl = document.querySelector(`.contact-item[data-name="${name}"]`);
-            const avatarEl = contactEl?.querySelector(".contact-avatar");
+    let avatarsHTML = visibleUsers.map((name) => {
+        const contactEl = document.querySelector(`.contact-item[data-name="${name}"]`);
+        const avatarEl = contactEl?.querySelector(".contact-avatar");
 
-            if (avatarEl) {
-                return avatarEl.outerHTML;
-            }
+        if (avatarEl) return avatarEl.outerHTML;
 
-            const initials = name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase();
-            const firstLetter = initials.charAt(0);
-            const bgColor = letterColors[firstLetter] || "#888";
+        const initials = name.split(" ").map((n) => n[0]).join("").toUpperCase();
+        const firstLetter = initials.charAt(0);
+        const bgColor = letterColors[firstLetter] || "#888";
 
-            return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
-        })
-        .join("");
+        return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
+    }).join("");
 
-    
-    if (hiddenCount > 0) {
+    if (maxVisible && assignedTo.length > maxVisible) {
         avatarsHTML += `
             <div class="contact-avatar" style="background-color: #ccc;">
-                +${hiddenCount}
+                +${assignedTo.length - maxVisible}
             </div>
         `;
     }
 
     return avatarsHTML;
 }
+
 
 
 /**
@@ -182,7 +174,8 @@ function getUserAvatarsHTML(assignedTo) {
 function createTaskHTML(task) {
     const label = task.taskType === "technical" ? "Technical Task" : "User Story";
     const color = task.taskType === "technical" ? "#1fd7c1" : "blue";
-    const users = getUserAvatarsHTML(task.assignedTo);
+    const users = getUserAvatarsHTML(task.assignedTo, 4); // Board: max. 4 + +x
+
     return `
         <div class="board-card d-flex-center" data-task-id="${task.id}">
             <div class="board-card-content d-flex-column">
