@@ -214,6 +214,9 @@
     position: fixed;
     width: 100%;
   }
+  .board-card-modal-wrapper {
+    z-index: 111111;
+  }
 }
 
 @media (max-width: 800px) {
@@ -377,9 +380,7 @@
 
 @media (max-width: 415px) {
   .modal-card-wrapper {
-    height: auto;
     width: 300px;
- 
   }
 
   .modal-card-content-edit {
@@ -400,5 +401,24 @@
     bottom: 16px;
     right: 24px;
     padding: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .modal-card-wrapper {
+    height: 95vh;
+    width: 90%;
+  }
+
+  .modal-card-content {
+    gap: 6px;
+  }
+
+  .modal-card-subtask {
+    margin-bottom: 16px;
+  }
+
+  .gap-16 {
+    gap: 24px;
   }
 }
