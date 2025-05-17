@@ -217,6 +217,10 @@
   .board-card-modal-wrapper {
     z-index: 111111;
   }
+
+  .edit-overlay {
+    z-index: 11111111;
+  }
 }
 
 @media (max-width: 800px) {
@@ -402,6 +406,15 @@
     right: 24px;
     padding: 10px;
   }
+
+  .edit-modal {
+    height: 624px;
+  }
+
+  .placeholder {
+    font-size: 12px;
+  }
+
 }
 
 @media (max-width: 380px) {
