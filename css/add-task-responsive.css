@@ -14,11 +14,9 @@
 }
 
 @media (max-width: 980px) {
-
-  
-
   .add-task-content-wrapper {
     left: 0;
+    top: 0;
     margin: 0 auto;
     padding: 0 16px;
     display: flex;
@@ -26,28 +24,34 @@
     height: 100vh;
     box-sizing: border-box;
     width: 100%;
-    overflow-y: auto; 
+    overflow-y: auto;
   }
 
   .add-task-header-wrapper {
-    height: auto;
+    height: 80px;
+    flex-shrink: 0;
+    z-index: 100;
+    padding-top: 0px;
     padding-left: 16px;
+    position: sticky;
+    top: 0;
     background-color: #f6f7f8;
     width: 100%;
-    margin-bottom: -32px;
-    position: static; 
+    margin-bottom: 80px;
   }
 
   .add-task-content {
-    flex-grow: 0;
-    overflow: unset;     
-    padding: 0 16px;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0px 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     width: 100%;
-    margin-top: 0;           
+    margin-top: -100px;
   }
 
   .add-task-footer {
-    height: 50px;
+    height: 0px;
     flex-shrink: 0;
     z-index: 100;
     position: sticky;
@@ -55,12 +59,17 @@
     background-color: #f6f7f8;
     width: 100%;
     padding-bottom: 120px;
-    margin-top: 120px;
+    margin-top: 24px;
   }
 
   .add-task-title {
-    margin-top: 0;
+    position: relative;
+    top: 0;
+    z-index: 1000;
     font-size: 47px;
+    margin: 0;
+    padding: 16px 0;
+    background-color: #f6f7f8;
   }
 
   .add-task-form {
@@ -69,8 +78,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    margin-top: -24px;
   }
-
 
   .add-task-content::-webkit-scrollbar {
     display: none;
@@ -96,8 +105,9 @@
 
   .respon-text {
     display: flex !important;
-    margin-top: 8px;
+    margin-top: 0px;
     z-index: 100;
+    position: relative;
   }
 
   .gap-24 {
@@ -127,10 +137,6 @@
 
   .task-description-text {
     width: 100%;
-  }
-
-  .priority-wrapper {
-    margin-top: -40px;
   }
 }
 
