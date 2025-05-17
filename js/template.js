@@ -135,11 +135,13 @@ window.tasks = [
  * @returns {string} A string containing the HTML for all user avatars assigned to the task.
  */
 function getUserAvatarsHTML(assignedTo) {
-    return assignedTo
+    const MAX_VISIBLE = 4;
+    const visibleUsers = assignedTo.slice(0, MAX_VISIBLE);
+    const hiddenCount = assignedTo.length - MAX_VISIBLE;
+
+    let avatarsHTML = visibleUsers
         .map((name) => {
-            const contactEl = document.querySelector(
-                `.contact-item[data-name="${name}"]`
-            );
+            const contactEl = document.querySelector(`.contact-item[data-name="${name}"]`);
             const avatarEl = contactEl?.querySelector(".contact-avatar");
 
             if (avatarEl) {
@@ -157,7 +159,19 @@ function getUserAvatarsHTML(assignedTo) {
             return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
         })
         .join("");
+
+    
+    if (hiddenCount > 0) {
+        avatarsHTML += `
+            <div class="contact-avatar" style="background-color: #ccc;">
+                +${hiddenCount}
+            </div>
+        `;
+    }
+
+    return avatarsHTML;
 }
+
 
 /**
  * Creates the HTML structure for a task card to be displayed on the board.
