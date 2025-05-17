@@ -18,35 +18,34 @@ body {
 }
 
 .headline_2 {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    padding-top: 100px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-top: 100px;
 }
-  
+
 .headline_2 h1 {
-    font-size: 48px;
-    font-weight: 700;
-    color: #000;
-    margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
 }
-  
-  .bold {
-    color: #000;
+
+.bold {
+  color: #000;
 }
-  
+
 .title {
-    font-size: 28px;
-    font-weight: 400;
-    color: #6c757d;
-    border-left: 2px solid #29abe2;
-    padding-left: 32px;
+  font-size: 28px;
+  font-weight: 400;
+  color: #6c757d;
+  border-left: 2px solid #29abe2;
+  padding-left: 32px;
 }
 
 .container {
   display: flex;
   width: 100%;
-
 }
 
 /*Wrapper*/
@@ -72,12 +71,11 @@ body {
 }
 
 .wrapper_box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-
 
 /*Boxes*/
 
@@ -103,27 +101,26 @@ body {
   cursor: pointer;
 }
 
-
 .metric-box img {
-    width: 69px;
-    height: 69px;
-    margin-bottom: 10px;
-}
-  
-.metric-box h2 {
-      font-size: 48px;
-    font-weight: 600;
-    color:  black;
-    margin: 10px 0;
-}
-  
-.metric-box p {
-    font-size: 18px;
-    font-weight: 400;
-    color:  black;
+  width: 69px;
+  height: 69px;
+  margin-bottom: 10px;
 }
 
-/*Box tasks*/ 
+.metric-box h2 {
+  font-size: 48px;
+  font-weight: 600;
+  color: black;
+  margin: 10px 0;
+}
+
+.metric-box p {
+  font-size: 18px;
+  font-weight: 400;
+  color: black;
+}
+
+/*Box tasks*/
 
 .metric-box-tasks {
   background: #ffff;
@@ -143,19 +140,17 @@ body {
 .metric-box-tasks h2 {
   font-size: 48px;
   font-weight: 600;
-  color:  black;
+  color: black;
   margin: 10px 0;
 }
 
 .metric-box-tasks p {
   font-size: 18px;
   font-weight: 400;
-  color:  black;
+  color: black;
 }
 
-
-
-/*Box urgent*/ 
+/*Box urgent*/
 
 .metric-box-urgent {
   background: #ffff;
@@ -172,17 +167,17 @@ body {
 }
 
 .metric-box-urgent h2 {
-    font-size: 48px;
-    font-weight: 600;
-    color:  black;
-    margin: 10px 0;
+  font-size: 48px;
+  font-weight: 600;
+  color: black;
+  margin: 10px 0;
 }
 
 .metric-box-urgent p {
-    font-size: 18px;
-    font-weight: 400;
-    color:  black;
-  }
+  font-size: 18px;
+  font-weight: 400;
+  color: black;
+}
 
 .deadline-info {
   border-left: 2px solid #ccc;
@@ -195,10 +190,9 @@ body {
 }
 
 .deadline-info p:first-child {
-    color:  black;
-    font-weight: bold; 
+  color: black;
+  font-weight: bold;
 }
-
 
 /*Greeting*/
 
@@ -221,16 +215,14 @@ body {
 
 /*Hover*/
 
-
 .metric-box:hover,
 .metric-box-urgent:hover,
 .metric-box-tasks:hover {
-    background-color: #2A3647;
-    color: white; 
-    transition: transform 0.3s ease-in-out;
-    transform: scale(1.05);
+  background-color: #2a3647;
+  color: white;
+  transition: transform 0.3s ease-in-out;
+  transform: scale(1.05);
 }
-
 
 .metric-box:hover h2,
 .metric-box:hover p,
@@ -238,22 +230,20 @@ body {
 .metric-box-urgent:hover p,
 .metric-box-tasks:hover h2,
 .metric-box-tasks:hover p {
-    color: white !important; 
+  color: white !important;
 }
 
-
 .metric-box:hover img[alt="Pen"] {
-    content: url("/assets/img/pen_white.png");
+  content: url("/assets/img/pen_white.png");
 }
 
 .metric-box:hover img[alt="Check"] {
-    content: url("/assets/img/check_white.png");
+  content: url("/assets/img/check_white.png");
 }
 
-
 .metric-box-urgent:hover img {
-    filter: none;
-    background-color: transparent;
+  filter: none;
+  background-color: transparent;
 }
 
 .only-responsive {
@@ -264,20 +254,16 @@ hr {
   display: none;
 }
 
-
-
-
 @media (max-width: 1200px) {
   body {
-      padding-left: 0px !important; 
-      max-width: 100vw;
+    padding-left: 0px !important;
+    max-width: 100vw;
   }
 
   .sidebar {
     display: none;
   }
-  
-  
+
   .mobile-nav {
     display: flex !important;
     position: fixed !important;
@@ -290,15 +276,12 @@ hr {
     align-items: center;
     z-index: 9999 !important;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
-    } 
-  
+  }
 
   .container {
-      display: none; 
-      margin-left: 0;
-      padding-top: 0px;
-
-
+    display: none;
+    margin-left: 0;
+    padding-top: 0px;
   }
 
   .headline_2 {
@@ -306,27 +289,26 @@ hr {
   }
 
   .wrapper_content_greeting {
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center; 
-      min-height: 100vh; 
-      margin-top: -100px;
-      padding-bottom: 60px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin-top: -100px;
+    padding-bottom: 60px;
   }
 
   .greeting {
-      position: static; 
-      top: auto;
-      text-align: center; 
-      margin-top: 0; 
-      padding-top: 88px;
-      font-size: 36px;
+    position: static;
+    top: auto;
+    text-align: center;
+    margin-top: 0;
+    padding-top: 88px;
+    font-size: 36px;
   }
 
   .highlight {
     font-size: 47px;
   }
-  
 
   .headline_2 {
     display: flex;
@@ -335,21 +317,19 @@ hr {
     gap: 12px;
   }
 
-  .title{
+  .title {
     border-left: none;
     padding: 0px;
   }
 
   hr {
     display: flex;
-    border: 2px solid #29ABE2;
+    border: 2px solid #29abe2;
     width: 120px;
   }
-
 }
 
 @media (max-width: 590px) {
-
   .container {
     display: flex;
     flex-direction: column;
@@ -360,102 +340,100 @@ hr {
   .wrapper_todo_done {
     width: 100%;
     gap: 12px;
-}
+  }
   .metrics {
     width: 100%;
-}
+  }
 
-.metric-box {
-  width: 164px;
-  height: 110px;
-  display: flex;
-  border-radius: 20px;
-}
+  .metric-box {
+    width: 164px;
+    height: 110px;
+    display: flex;
+    border-radius: 20px;
+  }
 
-.metric-box-urgent {
-  width: 100%;
-  height: 110px;
-  border-radius: 20px;
-}
+  .metric-box-urgent {
+    width: 100%;
+    height: 110px;
+    border-radius: 20px;
+  }
 
-.wrapper_tasks {
-  width: 100%;
-}
+  .wrapper_tasks {
+    width: 100%;
+  }
 
-.metric-box-tasks {
-  border-radius: 20px;
-  width: 116px;
-  height: 116px;
-}
+  .metric-box-tasks {
+    border-radius: 20px;
+    width: 116px;
+    height: 116px;
+  }
 
-.metric-box img {
-  width: 40px;
-  height: 40px;
-}
+  .metric-box img {
+    width: 40px;
+    height: 40px;
+  }
 
-.wrapper_box {
-  width: 40px;
-  height: 73px;
-}
+  .wrapper_box {
+    width: 40px;
+    height: 73px;
+  }
 
-.metric-box h2 {
-  font-size: 47px;
-  padding-top: 18px;
-  margin-bottom: 0px;
-}
+  .metric-box h2 {
+    font-size: 47px;
+    padding-top: 18px;
+    margin-bottom: 0px;
+  }
 
-.metric-box p {
-  font-size: 14px;
-  padding-bottom: 28px;
-}
+  .metric-box p {
+    font-size: 14px;
+    padding-bottom: 28px;
+  }
 
-.metric-box-urgent img {
-  width: 40px;
-  height: 40px;
-  margin-left: 24px;
-}
+  .metric-box-urgent img {
+    width: 40px;
+    height: 40px;
+    margin-left: 24px;
+  }
 
-.wrapper_box {
-  width: 40px;
-  height: 73px;
-}
+  .wrapper_box {
+    width: 40px;
+    height: 73px;
+  }
 
-.metric-box-urgent h2 {
-  font-size: 47px;
-  padding-top: 18px;
-  margin-bottom: 0px;
-}
+  .metric-box-urgent h2 {
+    font-size: 47px;
+    padding-top: 18px;
+    margin-bottom: 0px;
+  }
 
-.metric-box-urgent p {
-  font-size: 14px;
-  padding-bottom: 28px;
-}
+  .metric-box-urgent p {
+    font-size: 14px;
+    padding-bottom: 28px;
+  }
 
-.deadline-info {
-  border-left: 2px solid #ccc;
-  width: 165px;
-  height: 56px;
-}
+  .deadline-info {
+    border-left: 2px solid #ccc;
+    width: 165px;
+    height: 56px;
+  }
 
-.deadline-info p {
-  margin-top: -6px; 
-  margin-bottom: -24px; 
-}
+  .deadline-info p {
+    margin-top: -6px;
+    margin-bottom: -24px;
+  }
 
-.metric-box-tasks h2 {
-  font-size: 47px;
-  margin-bottom: 0px;
-}
+  .metric-box-tasks h2 {
+    font-size: 47px;
+    margin-bottom: 0px;
+  }
 
-.metric-box-tasks p {
-  font-size: 14px;
-  padding-bottom: 28px;
-}
-
+  .metric-box-tasks p {
+    font-size: 14px;
+    padding-bottom: 28px;
+  }
 }
 
 @media (max-width: 400px) {
-
   .headline_2 {
     padding-left: 24px;
   }
@@ -472,12 +450,11 @@ hr {
     padding-left: 24px;
     display: flex;
     justify-content: space-between;
-
   }
 
   .metric-box {
     width: 142px;
-    height: 100px
+    height: 100px;
   }
   .metric-box-urgent {
     width: 300px;
@@ -488,23 +465,22 @@ hr {
     margin-bottom: 0px;
   }
 
-.metric-box-urgent img {
-  margin-left: 18px;
+  .metric-box-urgent img {
+    margin-left: 18px;
   }
 
-.deadline-info {
-  padding-left: 12px;
-  gap: 2px;
-  border-left: 1px solid #ccc;
+  .deadline-info {
+    padding-left: 12px;
+    gap: 2px;
+    border-left: 1px solid #ccc;
   }
 
-.wrapper_tasks {
-  width: 300px;
-  margin-left: 24px;
+  .wrapper_tasks {
+    width: 300px;
+    margin-left: 24px;
   }
 
   .metric-box-tasks {
     width: 94px;
   }
-
 }
