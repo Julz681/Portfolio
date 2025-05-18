@@ -120,9 +120,9 @@ function renderSubtaskProgress(task) {
   const total = task.subtasks.length;
   let completed = 0;
 
-task.subtasks.forEach(subtask => {
-  if (subtask.checked) completed++;
-});
+  task.subtasks.forEach(subtask => {
+    if (subtask.checked) completed++;
+  });
 
 
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
@@ -530,7 +530,7 @@ function closeTaskForm() {
 
   document.body.classList.remove("modal-open");
   assignees = [];
- subtaskArray = [];
+  subtaskArray = [];
 
 }
 
@@ -587,3 +587,4 @@ function renderAssigneesTaskForm() {
 window.saveTasksToStorageOrFirebase = saveTasksToStorageOrFirebase;
 window.renderAllColumns = renderAllColumns;
 window.openTaskForm = openTaskForm;
+window.toggleSubtaskCheckbox = toggleSubtaskCheckbox;
