@@ -23,8 +23,6 @@ body {
   border-radius: 4px;
 }
 
-
-
 * {
   box-sizing: border-box;
   user-select: none;
@@ -32,10 +30,8 @@ body {
 }
 
 header {
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
+  position: absolute;
+  width: 1920px;
 }
 
 .header-inner {
@@ -46,7 +42,6 @@ header {
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  position: relative;
 }
 
 button {
@@ -75,34 +70,37 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9998; 
+  z-index: 9998;
   pointer-events: none;
   animation: backgroundExpand 1s ease-out forwards;
+  width: 1920px;
 }
 
 .start-logo {
+  position: absolute;
   width: 274px;
   height: 344.07px;
-  animation: logoAppear 0.5s ease-out 0.5s forwards;
-  pointer-events: none;
-  z-index: 9999; 
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation: logoAppear 0.5s ease-out 0.5s forwards;
+  z-index: 9999;
+  pointer-events: none;
 }
 
 .start-logo.finished {
-  position: absolute; 
-  z-index: 1; 
-  transform: none;
+  position: absolute;
+  z-index: 1;
+  width: 100px;
+  height: 121px;
+  top: 80px;
+  left: 77px;
+  transform: translate(0, 0);
 }
-
 
 .only-responsive {
   display: none !important;
 }
-
 
 @keyframes backgroundExpand {
   0% {
@@ -146,7 +144,6 @@ body {
   animation: contentAppear 0.5s ease-in-out;
 }
 
-
 @keyframes showContent {
   0% {
     opacity: 0;
@@ -157,11 +154,10 @@ body {
 }
 
 .start.finished {
-    pointer-events: none;
-    z-index: -1;
-    position: absolute;
-  }
-
+  pointer-events: none;
+  z-index: -1;
+  position: absolute;
+}
 
 .top-right {
   position: absolute;
@@ -375,18 +371,16 @@ a:hover {
   box-shadow: none;
 }
 
-
 .bottom {
   display: none;
 }
-
 
 @media (max-width: 690px) {
   .login-frame {
     width: 550px;
     margin-top: 120px;
   }
-  
+
   body {
     overflow-y: auto;
     overflow-x: hidden;
@@ -410,18 +404,15 @@ a:hover {
     height: auto;
     padding-top: 140px;
   }
-  
 }
 
-
 @media (max-width: 550px) {
-
   .login-frame {
     width: 396px;
     height: 475px;
     margin-top: 200px;
     margin-bottom: 28px;
-  } 
+  }
 
   h1 {
     font-size: 47px;
@@ -433,17 +424,16 @@ a:hover {
 
   .login-btn-container {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     gap: 21px;
   }
-
 
   .input-field {
     width: 364px;
     height: 48px;
     gap: 8px;
   }
-  
+
   @keyframes logoAppear {
     0% {
       width: 274px;
@@ -462,9 +452,8 @@ a:hover {
     }
   }
 
-
   .signup-btn1 {
-    background-color: #2A3647;
+    background-color: #2a3647;
     border-radius: 8px;
     border: none;
     display: flex;
@@ -478,12 +467,12 @@ a:hover {
     height: 51px;
     font-size: 16px;
     z-index: 1099;
-}
+  }
 
-.signup-btn1:hover {
-  background-color: #29ABE2;
-  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3); 
-}
+  .signup-btn1:hover {
+    background-color: #29abe2;
+    box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
+  }
 
   .top-right {
     display: none;
@@ -503,21 +492,16 @@ a:hover {
     padding-top: 20px;
   }
 
-
   .start-logo.finished {
-    position: absolute; 
+    position: absolute;
     z-index: 1;
-    transform: none; 
+    transform: none;
     top: 80px;
-    left: 77px; 
+    left: 77px;
   }
-
-
 }
 
-
 @media (max-width: 410px) {
-  
   .login-frame {
     width: 380px;
     height: 480px;
@@ -537,7 +521,7 @@ a:hover {
 
   .login-btn-container {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     gap: 21px;
   }
 
@@ -554,7 +538,6 @@ a:hover {
     gap: 10px;
     font-size: 16px;
   }
- 
 
   .login-data {
     gap: 24px;
@@ -570,12 +553,9 @@ a:hover {
     font-weight: 700;
   }
 
-
-
   .login-frame-alignment {
     height: auto;
     margin-top: 120px;
-
   }
 
   .login-frame {
@@ -583,9 +563,7 @@ a:hover {
   }
 }
 
-
 @media (max-width: 390px) {
-
   .login-frame {
     width: 100%;
     max-width: 310px;
@@ -593,11 +571,11 @@ a:hover {
     padding: 48px 24px;
   }
 
-  .login-data label .input-field { 
-    max-width: 270px; 
-}
+  .login-data label .input-field {
+    max-width: 270px;
+  }
 
-.input-container {
-  max-width: 270px;
-}
+  .input-container {
+    max-width: 270px;
+  }
 }
