@@ -135,6 +135,8 @@ function bindCreateButton() {
         if (!name || !email || !phone) return showError();
         hideError();
         const list = document.getElementById("contactList");
+        if (validateEmail("contactEmail", "email-error-message")) return;
+        if (validatePhoneNumber("contactPhone", "phone-error-message")) return;
         createContactElement(name, email, phone, list);
 
         // Local Storage speichern
@@ -321,9 +323,7 @@ function updateEditedContact(name, email, phone, list) {
  * and clears the contact details view.
  */
 function bindDeleteButton() {
-document
-    .querySelector(".contacts-right-bottom")
-    ?.addEventListener("click", (e) => {
+    document.querySelector(".contacts-right-bottom")?.addEventListener("click", (e) => {
         const btn = e.target.closest("#deleteBtn");
         if (!btn) return;
         const name = document.querySelector(".details-name")?.textContent;
@@ -553,20 +553,22 @@ function validateEmail(id, errorMessageId) {
     let emailInputValue = document.getElementById(id).value;
     let errorMessage = document.getElementById(errorMessageId);
     const emailPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/
-    showValidationError(emailPattern, emailInputValue, errorMessage);
+    return showValidationError(emailPattern, emailInputValue, errorMessage);
 }
 
 function validatePhoneNumber(id, errorMessageId) {
     let phoneInputValue = document.getElementById(id).value;
     let errorMessage = document.getElementById(errorMessageId);
     const phonePattern = /^(\+?\d{1,4}[\s-]?)?(\(?\d{1,5}\)?[\s-]?)?[\d\s\-\.]{5,15}$/;
-    showValidationError(phonePattern, phoneInputValue, errorMessage);
+    return showValidationError(phonePattern, phoneInputValue, errorMessage);
 }
 
 function showValidationError(pattern, value, errorMessage) {
     if (pattern.test(value) === false) {
         errorMessage.classList.remove("hidden");
+        return true;
     } else {
         errorMessage.classList.add("hidden");
+        return false;
     };
 }
