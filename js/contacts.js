@@ -138,7 +138,6 @@ function bindCreateButton() {
         if (validateEmail("contactEmail", "email-error-message")) return;
         if (validatePhoneNumber("contactPhone", "phone-error-message")) return;
         createContactElement(name, email, phone, list);
-
         // Local Storage speichern
         saveContactToLocalStorage(name, email, phone);
 
@@ -439,6 +438,8 @@ function handleEditSubmit(e) {
         document.getElementById("edit-error-message").style.display = "block";
         return;
     }
+    if (validateEmail('editContactEmail', 'email-edit-error-message')) return;
+    if (validatePhoneNumber('editContactPhone', 'phone-edit-error-message')) return;
     const list = document.getElementById("contactList");
     const currentName =
         document.getElementById("editContactOverlay").dataset.current;
