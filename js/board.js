@@ -519,3 +519,12 @@ function renderAssigneesTaskForm() {
     container.classList.add("d_none");
   }
 }
+
+// close task form when clicking outside the overlay
+document.getElementById("task-form-modal-wrapper").addEventListener("click", function (event) {
+  const formWrapper = document.getElementById("task-form-wrapper");
+
+  if (event.target === this) {
+    closeTaskForm();
+  }
+});
