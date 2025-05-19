@@ -51,6 +51,7 @@ async function openEditOverlay(task) {
     setupEditDropdownEvents();
     setupPrioritySelection();
     setupSubtaskInput();
+    setupAllDatePickers()
 }
 
 /**

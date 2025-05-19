@@ -787,9 +787,6 @@ function resetTaskHTML() {
     suppressEvents = false;
     getInputContainer("task-description").value = "";
     getInputContainer("category").placeholder = "Select task category";
-    // const categorySelect = getInputContainer("category");
-    // categorySelect.selectedIndex = 0;
-
     resetPriorityLabels();
     resetSubtasksList();
     resetAssignees();
