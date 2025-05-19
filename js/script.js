@@ -7,13 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
         window.history.back();
     }
     window.goBack = goBack; // Make the function globally available in case it's called directly in the HTML
-
-
-    // This function starts the logo-animation
     const startLogo = document.querySelector(".start-logo");
     const logoOverlay = document.getElementById("logo-overlay");
     const startElement = document.querySelector(".start");
-
     if (startLogo && logoOverlay && startElement) {
         startLogo.addEventListener("animationend", () => {
             startLogo.classList.add("finished");
@@ -47,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("DOMContentLoaded", () => {
         const navLinks = document.querySelectorAll(".mobile-nav a");
         const currentPath = window.location.pathname.split("/").pop();
-
         navLinks.forEach((link) => {
             const linkPath = link.getAttribute("href")?.split("/").pop();
             if (linkPath === currentPath) {
@@ -59,24 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // highlight current nav link logged out responsive
     window.addEventListener("DOMContentLoaded", () => {
         if (window.innerWidth < 1200) {
-            const currentFile = window.location.pathname
-                .toLowerCase()
-                .split("/")
-                .pop();
-
-            document
-                .querySelectorAll(".bottom-nav-a, .mobile-nav a")
-                .forEach((link) => {
-                    const href = link
-                        .getAttribute("href")
-                        ?.toLowerCase()
-                        .split("/")
-                        .pop();
-
-                    if (href === currentFile) {
-                        link.classList.add("active");
-                    }
-                });
+            const currentFile = window.location.pathname.toLowerCase().split("/").pop();
+            document.querySelectorAll(".bottom-nav-a, .mobile-nav a").forEach((link) => {
+                const href = link.getAttribute("href")?.toLowerCase().split("/").pop();
+                if (href === currentFile) {
+                    link.classList.add("active");
+                }
+            });
         }
     });
 
@@ -114,20 +98,15 @@ document.addEventListener("DOMContentLoaded", () => {
             userProfileSpan.textContent = "G";
         }
     }
-
     // Call the profile update functions
     updateUserProfileIcon();
     updateUserProfileInitials();
-
-    const policyLinks = document.querySelectorAll(
-        'a[href*="privacy_policy"], a[href*="legal_notice"]'
-    );
+    const policyLinks = document.querySelectorAll('a[href*="privacy_policy"], a[href*="legal_notice"]');
 
     policyLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
             const isGuest = localStorage.getItem("isGuest") === "true";
             if (!isGuest) return;
-
             const href = link.getAttribute("href");
             if (href.includes("privacy_policy.html")) {
                 event.preventDefault();
@@ -138,8 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-
-    // Drag & Drop for board cards
     const boardCards = document.querySelectorAll(".board-card");
     boardCards.forEach((card) => {
         card.addEventListener("dragstart", (e) => {
@@ -165,11 +142,7 @@ function getIconBackgroundColor(initials) {
  * @returns {string} The first two initials of the username in uppercase.
  */
 function getInitials(username) {
-    return username
-        .split(" ")
-        .map((w) => w[0])
-        .join("")
-        .slice(0, 2);
+    return username.split(" ").map((w) => w[0]).join("").slice(0, 2);
 }
 
 /**
