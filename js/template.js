@@ -226,7 +226,7 @@ function setModalUsers(task) {
 
     for (let i = 0; i < task.assignedTo.length; i++) {
         let name = task.assignedTo[i];
-        namesHTML += "<span>" + name + "</span>";
+        namesHTML += `<span style="height: 32px; display: flex; align-items: center;">` + name + `</span>`;
     }
 
     let html =
@@ -236,7 +236,7 @@ function setModalUsers(task) {
         "<div class='d-flex-column gap-16'>" +
         avatars +
         "</div>" +
-        "<div class='user-names d-flex-column gap-24'>" +
+        "<div class='user-names d-flex-column gap-16'>" +
         namesHTML +
         "</div>" +
         "</div>";
