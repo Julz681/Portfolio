@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   setupPrioritySelection();
   setupAssignedToDropdown();
   setupSubtaskInput();
-  // setupDatePicker();
   getTasksFromLocalStorage();
   renderAllColumns();
   setupTaskFormCloseButton();
@@ -32,12 +31,8 @@ function setupModalOverlay() {
 function getColumnMap() {
   return {
     "to-do": document.querySelector(".to-do-wrapper .column-content-wrapper"),
-    "in-progress": document.querySelector(
-      ".in-progress-wrapper .column-content-wrapper"
-    ),
-    "await-feedback": document.querySelector(
-      ".await-feedback-wrapper .column-content-wrapper"
-    ),
+    "in-progress": document.querySelector(".in-progress-wrapper .column-content-wrapper"),
+    "await-feedback": document.querySelector(".await-feedback-wrapper .column-content-wrapper"),
     done: document.querySelector(".done-wrapper .column-content-wrapper"),
   };
 }
@@ -50,20 +45,16 @@ function getColumnMap() {
  */
 function renderAllColumns() {
   const map = getColumnMap();
-
   for (const status in map) {
     const column = map[status];
     const tasksByStatus = getTasksByStatus(status);
-
     clearColumn(column);
     tasksByStatus.forEach((task) => {
       renderTask(column, task);
       renderSubtaskProgress(task);
     });
-
     toggleEmptyMsg(column, tasksByStatus);
   }
-
   setupCardClick();
   init();
 }
@@ -113,25 +104,19 @@ function toggleEmptyMsg(column, tasks) {
 function renderSubtaskProgress(task) {
   const progressBar = document.getElementById(`progress-bar-${task.id}`);
   const countDisplay = document.getElementById(`subtask-count-${task.id}`);
-
   const total = task.subtasks.length;
   let completed = 0;
-
   task.subtasks.forEach((subtask) => {
     const key = Object.keys(subtask)[0];
     const value = subtask[key];
-
     if (typeof value === "string" && value.startsWith("[x]")) {
       completed++;
     }
   });
-
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-
   if (progressBar) {
     progressBar.style.width = `${percentage}%`;
   }
-
   if (countDisplay) {
     countDisplay.innerHTML = `${completed} / ${total} Subtasks`;
   }
@@ -146,17 +131,13 @@ function renderSubtaskProgress(task) {
 function toggleSubtaskCheckbox(taskId, subtaskIndex) {
   const task = window.tasks.find((t) => t.id === taskId);
   if (!task) return;
-
   const subtask = task.subtasks[subtaskIndex];
   const key = Object.keys(subtask)[0];
   const currentValue = subtask[key];
-
   const isChecked = currentValue.startsWith("[x]");
   const label = isChecked ? currentValue.replace("[x] ", "") : currentValue;
   const newValue = isChecked ? label : `[x] ${label}`;
-
   task.subtasks[subtaskIndex][key] = newValue;
-
   renderSubtaskProgress(task);
 
   saveTasksToStorageOrFirebase();
@@ -334,12 +315,10 @@ function deleteTask() {
   const modal = document.getElementById("task-card-modal");
   const id = modal.getAttribute("data-task-id");
   const index = tasks.findIndex((t) => t.id === id);
-
   if (index !== -1) {
     tasks.splice(index, 1);
     deleteTaskFromFirebase(id);
   }
-
   renderAllColumns();
   closeModal();
 }
@@ -433,44 +412,28 @@ let overlayIsOpen = false;
 async function openTaskForm() {
   if (overlayIsOpen) return;
   overlayIsOpen = true;
-
   const modalWrapper = document.getElementById("task-form-modal-wrapper");
   const formWrapper = document.getElementById("task-form-wrapper");
   const formContainer = document.getElementById("task-form");
-
   const file = formContainer.getAttribute("w3-include-html");
   if (!file) return;
-
   try {
     const response = await fetch(file);
     if (!response.ok) throw new Error("Page not found.");
     const html = await response.text();
     formContainer.innerHTML = html;
-
     await new Promise(resolve => setTimeout(resolve, 0));
-
-
     renderUsersToAssign();
-
   } catch (error) {
     formContainer.innerHTML = error.message;
     return;
   }
-
   formContainer.classList.add("active");
   modalWrapper.classList.remove("d_none");
-
   formWrapper.classList.remove("slide-out");
   void formWrapper.offsetWidth;
   formWrapper.classList.add("slide-in");
-
   setupTaskFormCloseButton();
-
-  // flatpickr("#due-date-form", {
-  //   dateFormat: "d/m/Y",
-  //   allowInput: true,
-  //   disableMobile: true,
-  // });
   setupAllDatePickers();
 }
 
