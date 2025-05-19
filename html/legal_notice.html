@@ -17,25 +17,25 @@
 
 <body>
   <div class="max-width">
-  <header class="header">
-    <img src="/assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
-    <span class="headline">Kanban Project Management Tool</span>
-    <div class="nav-right">
-      <a href="/html/help.html" class="help-btn" title="Help">
-        <img src="/assets/img/help.png" alt="Help" style="display: none;" />
-      </a>
-      <div class="user-profile only-responsive" id="userProfile" onclick="toggleDropdown()">
-        <img src="/assets/img/ellipse.png" alt="Profile">
-        <span></span>
+    <header class="header">
+      <img src="/assets/img/logo_responsive.png" alt="Logo" class="logo-only-responsive" />
+      <span class="headline">Kanban Project Management Tool</span>
+      <div class="nav-right">
+        <a href="/html/help.html" class="help-btn" title="Help">
+          <img src="/assets/img/help.png" alt="Help" style="display: none;" />
+        </a>
+        <div class="user-profile only-responsive" id="userProfile" onclick="toggleDropdown()">
+          <img src="/assets/img/ellipse.png" alt="Profile">
+          <span></span>
+        </div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a class="only-responsive" href="/html/help.html">Help</a>
+          <a href="/html/legal_notice.html">Legal Notice</a>
+          <a href="/html/privacy_policy.html">Privacy Policy</a>
+          <a href="/index.html" onclick="clearTasksInLocalStorage()">Log out</a>
+        </div>
       </div>
-      <div class="dropdown-menu" id="dropdownMenu">
-        <a class="only-responsive" href="/html/help.html">Help</a>
-        <a href="/html/legal_notice.html">Legal Notice</a>
-        <a href="/html/privacy_policy.html">Privacy Policy</a>
-        <a href="/index.html">Log out</a>
-      </div>
-    </div>
-  </header>
+    </header>
   </div>
 
   <aside class="sidebar">
