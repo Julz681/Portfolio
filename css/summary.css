@@ -280,9 +280,10 @@ hr {
 
   .container {
     display: none;
-    margin-left: 0;
+    margin: 0 auto;
     padding-top: 0px;
     overflow-y: scroll;
+    height: 100%;
   }
 
   .headline_2 {
@@ -293,7 +294,7 @@ hr {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    height: 100%;
     margin-top: 0;
     padding-bottom: 60px;
   }
@@ -439,6 +440,10 @@ hr {
     padding-left: 24px;
   }
 
+  .container {
+    height: auto;
+  }
+
   .headline_2 h1 {
     font-size: 47px;
   }
@@ -453,15 +458,22 @@ hr {
     justify-content: space-between;
   }
 
+  .metrics {
+    margin-top: 20px;
+  }
+
   .metric-box {
     width: 142px;
     height: 100px;
+    margin-bottom: 13px;
   }
+
   .metric-box-urgent {
     width: 300px;
     margin-left: 24px;
     gap: 12px;
   }
+
   .metric-box img {
     margin-bottom: 0px;
   }
@@ -483,5 +495,6 @@ hr {
 
   .metric-box-tasks {
     width: 94px;
+    margin-top: 13px;
   }
 }
