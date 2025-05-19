@@ -1,4 +1,4 @@
-import { database, ref, push, set, get, update } from "/js/firebase.js"; //
+import { database, ref, push, set, get, update } from "/js/firebase.js";
 
 window.users = [];
 window.userNames = [];
@@ -12,6 +12,9 @@ async function init() {
   await uploadTemplateTasksOnce();
 }
 
+/**
+ * Uploads predefined tasks to Firebase only if they do not already exist.
+ */
 async function uploadTemplateTasksOnce() {
   const tasksRef = ref(database, "tasks");
 
@@ -29,6 +32,9 @@ async function uploadTemplateTasksOnce() {
   }
 }
 
+/**
+ * Loads tasks from local storage and adds them to the global task list if they are not already included.
+ */
 function getTasksFromLocalStorage() {
   const saved = JSON.parse(localStorage.getItem("tasks"));
   if (!saved) return;
@@ -57,7 +63,6 @@ async function getUsersFromDatabase() {
       window.userNames = names;
       return names;
     } else {
-      console.log("No data available");
       return null;
     }
   } catch (error) {
@@ -65,7 +70,6 @@ async function getUsersFromDatabase() {
     return null;
   }
 }
-
 
 /**
  * This function takes an object of users and extracts their names into a new array,
@@ -77,7 +81,6 @@ async function getUsersFromDatabase() {
 function getUserNames(users) {
   return Object.values(users).map((user) => user.name);
 }
-
 
 /**
  * This function determines the priority of a task based on the 'src' attribute
@@ -103,12 +106,14 @@ function getStatusFromColumnElement(taskElement) {
   const column = taskElement.closest(".board-columns");
   if (column?.classList.contains("to-do-wrapper")) return "to-do";
   if (column?.classList.contains("in-progress-wrapper")) return "in-progress";
-  if (column?.classList.contains("await-feedback-wrapper"))
-    return "await-feedback";
+  if (column?.classList.contains("await-feedback-wrapper")) return "await-feedback";
   if (column?.classList.contains("done-wrapper")) return "done";
   return "unknown";
 }
 
+/**
+ * Renders a dropdown select element with all user names as options.
+ */
 function renderUsersToSelect() {
   const select = document.getElementById("assigned-select");
   if (!select || !Array.isArray(window.userNames)) return;
@@ -132,10 +137,7 @@ function renderUsersToSelect() {
  */
 function renderUsersToAssign(listId = "assigned-to-users-list") {
   let usersListContainerRef = document.getElementById(listId);
-  if (!usersListContainerRef) {
-    console.warn(`Element mit ID "${listId}" nicht gefunden.`);
-    return;
-  }
+  if (!usersListContainerRef) return;
 
   usersListContainerRef.innerHTML = "";
 
@@ -170,9 +172,6 @@ window.getTasksFromLocalStorage = getTasksFromLocalStorage;
 function updateTaskStatusInFirebase(taskId, newStatus) {
   const taskRef = ref(database, `tasks/${taskId}`);
   update(taskRef, { status: newStatus })
-    .then(() =>
-      console.log(`Task ${taskId} updated to "${newStatus}" in Firebase.`)
-    )
     .catch((error) => console.error("Error updating task status:", error));
 }
 
@@ -198,14 +197,11 @@ import { remove } from "/js/firebase.js";
 
 /**
  * This function deletes a task from firebase when it is deleted on board.
- * @param {string} taskId -
+ * @param {string} taskId - The ID of the task to delete.
  */
 function deleteTaskFromFirebase(taskId) {
   const taskRef = ref(database, `tasks/${taskId}`);
   remove(taskRef)
-    .then(() =>
-      console.log(`Task ${taskId} erfolgreich aus Firebase gelöscht.`)
-    )
     .catch((error) =>
       console.error("Fehler beim Löschen des Tasks aus Firebase:", error)
     );
@@ -216,4 +212,3 @@ window.deleteTaskFromFirebase = deleteTaskFromFirebase;
 document.addEventListener("DOMContentLoaded", () => {
   init();
 });
-
