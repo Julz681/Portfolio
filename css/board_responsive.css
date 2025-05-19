@@ -100,6 +100,25 @@
   display: none;
 }
 
+    .modal-card-wrapper {
+    padding: 32px 24px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+    .modal-card-content {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+    .board-card-content {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  
+
 @media (max-width: 1550px) {
   .pd-l-r-64 {
     padding: 0;
@@ -221,6 +240,8 @@
   .edit-overlay {
     z-index: 11111111;
   }
+
+
 }
 
 @media (max-width: 800px) {
@@ -343,6 +364,19 @@
 
   .modal-card-wrapper {
     padding: 32px 24px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+    .modal-card-content {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+    .board-card-content {
+    max-height: 300px;
+    overflow-y: auto;
   }
 
   .edit-overlay {

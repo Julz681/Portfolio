@@ -525,6 +525,8 @@ function setupSubtaskListEvents(container, task) {
 function startEditingSubtask(e, task, index, container) {
     const item = e.target.closest(".subtask-list-item");
     const input = createSubtaskEditInput(item);
+    if (!input) return;  // Abbrechen, wenn kein Input erzeugt werden konnte
+
     const iconWrapper = getIconWrapper(item);
     if (!iconWrapper) return;
 
@@ -546,8 +548,14 @@ function startEditingSubtask(e, task, index, container) {
  * @returns {HTMLInputElement} The created input element for editing.
  */
 function createSubtaskEditInput(item) {
+    if (!item) return null;
+
     const textWrapper = item.querySelector(".subtask-list-item-content-wrapper");
+    if (!textWrapper) return null;
+
     const textEl = textWrapper.querySelector("span");
+    if (!textEl) return null;
+
     const oldText = textEl.textContent.trim();
 
     const input = document.createElement("input");
