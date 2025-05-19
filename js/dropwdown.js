@@ -103,13 +103,13 @@ function closeAllDropdowns(event) {
     if (window.location.pathname === "/html/board.html") {
         assignedToDropdownContainerId = "assigned-to-dropdown-task-form";
         dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown-task-form"),];
+        closeAllMenus(current = null);
     } else {
         assignedToDropdownContainerId = "assigned-to-dropdown";
         dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown"),];
     }
     checkDropdownContainersArray(assignedToDropdownContainerId, dropdownContainers);
     closeDropdown(event);
-    closeAllMenus(current = null);
     event.stopPropagation();
 }
 
