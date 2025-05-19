@@ -111,6 +111,7 @@ window.toggleMoveMenu = toggleMoveMenu;
 window.handleAddTaskClickResponsive = handleAddTaskClickResponsive;
 window.moveTaskToColumn = moveTaskToColumn;
 window.handleNoResultsMessage = handleNoResultsMessage;
+window.closeAllMenus = closeAllMenus;
 
 
 

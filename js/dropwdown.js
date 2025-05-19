@@ -2,17 +2,17 @@
  * This function shows and hides the menu when the user profile is clicked.
  */
 function toggleDropdown() {
-  const dropdownMenu = document.getElementById("dropdownMenu");
+    const dropdownMenu = document.getElementById("dropdownMenu");
 
-  const isVisible = dropdownMenu.style.display === "block";
-  const isMobile = window.innerWidth < 1200;
+    const isVisible = dropdownMenu.style.display === "block";
+    const isMobile = window.innerWidth < 1200;
 
-  if (isVisible) {
-    dropdownMenu.style.display = "none";
-    dropdownMenu.classList.remove("dropdown-slide-in");
-  } else {
-    dropdownMenu.style.display = "block";
-  }
+    if (isVisible) {
+        dropdownMenu.style.display = "none";
+        dropdownMenu.classList.remove("dropdown-slide-in");
+    } else {
+        dropdownMenu.style.display = "block";
+    }
 }
 
 /**
@@ -20,17 +20,17 @@ function toggleDropdown() {
  * @param {MouseEvent} event - The click event.
  */
 function closeDropdown(event) {
-  // This function gets the menu and user profile elements
-  var dropdownMenu = document.getElementById("dropdownMenu");
-  var userProfile = document.getElementById("userProfile");
+    // This function gets the menu and user profile elements
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    var userProfile = document.getElementById("userProfile");
 
-  //  Check if the click occurred outside the dropdown menu and the user profile
-  var clickedOutsideMenu = !dropdownMenu.contains(event.target);
-  var clickedOutsideProfile = !userProfile.contains(event.target);
+    //  Check if the click occurred outside the dropdown menu and the user profile
+    var clickedOutsideMenu = !dropdownMenu.contains(event.target);
+    var clickedOutsideProfile = !userProfile.contains(event.target);
 
-  if (clickedOutsideMenu && clickedOutsideProfile) {
-    dropdownMenu.style.display = "none";
-  }
+    if (clickedOutsideMenu && clickedOutsideProfile) {
+        dropdownMenu.style.display = "none";
+    }
 }
 
 // This function closes the drop down menu
@@ -109,6 +109,7 @@ function closeAllDropdowns(event) {
     }
     checkDropdownContainersArray(assignedToDropdownContainerId, dropdownContainers);
     closeDropdown(event);
+    closeAllMenus(current = null);
     event.stopPropagation();
 }
 
