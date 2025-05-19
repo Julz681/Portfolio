@@ -53,7 +53,6 @@ function checkDateInput(containerId) {
   let requiredErrorContainerRef;
   let invalidInputErrorContainerRef;
   let dateFormatErrorContainerRef;
-
   if (containerId === "due-date-add-task" || containerId === "due-date-form") {
     requiredErrorContainerRef = getErrorContainer("due-date-required-error-message");
     invalidInputErrorContainerRef = getErrorContainer("due-date-time-error-message");
@@ -63,10 +62,8 @@ function checkDateInput(containerId) {
     invalidInputErrorContainerRef = getErrorContainer("due-date-edit-time-error-message");
     dateFormatErrorContainerRef = getErrorContainer("due-date-edit-format-error-message");
   }
-
   let formattedDateValue = formatDateValue(dateInputValue).setHours(0, 0, 0, 0);
   let currentDate = new Date().setHours(0, 0, 0, 0);
-
   if (checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef)) {
     return;
   } else if (
@@ -148,11 +145,7 @@ function formatDateValue(dateInputValue) {
  * @param {HTMLElement} dateFormatErrorContainerRef - Error element for format mismatch.
  * @param {HTMLElement} invalidInputErrorContainerRef - Error element for invalid value.
  */
-function removeAllDateErrorUserInteractions(
-  requiredErrorContainerRef,
-  dateFormatErrorContainerRef,
-  invalidInputErrorContainerRef
-) {
+function removeAllDateErrorUserInteractions(requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef) {
   fp.altInput.classList.remove("task-input-fields-invalid");
   removeErrorMessage(requiredErrorContainerRef);
   removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputErrorContainerRef);
@@ -174,6 +167,5 @@ function removeDateValueErrorMessages(dateFormatErrorContainerRef, invalidInputE
  * Initializes all date pickers when the DOM is fully loaded.
  */
 window.addEventListener("DOMContentLoaded", () => {
-  // setupDatePicker(); // optional legacy single-picker init
   setupAllDatePickers();
 });

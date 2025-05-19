@@ -3,10 +3,8 @@
  */
 function toggleDropdown() {
     const dropdownMenu = document.getElementById("dropdownMenu");
-
     const isVisible = dropdownMenu.style.display === "block";
     const isMobile = window.innerWidth < 1200;
-
     if (isVisible) {
         dropdownMenu.style.display = "none";
         dropdownMenu.classList.remove("dropdown-slide-in");
