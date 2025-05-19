@@ -258,11 +258,10 @@
     padding-top: 60px;
   }
 
-  body,
-  html {
-    overflow-x: hidden;
+  .flatpickr-calendar {
+    z-index: 99999999 !important;
   }
-
+  
   .pd-l-r-64 {
     padding-left: 42px;
     padding-right: 12px;
