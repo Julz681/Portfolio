@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const userProfileSpan = document.querySelector("#userProfile span");
         const isGuest = localStorage.getItem("isGuest") === "true";
         const userName = localStorage.getItem("loggedInUserName");
-
+        if (userProfileSpan === null) return;
         if (isGuest) {
             userProfileSpan.textContent = "G";
         } else if (userName) {
