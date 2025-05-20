@@ -149,10 +149,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordInput = document.getElementById("password");
     const togglePasswordImg = document.querySelector(".toggle-password");
 
-    // Autofill on email click for testing
+    
     document.getElementById("email").addEventListener("click", autoFillFields);
 
-    // Password field visibility icon updates
+   
     let firstFocus = true;
     passwordInput.addEventListener("focus", () => {
         if (firstFocus) {
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updatePasswordIcon("password", togglePasswordImg);
     });
 
-    // Button listeners
+    
     document.getElementById("loginButton").addEventListener("click", normalLogin);
     document.getElementById("guestLoginButton").addEventListener("click", guestLogin);
 
@@ -178,6 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (signupBtn) signupBtn.addEventListener("click", () => window.location.href = "/html/sign_up.html");
     if (signupBtn1) signupBtn1.addEventListener("click", () => window.location.href = "/html/sign_up.html");
 
-    // Restore saved credentials if available
+    
     restoreLogin();
 });

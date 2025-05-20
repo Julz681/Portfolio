@@ -18,11 +18,11 @@ function toggleDropdown() {
  * @param {MouseEvent} event - The click event.
  */
 function closeDropdown(event) {
-    // This function gets the menu and user profile elements
+    /** This function gets the menu and user profile elements */
     var dropdownMenu = document.getElementById("dropdownMenu");
     var userProfile = document.getElementById("userProfile");
 
-    //  Check if the click occurred outside the dropdown menu and the user profile
+    /**  Check if the click occurred outside the dropdown menu and the user profile */
     var clickedOutsideMenu = !dropdownMenu.contains(event.target);
     var clickedOutsideProfile = !userProfile.contains(event.target);
 
@@ -31,10 +31,9 @@ function closeDropdown(event) {
     }
 }
 
-// This function closes the drop down menu
+ /** This function closes the drop down menu */
 document.onclick = closeDropdown;
 
-// add task dropdowns toggle
 
 /**
  * Toggles the visibility of a dropdown selection container and its associated icons.

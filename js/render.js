@@ -51,27 +51,57 @@ function renderAssignees(containerId, container) {
     }
 }
 
+/**
+ * Renders a single assignee's avatar within a specified container.
+ *
+ * @param {object} singleAssignee - The assignee object containing information to render.
+ * @param {HTMLElement} assigneesContainerRef - The DOM element where the assignee's avatar will be appended.
+ */
 function renderSingleAssignee(singleAssignee, assigneesContainerRef) {
     let initials = getInitials(singleAssignee);
     let iconBackgroundColor = getIconBackgroundColor(initials);
     assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);
 }
 
+/**
+ * Makes the assignees container visible and clears its current content.
+ *
+ * @param {HTMLElement} assigneesContainerRef - The DOM element representing the assignees container.
+ */
 function showAssigneesContainer(assigneesContainerRef) {
     assigneesContainerRef.classList.remove("d_none");
     assigneesContainerRef.innerHTML = "";
 }
 
+/**
+ * Displays an avatar indicating the number of additional assignees if there are any.
+ *
+ * @param {number} additionalAssignees - The number of assignees beyond the initial display limit.
+ * @param {HTMLElement} assigneesContainerRef - The DOM element where the additional assignees avatar will be appended.
+ */
 function showAdditionalAssignees(additionalAssignees, assigneesContainerRef) {
     if (additionalAssignees > 0) {
         assigneesContainerRef.innerHTML += getAvatarTemplate(`+${additionalAssignees}`, '#ccc');
     }
 }
 
+/**
+ * Hides the assignees container and clears its current content.
+ *
+ * @param {HTMLElement} assigneesContainerRef - The DOM element representing the assignees container.
+ */
 function hideAssigneesContainer(assigneesContainerRef) {
     assigneesContainerRef.classList.add("d_none");
     assigneesContainerRef.innerHTML = "";
 }
+
+/**
+ * Checks if the current index indicates an additional assignee (beyond the first four).
+ *
+ * @param {number} index - The current index of the assignee being processed.
+ * @param {number} additionalAssignees - The current count of additional assignees.
+ * @returns {number} The updated count of additional assignees.
+ */
 function checkForAdditionalAssignees(index, additionalAssignees) {
     if (index >= 4) {
         additionalAssignees++;
@@ -79,6 +109,14 @@ function checkForAdditionalAssignees(index, additionalAssignees) {
     return additionalAssignees;
 }
 
+/**
+ * Adds a single assignee's avatar to the container, but only if the index is less than 4.
+ * This effectively limits the number of displayed assignees.
+ *
+ * @param {number} index - The current index of the assignee.
+ * @param {object} singleAssignee - The assignee object to be rendered.
+ * @param {HTMLElement} assigneesContainerRef - The DOM element where the assignee's avatar will be appended.
+ */
 function addSingleAssignee(index, singleAssignee, assigneesContainerRef) {
     if (index < 4) {
         renderSingleAssignee(singleAssignee, assigneesContainerRef);

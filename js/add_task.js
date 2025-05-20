@@ -1,16 +1,11 @@
-let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/; // Regular expression for dd/mm/yyyy format
-/** @type {boolean | undefined} */
+let dateFormat = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
 let suppressEvents;
-/** @type {flatpickr.Instance | undefined} */
 let fp;
-/** @type {Array<Object>} */
 let subtaskArray = [];
-/** @type {Array<string>} */
 let assignees = [];
-/** @type {Array<Object>} */
 let searchResults = [];
-/** @type {Array<Object>} */
 let newTasks = [];
+
 
 /**
  * Checks the value of a title input field for required and size errors,
@@ -192,7 +187,6 @@ function setDefaultBackgroundColorOnPriorityLabel(priorityLabel, priorityLabelId
     priorityLabel.classList.add("default-prio-bg");
 }
 
-// assign-To section
 
 /**
  * Handles the assignment or unassignment of a contact to a task.
@@ -239,7 +233,6 @@ function removeAssigneeIfExists(contactContainerRef) {
     }
 }
 
-// search function
 
 /**
  * Initiates the search for users to assign to a task based on the input value.
@@ -302,7 +295,6 @@ function checkIsAssigned(value) {
     });
 }
 
-// category section
 
 /**
  * Selects a task category from the dropdown and updates the placeholder text of the category input field.
@@ -338,8 +330,6 @@ function checkCategoryInputPlaceholder(requiredErrorContainerId) {
     // }
 
 }
-
-// subtask section
 
 /**
  * Moves the focus (cursor) to the input field for adding new subtasks.
@@ -527,7 +517,7 @@ function detectKey(event) {
     }
 }
 
-//  error message handling
+
 
 /**
  * Shows a value-related error message by retrieving the error container and calling `showErrorMessage`.

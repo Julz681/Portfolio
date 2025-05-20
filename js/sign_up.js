@@ -1,4 +1,4 @@
-// Import Firebase database functions from firebase.js
+/**  Import Firebase database functions from firebase.js */
 import { saveUserData, database, ref, push, get } from "./firebase.js";
 
 /**
@@ -245,13 +245,13 @@ function sortContactsList() {
     groups.forEach(group => contactList.appendChild(group));
 }
 
-// Bind core functions to the window for inline event usage
+/**  Binds core functions to the window for inline event usage */
 window.autoFillFieldsSignUp = autoFillFieldsSignUp;
 window.handleSignUpSubmission = handleSignUpSubmission;
 window.togglePasswordVisibility = togglePasswordVisibility;
 window.updatePasswordIcon = updatePasswordIcon;
 
-// Add event listeners once DOM is ready
+/**  Adds event listeners once DOM is ready */
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("signup-form");
     if (form) form.addEventListener("submit", handleSignUpSubmission);

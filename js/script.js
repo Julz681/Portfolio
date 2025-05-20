@@ -1,15 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Function for the back button
     /**
      * Navigates the browser back to the previous page in history.
      */
     function goBack() {
         window.history.back();
     }
-    window.goBack = goBack; // Make the function globally available in case it's called directly in the HTML
+    window.goBack = goBack;
+
     const startLogo = document.querySelector(".start-logo");
     const logoOverlay = document.getElementById("logo-overlay");
     const startElement = document.querySelector(".start");
+
     if (startLogo && logoOverlay && startElement) {
         startLogo.addEventListener("animationend", () => {
             startLogo.classList.add("finished");
@@ -18,16 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-    // Hide/show the help button in the header
     const helpButton = document.querySelector(".help-btn");
     if (helpButton) {
         const isHelpPage = window.location.pathname.includes("help.html");
         helpButton.style.display = isHelpPage ? "none" : "block";
-
     }
 
-    // Highlight the active link in the sidebar
     const navLinks = document.querySelectorAll(".main-nav a");
     const currentPage = window.location.pathname.split("/").pop();
 
@@ -39,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // highlight current nav link responsive
     window.addEventListener("DOMContentLoaded", () => {
         const navLinks = document.querySelectorAll(".mobile-nav a");
         const currentPath = window.location.pathname.split("/").pop();
@@ -51,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // highlight current nav link logged out responsive
     window.addEventListener("DOMContentLoaded", () => {
         if (window.innerWidth < 1200) {
             const currentFile = window.location.pathname.toLowerCase().split("/").pop();
@@ -64,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Function to update the user profile icon
     /**
      * Updates the text content of the user profile icon based on whether the user is a guest.
      */
@@ -76,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Function to update the user profile initials (detailed)
     /**
      * Updates the text content of the detailed user profile icon with the user's initials
      * or "G" if the user is a guest or the username is not available.
@@ -98,9 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
             userProfileSpan.textContent = "G";
         }
     }
-    // Call the profile update functions
+
     updateUserProfileIcon();
     updateUserProfileInitials();
+
     const policyLinks = document.querySelectorAll('a[href*="privacy_policy"], a[href*="legal_notice"]');
 
     policyLinks.forEach((link) => {
@@ -117,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
     const boardCards = document.querySelectorAll(".board-card");
     boardCards.forEach((card) => {
         card.addEventListener("dragstart", (e) => {
@@ -147,6 +142,7 @@ function getInitials(username) {
 
 /**
  * Clears all data stored in the browser's local storage.
+ * If "remember me" is enabled, the saved email and password are preserved after clearing.
  */
 function clearTasksInLocalStorage() {
     const rememberMe = localStorage.getItem("rememberMe") === "true";
@@ -155,7 +151,6 @@ function clearTasksInLocalStorage() {
 
     localStorage.clear(); 
 
-  
     if (rememberMe && savedEmail && savedPassword) {
         localStorage.setItem("rememberMe", "true");
         localStorage.setItem("savedEmail", savedEmail);

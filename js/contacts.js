@@ -327,7 +327,7 @@ function bindDeleteButton() {
         if (!btn) return;
         const name = document.querySelector(".details-name")?.textContent;
 
-        // Remove from DOM
+        
         document.querySelectorAll(".contact-item").forEach((item) => {
             if (item.dataset.name === name) item.remove();
         });
@@ -336,7 +336,7 @@ function bindDeleteButton() {
         });
         document.querySelector(".contacts-right-bottom").innerHTML = "";
 
-        // Remove from localStorage
+       
         deleteContactFromLocalStorage(name);
     });
 }
@@ -536,6 +536,7 @@ function enableAutofill() {
 /**
  * Hides the error message in the add contact overlay when all input fields
  * (name, email, phone) have a non-empty value.
+ * Attaches input event listeners to relevant fields.
  */
 function closeErrorOnInput() {
     const name = document.getElementById("contactName");
@@ -550,13 +551,27 @@ function closeErrorOnInput() {
     [name, email, phone].forEach((f) => f.addEventListener("input", check));
 }
 
+/**
+ * Validates an email address input against a basic email pattern.
+ * 
+ * @param {string} id - The ID of the input element containing the email address.
+ * @param {string} errorMessageId - The ID of the element to display the error message.
+ * @returns {boolean} - Returns true if validation fails, false otherwise.
+ */
 function validateEmail(id, errorMessageId) {
     let emailInputValue = document.getElementById(id).value;
     let errorMessage = document.getElementById(errorMessageId);
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
     return showValidationError(emailPattern, emailInputValue, errorMessage);
 }
 
+/**
+ * Validates a phone number input against a general phone number pattern.
+ * 
+ * @param {string} id - The ID of the input element containing the phone number.
+ * @param {string} errorMessageId - The ID of the element to display the error message.
+ * @returns {boolean} - Returns true if validation fails, false otherwise.
+ */
 function validatePhoneNumber(id, errorMessageId) {
     let phoneInputValue = document.getElementById(id).value;
     let errorMessage = document.getElementById(errorMessageId);
@@ -564,6 +579,14 @@ function validatePhoneNumber(id, errorMessageId) {
     return showValidationError(phonePattern, phoneInputValue, errorMessage);
 }
 
+/**
+ * Shows or hides an error message based on whether the input value matches the pattern.
+ * 
+ * @param {RegExp} pattern - The regular expression pattern to validate against.
+ * @param {string} value - The input value to validate.
+ * @param {HTMLElement} errorMessage - The DOM element used to show the error message.
+ * @returns {boolean} - Returns true if the input is invalid, false if valid.
+ */
 function showValidationError(pattern, value, errorMessage) {
     if (pattern.test(value) === false) {
         errorMessage.classList.remove("hidden");
@@ -571,5 +594,5 @@ function showValidationError(pattern, value, errorMessage) {
     } else {
         errorMessage.classList.add("hidden");
         return false;
-    };
+    }
 }

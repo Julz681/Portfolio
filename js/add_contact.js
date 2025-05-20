@@ -1,14 +1,20 @@
 import { database, ref, get, update, remove, push } from '../js/firebase.js';
-// This is an object that provides colors for the avatars, depending on the first letter of the contact name.
+
+/**
+ * An object used to assign and store avatar background colors
+ * based on the first letter of each contact's name.
+ * @type {Object<string, string>}
+ */
 const letterColors = {};
 
 /**
- * This function creates a new contact element (div) for display in the contact list.
- * @param {string} name - The name of the contact.
- * @param {string} email - The email address of the contact.
- * @param {string} phone - The phone number of the contact.
- * @param {string} contactId - The unique ID of the contact from Firebase.
- * @returns {HTMLDivElement} - The newly created contact div element.
+ * Creates a new contact element (div) for display in the contact list.
+ *
+ * @param {string} name - The full name of the contact.
+ * @param {string} email - The contact's email address.
+ * @param {string} [phone=""] - The contact's phone number (optional).
+ * @param {string} [contactId=""] - The unique ID of the contact from Firebase.
+ * @returns {HTMLDivElement} - The newly created contact item element.
  */
 function createFirebaseContactElement(name, email, phone = "", contactId = "") {
   const groupLetter = name[0].toUpperCase();
@@ -23,6 +29,14 @@ function createFirebaseContactElement(name, email, phone = "", contactId = "") {
   return item;
 }
 
+/**
+ * Returns the HTML template string for a contact element.
+ *
+ * @param {string} name - The contact's full name.
+ * @param {string} email - The contact's email address.
+ * @param {string} initials - The initials to display in the avatar.
+ * @returns {string} - The HTML template string.
+ */
 function getContactElementTemplate(name, email, initials) {
   return `<div class="contact-avatar" data-name="${name}">
             ${initials}
@@ -34,7 +48,7 @@ function getContactElementTemplate(name, email, initials) {
 }
 
 /**
- * This function loads contacts from the Firebase Realtime Database and displays them in the contact list.
+ * Loads contacts from the Firebase Realtime Database and renders them into the contact list.
  */
 function loadContactsFromFirebase() {
   get(ref(database, "contacts"))
@@ -49,10 +63,15 @@ function loadContactsFromFirebase() {
       }));
       createContactsFromFirebase(contactsArray);
     }).catch((error) => {
-      console.error("Fehler beim Laden der Kontakte aus Firebase:", error);
+      console.error("Error loading contacts from Firebase:", error);
     });
 }
 
+/**
+ * Sorts and renders all contacts from Firebase, and initializes UI behavior.
+ *
+ * @param {Array<Object>} contactsArray - An array of contact data objects from Firebase.
+ */
 function createContactsFromFirebase(contactsArray) {
   contactsArray.sort((a, b) => a.name.localeCompare(b.name));
   contactsArray.forEach(renderContactFromFirebase);
@@ -61,17 +80,33 @@ function createContactsFromFirebase(contactsArray) {
   setAvatarColors();
 }
 
+/**
+ * Renders a contact in the UI. If it already exists, it updates the contact element.
+ *
+ * @param {Object} contactData - A contact object including name, email, phone, and id.
+ */
 function renderContactFromFirebase(contactData) {
   const existingContact = document.querySelector(`.contact-item[data-firebase-id="${contactData.id}"]`);
   if (existingContact) {
     updateExistingContactElement(existingContact, contactData);
     return;
   }
-  const newContactElement = createFirebaseContactElement(contactData.name, contactData.email, contactData.phone, contactData.id);
+  const newContactElement = createFirebaseContactElement(
+    contactData.name,
+    contactData.email,
+    contactData.phone,
+    contactData.id
+  );
   const group = groupLetterContainer(contactData.name[0].toUpperCase());
   group.appendChild(newContactElement);
 }
 
+/**
+ * Retrieves or creates a container group based on the first letter of a contact's name.
+ *
+ * @param {string} letter - The first uppercase letter of the contact's name.
+ * @returns {HTMLElement} - The container DOM element for the contact group.
+ */
 function groupLetterContainer(letter) {
   const contactList = document.getElementById("contactList");
   let group = [...document.querySelectorAll(".contact-group")].find(
@@ -86,6 +121,12 @@ function groupLetterContainer(letter) {
   return group;
 }
 
+/**
+ * Updates an existing contact DOM element with new data.
+ *
+ * @param {HTMLElement} el - The existing contact element to update.
+ * @param {Object} data - The updated contact data.
+ */
 function updateExistingContactElement(el, data) {
   el.dataset.name = data.name;
   el.dataset.email = data.email;
@@ -98,14 +139,14 @@ function updateExistingContactElement(el, data) {
   el.querySelector(".contact-email").textContent = data.email;
 }
 
-
 /**
- * This function updates a contact's data in the Firebase Realtime Database.
- * @param {string} firebaseId - The unique ID of the contact in Firebase.
- * @param {string} name - The new name of the contact.
- * @param {string} email - The new email address of the contact.
- * @param {string} phone - The new phone number of the contact.
- * @returns {Promise<void>}
+ * Updates a contact’s information in Firebase.
+ *
+ * @param {string} firebaseId - The contact's unique Firebase ID.
+ * @param {string} name - The updated name.
+ * @param {string} email - The updated email address.
+ * @param {string} phone - The updated phone number.
+ * @returns {Promise<void>} - A promise that resolves when the contact is updated.
  */
 function updateFirebaseContact(firebaseId, name, email, phone) {
   const contactRef = ref(database, `contacts/${firebaseId}`);
@@ -113,34 +154,39 @@ function updateFirebaseContact(firebaseId, name, email, phone) {
 }
 
 /**
- * This function deletes a contact from the Firebase Realtime Database.
- * @param {string} firebaseId - The unique ID of the contact in Firebase.
- * @returns {Promise<void>}
+ * Deletes a contact from the Firebase Realtime Database.
+ *
+ * @param {string} firebaseId - The contact's unique Firebase ID.
+ * @returns {Promise<void>} - A promise that resolves when the contact is deleted.
  */
 function deleteFirebaseContact(firebaseId) {
   const contactRef = ref(database, `contacts/${firebaseId}`);
   return remove(contactRef)
-    .then(() => console.log("Kontakt erfolgreich gelöscht"))
-    .catch((error) => console.error("Fehler beim Löschen des Kontakts:", error));
+    .then(() => console.log("Contact successfully deleted"))
+    .catch((error) => console.error("Error deleting contact:", error));
 }
 
 /**
- * This function adds a new contact to the Firebase Realtime Database.
- * @param {object} contactData - An object containing the contact's name, email, and phone number.
- * @returns {Promise<string>} - A promise that resolves with the unique ID of the newly created contact.
+ * Adds a new contact to the Firebase Realtime Database.
+ *
+ * @param {Object} contactData - The contact data to add (name, email, phone).
+ * @returns {Promise<string>} - A promise that resolves with the contact’s Firebase ID.
  */
 function addContactToFirebase(contactData) {
-  const newContactRef = push(ref(database, 'contacts'), contactData);  // Use ref(database, 'contacts')
+  const newContactRef = push(ref(database, 'contacts'), contactData);
   return new Promise((resolve, reject) => {
     newContactRef.then(snapshot => {
       resolve(snapshot.key);
     }).catch(error => {
       reject(error);
-    })
+    });
   });
 }
 
-// Event listener that runs when the DOM is fully loaded.
+/**
+ * Initializes Firebase contact handling once the DOM is fully loaded.
+ * It loads contacts, sets avatar colors, and exposes Firebase functions to the global scope.
+ */
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(loadContactsFromFirebase, 100);
   setTimeout(setAvatarColors, 200);

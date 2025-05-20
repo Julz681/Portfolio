@@ -195,9 +195,14 @@ function showTaskSuccessMessage() {
     }, 2000);
 }
 
+/**
+ * Redirects the user to the board page if they are not already on it.
+ * Normalizes the current path to use forward slashes and checks against expected board URLs.
+ */
 function redirectToBoard() {
     const currentPath = window.location.pathname.replace(/\\/g, '/');
     if (currentPath !== '/html/board.html' && currentPath !== '/board.html') {
         window.location.href = '/html/board.html';
     }
 }
+

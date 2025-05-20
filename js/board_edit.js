@@ -1,4 +1,4 @@
-// shows the editing overlay - populates all fields with task data and updates UI states.
+
 /**
  * Asynchronously opens the task editing overlay, populating all input fields with the data
  * of the provided task object and updating the visual states of UI elements like priority buttons

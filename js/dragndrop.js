@@ -1,5 +1,5 @@
 function init() {
-    // This function makes all tasks in board draggable  
+    /** This function makes all tasks in board draggable */
     const tasks = document.querySelectorAll('.board-card');
     tasks.forEach(task => {
         task.setAttribute('draggable', true);
@@ -66,7 +66,7 @@ function dragOver(event) {
 
         let topPosition = rect.top + 10; // If no cards exist, set the line at the top
 
-        // If cards exist, position the highlight line below the last card
+        /** If cards exist, position the highlight line below the last card */
         if (allCards.length > 0) {
             const lastCard = allCards[allCards.length - 1];
             topPosition = lastCard.getBoundingClientRect().bottom + 16; // Line below the last card
@@ -92,12 +92,12 @@ function drop(event) {
     const column = event.target.closest('.board-columns');
     const columnContent = column.querySelector('.column-content-wrapper');
 
-    // If cards exist, add the card to the end of the column
+    /**  If cards exist, add the card to the end of the column */
     if (columnContent && draggedTask) {
         columnContent.appendChild(draggedTask); // Append the card to the end of the column
         updateAllColumnsPlaceholder(); // Update placeholder visibility after drop
 
-        // Ermittle den neuen Status basierend auf der Spalte und speichere ihn in Firebase
+        
         const taskId = draggedTask.dataset.taskId;
         const newStatus = getStatusFromColumn(column);
         if (taskId && newStatus) {

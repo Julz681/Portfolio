@@ -71,10 +71,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Get a reference to the 'Tasks' node in your Firebase database
+    /**  Get a reference to the 'Tasks' node in your Firebase database */
     const tasksRef = ref(database, 'tasks');
 
-    // Set up a listener to be notified whenever there are changes to the data at the tasksRef
+    /**  Set up a listener to be notified whenever there are changes to the data at the tasksRef */
     onValue(tasksRef, (snapshot) => {
 
         const tasks = snapshot.val();
@@ -164,18 +164,18 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function handleScreenLogic() {
         if (window.innerWidth < 1200 && containerDiv && greetingDiv) {
-            // Clear any existing timeout
+            
             clearTimeout(timeoutId);
 
-            // Initially hide the container
+            
             containerDiv.style.display = 'none';
 
-            // Fade out the greeting after 1 second
+            
             timeoutId = setTimeout(() => {
                 greetingDiv.style.transition = 'opacity 1s ease-in-out';
                 greetingDiv.style.opacity = '0';
 
-                // After the fade out, hide the greeting and show the container
+                
                 setTimeout(() => {
                     greetingDiv.style.display = 'none';
                     greetingDiv.style.opacity = '1';
@@ -184,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 1000);
             }, 1000);
         } else if (window.innerWidth >= 1200 && containerDiv && greetingDiv) {
-            // If the screen is large, ensure greeting is visible and container might be as well
-            clearTimeout(timeoutId); // Clear any pending timeout
+            
+            clearTimeout(timeoutId); 
             greetingDiv.style.display = 'block';
             greetingDiv.style.opacity = '1';
             greetingDiv.style.transition = '';
@@ -193,13 +193,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Call handleScreenLogic on initial load
+    /**  Call handleScreenLogic on initial load */
     handleScreenLogic();
 
-    // Add event listener for window resizing
+    /**  Adds event listener for window resizing */
     window.addEventListener('resize', handleScreenLogic);
 
-    // Call the functions when the page loads
+    /**  Calls the functions when the page loads */
     updateGreeting();
     updateUserProfileInitials();
 

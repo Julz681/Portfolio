@@ -334,7 +334,7 @@ function deleteTask() {
   closeModal();
 }
 
-// handles searching tasks by title or description
+/** handles searching tasks by title or description */
 let searchInput = document.getElementById("task-search");
 let noResults = document.getElementById("no-results");
 
@@ -531,7 +531,7 @@ function renderAssigneesTaskForm() {
   }
 }
 
-// close task form when clicking outside the overlay
+/** Closea task form when clicking outside the overlay */
 document.getElementById("task-form-modal-wrapper").addEventListener("click", function (event) {
   const formWrapper = document.getElementById("task-form-wrapper");
 

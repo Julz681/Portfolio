@@ -1,4 +1,4 @@
-//colors for the avatars depending on the letter
+
 /**
  * @constant {object} letterColors - An object mapping uppercase letters to specific hexadecimal color codes.
  * This is used to determine the background color of user avatars based on the first letter of their name.
@@ -33,7 +33,7 @@ const letterColors = {
     Z: "#5D4037",
 };
 
-// array with objects
+
 /**
  * @global
  * @type {Array<object>} window.tasks - An array containing task objects.
@@ -328,7 +328,7 @@ function showContactDetails(name, email, phone) {
     container.classList.add("slide-in");
 }
 
-// opens the "Add Contact" overlay and resets relevant states
+
 /**
  * Opens the "Add Contact" overlay, resets the editing state (`isEditing` to false and
  * `currentEditingContact` to null), sets the overlay title to "Add Contact", displays the
