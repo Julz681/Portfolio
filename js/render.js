@@ -40,22 +40,14 @@ function renderAssignees(containerId, container) {
     let assigneesContainerRef = document.getElementById("assignees-list-task-form");
     let additionalAssignees = 0;
     if (((containerId === "assigned-to-dropdown" || containerId === "assigned-to-dropdown-task-form") && assignees.length != 0 && container.classList.contains("d_none")) || (containerId === "category-dropdown" && assignees.length != 0)) {
-        assigneesContainerRef.classList.remove("d_none");
-        assigneesContainerRef.innerHTML = "";
+        showAssigneesContainer(assigneesContainerRef);
         for (let index = 0; index < assignees.length; index++) {
-            if (index < 4) {
-                renderSingleAssignee(assignees[index], assigneesContainerRef);
-                // let initials = getInitials(assignees[index]);
-                // let iconBackgroundColor = getIconBackgroundColor(initials);
-                // assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);
-            } else {
-                additionalAssignees++;
-            }
+            addSingleAssignee(index, assignees[index], assigneesContainerRef)
+            additionalAssignees = checkForAdditionalAssignees(index, additionalAssignees);
         }
         assigneesContainerRef.innerHTML += getAvatarTemplate(`+${additionalAssignees}`, '#ccc');
     } else if (!container.classList.contains("d_none") || assignees.length === 0) {
-        assigneesContainerRef.classList.add("d_none");
-        assigneesContainerRef.innerHTML = "";
+        hideAssigneesContainer(assigneesContainerRef);
     }
 }
 
@@ -63,4 +55,26 @@ function renderSingleAssignee(singleAssignee, assigneesContainerRef) {
     let initials = getInitials(singleAssignee);
     let iconBackgroundColor = getIconBackgroundColor(initials);
     assigneesContainerRef.innerHTML += getAvatarTemplate(initials, iconBackgroundColor);
+}
+
+function showAssigneesContainer(assigneesContainerRef) {
+    assigneesContainerRef.classList.remove("d_none");
+    assigneesContainerRef.innerHTML = "";
+}
+
+function hideAssigneesContainer(assigneesContainerRef) {
+    assigneesContainerRef.classList.add("d_none");
+    assigneesContainerRef.innerHTML = "";
+}
+function checkForAdditionalAssignees(index, additionalAssignees) {
+    if (index >= 4) {
+        additionalAssignees++;
+    }
+    return additionalAssignees;
+}
+
+function addSingleAssignee(index, singleAssignee, assigneesContainerRef) {
+    if (index < 4) {
+        renderSingleAssignee(singleAssignee, assigneesContainerRef);
+    }
 }
