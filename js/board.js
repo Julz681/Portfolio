@@ -105,6 +105,15 @@ function renderSubtaskProgress(task) {
   const progressBar = document.getElementById(`progress-bar-${task.id}`);
   const countDisplay = document.getElementById(`subtask-count-${task.id}`);
   const total = task.subtasks.length;
+
+  if (!progressBar || !countDisplay) return;
+
+  if (total === 0) {
+    progressBar.style.display = "none";
+    countDisplay.style.display = "none";
+    return;
+  }
+
   let completed = 0;
   task.subtasks.forEach((subtask) => {
     const key = Object.keys(subtask)[0];
@@ -113,14 +122,16 @@ function renderSubtaskProgress(task) {
       completed++;
     }
   });
-  const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-  if (progressBar) {
-    progressBar.style.width = `${percentage}%`;
-  }
-  if (countDisplay) {
-    countDisplay.innerHTML = `${completed} / ${total} Subtasks`;
-  }
+
+  const percentage = Math.round((completed / total) * 100);
+
+  progressBar.style.width = `${percentage}%`;
+  progressBar.style.display = "block";
+
+  countDisplay.textContent = `${completed} / ${total} Subtasks`;
+  countDisplay.style.display = "block";
 }
+
 
 /**
  * Toggles the checked state of a subtask's checkbox and updates the task's subtasks array

@@ -149,5 +149,16 @@ function getInitials(username) {
  * Clears all data stored in the browser's local storage.
  */
 function clearTasksInLocalStorage() {
-    localStorage.clear();
+    const rememberMe = localStorage.getItem("rememberMe") === "true";
+    const savedEmail = localStorage.getItem("savedEmail");
+    const savedPassword = localStorage.getItem("savedPassword");
+
+    localStorage.clear(); 
+
+  
+    if (rememberMe && savedEmail && savedPassword) {
+        localStorage.setItem("rememberMe", "true");
+        localStorage.setItem("savedEmail", savedEmail);
+        localStorage.setItem("savedPassword", savedPassword);
+    }
 }

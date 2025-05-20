@@ -5,25 +5,27 @@ import { saveUserData, database, ref, push, get } from "./firebase.js";
  * Displays an error message in the UI.
  * @param {string} message - The error message to display.
  */
-function showError(message) {
-    const errorBox = document.getElementById("error-message");
-    if (errorBox) {
-        errorBox.textContent = message;
-        errorBox.classList.remove("d_none");
+function showFieldError(fieldId, message) {
+    const el = document.getElementById(`${fieldId}-error`);
+    if (el) {
+        el.textContent = message;
+        el.classList.remove("d_none");
     }
 }
 
 /**
  * Hides any visible error message from the UI.
  */
-function hideError() {
-    const errorBox = document.getElementById("error-message");
-    if (errorBox) {
-        errorBox.textContent = "";
-        errorBox.classList.add("d_none");
-    }
+function hideAllFieldErrors() {
+    const errorIds = ["name", "email", "password", "confirm-password", "privacy"];
+    errorIds.forEach(id => {
+        const el = document.getElementById(`${id}-error`);
+        if (el) {
+            el.textContent = "";
+            el.classList.add("d_none");
+        }
+    });
 }
-
 /**
  * Automatically fills in the sign-up fields for demo/testing purposes.
  */
@@ -42,7 +44,7 @@ function autoFillFieldsSignUp() {
  */
 function handleSignUpSubmission(event) {
     event.preventDefault();
-    hideError();
+    hideAllFieldErrors();
 
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -50,35 +52,50 @@ function handleSignUpSubmission(event) {
     const confirmPassword = document.getElementById("confirm-password").value;
     const privacyAccepted = document.getElementById("privacy-policy").checked;
 
-    if (!name || !email || !password || !confirmPassword) {
-        showError("Please fill in all required fields.");
-        return;
+    let hasError = false;
+
+    if (!name) {
+        showFieldError("name", "Please enter your name.");
+        hasError = true;
     }
 
-    if (!email.includes("@") || !email.includes(".")) {
-        showError("Please enter a valid email address.");
-        return;
+    if (!email) {
+        showFieldError("email", "Please enter your email.");
+        hasError = true;
+    } else if (!email.includes("@") || !email.includes(".")) {
+        showFieldError("email", "Please enter a valid email address.");
+        hasError = true;
     }
 
-    if (password.length < 8) {
-        showError("Password must be at least 8 characters long.");
-        return;
+    if (!password) {
+        showFieldError("password", "Please enter a password.");
+        hasError = true;
+    } else if (password.length < 8) {
+        showFieldError("password", "Password must be at least 8 characters.");
+        hasError = true;
     }
 
-    if (password !== confirmPassword) {
-        showError("Passwords do not match.");
-        return;
+    if (!confirmPassword) {
+        showFieldError("confirm-password", "Please confirm your password.");
+        hasError = true;
+    } else if (password !== confirmPassword) {
+        showFieldError("confirm-password", "Passwords do not match.");
+        hasError = true;
     }
 
     if (!privacyAccepted) {
-        showError("Please accept the privacy policy.");
-        return;
+        showFieldError("privacy", "Please accept the privacy policy.");
+        hasError = true;
     }
 
+    if (hasError) return;
+
     const userId = email.replace(/[^a-zA-Z0-9]/g, "_");
-    saveUserData(userId, name, email);
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
+    saveUserData(userId, name, email, password);
+localStorage.setItem("savedEmail", email);
+localStorage.setItem("savedPassword", password);
+localStorage.setItem("rememberMe", "true");
+
     createContact(name, email);
 
     let successMessage = document.querySelector(".success-message");

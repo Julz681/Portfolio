@@ -169,42 +169,51 @@ function createTaskHTML(task) {
     const label = task.taskType === "technical" ? "Technical Task" : "User Story";
     const color = task.taskType === "technical" ? "#1fd7c1" : "blue";
     const users = getUserAvatarsHTMLForBoard(task.assignedTo);
+    const hasSubtasks = task.subtasks && task.subtasks.length > 0;
+
+    const subtaskHTML = hasSubtasks
+        ? `
+        <div class="status d-flex-center">
+            <div class="progress" role="progressbar">
+                <div class="progress-bar" id="progress-bar-${task.id}" style="width: 0%"></div>
+            </div>
+            <div class="d-flex-center subtasks" id="subtask-count-${task.id}">
+                0 / ${task.subtasks.length} Subtasks
+            </div>
+        </div>`
+        : "";
 
     return `
         <div class="board-card d-flex-center" data-task-id="${task.id}">
             <div class="board-card-content d-flex-column">
-                    <button class="card-action-btn" onclick="toggleMoveMenu(this, event)">
-                <img src="/assets/img/responsive_frame.png" alt="Aktion" />
-            </button>
+                <button class="card-action-btn" onclick="toggleMoveMenu(this, event)">
+                    <img src="/assets/img/responsive_frame.png" alt="Aktion" />
+                </button>
 
-            <div class="move-menu d-none">
-                <span class="menu-title">Move to</span>
-                <div class="menu-item" onclick="moveTaskToColumn('to-do', event)">
-                    <span class="menu-icon">+</span> To do
+                <div class="move-menu d-none">
+                    <span class="menu-title">Move to</span>
+                    <div class="menu-item" onclick="moveTaskToColumn('to-do', event)">
+                        <span class="menu-icon">+</span> To do
+                    </div>
+                    <div class="menu-item" onclick="moveTaskToColumn('in-progress', event)">
+                        <span class="menu-icon">+</span> In progress
+                    </div>
+                    <div class="menu-item" onclick="moveTaskToColumn('await-feedback', event)">
+                        <span class="menu-icon">+</span> Await Feedback
+                    </div>
+                    <div class="menu-item" onclick="moveTaskToColumn('done', event)">
+                        <span class="menu-icon">+</span> Done
+                    </div>
                 </div>
-                <div class="menu-item" onclick="moveTaskToColumn('in-progress', event)">
-                    <span class="menu-icon">+</span> In progress
-                </div>
-                <div class="menu-item" onclick="moveTaskToColumn('await-feedback', event)">
-                    <span class="menu-icon">+</span> Await Feedback
-                </div>
-                <div class="menu-item" onclick="moveTaskToColumn('done', event)">
-                    <span class="menu-icon">+</span> Done
-                </div>
-            </div>
-               <label class="board-card-label br-8 d-flex-center" style="background:${color};">${label}</label>
+
+                <label class="board-card-label br-8 d-flex-center" style="background:${color};">${label}</label>
+
                 <div class="board-card-text d-flex-column br-10">
                     <h4 class="board-card-title">${task.title}</h4>
                     <p class="board-card-description">${task.description}</p>
                 </div>
-                <div class="status d-flex-center">
-                <div class="progress" role="progressbar">
-                    <div class="progress-bar" id="progress-bar-${task.id}" style="width: 0%"></div>
-                </div>
-                <div class="d-flex-center subtasks" id="subtask-count-${task.id}">
-                    0 / ${task.subtasks.length} Subtasks
-                </div>
-            </div>
+
+                ${subtaskHTML}
 
                 <div class="d-flex-space-between board-card-footer">
                     <div class="user-icons-wrapper d-flex-center">${users}</div>
@@ -213,6 +222,7 @@ function createTaskHTML(task) {
             </div>
         </div>`;
 }
+
 
 /**
  * Sets the HTML content for the "Assigned to" section in the task details modal.

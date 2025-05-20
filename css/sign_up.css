@@ -8,6 +8,18 @@
   font-size: 14px;
 }
 
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.required-error-message {
+  font-size: 12px;
+  font-weight: 400;
+  color: #ff8190;
+  font-family: "Poppins", sans-serif;
+}
 
 .d_none {
   display: none;
