@@ -45,7 +45,7 @@ function renderAssignees(containerId, container) {
             addSingleAssignee(index, assignees[index], assigneesContainerRef)
             additionalAssignees = checkForAdditionalAssignees(index, additionalAssignees);
         }
-        assigneesContainerRef.innerHTML += getAvatarTemplate(`+${additionalAssignees}`, '#ccc');
+        showAdditionalAssignees(additionalAssignees, assigneesContainerRef);
     } else if (!container.classList.contains("d_none") || assignees.length === 0) {
         hideAssigneesContainer(assigneesContainerRef);
     }
@@ -60,6 +60,12 @@ function renderSingleAssignee(singleAssignee, assigneesContainerRef) {
 function showAssigneesContainer(assigneesContainerRef) {
     assigneesContainerRef.classList.remove("d_none");
     assigneesContainerRef.innerHTML = "";
+}
+
+function showAdditionalAssignees(additionalAssignees, assigneesContainerRef) {
+    if (additionalAssignees > 0) {
+        assigneesContainerRef.innerHTML += getAvatarTemplate(`+${additionalAssignees}`, '#ccc');
+    }
 }
 
 function hideAssigneesContainer(assigneesContainerRef) {
