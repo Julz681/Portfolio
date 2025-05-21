@@ -21,17 +21,15 @@ function closeDropdown(event) {
     /** This function gets the menu and user profile elements */
     var dropdownMenu = document.getElementById("dropdownMenu");
     var userProfile = document.getElementById("userProfile");
-
     /**  Check if the click occurred outside the dropdown menu and the user profile */
     var clickedOutsideMenu = !dropdownMenu.contains(event.target);
     var clickedOutsideProfile = !userProfile.contains(event.target);
-
     if (clickedOutsideMenu && clickedOutsideProfile) {
         dropdownMenu.style.display = "none";
     }
 }
 
- /** This function closes the drop down menu */
+/** This function closes the drop down menu */
 document.onclick = closeDropdown;
 
 
@@ -105,6 +103,10 @@ function closeAllDropdowns(event) {
         assignedToDropdownContainerId = "assigned-to-dropdown";
         dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown"),];
     }
+    closeAllDropdownsTaskForm(event, assignedToDropdownContainerId, dropdownContainers)
+}
+
+function closeAllDropdownsTaskForm(event, assignedToDropdownContainerId, dropdownContainers) {
     checkDropdownContainersArray(assignedToDropdownContainerId, dropdownContainers);
     closeDropdown(event);
     event.stopPropagation();

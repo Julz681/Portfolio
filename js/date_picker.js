@@ -50,28 +50,40 @@ function setupAllDatePickers() {
 function checkDateInput(containerId) {
   let dateInput = getInputContainer(containerId);
   let dateInputValue = getInputValue(dateInput);
-  let requiredErrorContainerRef;
-  let invalidInputErrorContainerRef;
-  let dateFormatErrorContainerRef;
+  let errorContainers = initializeErrorContainersObject();
   if (containerId === "due-date-add-task" || containerId === "due-date-form") {
-    requiredErrorContainerRef = getErrorContainer("due-date-required-error-message");
-    invalidInputErrorContainerRef = getErrorContainer("due-date-time-error-message");
-    dateFormatErrorContainerRef = getErrorContainer("date-format-error-message");
+    errorContainers = getErrorContainersTaskForm();
   } else {
-    requiredErrorContainerRef = getErrorContainer("due-date-edit-required-error-message");
-    invalidInputErrorContainerRef = getErrorContainer("due-date-edit-time-error-message");
-    dateFormatErrorContainerRef = getErrorContainer("due-date-edit-format-error-message");
+    errorContainers = getErrorContainersEditForm();
   }
   let formattedDateValue = formatDateValue(dateInputValue).setHours(0, 0, 0, 0);
   let currentDate = new Date().setHours(0, 0, 0, 0);
-  if (checkDateValueValidity(dateInputValue, requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef)) {
-    return;
-  } else if (
-    checkFormattedDateValue(formattedDateValue, invalidInputErrorContainerRef, requiredErrorContainerRef, dateFormatErrorContainerRef, currentDate)
-  ) {
-    return;
-  } else {
-    removeAllDateErrorUserInteractions(requiredErrorContainerRef, dateFormatErrorContainerRef, invalidInputErrorContainerRef);
+  if (checkDateValueValidity(dateInputValue, errorContainers.requiredErrorContainerRef, errorContainers.dateFormatErrorContainerRef, errorContainers.invalidInputErrorContainerRef)) return;
+  else if (checkFormattedDateValue(formattedDateValue, errorContainers.invalidInputErrorContainerRef, errorContainers.requiredErrorContainerRef, errorContainers.dateFormatErrorContainerRef, currentDate)) return;
+  else removeAllDateErrorUserInteractions(errorContainers.requiredErrorContainerRef, errorContainers.dateFormatErrorContainerRef, errorContainers.invalidInputErrorContainerRef);
+}
+
+function getErrorContainersTaskForm() {
+  return {
+    requiredErrorContainerRef: getErrorContainer("due-date-required-error-message"),
+    invalidInputErrorContainerRef: getErrorContainer("due-date-time-error-message"),
+    dateFormatErrorContainerRef: getErrorContainer("date-format-error-message"),
+  }
+}
+
+function getErrorContainersEditForm() {
+  return {
+    requiredErrorContainerRef: getErrorContainer("due-date-edit-required-error-message"),
+    invalidInputErrorContainerRef: getErrorContainer("due-date-edit-time-error-message"),
+    dateFormatErrorContainerRef: getErrorContainer("due-date-edit-format-error-message"),
+  }
+}
+
+function initializeErrorContainersObject() {
+  return {
+    requiredErrorContainerRef: null,
+    invalidInputErrorContainerRef: null,
+    dateFormatErrorContainerRef: null,
   }
 }
 
