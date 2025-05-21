@@ -1,4 +1,3 @@
-
 /**
  * Asynchronously opens the task editing overlay, populating all input fields with the data
  * of the provided task object and updating the visual states of UI elements like priority buttons
@@ -8,50 +7,78 @@
  */
 async function openEditOverlay(task) {
     if (!task) return;
-
-    if (!window.userNames || window.userNames.length === 0) {
-        window.userNames = await getUsersFromDatabase();
-    }
-
-    window.assignees = Array.isArray(task.assignedTo) ? [...task.assignedTo] : [];
-
-    const overlay = document.getElementById("editTaskOverlay");
+  
+    await prepareAssignees(task);
+    const overlay = getEditOverlay();
     if (!overlay) return;
-    overlay.classList.remove("hidden");
+  
+    fillEditFormFields(task, overlay);
+    updatePriorityButtons(task, overlay);
+    renderAssigneesEditUI();
+    renderSubtaskSection(task);
+    setupAllBehaviors();
+  }
+  
+  
 
-    const titleInput = overlay.querySelector(
-        ".edit-input[placeholder='Enter a title']"
-    );
-    const descriptionTextarea = overlay.querySelector(
-        ".edit-textarea[placeholder='Enter a Description']"
-    );
-    const dueDateInput = overlay.querySelector("#due-date");
-    const priorityButtons = overlay.querySelectorAll(".priority-labels");
-    const subtaskListContainer = document.getElementById("subtaskList");
+async function prepareAssignees(task) {
+  if (!window.userNames || window.userNames.length === 0) {
+    window.userNames = await getUsersFromDatabase();
+  }
+  window.assignees = Array.isArray(task.assignedTo) ? [...task.assignedTo] : [];
+}
 
-    titleInput.value = task.title || "";
-    descriptionTextarea.value = task.description || "";
-    if (dueDateInput._flatpickr && task.dueDate) {
-        dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
+function getEditOverlay() {
+  const overlay = document.getElementById("editTaskOverlay");
+  if (overlay) overlay.classList.remove("hidden");
+  return overlay;
+}
+
+function fillEditFormFields(task, overlay) {
+  const titleInput = overlay.querySelector(
+    ".edit-input[placeholder='Enter a title']"
+  );
+  const descriptionTextarea = overlay.querySelector(
+    ".edit-textarea[placeholder='Enter a Description']"
+  );
+  const dueDateInput = overlay.querySelector("#due-date");
+
+  titleInput.value = task.title || "";
+  descriptionTextarea.value = task.description || "";
+
+  if (dueDateInput._flatpickr && task.dueDate) {
+    dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
+  }
+}
+
+function updatePriorityButtons(task, overlay) {
+  const priorityButtons = overlay.querySelectorAll(".priority-labels");
+  priorityButtons.forEach((btn) => {
+    resetPriority(btn);
+    btn.classList.remove("selected");
+    if (btn.id === task.priority) {
+      activatePriority(btn);
+      btn.classList.add("selected");
     }
-    priorityButtons.forEach((btn) => {
-        resetPriority(btn);
-        btn.classList.remove("selected");
-        if (btn.id === task.priority) {
-            activatePriority(btn);
-            btn.classList.add("selected");
-        }
-    });
-    renderUsersToAssignEdit();
-    renderAssigneesEdit(
-        "assigned-to-dropdown-edit",
-        document.getElementById("assigned-to-dropdown-edit")
-    );
-    renderSubtasks(task, subtaskListContainer);
-    setupEditDropdownEvents();
-    setupPrioritySelection();
-    setupSubtaskInput();
-    setupAllDatePickers()
+  });
+}
+
+function renderAssigneesEditUI() {
+  renderUsersToAssignEdit();
+  const dropdown = document.getElementById("assigned-to-dropdown-edit");
+  renderAssigneesEdit("assigned-to-dropdown-edit", dropdown);
+}
+
+function renderSubtaskSection(task) {
+  const subtaskListContainer = document.getElementById("subtaskList");
+  renderSubtasks(task, subtaskListContainer);
+}
+
+function setupAllBehaviors() {
+  setupEditDropdownEvents();
+  setupPrioritySelection();
+  setupSubtaskInput();
+  setupAllDatePickers();
 }
 
 /**
@@ -63,33 +90,46 @@ async function openEditOverlay(task) {
  * @param {HTMLElement} container - The HTML element of the dropdown container.
  */
 function renderAssigneesEdit(containerId, container) {
-    const assigneesContainerId =
-        containerId === "assigned-to-dropdown-edit"
-            ? "assignees-list-edit"
-            : "assignees-list";
+  const assigneesContainerRef = getAssigneesContainer(containerId);
+  if (!assigneesContainerRef) return;
 
-    const assigneesContainerRef = document.getElementById(assigneesContainerId);
-    if (!assigneesContainerRef) return;
+  assigneesContainerRef.innerHTML = "";
+  if (!Array.isArray(window.assignees)) return;
 
-    assigneesContainerRef.innerHTML = "";
+  if (window.assignees.length > 0) {
+    showAssigneeContainer(assigneesContainerRef);
+    renderAssigneeAvatars(assigneesContainerRef);
+  } else {
+    hideAssigneeContainer(assigneesContainerRef);
+  }
+}
 
-    if (!Array.isArray(window.assignees)) return;
+function getAssigneesContainer(containerId) {
+  const id =
+    containerId === "assigned-to-dropdown-edit"
+      ? "assignees-list-edit"
+      : "assignees-list";
+  return document.getElementById(id);
+}
 
-    if (window.assignees.length > 0) {
-        assigneesContainerRef.classList.remove("d_none");
+function showAssigneeContainer(container) {
+  container.classList.remove("d_none");
+}
 
-        window.assignees.forEach((name) => {
-            const initials = getInitials(name);
-            const bgColor = getIconBackgroundColor(initials);
-            const avatarHTML = getAvatarTemplate(initials, bgColor);
+function hideAssigneeContainer(container) {
+  container.classList.add("d_none");
+}
 
-            const wrapper = document.createElement("div");
-            wrapper.innerHTML = avatarHTML;
-            assigneesContainerRef.appendChild(wrapper.firstElementChild);
-        });
-    } else {
-        assigneesContainerRef.classList.add("d_none");
-    }
+function renderAssigneeAvatars(container) {
+  window.assignees.forEach((name) => {
+    const initials = getInitials(name);
+    const bgColor = getIconBackgroundColor(initials);
+    const avatarHTML = getAvatarTemplate(initials, bgColor);
+
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = avatarHTML;
+    container.appendChild(wrapper.firstElementChild);
+  });
 }
 
 /**
@@ -98,30 +138,38 @@ function renderAssigneesEdit(containerId, container) {
  * and then generates HTML for each user item using the `getUsersToAssignTemplateForEditTaskForm` template.
  */
 function renderUsersToAssignEdit() {
-    const usersList = document.getElementById("assigned-to-users-list-edit");
-    if (!usersList || !window.userNames) return;
+  const usersList = document.getElementById("assigned-to-users-list-edit");
+  if (!usersList || !window.userNames) return;
 
-    usersList.innerHTML = "";
+  usersList.innerHTML = "";
+  const sortedUsers = getSortedUsers();
 
-    const sortedUsers = [...window.userNames].sort((a, b) => {
-        const aAssigned = window.assignees?.includes(a) ? -1 : 1;
-        const bAssigned = window.assignees?.includes(b) ? -1 : 1;
-        return aAssigned - bAssigned;
-    });
+  sortedUsers.forEach((name, index) => {
+    const userHTML = createUserHTML(name, index);
+    usersList.innerHTML += userHTML;
+  });
+}
 
-    sortedUsers.forEach((name, index) => {
-        const initials = getInitials(name);
-        const bgColor = getIconBackgroundColor(initials);
-        const isSelected = window.assignees?.includes(name);
+function getSortedUsers() {
+  return [...window.userNames].sort((a, b) => {
+    const aAssigned = window.assignees?.includes(a) ? -1 : 1;
+    const bAssigned = window.assignees?.includes(b) ? -1 : 1;
+    return aAssigned - bAssigned;
+  });
+}
 
-        usersList.innerHTML += getUsersToAssignTemplateForEditTaskForm(
-            name,
-            index,
-            isSelected,
-            initials,
-            bgColor
-        );
-    });
+function createUserHTML(name, index) {
+  const initials = getInitials(name);
+  const bgColor = getIconBackgroundColor(initials);
+  const isSelected = window.assignees?.includes(name);
+
+  return getUsersToAssignTemplateForEditTaskForm(
+    name,
+    index,
+    isSelected,
+    initials,
+    bgColor
+  );
 }
 
 /**
@@ -132,16 +180,16 @@ function renderUsersToAssignEdit() {
  * @param {string} containerId - The ID of the dropdown container for assignees (e.g., "assigned-to-dropdown-edit").
  */
 function toggleAssigned(name, containerId) {
-    const index = window.assignees.indexOf(name);
-    if (index > -1) {
-        window.assignees.splice(index, 1);
-    } else {
-        window.assignees.push(name);
-    }
+  const index = window.assignees.indexOf(name);
+  if (index > -1) {
+    window.assignees.splice(index, 1);
+  } else {
+    window.assignees.push(name);
+  }
 
-    const dropdown = document.getElementById(containerId);
-    renderAssigneesEdit(containerId, dropdown);
-    renderUsersToAssignEdit();
+  const dropdown = document.getElementById(containerId);
+  renderAssigneesEdit(containerId, dropdown);
+  renderUsersToAssignEdit();
 }
 
 /**
@@ -151,10 +199,10 @@ function toggleAssigned(name, containerId) {
  * @returns {string} The initials of the user's name in uppercase.
  */
 function getInitials(name) {
-    if (!name) return "?";
-    const parts = name.trim().split(" ");
-    if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-    return (parts[0][0] + parts[1][0]).toUpperCase();
+  if (!name) return "?";
+  const parts = name.trim().split(" ");
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
 /**
@@ -164,23 +212,23 @@ function getInitials(name) {
  * @param {Event} event - The click event that triggered the toggle. It's stopped from propagating.
  */
 function toggleDropdownSelectionInEdit(dropdownId, event) {
-    event.stopPropagation();
+  event.stopPropagation();
 
-    const dropdown = document.getElementById(dropdownId);
-    const arrowClosed = document.getElementById(`${dropdownId}-closed`);
-    const arrowOpen = document.getElementById(`${dropdownId}-open`);
+  const dropdown = document.getElementById(dropdownId);
+  const arrowClosed = document.getElementById(`${dropdownId}-closed`);
+  const arrowOpen = document.getElementById(`${dropdownId}-open`);
 
-    const isOpen = !dropdown.classList.contains("d_none");
+  const isOpen = !dropdown.classList.contains("d_none");
 
-    if (isOpen) {
-        dropdown.classList.add("d_none");
-        arrowClosed.classList.remove("d_none");
-        arrowOpen.classList.add("d_none");
-    } else {
-        dropdown.classList.remove("d_none");
-        arrowClosed.classList.add("d_none");
-        arrowOpen.classList.remove("d_none");
-    }
+  if (isOpen) {
+    dropdown.classList.add("d_none");
+    arrowClosed.classList.remove("d_none");
+    arrowOpen.classList.add("d_none");
+  } else {
+    dropdown.classList.remove("d_none");
+    arrowClosed.classList.add("d_none");
+    arrowOpen.classList.remove("d_none");
+  }
 }
 
 /**
@@ -189,14 +237,14 @@ function toggleDropdownSelectionInEdit(dropdownId, event) {
  * @returns {Object | undefined} The task object if found, otherwise undefined.
  */
 function getTaskById(id) {
-    return tasks.find((t) => t.id === id);
+  return tasks.find((t) => t.id === id);
 }
 
 /**
  * Hides the task editing overlay by adding the 'hidden' class to its element.
  */
 function closeEditOverlay() {
-    document.getElementById("editTaskOverlay").classList.add("hidden");
+  document.getElementById("editTaskOverlay").classList.add("hidden");
 }
 
 /**
@@ -205,20 +253,19 @@ function closeEditOverlay() {
  * and then adds the 'selected' class and activates the styling for the clicked button.
  */
 function setupPrioritySelection() {
-    const buttons = document.querySelectorAll("#urgent, #medium, #low");
-    buttons.forEach((button) => {
-        button.addEventListener("click", () => {
-            buttons.forEach((btn) => {
-                btn.classList.remove("selected");
-                resetPriority(btn);
-            });
+  const buttons = document.querySelectorAll("#urgent, #medium, #low");
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((btn) => {
+        btn.classList.remove("selected");
+        resetPriority(btn);
+      });
 
-            button.classList.add("selected");
-            activatePriority(button);
-        });
+      button.classList.add("selected");
+      activatePriority(button);
     });
+  });
 }
-
 
 /**
  * Resets the visual styling of a priority button to its default state.
@@ -227,12 +274,12 @@ function setupPrioritySelection() {
  * @param {HTMLElement} button - The priority button element to reset.
  */
 function resetPriority(button) {
-    button.style.backgroundColor = "#ffffff";
-    button.style.color = "#000000";
-    button.style.fontWeight = "normal";
+  button.style.backgroundColor = "#ffffff";
+  button.style.color = "#000000";
+  button.style.fontWeight = "normal";
 
-    const paths = button.querySelectorAll("svg path");
-    paths.forEach((path) => setDefaultColor(path, button.id));
+  const paths = button.querySelectorAll("svg path");
+  paths.forEach((path) => setDefaultColor(path, button.id));
 }
 
 /**
@@ -241,9 +288,9 @@ function resetPriority(button) {
  * @param {string} id - The ID of the priority button ("urgent", "medium", or "low").
  */
 function setDefaultColor(path, id) {
-    if (id === "urgent") path.setAttribute("fill", "#FF3D00");
-    if (id === "medium") path.setAttribute("fill", "#FFA800");
-    if (id === "low") path.setAttribute("fill", "#7AE229");
+  if (id === "urgent") path.setAttribute("fill", "#FF3D00");
+  if (id === "medium") path.setAttribute("fill", "#FFA800");
+  if (id === "low") path.setAttribute("fill", "#7AE229");
 }
 
 /**
@@ -253,18 +300,18 @@ function setDefaultColor(path, id) {
  * @param {HTMLElement} button - The priority button element to activate.
  */
 function activatePriority(button) {
-    button.style.backgroundColor =
-        button.id === "urgent"
-            ? "#FF3D00"
-            : button.id === "medium"
-                ? "#FFA800"
-                : "#7AE229";
+  button.style.backgroundColor =
+    button.id === "urgent"
+      ? "#FF3D00"
+      : button.id === "medium"
+      ? "#FFA800"
+      : "#7AE229";
 
-    button.style.color = "#ffffff";
-    button.style.fontWeight = "bold";
+  button.style.color = "#ffffff";
+  button.style.fontWeight = "bold";
 
-    const paths = button.querySelectorAll("svg path");
-    paths.forEach((path) => path.setAttribute("fill", "#ffffff"));
+  const paths = button.querySelectorAll("svg path");
+  paths.forEach((path) => path.setAttribute("fill", "#ffffff"));
 }
 
 /**
@@ -272,9 +319,9 @@ function activatePriority(button) {
  * with at least some default values if no data has been loaded yet.
  */
 function setupAssignedToDropdown() {
-    if (!window.userNames || window.userNames.length === 0) {
-        window.userNames = ["Max Mustermann", "Erika Musterfrau"];
-    }
+  if (!window.userNames || window.userNames.length === 0) {
+    window.userNames = ["Max Mustermann", "Erika Musterfrau"];
+  }
 }
 
 /**
@@ -283,28 +330,35 @@ function setupAssignedToDropdown() {
  * and a global click listener to close the dropdown if the user clicks outside of it.
  */
 function setupEditDropdownEvents() {
-    const arrow = document.getElementById("select-arrow-edit");
-    const wrapper = document.querySelector(".dropdown-field-wrapper");
-    const dropdown = document.getElementById("assigned-to-dropdown-edit");
+  const arrow = document.getElementById("select-arrow-edit");
+  const wrapper = document.querySelector(".dropdown-field-wrapper");
+  const dropdown = document.getElementById("assigned-to-dropdown-edit");
 
-    if (!arrow || !wrapper || !dropdown) return;
+  if (!arrow || !wrapper || !dropdown) return;
 
-    arrow.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const isOpen = !dropdown.classList.contains("d_none");
+  bindDropdownArrowClick(arrow, dropdown);
+  bindOutsideDropdownClose(wrapper, dropdown, arrow);
+}
 
-        if (isOpen) {
-            closeEditDropdown(dropdown, arrow);
-        } else {
-            openEditDropdown(dropdown, arrow);
-        }
-    });
+function bindDropdownArrowClick(arrow, dropdown) {
+  arrow.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = !dropdown.classList.contains("d_none");
 
-    document.addEventListener("click", (e) => {
-        if (!wrapper.contains(e.target)) {
-            closeEditDropdown(dropdown, arrow);
-        }
-    });
+    if (isOpen) {
+      closeEditDropdown(dropdown, arrow);
+    } else {
+      openEditDropdown(dropdown, arrow);
+    }
+  });
+}
+
+function bindOutsideDropdownClose(wrapper, dropdown, arrow) {
+  document.addEventListener("click", (e) => {
+    if (!wrapper.contains(e.target)) {
+      closeEditDropdown(dropdown, arrow);
+    }
+  });
 }
 
 /**
@@ -313,9 +367,9 @@ function setupEditDropdownEvents() {
  * @param {HTMLElement} arrow - The arrow icon element of the dropdown.
  */
 function openEditDropdown(dropdown, arrow) {
-    dropdown.classList.remove("d_none");
-    arrow.classList.remove("closed");
-    arrow.classList.add("open");
+  dropdown.classList.remove("d_none");
+  arrow.classList.remove("closed");
+  arrow.classList.add("open");
 }
 
 /**
@@ -324,9 +378,9 @@ function openEditDropdown(dropdown, arrow) {
  * @param {HTMLElement} arrow - The arrow icon element of the dropdown.
  */
 function closeEditDropdown(dropdown, arrow) {
-    dropdown.classList.add("d_none");
-    arrow.classList.remove("open");
-    arrow.classList.add("closed");
+  dropdown.classList.add("d_none");
+  arrow.classList.remove("open");
+  arrow.classList.add("closed");
 }
 
 /**
@@ -335,20 +389,20 @@ function closeEditDropdown(dropdown, arrow) {
  * Clicking the clear or confirm button resets the input field and hides the confirm/clear icons.
  */
 function setupSubtaskInput() {
-    const input = document.getElementById("subtasks-edit");
-    const addBtn = document.getElementById("edit-add-subtask-icon");
-    const confirmWrap = document.getElementById("confirm-icons");
-    const confirmBtn = document.getElementById("confirm-icon");
-    const clearBtn = document.getElementById("clear-icon");
-    addBtn.addEventListener("click", () =>
-        showConfirm(input, confirmWrap, addBtn)
-    );
-    clearBtn.addEventListener("click", () =>
-        resetInput(input, confirmWrap, addBtn)
-    );
-    confirmBtn.addEventListener("click", () =>
-        resetInput(input, confirmWrap, addBtn)
-    );
+  const input = document.getElementById("subtasks-edit");
+  const addBtn = document.getElementById("edit-add-subtask-icon");
+  const confirmWrap = document.getElementById("confirm-icons");
+  const confirmBtn = document.getElementById("confirm-icon");
+  const clearBtn = document.getElementById("clear-icon");
+  addBtn.addEventListener("click", () =>
+    showConfirm(input, confirmWrap, addBtn)
+  );
+  clearBtn.addEventListener("click", () =>
+    resetInput(input, confirmWrap, addBtn)
+  );
+  confirmBtn.addEventListener("click", () =>
+    resetInput(input, confirmWrap, addBtn)
+  );
 }
 
 /**
@@ -359,9 +413,9 @@ function setupSubtaskInput() {
  * @param {HTMLElement} add - The add subtask icon.
  */
 function showConfirm(input, confirm, add) {
-    add.classList.add("d-none");
-    confirm.classList.remove("d-none");
-    input.focus();
+  add.classList.add("d-none");
+  confirm.classList.remove("d-none");
+  input.focus();
 }
 
 /**
@@ -372,9 +426,9 @@ function showConfirm(input, confirm, add) {
  * @param {HTMLElement} add - The add subtask icon.
  */
 function resetInput(input, confirm, add) {
-    input.value = "";
-    confirm.classList.add("d-none");
-    add.classList.remove("d-none");
+  input.value = "";
+  confirm.classList.add("d-none");
+  add.classList.remove("d-none");
 }
 
 /**
@@ -384,33 +438,34 @@ function resetInput(input, confirm, add) {
  * @param {HTMLElement} container - The HTML element to append the subtask list items to.
  */
 function renderSubtasks(task, container) {
-    container.innerHTML = "";
+  container.innerHTML = "";
 
-    if (Array.isArray(task.subtasks)) {
-        task.subtasks.forEach((subtask, index) => {
-            const [key, value] = Object.entries(subtask)[0];
+  if (!Array.isArray(task.subtasks)) return;
 
-            const subtaskItem = document.createElement("div");
-            subtaskItem.classList.add("subtask-list-item");
-            subtaskItem.style.listStyle = "none";
-            subtaskItem.style.display = "flex";
-            subtaskItem.style.justifyContent = "space-between";
-            subtaskItem.style.alignItems = "center";
-            subtaskItem.style.padding = "6px 16px";
+  task.subtasks.forEach((subtask, index) => {
+    const subtaskElement = createSubtaskElement(subtask, index);
+    container.appendChild(subtaskElement);
+  });
+}
 
-            subtaskItem.innerHTML = `
-                <div class="subtask-list-item-content-wrapper" style="width: 100%;">
-                    <span> ${value}</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                    <span class="edit-icon" data-index="${index}"></span>
-                    <span class="delete-icon" data-index="${index}"></span>
-                </div>
-            `;
+function createSubtaskElement(subtask, index) {
+  const [key, value] = Object.entries(subtask)[0];
 
-            container.appendChild(subtaskItem);
-        });
-    }
+  const subtaskItem = document.createElement("div");
+  subtaskItem.classList.add("subtask-list-item");
+
+  applySubtaskStyles(subtaskItem);
+  subtaskItem.innerHTML = getSubtaskItemTemplate(value, index);
+
+  return subtaskItem;
+}
+
+function applySubtaskStyles(element) {
+  element.style.listStyle = "none";
+  element.style.display = "flex";
+  element.style.justifyContent = "space-between";
+  element.style.alignItems = "center";
+  element.style.padding = "6px 16px";
 }
 
 /**
@@ -421,26 +476,57 @@ function renderSubtasks(task, container) {
  * @param {object} task - The task object whose details will be displayed in the edit overlay.
  */
 function populateEditOverlay(task) {
-    const overlay = document.getElementById("editTaskOverlay");
-    const titleInput = overlay.querySelector(
-        ".edit-input[placeholder='Enter a title']"
-    );
-    const descriptionTextarea = overlay.querySelector(
-        ".edit-textarea[placeholder='Enter a Description']"
-    );
-    const dueDateInput = overlay.querySelector("#due-date");
-    const subtaskInput = overlay.querySelector("#subtasks-edit");
-    const addSubtaskIcon = document.getElementById("edit-add-subtask-icon");
-    const subtaskListContainer = document.getElementById("subtaskList");
-    const priorityButtons = overlay.querySelectorAll(".priority-labels");
+  const overlay = document.getElementById("editTaskOverlay");
+  const titleInput = overlay.querySelector(
+    ".edit-input[placeholder='Enter a title']"
+  );
+  const descriptionTextarea = overlay.querySelector(
+    ".edit-textarea[placeholder='Enter a Description']"
+  );
+  const dueDateInput = overlay.querySelector("#due-date");
+  const subtaskInput = overlay.querySelector("#subtasks-edit");
 
-    fillFormFields(task, titleInput, descriptionTextarea, dueDateInput);
-    updatePrioritySelection(task.priority, priorityButtons);
-    renderSubtasks(task, subtaskListContainer);
-    subtaskInput.value = "";
-    openEditOverlay(task);
-    setupSubtaskAdd(addSubtaskIcon, subtaskInput, task, subtaskListContainer);
-    setupSubtaskListEvents(subtaskListContainer, task);
+  const addSubtaskIcon = document.getElementById("edit-add-subtask-icon");
+  const subtaskListContainer = document.getElementById("subtaskList");
+  const priorityButtons = overlay.querySelectorAll(".priority-labels");
+
+  fillFormFields(task, titleInput, descriptionTextarea, dueDateInput);
+  updatePrioritySelection(task.priority, priorityButtons);
+  finishOverlaySetup(task, subtaskInput, addSubtaskIcon, subtaskListContainer);
+}
+
+function fillFormFields(task, titleInput, descriptionTextarea, dueDateInput) {
+  titleInput.value = task.title || "";
+  descriptionTextarea.value = task.description || "";
+
+  if (dueDateInput._flatpickr && task.dueDate) {
+    dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
+  }
+}
+
+function updatePrioritySelection(priority, priorityButtons) {
+  priorityButtons.forEach((btn) => {
+    resetPriority(btn);
+    btn.classList.remove("selected");
+
+    if (btn.id === priority) {
+      activatePriority(btn);
+      btn.classList.add("selected");
+    }
+  });
+}
+
+function finishOverlaySetup(
+  task,
+  subtaskInput,
+  addSubtaskIcon,
+  subtaskListContainer
+) {
+  renderSubtasks(task, subtaskListContainer);
+  subtaskInput.value = "";
+  openEditOverlay(task);
+  setupSubtaskAdd(addSubtaskIcon, subtaskInput, task, subtaskListContainer);
+  setupSubtaskListEvents(subtaskListContainer, task);
 }
 
 /**
@@ -451,9 +537,9 @@ function populateEditOverlay(task) {
  * @param {HTMLInputElement} dueDateInput - The input field for the task due date.
  */
 function fillFormFields(task, titleInput, descriptionTextarea, dueDateInput) {
-    titleInput.value = task.title;
-    descriptionTextarea.value = task.description;
-    dueDateInput.value = task.dueDate;
+  titleInput.value = task.title;
+  descriptionTextarea.value = task.description;
+  dueDateInput.value = task.dueDate;
 }
 
 /**
@@ -463,14 +549,14 @@ function fillFormFields(task, titleInput, descriptionTextarea, dueDateInput) {
  * @param {NodeListOf<HTMLElement>} buttons - A list of all priority button elements.
  */
 function updatePrioritySelection(priority, buttons) {
-    buttons.forEach((btn) => {
-        resetPriority(btn);
-        btn.classList.remove("selected");
-        if (btn.id === priority) {
-            activatePriority(btn);
-            btn.classList.add("selected");
-        }
-    });
+  buttons.forEach((btn) => {
+    resetPriority(btn);
+    btn.classList.remove("selected");
+    if (btn.id === priority) {
+      activatePriority(btn);
+      btn.classList.add("selected");
+    }
+  });
 }
 
 /**
@@ -483,15 +569,15 @@ function updatePrioritySelection(priority, buttons) {
  * @param {HTMLElement} container - The container for the subtask list.
  */
 function setupSubtaskAdd(addBtn, input, task, container) {
-    addBtn.addEventListener("click", () => {
-        const newTitle = input.value.trim();
-        if (newTitle) {
-            if (!Array.isArray(task.subtasks)) task.subtasks = [];
-            task.subtasks.push({ [newTitle]: newTitle });
-            renderSubtasks(task, container);
-            input.value = "";
-        }
-    });
+  addBtn.addEventListener("click", () => {
+    const newTitle = input.value.trim();
+    if (newTitle) {
+      if (!Array.isArray(task.subtasks)) task.subtasks = [];
+      task.subtasks.push({ [newTitle]: newTitle });
+      renderSubtasks(task, container);
+      input.value = "";
+    }
+  });
 }
 
 /**
@@ -501,15 +587,15 @@ function setupSubtaskAdd(addBtn, input, task, container) {
  * @param {object} task - The task object whose subtasks are being displayed.
  */
 function setupSubtaskListEvents(container, task) {
-    container.addEventListener("click", (e) => {
-        const index = parseInt(e.target.dataset.index);
-        if (e.target.classList.contains("delete-icon")) {
-            task.subtasks.splice(index, 1);
-            renderSubtasks(task, container);
-        } else if (e.target.classList.contains("edit-icon")) {
-            startEditingSubtask(e, task, index, container);
-        }
-    });
+  container.addEventListener("click", (e) => {
+    const index = parseInt(e.target.dataset.index);
+    if (e.target.classList.contains("delete-icon")) {
+      task.subtasks.splice(index, 1);
+      renderSubtasks(task, container);
+    } else if (e.target.classList.contains("edit-icon")) {
+      startEditingSubtask(e, task, index, container);
+    }
+  });
 }
 
 /**
@@ -524,22 +610,22 @@ function setupSubtaskListEvents(container, task) {
  * @param {HTMLElement} container - The container element of the subtask list.
  */
 function startEditingSubtask(e, task, index, container) {
-    const item = e.target.closest(".subtask-list-item");
-    const input = createSubtaskEditInput(item);
-    if (!input) return;  // Abbrechen, wenn kein Input erzeugt werden konnte
+  const item = e.target.closest(".subtask-list-item");
+  const input = createSubtaskEditInput(item);
+  if (!input) return; // Abbrechen, wenn kein Input erzeugt werden konnte
 
-    const iconWrapper = getIconWrapper(item);
-    if (!iconWrapper) return;
+  const iconWrapper = getIconWrapper(item);
+  if (!iconWrapper) return;
 
-    prepareIconsForEditing(iconWrapper);
-    const deleteIcon = ensureDeleteIconVisible(iconWrapper);
-    const confirmBtn = createConfirmButton();
+  prepareIconsForEditing(iconWrapper);
+  const deleteIcon = ensureDeleteIconVisible(iconWrapper);
+  const confirmBtn = createConfirmButton();
 
-    replaceIcons(iconWrapper, deleteIcon, confirmBtn);
-    bindEditActions(input, confirmBtn, deleteIcon, task, index, container);
+  replaceIcons(iconWrapper, deleteIcon, confirmBtn);
+  bindEditActions(input, confirmBtn, deleteIcon, task, index, container);
 
-    input.focus();
-    item.classList.add("subtask-list-item-active");
+  input.focus();
+  item.classList.add("subtask-list-item-active");
 }
 
 /**
@@ -549,25 +635,22 @@ function startEditingSubtask(e, task, index, container) {
  * @returns {HTMLInputElement} The created input element for editing.
  */
 function createSubtaskEditInput(item) {
-    if (!item) return null;
+  if (!item) return null;
+  const textWrapper = item.querySelector(".subtask-list-item-content-wrapper");
 
-    const textWrapper = item.querySelector(".subtask-list-item-content-wrapper");
-    if (!textWrapper) return null;
+  if (!textWrapper) return null;
+  const textEl = textWrapper.querySelector("span");
 
-    const textEl = textWrapper.querySelector("span");
-    if (!textEl) return null;
+  if (!textEl) return null;
+  const oldText = textEl.textContent.trim();
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = oldText;
+  input.classList.add("subtask-item-input");
+  textWrapper.innerHTML = "";
+  textWrapper.appendChild(input);
 
-    const oldText = textEl.textContent.trim();
-
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = oldText;
-    input.classList.add("subtask-item-input");
-
-    textWrapper.innerHTML = "";
-    textWrapper.appendChild(input);
-
-    return input;
+  return input;
 }
 
 /**
@@ -576,7 +659,7 @@ function createSubtaskEditInput(item) {
  * @returns {HTMLElement | null} The icon wrapper element or null if not found.
  */
 function getIconWrapper(item) {
-    return item.querySelector("div:nth-child(2)");
+  return item.querySelector("div:nth-child(2)");
 }
 
 /**
@@ -584,8 +667,8 @@ function getIconWrapper(item) {
  * @param {HTMLElement} iconWrapper - The wrapper element containing the edit and delete icons.
  */
 function prepareIconsForEditing(iconWrapper) {
-    const editIcon = iconWrapper.querySelector(".edit-icon");
-    if (editIcon) editIcon.remove();
+  const editIcon = iconWrapper.querySelector(".edit-icon");
+  if (editIcon) editIcon.remove();
 }
 
 /**
@@ -594,14 +677,14 @@ function prepareIconsForEditing(iconWrapper) {
  * @returns {HTMLElement | null} The delete icon element or null if not found.
  */
 function ensureDeleteIconVisible(iconWrapper) {
-    const deleteIcon = iconWrapper.querySelector(".delete-icon");
-    if (deleteIcon) {
-        deleteIcon.style.display = "flex";
-        deleteIcon.style.visibility = "visible";
-        deleteIcon.style.opacity = "1";
-        deleteIcon.style.pointerEvents = "auto";
-    }
-    return deleteIcon;
+  const deleteIcon = iconWrapper.querySelector(".delete-icon");
+  if (deleteIcon) {
+    deleteIcon.style.display = "flex";
+    deleteIcon.style.visibility = "visible";
+    deleteIcon.style.opacity = "1";
+    deleteIcon.style.pointerEvents = "auto";
+  }
+  return deleteIcon;
 }
 
 /**
@@ -610,10 +693,10 @@ function ensureDeleteIconVisible(iconWrapper) {
  * @returns {HTMLSpanElement} The created confirm button element.
  */
 function createConfirmButton() {
-    return createIcon(
-        "confirm-icon",
-        `<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" width="16" style="cursor: pointer; display: none;">`
-    );
+  return createIcon(
+    "confirm-icon",
+    `<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" width="16" style="cursor: pointer; display: none;">`
+  );
 }
 
 /**
@@ -624,9 +707,9 @@ function createConfirmButton() {
  * @param {HTMLElement} confirmBtn - The confirm button element.
  */
 function replaceIcons(iconWrapper, deleteIcon, confirmBtn) {
-    iconWrapper.innerHTML = "";
-    iconWrapper.appendChild(deleteIcon);
-    iconWrapper.appendChild(confirmBtn);
+  iconWrapper.innerHTML = "";
+  iconWrapper.appendChild(deleteIcon);
+  iconWrapper.appendChild(confirmBtn);
 }
 
 /**
@@ -641,25 +724,25 @@ function replaceIcons(iconWrapper, deleteIcon, confirmBtn) {
  * @param {HTMLElement} container - The container element of the subtask list.
  */
 function bindEditActions(
-    input,
-    confirmBtn,
-    deleteIcon,
-    task,
-    index,
-    container
+  input,
+  confirmBtn,
+  deleteIcon,
+  task,
+  index,
+  container
 ) {
-    deleteIcon.onclick = () => {
-        renderSubtasks(task, container);
-    };
+  deleteIcon.onclick = () => {
+    renderSubtasks(task, container);
+  };
 
-    confirmBtn.onclick = () => {
-        const newText = input.value.trim();
-        if (newText) {
-            const key = Object.keys(task.subtasks[index])[0];
-            task.subtasks[index] = { [key]: newText };
-            renderSubtasks(task, container);
-        }
-    };
+  confirmBtn.onclick = () => {
+    const newText = input.value.trim();
+    if (newText) {
+      const key = Object.keys(task.subtasks[index])[0];
+      task.subtasks[index] = { [key]: newText };
+      renderSubtasks(task, container);
+    }
+  };
 }
 
 /**
@@ -670,10 +753,10 @@ function bindEditActions(
  * @returns {HTMLSpanElement} The created span element.
  */
 function createIcon(className, content) {
-    const span = document.createElement("span");
-    span.classList.add(className);
-    span.innerHTML = content;
-    return span;
+  const span = document.createElement("span");
+  span.classList.add(className);
+  span.innerHTML = content;
+  return span;
 }
 
 /**
@@ -689,30 +772,30 @@ function createIcon(className, content) {
  * @param {HTMLElement} item - The list item being edited.
  */
 function bindEditSaveCancel(
-    input,
-    confirmBtn,
-    cancelBtn,
-    task,
-    index,
-    container,
-    item
+  input,
+  confirmBtn,
+  cancelBtn,
+  task,
+  index,
+  container,
+  item
 ) {
-    confirmBtn.addEventListener("click", () => {
-        const newText = input.value.trim();
-        if (newText) {
-            const key = Object.keys(task.subtasks[index])[0];
-            task.subtasks[index] = { [key]: newText };
-            renderSubtasks(task, container);
-        }
-        item.classList.remove("subtask-list-item-active");
-    });
+  confirmBtn.addEventListener("click", () => {
+    const newText = input.value.trim();
+    if (newText) {
+      const key = Object.keys(task.subtasks[index])[0];
+      task.subtasks[index] = { [key]: newText };
+      renderSubtasks(task, container);
+    }
+    item.classList.remove("subtask-list-item-active");
+  });
 
-    cancelBtn.addEventListener("click", () => {
-        renderSubtasks(task, container);
-        item.classList.remove("subtask-list-item-active");
-    });
+  cancelBtn.addEventListener("click", () => {
+    renderSubtasks(task, container);
+    item.classList.remove("subtask-list-item-active");
+  });
 
-    input.addEventListener("click", (ev) => ev.stopPropagation());
+  input.addEventListener("click", (ev) => ev.stopPropagation());
 }
 
 /**
@@ -723,31 +806,37 @@ function bindEditSaveCancel(
  */
 function saveEdit() {
     const overlay = document.getElementById("editTaskOverlay");
-    const taskId = document
-        .getElementById("task-card-modal")
-        .getAttribute("data-task-id");
-    const taskIndex = tasks.findIndex((t) => t.id === taskId);
+    const taskId = getTaskIdFromOverlay();
+    const taskIndex = findTaskIndexById(taskId);
     if (taskIndex === -1) return;
 
-    const updatedTask = { ...tasks[taskIndex] };
-    updatedTask.title = getOverlayValue(
-        overlay,
-        ".edit-input[placeholder='Enter a title']"
-    );
-    updatedTask.description = getOverlayValue(
-        overlay,
-        ".edit-textarea[placeholder='Enter a Description']"
-    );
-    updatedTask.dueDate = overlay.querySelector("#due-date").value;
-    updatedTask.priority =
-        overlay.querySelector(".priority-labels.selected")?.id || "";
-    updatedTask.assignedTo = [...window.assignees];
-    updatedTask.subtasks = extractSubtasksFromDOM();
-
+    const updatedTask = buildUpdatedTask(overlay, tasks[taskIndex]);
     tasks[taskIndex] = updatedTask;
+
     saveTasksToStorageOrFirebase();
     renderAllColumns();
     closeEditOverlay();
+}
+
+function getTaskIdFromOverlay() {
+    return document.getElementById("task-card-modal")
+        .getAttribute("data-task-id");
+}
+
+function findTaskIndexById(taskId) {
+    return tasks.findIndex((t) => t.id === taskId);
+}
+
+function buildUpdatedTask(overlay, oldTask) {
+    return {
+        ...oldTask,
+        title: getOverlayValue(overlay, ".edit-input[placeholder='Enter a title']"),
+        description: getOverlayValue(overlay, ".edit-textarea[placeholder='Enter a Description']"),
+        dueDate: overlay.querySelector("#due-date").value,
+        priority: overlay.querySelector(".priority-labels.selected")?.id || "",
+        assignedTo: [...window.assignees],
+        subtasks: extractSubtasksFromDOM()
+    };
 }
 
 /**
@@ -758,8 +847,8 @@ function saveEdit() {
  * @returns {string} The trimmed value of the element or an empty string if not found.
  */
 function getOverlayValue(overlay, selector) {
-    const element = overlay.querySelector(selector);
-    return element ? element.value.trim() : "";
+  const element = overlay.querySelector(selector);
+  return element ? element.value.trim() : "";
 }
 
 /**
@@ -769,15 +858,15 @@ function getOverlayValue(overlay, selector) {
  * @returns {Array<Object>} An array of subtask objects, where each object has a single key-value pair representing the subtask text.
  */
 function extractSubtasksFromDOM() {
-    const subtaskWrappers = document.querySelectorAll(
-        "#subtaskList .subtask-list-item-content-wrapper"
-    );
-    return Array.from(subtaskWrappers)
-        .map((wrapper) => {
-            const input = wrapper.querySelector("input");
-            const span = wrapper.querySelector("span");
-            const text = input ? input.value.trim() : span?.textContent.trim() || "";
-            return { [text]: text };
-        })
-        .filter((subtask) => Object.keys(subtask)[0] !== "");
+  const subtaskWrappers = document.querySelectorAll(
+    "#subtaskList .subtask-list-item-content-wrapper"
+  );
+  return Array.from(subtaskWrappers)
+    .map((wrapper) => {
+      const input = wrapper.querySelector("input");
+      const span = wrapper.querySelector("span");
+      const text = input ? input.value.trim() : span?.textContent.trim() || "";
+      return { [text]: text };
+    })
+    .filter((subtask) => Object.keys(subtask)[0] !== "");
 }
