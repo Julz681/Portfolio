@@ -93,23 +93,12 @@ function modifyPriorityLabels(priorityLabels, priorityLabelId) {
         let currentPriorityLabelId = priorityLabels[i].id;
         let priorityIconParts = getPriorityIconParts(currentPriorityLabelId);
         let priorityColor = getPriorityColor(currentPriorityLabelId);
-        if (
-            currentPriorityLabelId != priorityLabelId ||
-            (currentPriorityLabelId == priorityLabelId &&
-                priorityLabels[i].classList.contains(`${priorityLabelId}-prio-bg`))
-        ) {
+        if (currentPriorityLabelId != priorityLabelId || (currentPriorityLabelId == priorityLabelId && priorityLabels[i].classList.contains(`${priorityLabelId}-prio-bg`))) {
             priorityLabels[i].style.color = "#000000";
             switchPriorityIconColor(priorityIconParts, priorityColor);
-            setDefaultBackgroundColorOnPriorityLabel(
-                priorityLabels[i],
-                currentPriorityLabelId
-            );
+            setDefaultBackgroundColorOnPriorityLabel(priorityLabels[i], currentPriorityLabelId);
         } else {
-            activatePriorityLabel(
-                priorityLabels[i],
-                currentPriorityLabelId,
-                priorityIconParts
-            );
+            activatePriorityLabel(priorityLabels[i], currentPriorityLabelId, priorityIconParts);
         }
     }
 }
@@ -268,10 +257,7 @@ function getSearchValue() {
 function createSearchResult(searchValue) {
     let results = [];
     for (let index = 0; index < userNames.length; index++) {
-        if (
-            typeof userNames[index] === "string" &&
-            userNames[index].toLowerCase().startsWith(searchValue)
-        ) {
+        if (typeof userNames[index] === "string" && userNames[index].toLowerCase().startsWith(searchValue)) {
             results.push(userNames[index]);
         }
     }
@@ -316,19 +302,12 @@ function selectCategory(categoryId) {
 function checkCategoryInputPlaceholder(requiredErrorContainerId) {
     let placeholder = getInputContainer("category").placeholder;
     let dropdownContainerRef = document.getElementById("category-dropdown");
-    // let categoryValue = getInputContainer("category").value;
     let errorContainerRef = getErrorContainer(requiredErrorContainerId);
     if (placeholder === "Select task category" && dropdownContainerRef.classList.contains("d_none")) {
         showErrorMessage(errorContainerRef);
     } else {
         removeErrorMessage(errorContainerRef);
     }
-    // if (!categoryValue) {
-    //     showErrorMessage(errorContainerRef);
-    // } else {
-    //     removeErrorMessage(errorContainerRef);
-    // }
-
 }
 
 /**
