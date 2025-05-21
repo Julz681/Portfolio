@@ -1,126 +1,23 @@
 /**
- * Asynchronously opens the task editing overlay, populating all input fields with the data
- * of the provided task object and updating the visual states of UI elements like priority buttons
- * and the assignees list. It also fetches user names if they are not already loaded.
- * @async
- * @param {Object} task - The task object containing the data to populate the edit form.
+ * Makes the assignee container visible.
+ * @param {HTMLElement} container - The container to show.
  */
-async function openEditOverlay(task) {
-    if (!task) return;
-
-  
-    await prepareAssignees(task);
-    const overlay = getEditOverlay();
-    if (!overlay) return;
-  
-    fillEditFormFields(task, overlay);
-    updatePriorityButtons(task, overlay);
-    renderAssigneesEditUI();
-    renderSubtaskSection(task);
-    setupAllBehaviors();
-  }
-  
-  
-
-async function prepareAssignees(task) {
-  if (!window.userNames || window.userNames.length === 0) {
-    window.userNames = await getUsersFromDatabase();
-  }
-  window.assignees = Array.isArray(task.assignedTo) ? [...task.assignedTo] : [];
-}
-
-function getEditOverlay() {
-  const overlay = document.getElementById("editTaskOverlay");
-  if (overlay) overlay.classList.remove("hidden");
-  return overlay;
-}
-
-function fillEditFormFields(task, overlay) {
-  const titleInput = overlay.querySelector(
-    ".edit-input[placeholder='Enter a title']"
-  );
-  const descriptionTextarea = overlay.querySelector(
-    ".edit-textarea[placeholder='Enter a Description']"
-  );
-  const dueDateInput = overlay.querySelector("#due-date");
-
-  titleInput.value = task.title || "";
-  descriptionTextarea.value = task.description || "";
-
-  if (dueDateInput._flatpickr && task.dueDate) {
-    dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
-  }
-}
-
-function updatePriorityButtons(task, overlay) {
-  const priorityButtons = overlay.querySelectorAll(".priority-labels");
-  priorityButtons.forEach((btn) => {
-    resetPriority(btn);
-    btn.classList.remove("selected");
-    if (btn.id === task.priority) {
-      activatePriority(btn);
-      btn.classList.add("selected");
-    }
-  });
-}
-
-function renderAssigneesEditUI() {
-  renderUsersToAssignEdit();
-  const dropdown = document.getElementById("assigned-to-dropdown-edit");
-  renderAssigneesEdit("assigned-to-dropdown-edit", dropdown);
-}
-
-function renderSubtaskSection(task) {
-  const subtaskListContainer = document.getElementById("subtaskList");
-  renderSubtasks(task, subtaskListContainer);
-}
-
-function setupAllBehaviors() {
-  setupEditDropdownEvents();
-  setupPrioritySelection();
-  setupSubtaskInput();
-  setupAllDatePickers();
-}
-
-/**
- * Renders the avatars of the users currently assigned to the task in the edit overlay.
- * It takes the ID of the dropdown container and the container element itself as parameters.
- * It iterates through the `window.assignees` array, generates avatar HTML for each assignee,
- * and appends it to the designated container. If there are no assignees, it hides the container.
- * @param {string} containerId - The ID of the dropdown container for assignees (e.g., "assigned-to-dropdown-edit").
- * @param {HTMLElement} container - The HTML element of the dropdown container.
- */
-function renderAssigneesEdit(containerId, container) {
-  const assigneesContainerRef = getAssigneesContainer(containerId);
-  if (!assigneesContainerRef) return;
-
-  assigneesContainerRef.innerHTML = "";
-  if (!Array.isArray(window.assignees)) return;
-
-  if (window.assignees.length > 0) {
-    showAssigneeContainer(assigneesContainerRef);
-    renderAssigneeAvatars(assigneesContainerRef);
-  } else {
-    hideAssigneeContainer(assigneesContainerRef);
-  }
-}
-
-function getAssigneesContainer(containerId) {
-  const id =
-    containerId === "assigned-to-dropdown-edit"
-      ? "assignees-list-edit"
-      : "assignees-list";
-  return document.getElementById(id);
-}
-
 function showAssigneeContainer(container) {
   container.classList.remove("d_none");
 }
 
+/**
+ * Hides the assignee container.
+ * @param {HTMLElement} container - The container to hide.
+ */
 function hideAssigneeContainer(container) {
   container.classList.add("d_none");
 }
 
+/**
+ * Creates and appends avatar elements for each assigned user.
+ * @param {HTMLElement} container - The element where avatars will be appended.
+ */
 function renderAssigneeAvatars(container) {
   window.assignees.forEach((name) => {
     const initials = getInitials(name);
@@ -134,51 +31,10 @@ function renderAssigneeAvatars(container) {
 }
 
 /**
- * Renders the list of users that can be assigned to the task in the edit overlay.
- * It retrieves the `window.userNames` array, sorts it to prioritize already assigned users,
- * and then generates HTML for each user item using the `getUsersToAssignTemplateForEditTaskForm` template.
- */
-function renderUsersToAssignEdit() {
-  const usersList = document.getElementById("assigned-to-users-list-edit");
-  if (!usersList || !window.userNames) return;
-
-  usersList.innerHTML = "";
-  const sortedUsers = getSortedUsers();
-
-  sortedUsers.forEach((name, index) => {
-    const userHTML = createUserHTML(name, index);
-    usersList.innerHTML += userHTML;
-  });
-}
-
-function getSortedUsers() {
-  return [...window.userNames].sort((a, b) => {
-    const aAssigned = window.assignees?.includes(a) ? -1 : 1;
-    const bAssigned = window.assignees?.includes(b) ? -1 : 1;
-    return aAssigned - bAssigned;
-  });
-}
-
-function createUserHTML(name, index) {
-  const initials = getInitials(name);
-  const bgColor = getIconBackgroundColor(initials);
-  const isSelected = window.assignees?.includes(name);
-
-  return getUsersToAssignTemplateForEditTaskForm(
-    name,
-    index,
-    isSelected,
-    initials,
-    bgColor
-  );
-}
-
-/**
- * Toggles the assignment status of a user to the task in the edit overlay.
- * It checks if the user's name is already in the `window.assignees` array and either adds or removes it.
- * After updating the array, it re-renders the assignees list and the list of users to assign.
- * @param {string} name - The name of the user whose assignment status is being toggled.
- * @param {string} containerId - The ID of the dropdown container for assignees (e.g., "assigned-to-dropdown-edit").
+ * Toggles a user's assignment in the edit overlay.
+ * Updates the assignee list and re-renders UI.
+ * @param {string} name - User name to toggle.
+ * @param {string} containerId - ID of the assignee dropdown.
  */
 function toggleAssigned(name, containerId) {
   const index = window.assignees.indexOf(name);
@@ -242,13 +98,6 @@ function getTaskById(id) {
 }
 
 /**
- * Hides the task editing overlay by adding the 'hidden' class to its element.
- */
-function closeEditOverlay() {
-  document.getElementById("editTaskOverlay").classList.add("hidden");
-}
-
-/**
  * Sets up event listeners for all priority buttons (Urgent, Medium, Low) in the edit overlay.
  * When a button is clicked, it removes the 'selected' class and resets the styling of all other priority buttons,
  * and then adds the 'selected' class and activates the styling for the clicked button.
@@ -295,10 +144,9 @@ function setDefaultColor(path, id) {
 }
 
 /**
- * Activates the visual styling of a priority button to indicate it is selected.
- * This includes setting the background color based on the priority, text color to white,
- * font weight to bold, and setting the fill color of the SVG path to white.
- * @param {HTMLElement} button - The priority button element to activate.
+ * Styles a priority button as active.
+ * Sets color, weight, and SVG fill.
+ * @param {HTMLElement} button - The button to style.
  */
 function activatePriority(button) {
   button.style.backgroundColor =
@@ -360,28 +208,6 @@ function bindOutsideDropdownClose(wrapper, dropdown, arrow) {
       closeEditDropdown(dropdown, arrow);
     }
   });
-}
-
-/**
- * Opens the specified dropdown element in the edit overlay and updates the visual state of the dropdown arrow.
- * @param {HTMLElement} dropdown - The dropdown element to open.
- * @param {HTMLElement} arrow - The arrow icon element of the dropdown.
- */
-function openEditDropdown(dropdown, arrow) {
-  dropdown.classList.remove("d_none");
-  arrow.classList.remove("closed");
-  arrow.classList.add("open");
-}
-
-/**
- * Closes the specified dropdown element in the edit overlay and updates the visual state of the dropdown arrow.
- * @param {HTMLElement} dropdown - The dropdown element to close.
- * @param {HTMLElement} arrow - The arrow icon element of the dropdown.
- */
-function closeEditDropdown(dropdown, arrow) {
-  dropdown.classList.add("d_none");
-  arrow.classList.remove("open");
-  arrow.classList.add("closed");
 }
 
 /**
@@ -469,42 +295,6 @@ function applySubtaskStyles(element) {
   element.style.padding = "6px 16px";
 }
 
-/**
- * Populates the edit overlay with the details of a given task.
- * It fills the title, description, and due date fields, updates the priority selection,
- * renders the subtasks, and sets up the subtask input and list event handlers.
- * Finally, it opens the edit overlay.
- * @param {object} task - The task object whose details will be displayed in the edit overlay.
- */
-function populateEditOverlay(task) {
-  const overlay = document.getElementById("editTaskOverlay");
-  const titleInput = overlay.querySelector(
-    ".edit-input[placeholder='Enter a title']"
-  );
-  const descriptionTextarea = overlay.querySelector(
-    ".edit-textarea[placeholder='Enter a Description']"
-  );
-  const dueDateInput = overlay.querySelector("#due-date");
-  const subtaskInput = overlay.querySelector("#subtasks-edit");
-
-  const addSubtaskIcon = document.getElementById("edit-add-subtask-icon");
-  const subtaskListContainer = document.getElementById("subtaskList");
-  const priorityButtons = overlay.querySelectorAll(".priority-labels");
-
-  fillFormFields(task, titleInput, descriptionTextarea, dueDateInput);
-  updatePrioritySelection(task.priority, priorityButtons);
-  finishOverlaySetup(task, subtaskInput, addSubtaskIcon, subtaskListContainer);
-}
-
-function fillFormFields(task, titleInput, descriptionTextarea, dueDateInput) {
-  titleInput.value = task.title || "";
-  descriptionTextarea.value = task.description || "";
-
-  if (dueDateInput._flatpickr && task.dueDate) {
-    dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
-  }
-}
-
 function updatePrioritySelection(priority, priorityButtons) {
   priorityButtons.forEach((btn) => {
     resetPriority(btn);
@@ -531,57 +321,6 @@ function finishOverlaySetup(
 }
 
 /**
- * Fills the title, description, and due date input fields in the edit overlay with the corresponding task data.
- * @param {object} task - The task object containing the data.
- * @param {HTMLInputElement} titleInput - The input field for the task title.
- * @param {HTMLTextAreaElement} descriptionTextarea - The textarea for the task description.
- * @param {HTMLInputElement} dueDateInput - The input field for the task due date.
- */
-function fillFormFields(task, titleInput, descriptionTextarea, dueDateInput) {
-  titleInput.value = task.title;
-  descriptionTextarea.value = task.description;
-  dueDateInput.value = task.dueDate;
-}
-
-/**
- * Updates the priority selection in the edit overlay based on the task's priority.
- * It resets all priority buttons and then activates the one matching the task's priority.
- * @param {string} priority - The priority of the task ("urgent", "medium", or "low").
- * @param {NodeListOf<HTMLElement>} buttons - A list of all priority button elements.
- */
-function updatePrioritySelection(priority, buttons) {
-  buttons.forEach((btn) => {
-    resetPriority(btn);
-    btn.classList.remove("selected");
-    if (btn.id === priority) {
-      activatePriority(btn);
-      btn.classList.add("selected");
-    }
-  });
-}
-
-/**
- * Sets up the event listener for adding a new subtask in the edit overlay.
- * When the add button is clicked, it takes the value from the input field,
- * adds it as a new subtask to the task object, re-renders the subtask list, and clears the input.
- * @param {HTMLElement} addBtn - The button to add a new subtask.
- * @param {HTMLInputElement} input - The input field for the new subtask title.
- * @param {object} task - The task object to which the subtask will be added.
- * @param {HTMLElement} container - The container for the subtask list.
- */
-function setupSubtaskAdd(addBtn, input, task, container) {
-  addBtn.addEventListener("click", () => {
-    const newTitle = input.value.trim();
-    if (newTitle) {
-      if (!Array.isArray(task.subtasks)) task.subtasks = [];
-      task.subtasks.push({ [newTitle]: newTitle });
-      renderSubtasks(task, container);
-      input.value = "";
-    }
-  });
-}
-
-/**
  * Sets up event listeners for the subtask list in the edit overlay to handle deleting and editing subtasks.
  * It listens for clicks on the delete and edit icons within each subtask list item.
  * @param {HTMLElement} container - The container for the subtask list.
@@ -600,20 +339,18 @@ function setupSubtaskListEvents(container, task) {
 }
 
 /**
- * Initiates the editing process for a subtask within the edit overlay.
- * It finds the corresponding list item, creates an input field with the current subtask text,
- * prepares the icons for editing (hides the edit icon), ensures the delete icon is visible,
- * creates a confirm button, replaces the icons in the item, binds the edit actions (save and cancel),
- * focuses on the input field, and visually marks the list item as active.
- * @param {MouseEvent} e - The mouse event triggered by clicking the edit icon.
- * @param {object} task - The task object containing the subtasks.
- * @param {number} index - The index of the subtask being edited in the task's subtasks array.
- * @param {HTMLElement} container - The container element of the subtask list.
+ * Starts editing a subtask in the edit overlay.
+ * Replaces the subtask text with an input field and shows confirm/delete icons.
+ * Binds save and cancel actions and focuses the input field.
+ * @param {MouseEvent} e - The event from clicking the edit icon.
+ * @param {object} task - The task containing the subtasks.
+ * @param {number} index - Index of the subtask to edit.
+ * @param {HTMLElement} container - Subtask list container element.
  */
 function startEditingSubtask(e, task, index, container) {
   const item = e.target.closest(".subtask-list-item");
   const input = createSubtaskEditInput(item);
-  if (!input) return; // Abbrechen, wenn kein Input erzeugt werden konnte
+  if (!input) return; 
 
   const iconWrapper = getIconWrapper(item);
   if (!iconWrapper) return;
@@ -698,176 +435,4 @@ function createConfirmButton() {
     "confirm-icon",
     `<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" width="16" style="cursor: pointer; display: none;">`
   );
-}
-
-/**
- * Clears the content of the icon wrapper and appends the delete icon and the confirm button to it.
- * This replaces the edit icon with the save and delete options during editing.
- * @param {HTMLElement} iconWrapper - The wrapper element for the icons.
- * @param {HTMLElement} deleteIcon - The delete icon element.
- * @param {HTMLElement} confirmBtn - The confirm button element.
- */
-function replaceIcons(iconWrapper, deleteIcon, confirmBtn) {
-  iconWrapper.innerHTML = "";
-  iconWrapper.appendChild(deleteIcon);
-  iconWrapper.appendChild(confirmBtn);
-}
-
-/**
- * Binds the functionality to the delete and confirm buttons that appear when a subtask is being edited.
- * Clicking the delete icon re-renders the subtask list (effectively canceling the edit).
- * Clicking the confirm button saves the edited text to the task's subtasks array and re-renders the list.
- * @param {HTMLInputElement} input - The input field where the subtask is being edited.
- * @param {HTMLElement} confirmBtn - The confirm button element.
- * @param {HTMLElement} deleteIcon - The delete icon element.
- * @param {object} task - The task object containing the subtasks.
- * @param {number} index - The index of the subtask being edited.
- * @param {HTMLElement} container - The container element of the subtask list.
- */
-function bindEditActions(
-  input,
-  confirmBtn,
-  deleteIcon,
-  task,
-  index,
-  container
-) {
-  deleteIcon.onclick = () => {
-    renderSubtasks(task, container);
-  };
-
-  confirmBtn.onclick = () => {
-    const newText = input.value.trim();
-    if (newText) {
-      const key = Object.keys(task.subtasks[index])[0];
-      task.subtasks[index] = { [key]: newText };
-      renderSubtasks(task, container);
-    }
-  };
-}
-
-/**
- * Creates a span element with a given class name and inner HTML content.
- * This is a utility function for creating icon elements.
- * @param {string} className - The CSS class to add to the span element.
- * @param {string} content - The inner HTML content of the span element.
- * @returns {HTMLSpanElement} The created span element.
- */
-function createIcon(className, content) {
-  const span = document.createElement("span");
-  span.classList.add(className);
-  span.innerHTML = content;
-  return span;
-}
-
-/**
- * Binds event listeners to the confirm and cancel buttons that appear during subtask editing.
- * Clicking confirm saves the edited text, and clicking cancel reverts to the original text.
- * After either action, the visual state of the list item is reset.
- * @param {HTMLInputElement} input - The input field where the subtask is being edited.
- * @param {HTMLElement} confirmBtn - The confirm button element.
- * @param {HTMLElement} cancelBtn - The cancel button element.
- * @param {object} task - The task object containing the subtasks.
- * @param {number} index - The index of the subtask being edited.
- * @param {HTMLElement} container - The container element of the subtask list.
- * @param {HTMLElement} item - The list item being edited.
- */
-function bindEditSaveCancel(
-  input,
-  confirmBtn,
-  cancelBtn,
-  task,
-  index,
-  container,
-  item
-) {
-  confirmBtn.addEventListener("click", () => {
-    const newText = input.value.trim();
-    if (newText) {
-      const key = Object.keys(task.subtasks[index])[0];
-      task.subtasks[index] = { [key]: newText };
-      renderSubtasks(task, container);
-    }
-    item.classList.remove("subtask-list-item-active");
-  });
-
-  cancelBtn.addEventListener("click", () => {
-    renderSubtasks(task, container);
-    item.classList.remove("subtask-list-item-active");
-  });
-
-  input.addEventListener("click", (ev) => ev.stopPropagation());
-}
-
-/**
- * Saves the changes made in the edit overlay to the corresponding task object in the `tasks` array.
- * It retrieves the updated values from the input fields, priority selection, assignees, and subtasks,
- * updates the task object, saves the `tasks` array to local storage or Firebase, re-renders the board columns,
- * and closes the edit overlay.
- */
-function saveEdit() {
-    const overlay = document.getElementById("editTaskOverlay");
-    const taskId = getTaskIdFromOverlay();
-    const taskIndex = findTaskIndexById(taskId);
-    if (taskIndex === -1) return;
-
-    const updatedTask = buildUpdatedTask(overlay, tasks[taskIndex]);
-    tasks[taskIndex] = updatedTask;
-
-    saveTasksToStorageOrFirebase();
-    renderAllColumns();
-    closeEditOverlay();
-}
-
-function getTaskIdFromOverlay() {
-    return document.getElementById("task-card-modal")
-        .getAttribute("data-task-id");
-}
-
-function findTaskIndexById(taskId) {
-    return tasks.findIndex((t) => t.id === taskId);
-}
-
-function buildUpdatedTask(overlay, oldTask) {
-    return {
-        ...oldTask,
-        title: getOverlayValue(overlay, ".edit-input[placeholder='Enter a title']"),
-        description: getOverlayValue(overlay, ".edit-textarea[placeholder='Enter a Description']"),
-        dueDate: overlay.querySelector("#due-date").value,
-        priority: overlay.querySelector(".priority-labels.selected")?.id || "",
-        assignedTo: [...window.assignees],
-        subtasks: extractSubtasksFromDOM()
-    };
-}
-
-/**
- * Retrieves the trimmed value of an element within a given overlay based on a CSS selector.
- * If the element is not found, it returns an empty string.
- * @param {HTMLElement} overlay - The overlay element to search within.
- * @param {string} selector - The CSS selector to identify the element.
- * @returns {string} The trimmed value of the element or an empty string if not found.
- */
-function getOverlayValue(overlay, selector) {
-  const element = overlay.querySelector(selector);
-  return element ? element.value.trim() : "";
-}
-
-/**
- * Extracts the subtasks from the DOM in the edit overlay.
- * It selects all subtask content wrappers, maps them to an array of subtask objects (key-value pairs),
- * and filters out any empty subtasks.
- * @returns {Array<Object>} An array of subtask objects, where each object has a single key-value pair representing the subtask text.
- */
-function extractSubtasksFromDOM() {
-  const subtaskWrappers = document.querySelectorAll(
-    "#subtaskList .subtask-list-item-content-wrapper"
-  );
-  return Array.from(subtaskWrappers)
-    .map((wrapper) => {
-      const input = wrapper.querySelector("input");
-      const span = wrapper.querySelector("span");
-      const text = input ? input.value.trim() : span?.textContent.trim() || "";
-      return { [text]: text };
-    })
-    .filter((subtask) => Object.keys(subtask)[0] !== "");
 }
