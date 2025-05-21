@@ -36,7 +36,7 @@ function handleAddTaskClickResponsive() {
     if (width < 1200) {
         window.location.href = "add_task.html";
     } else {
-        openTaskForm(); // öffnet task_form.html per Overlay (via include)
+        openTaskForm();
     }
 }
 
@@ -88,21 +88,16 @@ document.addEventListener("click", (e) => {
  */
 function moveTaskToColumn(status, event) {
     event.stopPropagation();
-
     const openCard = document.querySelector(".board-card.menu-open");
     if (!openCard) return;
-
     const taskId = openCard.dataset.taskId;
     const task = tasks.find((task) => task.id === taskId);
+    
     if (!task) return;
-
-    // Erst den Status setzen, DANN speichern
     task.status = status;
 
     const taskRef = ref(database, `tasks/${task.id}`);
     set(taskRef, task);
-
-
     renderAllColumns();
     closeAllMenus();
 }

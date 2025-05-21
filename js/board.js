@@ -531,7 +531,7 @@ function renderAssigneesTaskForm() {
   }
 }
 
-/** Closea task form when clicking outside the overlay */
+/** Closes task form when clicking outside the overlay */
 document.getElementById("task-form-modal-wrapper").addEventListener("click", function (event) {
   const formWrapper = document.getElementById("task-form-wrapper");
 
