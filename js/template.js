@@ -1,38 +1,36 @@
-
 /**
  * @constant {object} letterColors - An object mapping uppercase letters to specific hexadecimal color codes.
  * This is used to determine the background color of user avatars based on the first letter of their name.
  * Each letter of the alphabet (A-Z) has a corresponding color defined.
  */
 const letterColors = {
-    A: "#D32F2F",
-    B: "#C2185B",
-    C: "#7B1FA2",
-    D: "#512DA8",
-    E: "#1976D2",
-    F: "#0288D1",
-    G: "#00796B",
-    H: "#388E3C",
-    I: "#689F38",
-    J: "#F57C00",
-    K: "#E64A19",
-    L: "#5D4037",
-    M: "#455A64",
-    N: "#263238",
-    O: "#D81B60",
-    P: "#8E24AA",
-    Q: "#673AB7",
-    R: "#303F9F",
-    S: "#0288D1",
-    T: "#0097A7",
-    U: "#00796B",
-    V: "#388E3C",
-    W: "#689F38",
-    X: "#F57C00",
-    Y: "#E64A19",
-    Z: "#5D4037",
+  A: "#D32F2F",
+  B: "#C2185B",
+  C: "#7B1FA2",
+  D: "#512DA8",
+  E: "#1976D2",
+  F: "#0288D1",
+  G: "#00796B",
+  H: "#388E3C",
+  I: "#689F38",
+  J: "#F57C00",
+  K: "#E64A19",
+  L: "#5D4037",
+  M: "#455A64",
+  N: "#263238",
+  O: "#D81B60",
+  P: "#8E24AA",
+  Q: "#673AB7",
+  R: "#303F9F",
+  S: "#0288D1",
+  T: "#0097A7",
+  U: "#00796B",
+  V: "#388E3C",
+  W: "#689F38",
+  X: "#F57C00",
+  Y: "#E64A19",
+  Z: "#5D4037",
 };
-
 
 /**
  * @global
@@ -49,82 +47,82 @@ const letterColors = {
  * - `status`: The current stage of the task ('await-feedback', 'done', 'in-progress', 'to-do').
  */
 window.tasks = [
-    {
-        id: "task-1",
-        title: "Kochwelt Page & Recipe Recommender",
-        description: "Build start page with recipe recommendation",
-        priority: "urgent",
-        taskType: "userStory",
-        dueDate: "06/10/2025",
-        assignedTo: ["Judtih Lütke", "Bernadette Pöltl"],
-        subtasks: [
-            { 'subtask-0': 'Create Recommender' },
-            { 'subtask-1': "Get some Recipe" },
-            { 'subtask-2': "Implement Backend" }
-        ],
-        status: "await-feedback",
-    },
-    {
-        id: "task-2",
-        title: "Design the Homepage",
-        description: "Create a wireframe for the main landing page.",
-        priority: "medium",
-        taskType: "technical",
-        dueDate: "15/06/2025",
-        assignedTo: ["Ada Lovelace", "Tobias Fröhler"],
-        subtasks: [
-            { 'subtask-0': "Create Wireframe" },
-            { 'subtask-1': "Get Approval" },
-            { 'subtask-2': "Implement UI" }
-        ],
-        status: "done",
-    },
-    {
-        id: "task-3",
-        title: "Implement Login System",
-        description: "Develop authentication using Firebase Auth.",
-        priority: "low",
-        taskType: "technical",
-        dueDate: "10/10/2025",
-        assignedTo: ["Frances Allen", "Edsger Dijkstra"],
-        subtasks: [
-            { 'subtask-0': "Setup Firebase" },
-            { 'subtask-1': "Create Login Form" },
-            { 'subtask-2': "Test Auth Flow" }
-        ],
-        status: "in-progress",
-    },
-    {
-        id: "task-4",
-        title: "Dark Mode Toggle",
-        description: "As a user, I want to switch between dark and light mode.",
-        priority: "medium",
-        taskType: "userStory",
-        dueDate: "15/06/2025",
-        assignedTo: ["Ada Lovelace", "Shafi Goldwasser"],
-        subtasks: [
-            { 'subtask-0': "Design toggle switch" },
-            { 'subtask-1': "Implement dark/light themes" },
-            { 'subtask-2': "Store preference in localStorage" },
-        ],
-        status: "to-do",
-    },
-    {
-        id: "task-5",
-        title: "Drag & Drop Task Board",
-        description:
-            "Enable drag and drop functionality to move tasks across different columns.",
-        priority: "low",
-        taskType: "technical",
-        dueDate: "20/07/2025",
-        assignedTo: ["Reshma Saujani", "Frances Allen"],
-        subtasks: [
-            { 'subtask - 0': "Set up drag listeners" },
-            { 'subtask - 1': "Handle drop zones" },
-            { 'subtask-2': "Update task status on drop" },
-        ],
-        status: "to-do",
-    },
+  {
+    id: "task-1",
+    title: "Kochwelt Page & Recipe Recommender",
+    description: "Build start page with recipe recommendation",
+    priority: "urgent",
+    taskType: "userStory",
+    dueDate: "06/10/2025",
+    assignedTo: ["Judtih Lütke", "Bernadette Pöltl"],
+    subtasks: [
+      { "subtask-0": "Create Recommender" },
+      { "subtask-1": "Get some Recipe" },
+      { "subtask-2": "Implement Backend" },
+    ],
+    status: "await-feedback",
+  },
+  {
+    id: "task-2",
+    title: "Design the Homepage",
+    description: "Create a wireframe for the main landing page.",
+    priority: "medium",
+    taskType: "technical",
+    dueDate: "15/06/2025",
+    assignedTo: ["Ada Lovelace", "Tobias Fröhler"],
+    subtasks: [
+      { "subtask-0": "Create Wireframe" },
+      { "subtask-1": "Get Approval" },
+      { "subtask-2": "Implement UI" },
+    ],
+    status: "done",
+  },
+  {
+    id: "task-3",
+    title: "Implement Login System",
+    description: "Develop authentication using Firebase Auth.",
+    priority: "low",
+    taskType: "technical",
+    dueDate: "10/10/2025",
+    assignedTo: ["Frances Allen", "Edsger Dijkstra"],
+    subtasks: [
+      { "subtask-0": "Setup Firebase" },
+      { "subtask-1": "Create Login Form" },
+      { "subtask-2": "Test Auth Flow" },
+    ],
+    status: "in-progress",
+  },
+  {
+    id: "task-4",
+    title: "Dark Mode Toggle",
+    description: "As a user, I want to switch between dark and light mode.",
+    priority: "medium",
+    taskType: "userStory",
+    dueDate: "15/06/2025",
+    assignedTo: ["Ada Lovelace", "Shafi Goldwasser"],
+    subtasks: [
+      { "subtask-0": "Design toggle switch" },
+      { "subtask-1": "Implement dark/light themes" },
+      { "subtask-2": "Store preference in localStorage" },
+    ],
+    status: "to-do",
+  },
+  {
+    id: "task-5",
+    title: "Drag & Drop Task Board",
+    description:
+      "Enable drag and drop functionality to move tasks across different columns.",
+    priority: "low",
+    taskType: "technical",
+    dueDate: "20/07/2025",
+    assignedTo: ["Reshma Saujani", "Frances Allen"],
+    subtasks: [
+      { "subtask - 0": "Set up drag listeners" },
+      { "subtask - 1": "Handle drop zones" },
+      { "subtask-2": "Update task status on drop" },
+    ],
+    status: "to-do",
+  },
 ];
 
 /**
@@ -135,28 +133,28 @@ window.tasks = [
  * @returns {string} A string containing the HTML for all user avatars assigned to the task.
  */
 function getUserAvatarsHTML(assignedTo) {
-    return assignedTo
-        .map((name) => {
-            const contactEl = document.querySelector(
-                `.contact-item[data-name="${name}"]`
-            );
-            const avatarEl = contactEl?.querySelector(".contact-avatar");
+  return assignedTo
+    .map((name) => {
+      const contactEl = document.querySelector(
+        `.contact-item[data-name="${name}"]`
+      );
+      const avatarEl = contactEl?.querySelector(".contact-avatar");
 
-            if (avatarEl) {
-                return avatarEl.outerHTML;
-            }
+      if (avatarEl) {
+        return avatarEl.outerHTML;
+      }
 
-            const initials = name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase();
-            const firstLetter = initials.charAt(0);
-            const bgColor = letterColors[firstLetter] || "#888";
+      const initials = name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase();
+      const firstLetter = initials.charAt(0);
+      const bgColor = letterColors[firstLetter] || "#888";
 
-            return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
-        })
-        .join("");
+      return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
+    })
+    .join("");
 }
 
 /**
@@ -166,13 +164,13 @@ function getUserAvatarsHTML(assignedTo) {
  * @returns {string} A string containing the HTML for the task card.
  */
 function createTaskHTML(task) {
-    const label = task.taskType === "technical" ? "Technical Task" : "User Story";
-    const color = task.taskType === "technical" ? "#1fd7c1" : "blue";
-    const users = getUserAvatarsHTMLForBoard(task.assignedTo);
-    const hasSubtasks = task.subtasks && task.subtasks.length > 0;
+  const label = task.taskType === "technical" ? "Technical Task" : "User Story";
+  const color = task.taskType === "technical" ? "#1fd7c1" : "blue";
+  const users = getUserAvatarsHTMLForBoard(task.assignedTo);
+  const hasSubtasks = task.subtasks && task.subtasks.length > 0;
 
-    const subtaskHTML = hasSubtasks
-        ? `
+  const subtaskHTML = hasSubtasks
+    ? `
         <div class="status d-flex-center">
             <div class="progress" role="progressbar">
                 <div class="progress-bar" id="progress-bar-${task.id}" style="width: 0%"></div>
@@ -181,9 +179,9 @@ function createTaskHTML(task) {
                 0 / ${task.subtasks.length} Subtasks
             </div>
         </div>`
-        : "";
+    : "";
 
-    return `
+  return `
         <div class="board-card d-flex-center" data-task-id="${task.id}">
             <div class="board-card-content d-flex-column">
                 <button class="card-action-btn" onclick="toggleMoveMenu(this, event)">
@@ -223,35 +221,37 @@ function createTaskHTML(task) {
         </div>`;
 }
 
-
 /**
  * Sets the HTML content for the "Assigned to" section in the task details modal.
  * It displays the avatars of the assigned users along with their names.
  * @param {object} task - A task object containing the `assignedTo` array.
  */
 function setModalUsers(task) {
-    let box = document.querySelector(".assignments");
-    let avatars = getUserAvatarsHTML(task.assignedTo);
-    let namesHTML = "";
+  let box = document.querySelector(".assignments");
+  let avatars = getUserAvatarsHTML(task.assignedTo);
+  let namesHTML = "";
 
-    for (let i = 0; i < task.assignedTo.length; i++) {
-        let name = task.assignedTo[i];
-        namesHTML += `<span style="height: 32px; display: flex; align-items: center;">` + name + `</span>`;
-    }
+  for (let i = 0; i < task.assignedTo.length; i++) {
+    let name = task.assignedTo[i];
+    namesHTML +=
+      `<span style="height: 32px; display: flex; align-items: center;">` +
+      name +
+      `</span>`;
+  }
 
-    let html =
-        "" +
-        "<span>Assigned to:</span>" +
-        "<div class='user-line d-flex-space-between gap-16'>" +
-        "<div class='d-flex-column gap-16'>" +
-        avatars +
-        "</div>" +
-        "<div class='user-names d-flex-column gap-16'>" +
-        namesHTML +
-        "</div>" +
-        "</div>";
+  let html =
+    "" +
+    "<span>Assigned to:</span>" +
+    "<div class='user-line d-flex-space-between gap-16'>" +
+    "<div class='d-flex-column gap-16'>" +
+    avatars +
+    "</div>" +
+    "<div class='user-names d-flex-column gap-16'>" +
+    namesHTML +
+    "</div>" +
+    "</div>";
 
-    box.innerHTML = html;
+  box.innerHTML = html;
 }
 
 /**
@@ -261,14 +261,14 @@ function setModalUsers(task) {
  * @param {object} task - A task object containing the `subtasks` array.
  */
 function setModalSubtasks(task) {
-    const box = document.querySelector(".subtasks-wrapper");
-    box.innerHTML = task.subtasks
-        .map((s, i) => {
-            const [key, value] = Object.entries(s)[0];
-            const isChecked = value.startsWith("[x]");
-            const label = isChecked ? value.replace("[x] ", "") : value;
+  const box = document.querySelector(".subtasks-wrapper");
+  box.innerHTML = task.subtasks
+    .map((s, i) => {
+      const [key, value] = Object.entries(s)[0];
+      const isChecked = value.startsWith("[x]");
+      const label = isChecked ? value.replace("[x] ", "") : value;
 
-            return `
+      return `
                 <div class="modal-card-subtask-wrapper d-flex-center">
                     <label class="modal-card-subtask gap-16">
                         <input 
@@ -281,10 +281,9 @@ function setModalSubtasks(task) {
                         <span>${label}</span>
                     </label>
                 </div>`;
-        })
-        .join("");
+    })
+    .join("");
 }
-
 
 /**
  * Displays the details of a selected contact on the right side of the contacts page.
@@ -296,10 +295,10 @@ function setModalSubtasks(task) {
  * @param {string} phone - The phone number of the contact.
  */
 function showContactDetails(name, email, phone) {
-    const initial = name.trim()[0].toUpperCase();
-    const second = name.split(" ")[1]?.[0]?.toUpperCase() || "";
-    const color = letterColors[initial] || "#999";
-    const html = `
+  const initial = name.trim()[0].toUpperCase();
+  const second = name.split(" ")[1]?.[0]?.toUpperCase() || "";
+  const color = letterColors[initial] || "#999";
+  const html = `
         <div class="contact-details-card">
             <div class="contact-header">
                 <div class="contact-avatar-large" style="background-color:${color};">${initial}${second}</div>
@@ -321,13 +320,12 @@ function showContactDetails(name, email, phone) {
                 <div><strong>Phone</strong><br><br>${phone}</div>
             </div>
         </div>`;
-    const container = document.querySelector(".contacts-right-bottom");
-    container.classList.remove("slide-in");
-    void container.offsetWidth;
-    container.innerHTML = html;
-    container.classList.add("slide-in");
+  const container = document.querySelector(".contacts-right-bottom");
+  container.classList.remove("slide-in");
+  void container.offsetWidth;
+  container.innerHTML = html;
+  container.classList.add("slide-in");
 }
-
 
 /**
  * Opens the "Add Contact" overlay, resets the editing state (`isEditing` to false and
@@ -337,28 +335,28 @@ function showContactDetails(name, email, phone) {
  * button's transition and margin are reset.
  */
 function openOverlay() {
-    isEditing = false;
-    currentEditingContact = null;
-    document.getElementById("addContactOverlay").classList.add("open");
-    document.getElementById("overlayTitle").textContent = "Add Contact";
-    document.getElementById("overlayDescription").style.display = "block";
-    document.getElementById("createContact").innerHTML = `
+  isEditing = false;
+  currentEditingContact = null;
+  document.getElementById("addContactOverlay").classList.add("open");
+  document.getElementById("overlayTitle").textContent = "Add Contact";
+  document.getElementById("overlayDescription").style.display = "block";
+  document.getElementById("createContact").innerHTML = `
         <span>${isEditing ? "Save" : "Create Contact"}</span>
         <span class="checkmark-icon"></span>
     `;
-    document.getElementById(
-        "overlayAvatar"
-    ).innerHTML = `<img class="vector" src="/assets/img/addnewcontact.png">`;
-    document.getElementById("overlayAvatar").style.backgroundColor =
-        "transparent";
-    clearForm();
+  document.getElementById(
+    "overlayAvatar"
+  ).innerHTML = `<img class="vector" src="/assets/img/addnewcontact.png">`;
+  document.getElementById("overlayAvatar").style.backgroundColor =
+    "transparent";
+  clearForm();
 
-    const cancelBtn = document.getElementById("cancelAddContact");
-    if (cancelBtn) {
-        cancelBtn.style.transition = "none";
-        cancelBtn.style.marginLeft = "0px";
-    }
-    updateFloatingButtons();
+  const cancelBtn = document.getElementById("cancelAddContact");
+  if (cancelBtn) {
+    cancelBtn.style.transition = "none";
+    cancelBtn.style.marginLeft = "0px";
+  }
+  updateFloatingButtons();
 }
 
 /**
@@ -372,20 +370,20 @@ function openOverlay() {
  * @returns {HTMLElement} The newly created contact item div element.
  */
 function buildContactItem(name, email, phone) {
-    const initials = getInitials(name);
-    const color = letterColors[name[0].toUpperCase()] || "#000";
-    const item = document.createElement("div");
-    item.className = "contact-item";
-    item.dataset.name = name;
-    item.dataset.email = email;
-    item.dataset.phone = phone;
-    item.innerHTML = `
+  const initials = getInitials(name);
+  const color = letterColors[name[0].toUpperCase()] || "#000";
+  const item = document.createElement("div");
+  item.className = "contact-item";
+  item.dataset.name = name;
+  item.dataset.email = email;
+  item.dataset.phone = phone;
+  item.innerHTML = `
         <div class="contact-avatar" data-name="${name}" style="background-color:${color}">${initials}</div>
         <div class="contact-details">
             <div class="contact-name">${name}</div>
             <div class="contact-email">${email}</div>
         </div>`;
-    return item;
+  return item;
 }
 
 /**
@@ -397,16 +395,30 @@ function buildContactItem(name, email, phone) {
  * @returns {HTMLElement} The existing or newly created contact group div element.
  */
 function getOrCreateGroup(letter, list) {
-    let group = [...list.querySelectorAll(".contact-group")].find(
-        (g) => g.querySelector(".contact-group-letter")?.textContent === letter
-    );
-    if (!group) {
-        group = document.createElement("div");
-        group.className = "contact-group";
-        group.innerHTML = `<div class="contact-group-letter">${letter}</div>`;
-        list.appendChild(group);
-    }
-    return group;
+  let group = [...list.querySelectorAll(".contact-group")].find(
+    (g) => g.querySelector(".contact-group-letter")?.textContent === letter
+  );
+  if (!group) {
+    group = document.createElement("div");
+    group.className = "contact-group";
+    group.innerHTML = `<div class="contact-group-letter">${letter}</div>`;
+    list.appendChild(group);
+  }
+  return group;
+}
+
+/**
+ * Returns the HTML template for a single subtask list item in the Edit Mode.***/
+function getSubtaskItemTemplate(value, index) {
+  return `
+        <div class="subtask-list-item-content-wrapper" style="width: 100%;">
+            <span>${value}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+            <span class="edit-icon" data-index="${index}"></span>
+            <span class="delete-icon" data-index="${index}"></span>
+        </div>
+    `;
 }
 
 /**
@@ -418,7 +430,7 @@ function getOrCreateGroup(letter, list) {
  * @returns {string} The HTML string for a subtask list item.
  */
 function getSubtaskTemplate(index, subtaskValue) {
-    return `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
+  return `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
                 <span class="d-flex-center">•</span>
                 <div class="subtask-list-item-content-wrapper d-flex-space-between">
                     <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" onkeydown="editSubtaskOnKeyPress('subtask-${index}', event)" disabled>
@@ -430,7 +442,7 @@ function getSubtaskTemplate(index, subtaskValue) {
                         <span class="confirm-icon" onclick="confirmEditSubtask('subtask-${index}')"></span>
                     </div>
                 </div>
-            </li>`
+            </li>`;
 }
 
 /**
@@ -445,8 +457,15 @@ function getSubtaskTemplate(index, subtaskValue) {
  * @param {string} iconBackgroundColor - The background color for the user's avatar icon.
  * @returns {string} The HTML string for a user in the "Assign to" dropdown.
  */
-function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass, initials, iconBackgroundColor) {
-    return `<li id="US-${index}" class="${wrapperClass} d-flex-space-between br-10"
+function getUsersToAssignTemplate(
+  userName,
+  index,
+  wrapperClass,
+  checkboxClass,
+  initials,
+  iconBackgroundColor
+) {
+  return `<li id="US-${index}" class="${wrapperClass} d-flex-space-between br-10"
                     onclick="assignContactToTask('US-${index}', event)">
                     <div class="d-flex-space-between gap-16">
                         <span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>
@@ -463,7 +482,7 @@ function getUsersToAssignTemplate(userName, index, wrapperClass, checkboxClass, 
  * @returns {string} The HTML string for a user avatar icon.
  */
 function getAvatarTemplate(initials, iconBackgroundColor) {
-    return `<span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>`
+  return `<span class="single-contact-icon d-flex-center" style="background-color: ${iconBackgroundColor}">${initials}</span>`;
 }
 
 /**
@@ -477,16 +496,22 @@ function getAvatarTemplate(initials, iconBackgroundColor) {
  * @param {string} iconBackgroundColor - The background color for the user's avatar icon.
  * @returns {string} The HTML string for a user in the "Assign to" dropdown in the task form.
  */
-function getUsersToAssignTemplateForTaskForm(userName, index, isSelected, initials, iconBackgroundColor) {
-    const wrapperClass = isSelected
-        ? "single-contact-wrapper-checked d-flex-space-between br-10"
-        : "single-contact-wrapper d-flex-space-between br-10";
+function getUsersToAssignTemplateForTaskForm(
+  userName,
+  index,
+  isSelected,
+  initials,
+  iconBackgroundColor
+) {
+  const wrapperClass = isSelected
+    ? "single-contact-wrapper-checked d-flex-space-between br-10"
+    : "single-contact-wrapper d-flex-space-between br-10";
 
-    const checkboxClass = isSelected
-        ? "single-contact-checkbox-checked"
-        : "single-contact-checkbox-unchecked";
+  const checkboxClass = isSelected
+    ? "single-contact-checkbox-checked"
+    : "single-contact-checkbox-unchecked";
 
-    return `
+  return `
         <li id="TF-${index}" class="${wrapperClass}"
             onclick="assignContactToTaskForm('TF-${index}', event)">
             <div class="d-flex-space-between gap-16">
@@ -509,16 +534,22 @@ function getUsersToAssignTemplateForTaskForm(userName, index, isSelected, initia
  * @param {string} iconBackgroundColor - The background color for the user's avatar icon.
  * @returns {string} The HTML string for a user in the "Assign to" dropdown in the edit task form.
  */
-function getUsersToAssignTemplateForEditTaskForm(userName, index, isSelected, initials, iconBackgroundColor) {
-    const wrapperClass = isSelected
-        ? "single-contact-wrapper-checked d-flex-space-between br-10"
-        : "single-contact-wrapper d-flex-space-between br-10";
+function getUsersToAssignTemplateForEditTaskForm(
+  userName,
+  index,
+  isSelected,
+  initials,
+  iconBackgroundColor
+) {
+  const wrapperClass = isSelected
+    ? "single-contact-wrapper-checked d-flex-space-between br-10"
+    : "single-contact-wrapper d-flex-space-between br-10";
 
-    const checkboxClass = isSelected
-        ? "single-contact-checkbox-checked"
-        : "single-contact-checkbox-unchecked";
+  const checkboxClass = isSelected
+    ? "single-contact-checkbox-checked"
+    : "single-contact-checkbox-unchecked";
 
-    return `
+  return `
         <li id="EDIT-${index}" class="${wrapperClass}"
             onclick="toggleAssigned('${userName}', 'assigned-to-dropdown-edit')">
             <div class="d-flex-space-between gap-16">
@@ -529,8 +560,6 @@ function getUsersToAssignTemplateForEditTaskForm(userName, index, isSelected, in
         </li>`;
 }
 
-
-
 /**
  * Renders a button with "Edit" text. This function seems to be a placeholder or a very basic
  * way to generate an edit button, likely intended for task cards.
@@ -538,11 +567,10 @@ function getUsersToAssignTemplateForEditTaskForm(userName, index, isSelected, in
  * @returns {string} The HTML string for an edit button.
  */
 function renderTaskCard(task) {
-    return `
+  return `
         <button onclick="openEditOverlay(getTaskById('${task.id}'))">Edit</button>
     `;
 }
-
 
 /**
  * Returns the HTML template for a single subtask list item within an edit context.
@@ -554,7 +582,7 @@ function renderTaskCard(task) {
  * @returns {string} The HTML string for an editable subtask list item.
  */
 function getSubtaskEditTemplate(index, subtaskValue) {
-    return `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
+  return `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
                 <span class="d-flex-center">•</span>
                 <div class="subtask-list-item-content-wrapper d-flex-space-between">
                     <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" onkeydown="editSubtaskOnKeyPress('subtask-${index}', event)" disabled>
@@ -566,15 +594,15 @@ function getSubtaskEditTemplate(index, subtaskValue) {
                         <span class="confirm-icon" onclick="confirmEditSubtask('subtask-${index}')"></span>
                     </div>
                 </div>
-            </li>`
+            </li>`;
 }
 
 /**
  * Generates HTML for displaying user avatars on a task card in the board view.
- * 
+ *
  * - Shows up to 4 avatars based on the assigned users.
  * - If more than 4 users are assigned, displays a "+x" element indicating additional users.
- * - This function is intended for compact avatar display in board cards only, 
+ * - This function is intended for compact avatar display in board cards only,
  *   not for full task detail modals.
  *
  * @param {Array<string>} assignedTo - An array of user names assigned to the task.
@@ -585,30 +613,30 @@ function getSubtaskEditTemplate(index, subtaskValue) {
  * // returns: 4 avatar divs + one extra div with "+1"
  */
 function getUserAvatarsHTMLForBoard(assignedTo) {
-    const maxVisible = 4;
-    const totalAssigned = assignedTo.length;
-    const visibleUsers = assignedTo.slice(0, maxVisible);
-    const extraCount = totalAssigned > maxVisible ? totalAssigned - maxVisible : 0;
+  const maxVisible = 4;
+  const totalAssigned = assignedTo.length;
+  const visibleUsers = assignedTo.slice(0, maxVisible);
+  const extraCount =
+    totalAssigned > maxVisible ? totalAssigned - maxVisible : 0;
 
-    const avatarsHTML = visibleUsers
-        .map((name) => {
-            const initials = name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase();
-            const firstLetter = initials.charAt(0);
-            const bgColor = letterColors[firstLetter] || "#888";
+  const avatarsHTML = visibleUsers
+    .map((name) => {
+      const initials = name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase();
+      const firstLetter = initials.charAt(0);
+      const bgColor = letterColors[firstLetter] || "#888";
 
-            return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
-        })
-        .join("");
+      return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
+    })
+    .join("");
 
-    const extraHTML = extraCount > 0
-        ? `<div class="contact-avatar extra-count" style="background-color: #ccc;">+${extraCount}</div>`
-        : "";
+  const extraHTML =
+    extraCount > 0
+      ? `<div class="contact-avatar extra-count" style="background-color: #ccc;">+${extraCount}</div>`
+      : "";
 
-    return avatarsHTML + extraHTML;
+  return avatarsHTML + extraHTML;
 }
-
-

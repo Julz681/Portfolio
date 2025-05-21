@@ -7,6 +7,7 @@
  */
 async function openEditOverlay(task) {
     if (!task) return;
+
   
     await prepareAssignees(task);
     const overlay = getEditOverlay();

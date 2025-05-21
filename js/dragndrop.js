@@ -6,14 +6,11 @@ function init() {
         task.addEventListener('dragstart', dragStart);
         task.addEventListener('dragend', dragEnd);
     });
-
-    
     const columns = document.querySelectorAll('.board-columns');
     columns.forEach(column => {
         column.addEventListener('dragover', dragOver);
         column.addEventListener('drop', drop);
     });
-
     createHighlightLine();
     updateAllColumnsPlaceholder(); // Initial check for placeholder visibility in all columns
 }
@@ -31,7 +28,6 @@ function dragStart(event) {
     draggedTask = event.target;
     draggedTask.classList.add('dragging');
     draggedTask.style.transform = 'rotate(5deg)'; // Slightly rotate the card while dragging
-
     event.dataTransfer.setData('text/plain', draggedTask.dataset.taskId);
     document.querySelector('.highlight-line').style.display = 'block';
 }
@@ -59,19 +55,15 @@ function dragOver(event) {
     const column = event.target.closest('.board-columns');
     const columnContent = column.querySelector('.column-content-wrapper');
     const highlightLine = document.querySelector('.highlight-line');
-
     if (columnContent) {
         const rect = columnContent.getBoundingClientRect();
         const allCards = columnContent.querySelectorAll('.board-card');
-
         let topPosition = rect.top + 10; // If no cards exist, set the line at the top
-
         /** If cards exist, position the highlight line below the last card */
         if (allCards.length > 0) {
             const lastCard = allCards[allCards.length - 1];
             topPosition = lastCard.getBoundingClientRect().bottom + 16; // Line below the last card
         }
-
         highlightLine.style.top = `${topPosition}px`; // Position the line below the last card
         highlightLine.style.left = `${rect.left + rect.width / 2 - 110}px`; // Center the line
         highlightLine.style.display = 'block'; // Show the line
@@ -87,26 +79,27 @@ function dragOver(event) {
  * @param {DragEvent} event - The drop event object.
  */
 function drop(event) {
-    event.preventDefault(); // Prevent default behavior
-
+    event.preventDefault();
     const column = event.target.closest('.board-columns');
     const columnContent = column.querySelector('.column-content-wrapper');
-
-    /**  If cards exist, add the card to the end of the column */
     if (columnContent && draggedTask) {
-        columnContent.appendChild(draggedTask); // Append the card to the end of the column
-        updateAllColumnsPlaceholder(); // Update placeholder visibility after drop
-
-        
+        columnContent.appendChild(draggedTask);
+        updateAllColumnsPlaceholder();
         const taskId = draggedTask.dataset.taskId;
         const newStatus = getStatusFromColumn(column);
         if (taskId && newStatus) {
             window.updateTaskStatusInFirebase(taskId, newStatus);
+
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = newStatus;
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+            }
         }
     }
-
-    removeHighlightLine(); // Hide the highlight line after the drop
+    removeHighlightLine();
 }
+
 
 /**
  * This function determines the status of a task based on the class name of the column it is in.
@@ -152,12 +145,10 @@ function updateAllColumnsPlaceholder() {
     columns.forEach(column => {
         const columnContent = column.querySelector('.column-content-wrapper');
         const noTasksFeedback = columnContent.querySelector('.no-tasks-feedback');
-
         if (columnContent && noTasksFeedback) {
             // Only count elements with class 'board-card'
             const numberOfCards = columnContent.querySelectorAll('.board-card:not(.dragging)').length;
             const isDraggingInThisColumn = columnContent.contains(draggedTask);
-
             if (numberOfCards === 0 && !isDraggingInThisColumn) {
                 // Show feedback when no cards are placed in column
                 noTasksFeedback.classList.remove('d_none');

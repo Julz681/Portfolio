@@ -42,18 +42,24 @@ function checkWindowLocation(taskObject) {
  * @param {string} dateFieldId - The ID of the input field for the due date.
  * @returns {Object} An object containing all the data for the new task.
  */
+/**
+ * Creates a task object with data from the input fields.
+ * @param {string} taskId - The unique ID for the new task.
+ * @param {string} dateFieldId - The ID of the input field for the due date.
+ * @returns {Object} An object containing all the data for the new task.
+ */
 function createTaskObject(taskId, dateFieldId) {
-    return (taskObject = {
+    return {
         id: taskId,
         title: getInputContainer("task-title").value,
         description: getInputContainer("task-description").value,
         priority: getTaskPriority(),
         dueDate: getInputContainer(dateFieldId).value,
         taskType: getTaskType(),
-        assignedTo: assignees,
-        subtasks: subtaskArray,
+        assignedTo: [...assignees],
+        subtasks: subtaskArray.map(subtask => ({ ...subtask })), 
         status: "to-do",
-    });
+    };
 }
 
 /**
@@ -68,9 +74,7 @@ function getTaskType() {
     } else {
         return "technical";
     }
-
 }
-
 
 /**
  * Checks if all required input fields in the task form have valid values.
