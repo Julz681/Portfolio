@@ -82,9 +82,19 @@ function clearColumn(column) {
  * @param {Object} task - The task object to render.
  */
 function renderTask(column, task) {
-  const html = createTaskHTML(task);
-  column.insertAdjacentHTML("beforeend", html);
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = createTaskHTML(task); 
+
+  const taskCard = wrapper.firstElementChild;
+  if (!taskCard) return;
+
+  taskCard.setAttribute("draggable", true);
+  taskCard.addEventListener("dragstart", dragStart);
+  taskCard.addEventListener("dragend", dragEnd);
+
+  column.appendChild(taskCard);
 }
+
 
 /**
  * Shows or hides the "No Tasks" message within a column based on whether there are any tasks in that column.
@@ -327,12 +337,14 @@ function deleteTask() {
   const id = modal.getAttribute("data-task-id");
   const index = tasks.findIndex((t) => t.id === id);
   if (index !== -1) {
-    tasks.splice(index, 1);
-    deleteTaskFromFirebase(id);
+    tasks.splice(index, 1); 
+    localStorage.setItem("tasks", JSON.stringify(tasks)); 
+    deleteTaskFromFirebase(id); 
   }
   renderAllColumns();
   closeModal();
 }
+
 
 /** handles searching tasks by title or description */
 let searchInput = document.getElementById("task-search");
@@ -531,7 +543,7 @@ function renderAssigneesTaskForm() {
   }
 }
 
-/** Closea task form when clicking outside the overlay */
+/** Closes task form when clicking outside the overlay */
 document.getElementById("task-form-modal-wrapper").addEventListener("click", function (event) {
   const formWrapper = document.getElementById("task-form-wrapper");
 

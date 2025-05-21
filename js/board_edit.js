@@ -8,32 +8,30 @@
  */
 async function openEditOverlay(task) {
     if (!task) return;
-
     if (!window.userNames || window.userNames.length === 0) {
         window.userNames = await getUsersFromDatabase();
     }
-
     window.assignees = Array.isArray(task.assignedTo) ? [...task.assignedTo] : [];
-
+    window.subtaskArray = Array.isArray(task.subtasks)
+        ? task.subtasks.map((subtask) => ({ ...subtask }))
+        : [];
     const overlay = document.getElementById("editTaskOverlay");
     if (!overlay) return;
     overlay.classList.remove("hidden");
 
-    const titleInput = overlay.querySelector(
-        ".edit-input[placeholder='Enter a title']"
-    );
-    const descriptionTextarea = overlay.querySelector(
-        ".edit-textarea[placeholder='Enter a Description']"
-    );
+    const titleInput = overlay.querySelector(".edit-input[placeholder='Enter a title']");
+    const descriptionTextarea = overlay.querySelector(".edit-textarea[placeholder='Enter a Description']");
     const dueDateInput = overlay.querySelector("#due-date");
     const priorityButtons = overlay.querySelectorAll(".priority-labels");
     const subtaskListContainer = document.getElementById("subtaskList");
 
     titleInput.value = task.title || "";
     descriptionTextarea.value = task.description || "";
+
     if (dueDateInput._flatpickr && task.dueDate) {
         dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
     }
+
     priorityButtons.forEach((btn) => {
         resetPriority(btn);
         btn.classList.remove("selected");
@@ -42,17 +40,17 @@ async function openEditOverlay(task) {
             btn.classList.add("selected");
         }
     });
+
     renderUsersToAssignEdit();
-    renderAssigneesEdit(
-        "assigned-to-dropdown-edit",
-        document.getElementById("assigned-to-dropdown-edit")
-    );
-    renderSubtasks(task, subtaskListContainer);
+    renderAssigneesEdit("assigned-to-dropdown-edit", document.getElementById("assigned-to-dropdown-edit"));
+    renderSubtasks({ subtasks: window.subtaskArray }, subtaskListContainer);
+
     setupEditDropdownEvents();
     setupPrioritySelection();
     setupSubtaskInput();
-    setupAllDatePickers()
+    setupAllDatePickers();
 }
+
 
 /**
  * Renders the avatars of the users currently assigned to the task in the edit overlay.
@@ -385,6 +383,7 @@ function resetInput(input, confirm, add) {
  */
 function renderSubtasks(task, container) {
     container.innerHTML = "";
+    const subtasks = task.subtasks || window.subtaskArray;
 
     if (Array.isArray(task.subtasks)) {
         task.subtasks.forEach((subtask, index) => {
@@ -486,13 +485,13 @@ function setupSubtaskAdd(addBtn, input, task, container) {
     addBtn.addEventListener("click", () => {
         const newTitle = input.value.trim();
         if (newTitle) {
-            if (!Array.isArray(task.subtasks)) task.subtasks = [];
-            task.subtasks.push({ [newTitle]: newTitle });
-            renderSubtasks(task, container);
+            window.subtaskArray.push({ [`subtask-${window.subtaskArray.length}`]: newTitle });
+            renderSubtasks({ subtasks: window.subtaskArray }, container); // ⬅️ geändert
             input.value = "";
         }
     });
 }
+
 
 /**
  * Sets up event listeners for the subtask list in the edit overlay to handle deleting and editing subtasks.
@@ -504,13 +503,14 @@ function setupSubtaskListEvents(container, task) {
     container.addEventListener("click", (e) => {
         const index = parseInt(e.target.dataset.index);
         if (e.target.classList.contains("delete-icon")) {
-            task.subtasks.splice(index, 1);
-            renderSubtasks(task, container);
+            window.subtaskArray.splice(index, 1);
+            renderSubtasks({ subtasks: window.subtaskArray }, container); // ⬅️ geändert
         } else if (e.target.classList.contains("edit-icon")) {
             startEditingSubtask(e, task, index, container);
         }
     });
 }
+
 
 /**
  * Initiates the editing process for a subtask within the edit overlay.
@@ -526,7 +526,7 @@ function setupSubtaskListEvents(container, task) {
 function startEditingSubtask(e, task, index, container) {
     const item = e.target.closest(".subtask-list-item");
     const input = createSubtaskEditInput(item);
-    if (!input) return;  // Abbrechen, wenn kein Input erzeugt werden konnte
+    if (!input) return; 
 
     const iconWrapper = getIconWrapper(item);
     if (!iconWrapper) return;
@@ -649,15 +649,16 @@ function bindEditActions(
     container
 ) {
     deleteIcon.onclick = () => {
-        renderSubtasks(task, container);
+        renderSubtasks({ subtasks: window.subtaskArray }, container);
     };
+
 
     confirmBtn.onclick = () => {
         const newText = input.value.trim();
         if (newText) {
-            const key = Object.keys(task.subtasks[index])[0];
-            task.subtasks[index] = { [key]: newText };
-            renderSubtasks(task, container);
+            const key = Object.keys(window.subtaskArray[index])[0];
+            window.subtaskArray[index] = { [key]: newText };
+            renderSubtasks({ subtasks: window.subtaskArray }, container);
         }
     };
 }
@@ -700,20 +701,21 @@ function bindEditSaveCancel(
     confirmBtn.addEventListener("click", () => {
         const newText = input.value.trim();
         if (newText) {
-            const key = Object.keys(task.subtasks[index])[0];
-            task.subtasks[index] = { [key]: newText };
-            renderSubtasks(task, container);
+            const key = Object.keys(window.subtaskArray[index])[0];
+            window.subtaskArray[index] = { [key]: newText };
+            renderSubtasks({ subtasks: window.subtaskArray }, container);
         }
         item.classList.remove("subtask-list-item-active");
     });
 
     cancelBtn.addEventListener("click", () => {
-        renderSubtasks(task, container);
+        renderSubtasks({ subtasks: window.subtaskArray }, container);
         item.classList.remove("subtask-list-item-active");
     });
 
     input.addEventListener("click", (ev) => ev.stopPropagation());
 }
+
 
 /**
  * Saves the changes made in the edit overlay to the corresponding task object in the `tasks` array.
@@ -723,32 +725,26 @@ function bindEditSaveCancel(
  */
 function saveEdit() {
     const overlay = document.getElementById("editTaskOverlay");
-    const taskId = document
-        .getElementById("task-card-modal")
-        .getAttribute("data-task-id");
+    const taskId = document.getElementById("task-card-modal").getAttribute("data-task-id");
     const taskIndex = tasks.findIndex((t) => t.id === taskId);
     if (taskIndex === -1) return;
 
     const updatedTask = { ...tasks[taskIndex] };
-    updatedTask.title = getOverlayValue(
-        overlay,
-        ".edit-input[placeholder='Enter a title']"
-    );
-    updatedTask.description = getOverlayValue(
-        overlay,
-        ".edit-textarea[placeholder='Enter a Description']"
-    );
+    updatedTask.title = getOverlayValue(overlay, ".edit-input[placeholder='Enter a title']");
+    updatedTask.description = getOverlayValue(overlay, ".edit-textarea[placeholder='Enter a Description']");
     updatedTask.dueDate = overlay.querySelector("#due-date").value;
-    updatedTask.priority =
-        overlay.querySelector(".priority-labels.selected")?.id || "";
+    updatedTask.priority = overlay.querySelector(".priority-labels.selected")?.id || "";
     updatedTask.assignedTo = [...window.assignees];
-    updatedTask.subtasks = extractSubtasksFromDOM();
+
+    // ⛏ Hier: statt extractSubtasksFromDOM()
+    updatedTask.subtasks = window.subtaskArray.map(sub => ({ ...sub }));
 
     tasks[taskIndex] = updatedTask;
     saveTasksToStorageOrFirebase();
     renderAllColumns();
     closeEditOverlay();
 }
+
 
 /**
  * Retrieves the trimmed value of an element within a given overlay based on a CSS selector.

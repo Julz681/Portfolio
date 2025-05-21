@@ -87,26 +87,32 @@ function dragOver(event) {
  * @param {DragEvent} event - The drop event object.
  */
 function drop(event) {
-    event.preventDefault(); // Prevent default behavior
+    event.preventDefault();
 
     const column = event.target.closest('.board-columns');
     const columnContent = column.querySelector('.column-content-wrapper');
 
-    /**  If cards exist, add the card to the end of the column */
     if (columnContent && draggedTask) {
-        columnContent.appendChild(draggedTask); // Append the card to the end of the column
-        updateAllColumnsPlaceholder(); // Update placeholder visibility after drop
+        columnContent.appendChild(draggedTask);
+        updateAllColumnsPlaceholder();
 
-        
         const taskId = draggedTask.dataset.taskId;
         const newStatus = getStatusFromColumn(column);
+
         if (taskId && newStatus) {
             window.updateTaskStatusInFirebase(taskId, newStatus);
+
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = newStatus;
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+            }
         }
     }
 
-    removeHighlightLine(); // Hide the highlight line after the drop
+    removeHighlightLine();
 }
+
 
 /**
  * This function determines the status of a task based on the class name of the column it is in.
