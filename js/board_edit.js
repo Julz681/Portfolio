@@ -640,14 +640,7 @@ function replaceIcons(iconWrapper, deleteIcon, confirmBtn) {
  * @param {number} index - The index of the subtask being edited.
  * @param {HTMLElement} container - The container element of the subtask list.
  */
-function bindEditActions(
-    input,
-    confirmBtn,
-    deleteIcon,
-    task,
-    index,
-    container
-) {
+function bindEditActions(input, confirmBtn, deleteIcon, task, index, container) {
     deleteIcon.onclick = () => {
         renderSubtasks({ subtasks: window.subtaskArray }, container);
     };
@@ -689,15 +682,7 @@ function createIcon(className, content) {
  * @param {HTMLElement} container - The container element of the subtask list.
  * @param {HTMLElement} item - The list item being edited.
  */
-function bindEditSaveCancel(
-    input,
-    confirmBtn,
-    cancelBtn,
-    task,
-    index,
-    container,
-    item
-) {
+function bindEditSaveCancel(input, confirmBtn, cancelBtn, task, index, container, item) {
     confirmBtn.addEventListener("click", () => {
         const newText = input.value.trim();
         if (newText) {
