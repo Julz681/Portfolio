@@ -106,7 +106,8 @@ function getStatusFromColumnElement(taskElement) {
   const column = taskElement.closest(".board-columns");
   if (column?.classList.contains("to-do-wrapper")) return "to-do";
   if (column?.classList.contains("in-progress-wrapper")) return "in-progress";
-  if (column?.classList.contains("await-feedback-wrapper")) return "await-feedback";
+  if (column?.classList.contains("await-feedback-wrapper"))
+    return "await-feedback";
   if (column?.classList.contains("done-wrapper")) return "done";
   return "unknown";
 }
@@ -131,33 +132,59 @@ function renderUsersToSelect() {
 }
 
 /**
- * This function dynamically renders a list of users to assign to a task in the UI.
- * It clears the existing content of the container and then appends HTML generated
- * by the `getUsersToAssignTemplate` function for each user in the `window.userNames` array.
+ * Renders the list of users to assign to a task in the UI.
+ * @param {string} listId - The DOM id of the user list container.
  */
 function renderUsersToAssign(listId = "assigned-to-users-list") {
-  let usersListContainerRef = document.getElementById(listId);
-  if (!usersListContainerRef) return;
+  let container = document.getElementById(listId);
+  if (!container) return;
 
-  usersListContainerRef.innerHTML = "";
+  clearUserList(container);
+  addAllUsersToList(container);
+  renderUsersToSelect();
+}
 
+/**
+ * Clears the current content inside the user list container.
+ * @param {HTMLElement} container - The user list container element.
+ */
+function clearUserList(container) {
+  container.innerHTML = "";
+}
+
+/**
+ * Iterates over window.userNames and adds each user to the container.
+ * @param {HTMLElement} container - The user list container.
+ */
+function addAllUsersToList(container) {
   for (let index = 0; index < window.userNames.length; index++) {
-    if (typeof window.userNames[index] === "string") {
-      let initials = getInitials(window.userNames[index]);
-      let stylingObject = checkIsAssigned(window.userNames[index]);
-      let iconBackgroundColor = getIconBackgroundColor(initials);
-      usersListContainerRef.innerHTML += getUsersToAssignTemplate(
-        window.userNames[index],
-        index,
-        stylingObject.wrapperClass,
-        stylingObject.checkboxClass,
-        initials,
-        iconBackgroundColor
-      );
+    const name = window.userNames[index];
+    if (typeof name === "string") {
+      const html = createUserTemplateHTML(name, index);
+      container.innerHTML += html;
     }
   }
+}
 
-  renderUsersToSelect();
+/**
+ * Generates HTML for a single user based on initials and assignment state.
+ * @param {string} name - The full name of the user.
+ * @param {number} index - The user's index in the list.
+ * @returns {string} - HTML string for the user entry.
+ */
+function createUserTemplateHTML(name, index) {
+  const initials = getInitials(name);
+  const styling = checkIsAssigned(name);
+  const bgColor = getIconBackgroundColor(initials);
+
+  return getUsersToAssignTemplate(
+    name,
+    index,
+    styling.wrapperClass,
+    styling.checkboxClass,
+    initials,
+    bgColor
+  );
 }
 
 window.renderUsersToAssign = renderUsersToAssign;
@@ -171,8 +198,9 @@ window.getTasksFromLocalStorage = getTasksFromLocalStorage;
  */
 function updateTaskStatusInFirebase(taskId, newStatus) {
   const taskRef = ref(database, `tasks/${taskId}`);
-  update(taskRef, { status: newStatus })
-    .catch((error) => console.error("Error updating task status:", error));
+  update(taskRef, { status: newStatus }).catch((error) =>
+    console.error("Error updating task status:", error)
+  );
 }
 
 window.updateTaskStatusInFirebase = updateTaskStatusInFirebase;
@@ -201,10 +229,9 @@ import { remove } from "/js/firebase.js";
  */
 function deleteTaskFromFirebase(taskId) {
   const taskRef = ref(database, `tasks/${taskId}`);
-  remove(taskRef)
-    .catch((error) =>
-      console.error("Fehler beim Löschen des Tasks aus Firebase:", error)
-    );
+  remove(taskRef).catch((error) =>
+    console.error("Fehler beim Löschen des Tasks aus Firebase:", error)
+  );
 }
 
 window.deleteTaskFromFirebase = deleteTaskFromFirebase;
