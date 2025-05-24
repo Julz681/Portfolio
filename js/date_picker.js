@@ -9,32 +9,35 @@ function setupAllDatePickers() {
     "#due-date-add-task",
     "#due-date-form",
   ];
-
   if (!window.flatpickr) return;
-
   datePickerIDs.forEach((selector) => {
-    const element = document.querySelector(selector);
-    let id = selector.replace("#", "");
-    if (element) {
-      fp = flatpickr(selector, {
-        dateFormat: "d/m/Y",
-        altFormat: "d/m/Y",
-        altInput: true,
-        allowInput: false,
-        disableMobile: true,
-        minDate: new Date().fp_incr(0),
-        maxDate: new Date().fp_incr(365),
-        onOpen: function () {
-          if (!suppressEvents) checkDateInput(id);
-        },
-        onChange: function () {
-          if (!suppressEvents) checkDateInput(id);
-        },
-        onValueUpdate: function () {
-          if (!suppressEvents) checkDateInput(id);
-        },
-      });
-    }
+    setupSingleDatePicker(selector);
+  });
+}
+
+function setupSingleDatePicker(selector) {
+  const element = document.querySelector(selector);
+  let id = selector.replace("#", "");
+  if (element) {
+    initFlatpickr(selector, id);
+  }
+}
+
+function initFlatpickr(selector, id) {
+  fp = flatpickr(selector, {
+    dateFormat: "d/m/Y",
+    altFormat: "d/m/Y",
+    altInput: true,
+    allowInput: false,
+    disableMobile: true,
+    minDate: new Date().fp_incr(0),
+    maxDate: new Date().fp_incr(365),
+    onOpen: function () {
+      if (!suppressEvents) checkDateInput(id);},
+    onChange: function () {
+      if (!suppressEvents) checkDateInput(id);},
+    onValueUpdate: function () {
+      if (!suppressEvents) checkDateInput(id);},
   });
 }
 

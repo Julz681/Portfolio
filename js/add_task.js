@@ -424,3 +424,4 @@ function detectKey(event) {
 function getInputContainer(id) {
   return document.getElementById(id);
 }
+
