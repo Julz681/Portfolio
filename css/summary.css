@@ -1,9 +1,14 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
 body {
   margin: 0;
   padding-left: 340px;
   max-width: 100%;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   scroll-behavior: smooth;
@@ -443,7 +448,8 @@ hr {
   }
 
   .container {
-    height: auto;
+    height: 100vh;
+    overflow-y: auto;
   }
 
   .headline_2 h1 {
@@ -498,5 +504,13 @@ hr {
   .metric-box-tasks {
     width: 94px;
     margin-top: 13px;
+  }
+}
+
+@media (max-height: 600px) {
+  .container {
+    padding-top: 120px;
+    overflow-y: auto;
+    padding-bottom: 40px;
   }
 }

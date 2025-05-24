@@ -1,9 +1,14 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
 body {
   margin: 0;
   padding-left: 340px;
   max-width: 1920px;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   scroll-behavior: smooth;
