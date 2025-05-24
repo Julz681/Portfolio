@@ -47,19 +47,15 @@ function bindDeleteEditOverlayButton() {
 function updateFloatingButtons() {
   const editOverlay = document.getElementById("editContactOverlay");
   if (editOverlay?.classList.contains("open")) return;
-
   const addOverlay = document.getElementById("addContactOverlay");
   const rightBox = document.querySelector(".contacts-right");
   const addBtn = document.getElementById("openAddContact");
   const dotsBtn = document.getElementById("menuDotsBtn");
   const backBtn = document.querySelector(".mobile-only-goback");
-
   const isMobile = window.innerWidth < 900;
   const showContact = rightBox?.classList.contains("show-contact-right");
-
   addBtn.style.display = isMobile && showContact ? "none" : "flex";
   dotsBtn.style.display = isMobile && showContact ? "flex" : "none";
-
   if (backBtn) backBtn.classList.toggle("visible", isMobile && showContact);
 }
 
@@ -71,10 +67,8 @@ function updateFloatingButtons() {
 function closeDropupMenu() {
   const menu = document.getElementById("dropupMenu");
   if (!menu?.classList.contains("show")) return;
-
   menu.classList.remove("show");
   menu.classList.add("hide");
-
   setTimeout(() => {
     menu.classList.remove("hide");
     menu.style.display = "none";
@@ -89,14 +83,12 @@ function toggleDropupMenu() {
   const menu = document.getElementById("dropupMenu");
   const rightBox = document.querySelector(".contacts-right");
   if (!rightBox?.classList.contains("show-contact-right")) return;
-
   if (menu.classList.contains("show")) {
     closeDropupMenu();
   } else {
     menu.style.display = "block";
     requestAnimationFrame(() => menu.classList.add("show"));
   }
-
   updateFloatingButtons();
 }
 
@@ -109,7 +101,6 @@ function toggleDropupMenu() {
 function deleteContact() {
   const name = document.querySelector(".details-name")?.textContent;
   if (!name) return;
-
   document.querySelectorAll(".contact-item").forEach((item) => {
     if (item.dataset.name === name) item.remove();
   });
@@ -143,7 +134,6 @@ function closeDetailAndMenu() {
 document.addEventListener("click", (e) => {
   const menu = document.getElementById("dropupMenu");
   const btn = document.getElementById("menuDotsBtn");
-
   if (!menu.contains(e.target) && !btn.contains(e.target)) {
     closeDropupMenu();
   }
@@ -192,7 +182,6 @@ window.addEventListener("DOMContentLoaded", () => {
     const item = e.target.closest(".contact-item");
     if (item) openContactDetails();
   });
-
   bindEditOverlayButtons();
 });
 
@@ -203,10 +192,8 @@ window.addEventListener("DOMContentLoaded", () => {
 function showSuccessMessage() {
   const msg = document.getElementById("contactSuccessMsg");
   if (!msg) return;
-
   msg.classList.remove("hidden");
   msg.classList.add("show");
-
   setTimeout(() => {
     msg.classList.remove("show");
     msg.classList.add("hidden");
@@ -220,16 +207,13 @@ function showSuccessMessage() {
 function openContactModal() {
   const overlay = document.querySelector(".overlay");
   const modal = document.querySelector(".add-contact-modal");
-
   modal.classList.remove(
     "slide-from-right",
     "show-from-right",
     "slide-from-bottom",
     "show-from-bottom"
   );
-
   overlay.classList.add("open");
-
   if (window.innerWidth >= 1200) {
     modal.classList.add("slide-from-right");
     setTimeout(() => modal.classList.add("show-from-right"), 10);
@@ -246,7 +230,6 @@ function openContactModal() {
 function closeContactModal() {
   const overlay = document.querySelector(".overlay");
   const modal = document.querySelector(".add-contact-modal");
-
   if (window.innerWidth >= 1200) {
     modal.classList.remove("show-from-right");
     modal.classList.add("slide-from-right");
@@ -254,6 +237,5 @@ function closeContactModal() {
     modal.classList.remove("show-from-bottom");
     modal.classList.add("slide-from-bottom");
   }
-
   setTimeout(() => overlay.classList.remove("open"), 8000);
 }

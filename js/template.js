@@ -143,7 +143,6 @@ function getUserAvatarsHTML(assignedTo) {
       if (avatarEl) {
         return avatarEl.outerHTML;
       }
-
       const initials = name
         .split(" ")
         .map((n) => n[0])
@@ -151,7 +150,6 @@ function getUserAvatarsHTML(assignedTo) {
         .toUpperCase();
       const firstLetter = initials.charAt(0);
       const bgColor = letterColors[firstLetter] || "#888";
-
       return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
     })
     .join("");
@@ -168,7 +166,6 @@ function createTaskHTML(task) {
   const color = task.taskType === "technical" ? "#1fd7c1" : "blue";
   const users = getUserAvatarsHTMLForBoard(task.assignedTo);
   const hasSubtasks = task.subtasks && task.subtasks.length > 0;
-
   const subtaskHTML = hasSubtasks
     ? `
         <div class="status d-flex-center">
@@ -180,7 +177,6 @@ function createTaskHTML(task) {
             </div>
         </div>`
     : "";
-
   return `
         <div class="board-card d-flex-center" data-task-id="${task.id}">
             <div class="board-card-content d-flex-column">
@@ -230,7 +226,6 @@ function setModalUsers(task) {
   let box = document.querySelector(".assignments");
   let avatars = getUserAvatarsHTML(task.assignedTo);
   let namesHTML = "";
-
   for (let i = 0; i < task.assignedTo.length; i++) {
     let name = task.assignedTo[i];
     namesHTML +=
@@ -238,7 +233,6 @@ function setModalUsers(task) {
       name +
       `</span>`;
   }
-
   let html =
     "" +
     "<span>Assigned to:</span>" +
@@ -250,7 +244,6 @@ function setModalUsers(task) {
     namesHTML +
     "</div>" +
     "</div>";
-
   box.innerHTML = html;
 }
 
@@ -267,7 +260,6 @@ function setModalSubtasks(task) {
       const [key, value] = Object.entries(s)[0];
       const isChecked = value.startsWith("[x]");
       const label = isChecked ? value.replace("[x] ", "") : value;
-
       return `
                 <div class="modal-card-subtask-wrapper d-flex-center">
                     <label class="modal-card-subtask gap-16">
@@ -458,13 +450,7 @@ function getSubtaskTemplate(index, subtaskValue) {
  * @returns {string} The HTML string for a user in the "Assign to" dropdown.
  */
 function getUsersToAssignTemplate(
-  userName,
-  index,
-  wrapperClass,
-  checkboxClass,
-  initials,
-  iconBackgroundColor
-) {
+  userName,index,wrapperClass,checkboxClass,initials,iconBackgroundColor) {
   return `<li id="US-${index}" class="${wrapperClass} d-flex-space-between br-10"
                     onclick="assignContactToTask('US-${index}', event)">
                     <div class="d-flex-space-between gap-16">
@@ -496,13 +482,7 @@ function getAvatarTemplate(initials, iconBackgroundColor) {
  * @param {string} iconBackgroundColor - The background color for the user's avatar icon.
  * @returns {string} The HTML string for a user in the "Assign to" dropdown in the task form.
  */
-function getUsersToAssignTemplateForTaskForm(
-  userName,
-  index,
-  isSelected,
-  initials,
-  iconBackgroundColor
-) {
+function getUsersToAssignTemplateForTaskForm(userName,index,isSelected,initials,iconBackgroundColor) {
   const wrapperClass = isSelected
     ? "single-contact-wrapper-checked d-flex-space-between br-10"
     : "single-contact-wrapper d-flex-space-between br-10";
@@ -534,13 +514,7 @@ function getUsersToAssignTemplateForTaskForm(
  * @param {string} iconBackgroundColor - The background color for the user's avatar icon.
  * @returns {string} The HTML string for a user in the "Assign to" dropdown in the edit task form.
  */
-function getUsersToAssignTemplateForEditTaskForm(
-  userName,
-  index,
-  isSelected,
-  initials,
-  iconBackgroundColor
-) {
+function getUsersToAssignTemplateForEditTaskForm(userName,index,isSelected,initials,iconBackgroundColor) {
   const wrapperClass = isSelected
     ? "single-contact-wrapper-checked d-flex-space-between br-10"
     : "single-contact-wrapper d-flex-space-between br-10";
@@ -616,9 +590,7 @@ function getUserAvatarsHTMLForBoard(assignedTo) {
   const maxVisible = 4;
   const totalAssigned = assignedTo.length;
   const visibleUsers = assignedTo.slice(0, maxVisible);
-  const extraCount =
-    totalAssigned > maxVisible ? totalAssigned - maxVisible : 0;
-
+  const extraCount =totalAssigned > maxVisible ? totalAssigned - maxVisible : 0;
   const avatarsHTML = visibleUsers
     .map((name) => {
       const initials = name
@@ -628,15 +600,12 @@ function getUserAvatarsHTMLForBoard(assignedTo) {
         .toUpperCase();
       const firstLetter = initials.charAt(0);
       const bgColor = letterColors[firstLetter] || "#888";
-
       return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
     })
     .join("");
-
   const extraHTML =
     extraCount > 0
       ? `<div class="contact-avatar extra-count" style="background-color: #ccc;">+${extraCount}</div>`
       : "";
-
   return avatarsHTML + extraHTML;
 }

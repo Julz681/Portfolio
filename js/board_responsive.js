@@ -15,7 +15,6 @@ function handleNoResultsMessage(text, matchCount) {
         text.length >= 2 && matchCount === 0 && window.innerWidth >= 1440;
     const showPerColumnPlaceholder =
         text.length >= 2 && matchCount === 0 && window.innerWidth < 1440;
-
     if (noResults) {
         noResults.style.display = showGlobalNoResults ? "block" : "none";
     }
@@ -32,7 +31,6 @@ function handleNoResultsMessage(text, matchCount) {
  */
 function handleAddTaskClickResponsive() {
     const width = window.innerWidth;
-
     if (width < 1200) {
         window.location.href = "add_task.html";
     } else {
@@ -92,10 +90,8 @@ function moveTaskToColumn(status, event) {
     if (!openCard) return;
     const taskId = openCard.dataset.taskId;
     const task = tasks.find((task) => task.id === taskId);
-    
     if (!task) return;
     task.status = status;
-
     const taskRef = ref(database, `tasks/${task.id}`);
     set(taskRef, task);
     renderAllColumns();

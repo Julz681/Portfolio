@@ -17,7 +17,6 @@ async function init() {
  */
 async function uploadTemplateTasksOnce() {
   const tasksRef = ref(database, "tasks");
-
   try {
     const snapshot = await get(tasksRef);
     const existingTasks = snapshot.exists() ? snapshot.val() : {};

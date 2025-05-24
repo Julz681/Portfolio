@@ -7,11 +7,9 @@
  */
 async function openEditOverlay(task) {
   if (!task) return;
-
   await prepareAssignees(task);
   const overlay = getEditOverlay();
   if (!overlay) return;
-
   fillEditFormFields(task, overlay);
   updatePriorityButtons(task, overlay);
   renderAssigneesEditUI();
@@ -55,10 +53,8 @@ function fillEditFormFields(task, overlay) {
     ".edit-textarea[placeholder='Enter a Description']"
   );
   const dueDateInput = overlay.querySelector("#due-date");
-
   titleInput.value = task.title || "";
   descriptionTextarea.value = task.description || "";
-
   if (dueDateInput._flatpickr && task.dueDate) {
     dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
   }
@@ -145,18 +141,14 @@ function closeEditDropdown(dropdown, arrow) {
 function populateEditOverlay(task) {
   const overlay = document.getElementById("editTaskOverlay");
   const titleInput = overlay.querySelector(
-    ".edit-input[placeholder='Enter a title']"
-  );
+    ".edit-input[placeholder='Enter a title']");
   const descriptionTextarea = overlay.querySelector(
-    ".edit-textarea[placeholder='Enter a Description']"
-  );
+    ".edit-textarea[placeholder='Enter a Description']");
   const dueDateInput = overlay.querySelector("#due-date");
   const subtaskInput = overlay.querySelector("#subtasks-edit");
-
   const addSubtaskIcon = document.getElementById("edit-add-subtask-icon");
   const subtaskListContainer = document.getElementById("subtaskList");
   const priorityButtons = overlay.querySelectorAll(".priority-labels");
-
   fillFormFields(task, titleInput, descriptionTextarea, dueDateInput);
   updatePrioritySelection(task.priority, priorityButtons);
   finishOverlaySetup(task, subtaskInput, addSubtaskIcon, subtaskListContainer);
@@ -165,7 +157,6 @@ function populateEditOverlay(task) {
 function fillFormFields(task, titleInput, descriptionTextarea, dueDateInput) {
   titleInput.value = task.title || "";
   descriptionTextarea.value = task.description || "";
-
   if (dueDateInput._flatpickr && task.dueDate) {
     dueDateInput._flatpickr.setDate(task.dueDate, true, "d/m/Y");
   }
@@ -246,18 +237,10 @@ function replaceIcons(iconWrapper, deleteIcon, confirmBtn) {
  * @param {number} index - The index of the subtask being edited.
  * @param {HTMLElement} container - The container element of the subtask list.
  */
-function bindEditActions(
-  input,
-  confirmBtn,
-  deleteIcon,
-  task,
-  index,
-  container
-) {
+function bindEditActions(input,confirmBtn,deleteIcon,task,index,container) {
   deleteIcon.onclick = () => {
     renderSubtasks(task, container);
   };
-
   confirmBtn.onclick = () => {
     const newText = input.value.trim();
     if (newText) {
@@ -294,15 +277,7 @@ function createIcon(className, content) {
  * @param {HTMLElement} container - The container element of the subtask list.
  * @param {HTMLElement} item - The list item being edited.
  */
-function bindEditSaveCancel(
-  input,
-  confirmBtn,
-  cancelBtn,
-  task,
-  index,
-  container,
-  item
-) {
+function bindEditSaveCancel(input,confirmBtn,cancelBtn,task,index,container,item) {
   confirmBtn.addEventListener("click", () => {
     const newText = input.value.trim();
     if (newText) {
@@ -312,12 +287,10 @@ function bindEditSaveCancel(
     }
     item.classList.remove("subtask-list-item-active");
   });
-
   cancelBtn.addEventListener("click", () => {
     renderSubtasks(task, container);
     item.classList.remove("subtask-list-item-active");
   });
-
   input.addEventListener("click", (ev) => ev.stopPropagation());
 }
 
@@ -332,18 +305,15 @@ function saveEdit() {
   const taskId = getTaskIdFromOverlay();
   const taskIndex = findTaskIndexById(taskId);
   if (taskIndex === -1) return;
-
   const updatedTask = buildUpdatedTask(overlay, tasks[taskIndex]);
   tasks[taskIndex] = updatedTask;
-
   saveTasksToStorageOrFirebase();
   renderAllColumns();
   closeEditOverlay();
 }
 
 function getTaskIdFromOverlay() {
-  return document
-    .getElementById("task-card-modal")
+  return document.getElementById("task-card-modal")
     .getAttribute("data-task-id");
 }
 
@@ -357,8 +327,7 @@ function buildUpdatedTask(overlay, oldTask) {
     title: getOverlayValue(overlay, ".edit-input[placeholder='Enter a title']"),
     description: getOverlayValue(
       overlay,
-      ".edit-textarea[placeholder='Enter a Description']"
-    ),
+      ".edit-textarea[placeholder='Enter a Description']"),
     dueDate: overlay.querySelector("#due-date").value,
     priority: overlay.querySelector(".priority-labels.selected")?.id || "",
     assignedTo: [...window.assignees],
@@ -386,8 +355,7 @@ function getOverlayValue(overlay, selector) {
  */
 function extractSubtasksFromDOM() {
   const subtaskWrappers = document.querySelectorAll(
-    "#subtaskList .subtask-list-item-content-wrapper"
-  );
+    "#subtaskList .subtask-list-item-content-wrapper");
   return Array.from(subtaskWrappers)
     .map((wrapper) => {
       const input = wrapper.querySelector("input");

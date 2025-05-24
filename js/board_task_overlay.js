@@ -216,7 +216,6 @@ function toggleCardsDisplay(allCards, matchingCards, text) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const openTaskFormBtn = document.getElementById("openTaskForm");
-
   if (openTaskFormBtn) {
     openTaskFormBtn.addEventListener("click", () => {
       openTaskForm();
@@ -286,9 +285,7 @@ function showTaskFormOverlay(form, modal, wrapper) {
   form.classList.add("active");
   modal.classList.remove("d_none");
   wrapper.classList.remove("slide-out");
-
   void wrapper.offsetWidth;
-
   wrapper.classList.add("slide-in");
 }
 
@@ -357,7 +354,6 @@ let assigneesTaskForm = [];
  */
 function assignContactToTaskForm(id, event) {
   event.stopPropagation();
-
   const index = parseInt(id.split("-")[1]);
   const name = window.userNames[index];
   if (!name) return;

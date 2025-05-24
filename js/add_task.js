@@ -27,23 +27,14 @@ function modifyPriorityLabels(priorityLabels, priorityLabelId) {
     let currentPriorityLabelId = priorityLabels[i].id;
     let priorityIconParts = getPriorityIconParts(currentPriorityLabelId);
     let priorityColor = getPriorityColor(currentPriorityLabelId);
-    if (
-      currentPriorityLabelId != priorityLabelId ||
+    if (currentPriorityLabelId != priorityLabelId ||
       (currentPriorityLabelId == priorityLabelId &&
-        priorityLabels[i].classList.contains(`${priorityLabelId}-prio-bg`))
-    ) {
+        priorityLabels[i].classList.contains(`${priorityLabelId}-prio-bg`))) {
       priorityLabels[i].style.color = "#000000";
       switchPriorityIconColor(priorityIconParts, priorityColor);
-      setDefaultBackgroundColorOnPriorityLabel(
-        priorityLabels[i],
-        currentPriorityLabelId
-      );
+      setDefaultBackgroundColorOnPriorityLabel(priorityLabels[i],currentPriorityLabelId);
     } else {
-      activatePriorityLabel(
-        priorityLabels[i],
-        currentPriorityLabelId,
-        priorityIconParts
-      );
+      activatePriorityLabel(priorityLabels[i],currentPriorityLabelId,priorityIconParts);
     }
   }
 }
@@ -55,11 +46,7 @@ function modifyPriorityLabels(priorityLabels, priorityLabelId) {
  * @param {string} priorityLabelId - The ID of the priority label (e.g., "low", "medium", "urgent").
  * @param {HTMLCollectionOf<SVGElement>} priorityIcon - A collection of SVG elements that make up the priority icon.
  */
-function activatePriorityLabel(
-  priorityLabelContainerRef,
-  priorityLabelId,
-  priorityIcon
-) {
+function activatePriorityLabel(priorityLabelContainerRef,priorityLabelId,priorityIcon) {
   priorityLabelContainerRef.style.color = "#ffffff";
   setPriorityBackgroundColor(priorityLabelContainerRef, priorityLabelId);
   switchPriorityIconColor(priorityIcon, "#ffffff");
@@ -120,10 +107,7 @@ function setPriorityBackgroundColor(priorityLabel, priorityLabelId) {
  * @param {HTMLElement} priorityLabel - The HTML element of the priority label.
  * @param {string} priorityLabelId - The ID of the priority label to determine the background class to remove.
  */
-function setDefaultBackgroundColorOnPriorityLabel(
-  priorityLabel,
-  priorityLabelId
-) {
+function setDefaultBackgroundColorOnPriorityLabel(priorityLabel,priorityLabelId) {
   priorityLabel.classList.remove(`${priorityLabelId}-prio-bg`, "weight-700");
   priorityLabel.classList.add("default-prio-bg");
 }
@@ -230,23 +214,12 @@ function evaluateSubtaskInput(valueSizeErrorContainerId) {
   let inputValue = getInputValue(subtaskInputContainerRef);
   if (inputValue.length > 3) {
     switchIconsOnSubtasks(confirmInputIconsRef, addIconRef);
-    removeErrorMessageOnSubtaskInput(
-      subtaskInputContainerRef.parentElement,
-      valueSizeErrorContainerId
-    );
+    removeErrorMessageOnSubtaskInput(subtaskInputContainerRef.parentElement,valueSizeErrorContainerId);
   } else if (inputValue.length <= 3 && inputValue.length > 0) {
-    falseInputValueHandling(
-      confirmInputIconsRef,
-      addIconRef,
-      valueSizeErrorContainerId,
-      subtaskInputContainerRef.parentElement
-    );
+    falseInputValueHandling(confirmInputIconsRef,addIconRef,valueSizeErrorContainerId,subtaskInputContainerRef.parentElement);
   } else {
     switchIconsOnSubtasks(addIconRef, confirmInputIconsRef);
-    removeErrorMessageOnSubtaskInput(
-      subtaskInputContainerRef.parentElement,
-      valueSizeErrorContainerId
-    );
+    removeErrorMessageOnSubtaskInput(subtaskInputContainerRef.parentElement,valueSizeErrorContainerId);
   }
 }
 
@@ -255,10 +228,7 @@ function evaluateSubtaskInput(valueSizeErrorContainerId) {
  * @param {HTMLElement} subtaskInputContainer - The parent container of the subtask input field.
  * @param {string} valueSizeErrorContainerId - The ID of the value size error message container.
  */
-function removeErrorMessageOnSubtaskInput(
-  subtaskInputContainer,
-  valueSizeErrorContainerId
-) {
+function removeErrorMessageOnSubtaskInput(subtaskInputContainer,valueSizeErrorContainerId) {
   removeValueErrorStylingOnInput(subtaskInputContainer);
   hideValueErrorMessage(valueSizeErrorContainerId);
 }
@@ -281,12 +251,7 @@ function switchIconsOnSubtasks(showIcon1, hideIcon2) {
  * @param {string} valueSizeErrorContainerId - The ID of the value size error message container.
  * @param {HTMLElement} InputContainerWrapperRef - The wrapper element of the subtask input.
  */
-function falseInputValueHandling(
-  confirmInputIconsRef,
-  addIconRef,
-  valueSizeErrorContainerId,
-  InputContainerWrapperRef
-) {
+function falseInputValueHandling(confirmInputIconsRef,addIconRef,valueSizeErrorContainerId,InputContainerWrapperRef) {
   confirmInputIconsRef.classList.add("d_none");
   addIconRef.classList.remove("d_none");
   showValueErrorMessage(valueSizeErrorContainerId);

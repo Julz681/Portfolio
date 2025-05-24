@@ -88,14 +88,11 @@ function clearColumn(column) {
 function renderTask(column, task) {
   const wrapper = document.createElement("div");
   wrapper.innerHTML = createTaskHTML(task);
-
   const taskCard = wrapper.firstElementChild;
   if (!taskCard) return;
-
   taskCard.setAttribute("draggable", true);
   taskCard.addEventListener("dragstart", dragStart);
   taskCard.addEventListener("dragend", dragEnd);
-
   column.appendChild(taskCard);
 }
 
@@ -117,10 +114,8 @@ function renderSubtaskProgress(task) {
   const progressBar = document.getElementById(`progress-bar-${task.id}`);
   const countDisplay = document.getElementById(`subtask-count-${task.id}`);
   if (!progressBar || !countDisplay) return;
-
   const total = task.subtasks.length;
   if (total === 0) return hideSubtaskProgress(progressBar, countDisplay);
-
   const completed = countCompletedSubtasks(task.subtasks);
   const percentage = calculateCompletionPercentage(completed, total);
   updateProgressBar(progressBar, percentage);
@@ -223,7 +218,6 @@ searchInput.addEventListener("input", function () {
 function handleSearch(text) {
   const allCards = document.querySelectorAll(".board-card");
   const normalizedText = text.toLowerCase();
-
   const matchingCards = filterCards(allCards, normalizedText);
   toggleCardsDisplay(allCards, matchingCards, normalizedText);
   handleNoResultsMessage(normalizedText, matchingCards.length);

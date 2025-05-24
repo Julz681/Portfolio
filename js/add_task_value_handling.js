@@ -5,23 +5,14 @@
  * @param {string} valueSizeErrorContainerId - The ID of the element to display the value size error message.
  * @param {string} containerId - The ID of the input container element.
  */
-function checkTitleInputValue(
-  requiredErrorContainerId,
-  valueSizeErrorContainerId,
-  containerId
-) {
+function checkTitleInputValue(requiredErrorContainerId,valueSizeErrorContainerId,containerId) {
   let requiredErrorContainer = getErrorContainer(`${requiredErrorContainerId}`);
   let valueSizeErrorContainer = getErrorContainer(
     `${valueSizeErrorContainerId}`
   );
   let inputContainer = getInputContainer(`${containerId}`);
   let inputContainerValue = getInputContainerValue(`${containerId}`);
-  titleErrorsHandling(
-    requiredErrorContainer,
-    valueSizeErrorContainer,
-    inputContainer,
-    inputContainerValue
-  );
+  titleErrorsHandling(requiredErrorContainer,valueSizeErrorContainer,inputContainer,inputContainerValue);
 }
 
 /**
@@ -32,12 +23,7 @@ function checkTitleInputValue(
  * @param {HTMLElement} inputContainer - The input container element to apply styling to.
  * @param {string} containerValue - The current value of the input field.
  */
-function titleErrorsHandling(
-  requiredErrorContainer,
-  valueSizeErrorContainer,
-  inputContainer,
-  containerValue
-) {
+function titleErrorsHandling(requiredErrorContainer,valueSizeErrorContainer,inputContainer,containerValue) {
   if (containerValue.length == 0 || containerValue.length <= 3) {
     showErrorMessage(valueSizeErrorContainer);
     showErrorMessage(requiredErrorContainer);

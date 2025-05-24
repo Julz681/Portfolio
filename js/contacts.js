@@ -20,12 +20,9 @@ function hideError() {
   const nameField = document.getElementById("contactName");
   const emailField = document.getElementById("contactEmail");
   const phoneField = document.getElementById("contactPhone");
-
   const addError = document.getElementById("error-message");
   const editError = document.getElementById("edit-error-message");
-
   if (!nameField || !emailField || !phoneField) return;
-
   const checkAndHide = () => {
     const allFilled =
       nameField.value.trim() &&
@@ -34,7 +31,6 @@ function hideError() {
     if (allFilled && addError) addError.style.display = "none";
     if (allFilled && editError) editError.style.display = "none";
   };
-
   [nameField, emailField, phoneField].forEach((field) =>
     field.addEventListener("input", checkAndHide)
   );

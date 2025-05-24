@@ -23,7 +23,6 @@ function renderAssigneeAvatars(container) {
     const initials = getInitials(name);
     const bgColor = getIconBackgroundColor(initials);
     const avatarHTML = getAvatarTemplate(initials, bgColor);
-
     const wrapper = document.createElement("div");
     wrapper.innerHTML = avatarHTML;
     container.appendChild(wrapper.firstElementChild);
@@ -43,7 +42,6 @@ function toggleAssigned(name, containerId) {
   } else {
     window.assignees.push(name);
   }
-
   const dropdown = document.getElementById(containerId);
   renderAssigneesEdit(containerId, dropdown);
   renderUsersToAssignEdit();
@@ -70,13 +68,10 @@ function getInitials(name) {
  */
 function toggleDropdownSelectionInEdit(dropdownId, event) {
   event.stopPropagation();
-
   const dropdown = document.getElementById(dropdownId);
   const arrowClosed = document.getElementById(`${dropdownId}-closed`);
   const arrowOpen = document.getElementById(`${dropdownId}-open`);
-
   const isOpen = !dropdown.classList.contains("d_none");
-
   if (isOpen) {
     dropdown.classList.add("d_none");
     arrowClosed.classList.remove("d_none");
@@ -110,7 +105,6 @@ function setupPrioritySelection() {
         btn.classList.remove("selected");
         resetPriority(btn);
       });
-
       button.classList.add("selected");
       activatePriority(button);
     });
@@ -127,7 +121,6 @@ function resetPriority(button) {
   button.style.backgroundColor = "#ffffff";
   button.style.color = "#000000";
   button.style.fontWeight = "normal";
-
   const paths = button.querySelectorAll("svg path");
   paths.forEach((path) => setDefaultColor(path, button.id));
 }
@@ -155,10 +148,8 @@ function activatePriority(button) {
       : button.id === "medium"
       ? "#FFA800"
       : "#7AE229";
-
   button.style.color = "#ffffff";
   button.style.fontWeight = "bold";
-
   const paths = button.querySelectorAll("svg path");
   paths.forEach((path) => path.setAttribute("fill", "#ffffff"));
 }
@@ -182,9 +173,7 @@ function setupEditDropdownEvents() {
   const arrow = document.getElementById("select-arrow-edit");
   const wrapper = document.querySelector(".dropdown-field-wrapper");
   const dropdown = document.getElementById("assigned-to-dropdown-edit");
-
   if (!arrow || !wrapper || !dropdown) return;
-
   bindDropdownArrowClick(arrow, dropdown);
   bindOutsideDropdownClose(wrapper, dropdown, arrow);
 }
@@ -193,7 +182,6 @@ function bindDropdownArrowClick(arrow, dropdown) {
   arrow.addEventListener("click", (e) => {
     e.stopPropagation();
     const isOpen = !dropdown.classList.contains("d_none");
-
     if (isOpen) {
       closeEditDropdown(dropdown, arrow);
     } else {
@@ -266,9 +254,7 @@ function resetInput(input, confirm, add) {
  */
 function renderSubtasks(task, container) {
   container.innerHTML = "";
-
   if (!Array.isArray(task.subtasks)) return;
-
   task.subtasks.forEach((subtask, index) => {
     const subtaskElement = createSubtaskElement(subtask, index);
     container.appendChild(subtaskElement);
@@ -277,13 +263,10 @@ function renderSubtasks(task, container) {
 
 function createSubtaskElement(subtask, index) {
   const [key, value] = Object.entries(subtask)[0];
-
   const subtaskItem = document.createElement("div");
   subtaskItem.classList.add("subtask-list-item");
-
   applySubtaskStyles(subtaskItem);
   subtaskItem.innerHTML = getSubtaskItemTemplate(value, index);
-
   return subtaskItem;
 }
 
@@ -299,7 +282,6 @@ function updatePrioritySelection(priority, priorityButtons) {
   priorityButtons.forEach((btn) => {
     resetPriority(btn);
     btn.classList.remove("selected");
-
     if (btn.id === priority) {
       activatePriority(btn);
       btn.classList.add("selected");
@@ -307,12 +289,7 @@ function updatePrioritySelection(priority, priorityButtons) {
   });
 }
 
-function finishOverlaySetup(
-  task,
-  subtaskInput,
-  addSubtaskIcon,
-  subtaskListContainer
-) {
+function finishOverlaySetup(task,subtaskInput,addSubtaskIcon,subtaskListContainer) {
   renderSubtasks(task, subtaskListContainer);
   subtaskInput.value = "";
   openEditOverlay(task);
@@ -351,17 +328,13 @@ function startEditingSubtask(e, task, index, container) {
   const item = e.target.closest(".subtask-list-item");
   const input = createSubtaskEditInput(item);
   if (!input) return; 
-
   const iconWrapper = getIconWrapper(item);
   if (!iconWrapper) return;
-
   prepareIconsForEditing(iconWrapper);
   const deleteIcon = ensureDeleteIconVisible(iconWrapper);
   const confirmBtn = createConfirmButton();
-
   replaceIcons(iconWrapper, deleteIcon, confirmBtn);
   bindEditActions(input, confirmBtn, deleteIcon, task, index, container);
-
   input.focus();
   item.classList.add("subtask-list-item-active");
 }
@@ -375,10 +348,8 @@ function startEditingSubtask(e, task, index, container) {
 function createSubtaskEditInput(item) {
   if (!item) return null;
   const textWrapper = item.querySelector(".subtask-list-item-content-wrapper");
-
   if (!textWrapper) return null;
   const textEl = textWrapper.querySelector("span");
-
   if (!textEl) return null;
   const oldText = textEl.textContent.trim();
   const input = document.createElement("input");
@@ -387,7 +358,6 @@ function createSubtaskEditInput(item) {
   input.classList.add("subtask-item-input");
   textWrapper.innerHTML = "";
   textWrapper.appendChild(input);
-
   return input;
 }
 

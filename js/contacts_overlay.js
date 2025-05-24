@@ -47,8 +47,7 @@ function clearForm() {
  * shows a success message on smaller screens, updates floating buttons, and re-binds edit overlay buttons.
  */
 function bindCreateButton() {
-  document
-    .getElementById("createContact")
+  document.getElementById("createContact")
     .addEventListener("click", function (e) {
       e.preventDefault();
       const name = getValue("contactName");
@@ -60,9 +59,7 @@ function bindCreateButton() {
       if (validateEmail("contactEmail", "email-error-message")) return;
       if (validatePhoneNumber("contactPhone", "phone-error-message")) return;
       createContactElement(name, email, phone, list);
-      // Local Storage speichern
       saveContactToLocalStorage(name, email, phone);
-
       resetOverlay();
       if (window.innerWidth < 900) {
         document

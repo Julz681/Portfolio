@@ -247,12 +247,10 @@ window.updatePasswordIcon = updatePasswordIcon;
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("signup-form");
   if (form) form.addEventListener("submit", handleSignUpSubmission);
-
   const pw = document.getElementById("password");
   const pwConfirm = document.getElementById("confirm-password");
   const eye1 = document.getElementById("eye-icon-password");
   const eye2 = document.getElementById("eye-icon-confirm-password");
-
   if (pw && eye1) {
     pw.addEventListener("focus", () => eye1.src = "/assets/img/eye_closed.png");
   }

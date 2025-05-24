@@ -1,9 +1,8 @@
 import { database, ref, onValue } from '/js/firebase.js';
-
-document.addEventListener('DOMContentLoaded', function () {
     /**
      * DOM elements for updating task counts and deadlines.
      */
+document.addEventListener('DOMContentLoaded', function () {
     const elements = {
         todo: document.querySelector('.wrapper_todo_done .metric-box:first-child h2'),
         done: document.querySelector('.wrapper_todo_done .metric-box:nth-child(2) h2'),
@@ -11,23 +10,12 @@ document.addEventListener('DOMContentLoaded', function () {
         total: document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(1) h2'),
         progress: document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(2) h2'),
         feedback: document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(3) h2'),
-        deadline: document.querySelector('.metric-box-urgent .deadline-info p:first-child')
-    };
-
-    /**
-     * Firebase reference to the "tasks" node.
-     */
+        deadline: document.querySelector('.metric-box-urgent .deadline-info p:first-child')};
     const tasksRef = ref(database, 'tasks');
-
-    /**
-     * Realtime listener to update dashboard when tasks change.
-     */
     onValue(tasksRef, (snapshot) => {
         const tasks = snapshot.val();
         if (tasks) updateTaskCounts(tasks, elements);
-        else resetCounts(elements);
-    });
-
+        else resetCounts(elements);});
     updateGreeting();
     updateUserProfileInitials();
     handleScreenLogic();
@@ -129,17 +117,14 @@ function resetCounts(el) {
 function updateGreeting() {
     const greetingEl = document.querySelector('.greeting p');
     if (!greetingEl) return;
-
     const hour = new Date().getHours();
     let text = hour < 12 ? 'Good morning' :
         hour < 18 ? 'Good afternoon' : 'Good evening';
-
     const isGuest = localStorage.getItem('isGuest') === 'true';
     if (!isGuest) {
         const name = localStorage.getItem('loggedInUserName') || 'User';
         text += `,<br><span class='highlight'>${name}</span>`;
     }
-
     greetingEl.innerHTML = text;
 }
 
@@ -150,10 +135,8 @@ function updateGreeting() {
 function updateUserProfileInitials() {
     const span = document.querySelector("#userProfile span");
     if (!span) return;
-
     const isGuest = localStorage.getItem("isGuest") === "true";
     const name = localStorage.getItem("loggedInUserName");
-
     if (isGuest || !name) {
         span.textContent = "G";
     } else {
@@ -170,7 +153,6 @@ function handleScreenLogic() {
     const greetingDiv = document.querySelector('.greeting');
     const containerDiv = document.querySelector('.container');
     if (!greetingDiv || !containerDiv) return;
-
     clearTimeout(window.timeoutId);
     if (window.innerWidth >= 1200) {
         greetingDiv.style.display = 'block';
@@ -178,7 +160,6 @@ function handleScreenLogic() {
         greetingDiv.style.opacity = '1';
         return;
     }
-
     containerDiv.style.display = 'none';
     window.timeoutId = setTimeout(() => fadeGreeting(greetingDiv, containerDiv), 1000);
 }
