@@ -71,14 +71,11 @@ function updatePasswordIcon(inputId, imgElement) {
 async function normalLogin(event = null) {
   if (event) event.preventDefault();
   hideFieldErrors();
-
   const { email, password, rememberMe } = getLoginFormValues();
   if (!validateLoginFields(email, password)) return;
-
   try {
     const userData = await getUserDataByEmail(email);
     if (!handleUserValidation(userData, password)) return;
-
     saveLoginSession(userData, rememberMe, email, password);
     window.location.href = "/html/summary.html";
   } catch (err) {
@@ -124,7 +121,6 @@ function saveLoginSession(userData, rememberMe, email, password) {
   localStorage.setItem("userId", userData.userId);
   localStorage.setItem("loggedInUserName", userData.name);
   localStorage.setItem("isGuest", "false");
-
   if (rememberMe) {
     localStorage.setItem("rememberMe", "true");
     localStorage.setItem("savedEmail", email);
@@ -155,7 +151,6 @@ function restoreLogin() {
   const remember = localStorage.getItem("rememberMe") === "true";
   const email = localStorage.getItem("savedEmail");
   const password = localStorage.getItem("savedPassword");
-
   if (remember && email && password) {
     document.getElementById("email").value = email;
     document.getElementById("password").value = password;
@@ -187,7 +182,6 @@ function initEmailField() {
 function initPasswordField() {
   const input = document.getElementById("password");
   const icon = document.querySelector(".toggle-password");
-
   let firstFocus = true;
   input?.addEventListener("focus", () => {
     if (firstFocus) {
@@ -195,7 +189,6 @@ function initPasswordField() {
       firstFocus = false;
     }
   });
-
   input?.addEventListener("input", () => updatePasswordIcon("password", icon));
   input?.addEventListener("blur", () => updatePasswordIcon("password", icon));
   icon?.addEventListener("click", () => {
@@ -208,11 +201,9 @@ function initPasswordField() {
  * Sets up login and guest login buttons.
  */
 function initLoginButtons() {
-  document
-    .getElementById("loginButton")
+  document.getElementById("loginButton")
     ?.addEventListener("click", normalLogin);
-  document
-    .getElementById("guestLoginButton")
+  document.getElementById("guestLoginButton")
     ?.addEventListener("click", guestLogin);
 }
 
@@ -223,7 +214,6 @@ function initSignupLinks() {
   const signupBtn = document.querySelector(".signup-btn");
   const signupBtn1 = document.querySelector(".signup-btn1");
   const goToSignup = () => (window.location.href = "/html/sign_up.html");
-
   signupBtn?.addEventListener("click", goToSignup);
   signupBtn1?.addEventListener("click", goToSignup);
 }

@@ -184,10 +184,8 @@ function renderSubtaskSection(task) {
 function renderAssigneesEdit(containerId, container) {
   const assigneesContainerRef = getAssigneesContainer(containerId);
   if (!assigneesContainerRef) return;
-
   assigneesContainerRef.innerHTML = "";
   if (!Array.isArray(window.assignees)) return;
-
   if (window.assignees.length > 0) {
     showAssigneeContainer(assigneesContainerRef);
     renderAssigneeAvatars(assigneesContainerRef);
@@ -204,10 +202,8 @@ function renderAssigneesEdit(containerId, container) {
 function renderUsersToAssignEdit() {
   const usersList = document.getElementById("assigned-to-users-list-edit");
   if (!usersList || !window.userNames) return;
-
   usersList.innerHTML = "";
   const sortedUsers = getSortedUsers();
-
   sortedUsers.forEach((name, index) => {
     const userHTML = createUserHTML(name, index);
     usersList.innerHTML += userHTML;

@@ -1,206 +1,200 @@
 import { database, ref, onValue } from '/js/firebase.js';
 
-document.addEventListener('DOMContentLoaded', function() {
-    const todoCountElement = document.querySelector('.wrapper_todo_done .metric-box:first-child h2');
-    const doneCountElement = document.querySelector('.wrapper_todo_done .metric-box:nth-child(2) h2');
-    const urgentCountElement = document.querySelector('.metric-box-urgent .wrapper_box h2');
-    const tasksInBoardCountElement = document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(1) h2');
-    const inProgressCountElement = document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(2) h2');
-    const awaitingFeedbackCountElement = document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(3) h2');
-    const urgentDeadlineElement = document.querySelector('.metric-box-urgent .deadline-info p:first-child');
+document.addEventListener('DOMContentLoaded', function () {
+    /**
+     * DOM elements for updating task counts and deadlines.
+     */
+    const elements = {
+        todo: document.querySelector('.wrapper_todo_done .metric-box:first-child h2'),
+        done: document.querySelector('.wrapper_todo_done .metric-box:nth-child(2) h2'),
+        urgent: document.querySelector('.metric-box-urgent .wrapper_box h2'),
+        total: document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(1) h2'),
+        progress: document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(2) h2'),
+        feedback: document.querySelector('.wrapper_tasks .metric-box-tasks:nth-child(3) h2'),
+        deadline: document.querySelector('.metric-box-urgent .deadline-info p:first-child')
+    };
 
     /**
-     * Updates the displayed counts for each task status on the dashboard.
-     * It iterates through the provided tasks object, counts the number of tasks in 'to-do',
-     * 'done', 'in-progress', and 'await-feedback' statuses, as well as the total number of tasks
-     * and the number of 'urgent' priority tasks. It also finds the closest due date among the urgent tasks.
-     * Finally, it updates the text content of the corresponding HTML elements with these counts and the urgent deadline.
-     * @param {object} tasks - An object where each key is a task ID and the value is the task object from Firebase.
+     * Firebase reference to the "tasks" node.
      */
-    function updateTaskCounts(tasks) {
-        let todoCount = 0;
-        let doneCount = 0;
-        let urgentCount = 0;
-        let inProgressCount = 0;
-        let awaitingFeedbackCount = 0;
-        let allTasksCount = 0;
-        let closestUrgentDeadline = null;
-
-        for (const taskId in tasks) {
-            if (tasks.hasOwnProperty(taskId)) {
-                const task = tasks[taskId];
-                allTasksCount++;
-                switch (task.status) {
-                    case 'to-do':
-                        todoCount++;
-                        break;
-                    case 'done':
-                        doneCount++;
-                        break;
-                    case 'in-progress':
-                        inProgressCount++;
-                        break;
-                    case 'await-feedback':
-                        awaitingFeedbackCount++;
-                        break;
-                }
-                // Counts urgent tasks realted to priority and finds the closest deadline
-                if (task.priority === 'urgent') {
-                    urgentCount++;
-                    if (task.dueDate) {
-                        const dueDate = new Date(task.dueDate);
-                        if (!closestUrgentDeadline || dueDate < closestUrgentDeadline) {
-                            closestUrgentDeadline = dueDate;
-                        }
-                    }
-                }
-            }
-        }
-
-        if (todoCountElement) todoCountElement.textContent = todoCount;
-        if (doneCountElement) doneCountElement.textContent = doneCount;
-        if (urgentCountElement) urgentCountElement.textContent = urgentCount;
-        if (tasksInBoardCountElement) tasksInBoardCountElement.textContent = allTasksCount;
-        if (inProgressCountElement) inProgressCountElement.textContent = inProgressCount;
-        if (awaitingFeedbackCountElement) awaitingFeedbackCountElement.textContent = awaitingFeedbackCount;
-        if (urgentDeadlineElement && closestUrgentDeadline) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            urgentDeadlineElement.textContent = closestUrgentDeadline.toLocaleDateString('en-US', options);
-        } else if (urgentDeadlineElement) {
-            urgentDeadlineElement.textContent = 'No urgent tasks';
-        }
-    }
-
-    /**  Get a reference to the 'Tasks' node in your Firebase database */
     const tasksRef = ref(database, 'tasks');
 
-    /**  Set up a listener to be notified whenever there are changes to the data at the tasksRef */
+    /**
+     * Realtime listener to update dashboard when tasks change.
+     */
     onValue(tasksRef, (snapshot) => {
-
         const tasks = snapshot.val();
-        if (tasks) {
-            updateTaskCounts(tasks);
-        } else {
-            // If there are no tasks, reset the counts to 0
-            if (todoCountElement) todoCountElement.textContent = 0;
-            if (doneCountElement) doneCountElement.textContent = 0;
-            if (urgentCountElement) urgentCountElement.textContent = 0;
-            if (tasksInBoardCountElement) tasksInBoardCountElement.textContent = 0;
-            if (inProgressCountElement) inProgressCountElement.textContent = 0;
-            if (awaitingFeedbackCountElement) awaitingFeedbackCountElement.textContent = 0;
-            if (urgentDeadlineElement) urgentDeadlineElement.textContent = 'No urgent tasks';
-        }
+        if (tasks) updateTaskCounts(tasks, elements);
+        else resetCounts(elements);
     });
 
-    /**
-     * Updates the greeting message displayed on the dashboard based on the current hour of the day.
-     * It sets the greeting to "Good morning" for the hours before noon, "Good afternoon" for the hours
-     * between noon and 6 PM, and "Good evening" for the hours from 6 PM to midnight and after midnight until 5 AM.
-     * If the user is not a guest (checked via localStorage), it also appends the user's name to the greeting,
-     * retrieved from localStorage and styled with a highlight class.
-     */
-    function updateGreeting() {
-        const greetingElement = document.querySelector(".greeting p");
-        const currentHour = new Date().getHours();
-        let greetingText = "Good morning";
-
-        if (currentHour >= 12 && currentHour < 18) {
-            greetingText = "Good afternoon";
-        } else if (currentHour >= 18 || currentHour < 5) {
-            greetingText = "Good evening";
-        }
-
-        const isGuest = localStorage.getItem("isGuest") === "true";
-        let greetingHTML = `${greetingText}`;
-
-        if (!isGuest) {
-            const userName = localStorage.getItem("loggedInUserName") || "User";
-            greetingHTML += `, <br> <span class='highlight'>${userName}</span>`;
-        }
-
-        greetingElement.innerHTML = greetingHTML;
-    }
-
-    /**
-     * Updates the initials displayed in the user profile icon.
-     * If the user is a guest (checked via localStorage), it sets the icon text to "G".
-     * If the user is logged in and their name is stored in localStorage, it extracts the first letter
-     * of the first and last names (if available) and sets them as the icon text in uppercase.
-     * If no username is found for a logged-in user, it defaults to "G".
-     */
-    function updateUserProfileInitials() {
-        const userProfileSpan = document.querySelector("#userProfile span");
-        const isGuest = localStorage.getItem("isGuest") === "true";
-        const userName = localStorage.getItem("loggedInUserName");
-
-        if (isGuest) {
-            userProfileSpan.textContent = "G"; // Always "G" for guests
-        } else if (userName) {
-            const names = userName.split(" ");
-            let initials = "";
-            if (names.length > 0) {
-                initials += names[0].charAt(0).toUpperCase();
-            }
-            if (names.length > 1) {
-                initials += names[1].charAt(0).toUpperCase();
-            }
-            userProfileSpan.textContent = initials;
-        } else {
-            userProfileSpan.textContent = "G"; // Default if there is no name
-        }
-    }
-
-    const greetingDiv = document.querySelector('.greeting');
-    const containerDiv = document.querySelector('.container');
-    let timeoutId; // Variable to store the timeout ID
-
-    /**
-     * Handles the logic for displaying the greeting and the main container based on the screen width.
-     * On smaller screens (width < 1200px), it initially hides the main container, then fades out the greeting
-     * after 1 second, and after the fade out (another 1 second), it hides the greeting and makes the main
-     * container visible. This creates a delayed transition effect for smaller viewports.
-     * On larger screens (width >= 1200px), it ensures the greeting and container are both visible without any delay or fade.
-     * It also clears any existing timeouts when the screen size changes.
-     */
-    function handleScreenLogic() {
-        if (window.innerWidth < 1200 && containerDiv && greetingDiv) {
-            
-            clearTimeout(timeoutId);
-
-            
-            containerDiv.style.display = 'none';
-
-            
-            timeoutId = setTimeout(() => {
-                greetingDiv.style.transition = 'opacity 1s ease-in-out';
-                greetingDiv.style.opacity = '0';
-
-                
-                setTimeout(() => {
-                    greetingDiv.style.display = 'none';
-                    greetingDiv.style.opacity = '1';
-                    greetingDiv.style.transition = '';
-                    containerDiv.style.display = 'flex';
-                }, 1000);
-            }, 1000);
-        } else if (window.innerWidth >= 1200 && containerDiv && greetingDiv) {
-            
-            clearTimeout(timeoutId); 
-            greetingDiv.style.display = 'block';
-            greetingDiv.style.opacity = '1';
-            greetingDiv.style.transition = '';
-            containerDiv.style.display = 'flex';
-        }
-    }
-
-    /**  Call handleScreenLogic on initial load */
-    handleScreenLogic();
-
-    /**  Adds event listener for window resizing */
-    window.addEventListener('resize', handleScreenLogic);
-
-    /**  Calls the functions when the page loads */
     updateGreeting();
     updateUserProfileInitials();
-
+    handleScreenLogic();
+    window.addEventListener('resize', handleScreenLogic);
 });
+
+/**
+ * Updates task counters and the urgent deadline display.
+ * @param {Object} tasks - Task list retrieved from Firebase.
+ * @param {Object} el - Object containing DOM references for output.
+ */
+function updateTaskCounts(tasks, el) {
+    const counters = initCounters();
+    for (const id in tasks) countTaskStats(tasks[id], counters);
+    updateDOMCounts(el, counters);
+}
+
+/**
+ * Initializes a blank stats counter object.
+ * @returns {Object} Initialized counters for task stats.
+ */
+function initCounters() {
+    return {
+        todo: 0, done: 0, urgent: 0, total: 0,
+        progress: 0, feedback: 0, closestDeadline: null
+    };
+}
+
+/**
+ * Increments the appropriate counters for a single task.
+ * @param {Object} task - A task object.
+ * @param {Object} c - Counters object to update.
+ */
+function countTaskStats(task, c) {
+    c.total++;
+    if (task.status === 'to-do') c.todo++;
+    if (task.status === 'done') c.done++;
+    if (task.status === 'in-progress') c.progress++;
+    if (task.status === 'await-feedback') c.feedback++;
+    if (task.priority === 'urgent') countUrgent(task, c);
+}
+
+/**
+ * Updates urgent task count and finds closest deadline.
+ * @param {Object} task - A task object with "urgent" priority.
+ * @param {Object} c - Counters object to update.
+ */
+function countUrgent(task, c) {
+    c.urgent++;
+    if (!task.dueDate) return;
+    const date = new Date(task.dueDate);
+    if (!c.closestDeadline || date < c.closestDeadline) c.closestDeadline = date;
+}
+
+/**
+ * Updates the DOM with calculated task statistics.
+ * @param {Object} el - Object containing DOM elements.
+ * @param {Object} c - Counters containing task data.
+ */
+function updateDOMCounts(el, c) {
+    if (el.todo) el.todo.textContent = c.todo;
+    if (el.done) el.done.textContent = c.done;
+    if (el.urgent) el.urgent.textContent = c.urgent;
+    if (el.total) el.total.textContent = c.total;
+    if (el.progress) el.progress.textContent = c.progress;
+    if (el.feedback) el.feedback.textContent = c.feedback;
+    updateDeadlineText(el.deadline, c.closestDeadline);
+}
+
+/**
+ * Displays the closest urgent deadline or fallback text.
+ * @param {HTMLElement} el - Element to show deadline.
+ * @param {Date|null} date - Closest deadline date or null.
+ */
+function updateDeadlineText(el, date) {
+    if (!el) return;
+    if (!date) el.textContent = 'No urgent tasks';
+    else el.textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+/**
+ * Resets all task-related DOM elements to default state.
+ * @param {Object} el - Object containing DOM element references.
+ */
+function resetCounts(el) {
+    if (el.todo) el.todo.textContent = 0;
+    if (el.done) el.done.textContent = 0;
+    if (el.urgent) el.urgent.textContent = 0;
+    if (el.total) el.total.textContent = 0;
+    if (el.progress) el.progress.textContent = 0;
+    if (el.feedback) el.feedback.textContent = 0;
+    if (el.deadline) el.deadline.textContent = 'No urgent tasks';
+}
+
+/**
+ * Updates the greeting message depending on the time of day.
+ * Adds the user name if logged in and not a guest.
+ */
+function updateGreeting() {
+    const greetingEl = document.querySelector('.greeting p');
+    if (!greetingEl) return;
+
+    const hour = new Date().getHours();
+    let text = hour < 12 ? 'Good morning' :
+        hour < 18 ? 'Good afternoon' : 'Good evening';
+
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+    if (!isGuest) {
+        const name = localStorage.getItem('loggedInUserName') || 'User';
+        text += `,<br><span class='highlight'>${name}</span>`;
+    }
+
+    greetingEl.innerHTML = text;
+}
+
+/**
+ * Sets the user profile icon initials based on the username.
+ * Defaults to "G" for guests or missing user data.
+ */
+function updateUserProfileInitials() {
+    const span = document.querySelector("#userProfile span");
+    if (!span) return;
+
+    const isGuest = localStorage.getItem("isGuest") === "true";
+    const name = localStorage.getItem("loggedInUserName");
+
+    if (isGuest || !name) {
+        span.textContent = "G";
+    } else {
+        const initials = name.split(" ").map(n => n[0]).slice(0, 2).join("").toUpperCase();
+        span.textContent = initials;
+    }
+}
+
+/**
+ * Controls fade animation between greeting and main UI
+ * depending on screen size (mobile vs desktop).
+ */
+function handleScreenLogic() {
+    const greetingDiv = document.querySelector('.greeting');
+    const containerDiv = document.querySelector('.container');
+    if (!greetingDiv || !containerDiv) return;
+
+    clearTimeout(window.timeoutId);
+    if (window.innerWidth >= 1200) {
+        greetingDiv.style.display = 'block';
+        containerDiv.style.display = 'flex';
+        greetingDiv.style.opacity = '1';
+        return;
+    }
+
+    containerDiv.style.display = 'none';
+    window.timeoutId = setTimeout(() => fadeGreeting(greetingDiv, containerDiv), 1000);
+}
+
+/**
+ * Applies fade-out effect to greeting and shows container.
+ * @param {HTMLElement} greeting - Greeting element to fade.
+ * @param {HTMLElement} container - Container element to show.
+ */
+function fadeGreeting(greeting, container) {
+    greeting.style.transition = 'opacity 1s ease-in-out';
+    greeting.style.opacity = '0';
+    setTimeout(() => {
+        greeting.style.display = 'none';
+        greeting.style.opacity = '1';
+        greeting.style.transition = '';
+        container.style.display = 'flex';
+    }, 1000);
+}

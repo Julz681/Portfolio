@@ -1,15 +1,15 @@
 window.addEventListener("DOMContentLoaded", () => {
-  hideError(); // hide the error message on page load
-  setAvatarColors(); // set avatar background colors based on the letters
-  bindContactClicks(); // add click events to contact items for selection
-  bindOverlayButtons(); // add functionality to open/close the contact overlay
-  bindCreateButton(); // enable creating or editing a contact
+  hideError(); 
+  setAvatarColors(); 
+  bindContactClicks(); 
+  bindOverlayButtons();
+  bindCreateButton(); 
   loadContactsFromLocalStorage();
-  bindDeleteButton(); // enable deleting a selected contact
-  bindEditButton(); // enable editing an existing contact
-  enableAutofill(); // automatically fill in example contact -> Mark Zuckerberg
-  closeErrorOnInput(); // hide the error message when all fields are filled
-  bindEditOverlayButtons(); // binds all Event-Listener for the Edit-Overlay
+  bindDeleteButton(); 
+  bindEditButton(); 
+  enableAutofill(); 
+  closeErrorOnInput(); 
+  bindEditOverlayButtons();
 });
 
 /**
@@ -86,13 +86,8 @@ function selectContact(item) {
  * @param {string} phone - The phone number of the contact.
  */
 function saveContactToLocalStorage(name, email, phone) {
-  // Retrieve existing contacts or initialize as empty array
   const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
-
-  // Add the new contact to the array
   contacts.push({ name, email, phone });
-
-  // Save the updated contact list back to localStorage
   localStorage.setItem("contacts", JSON.stringify(contacts));
 }
 
@@ -101,13 +96,8 @@ function saveContactToLocalStorage(name, email, phone) {
  * This is typically called when the page is first loaded.
  */
 function loadContactsFromLocalStorage() {
-  // Retrieve saved contacts or use empty array if none exist
   const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
-
-  // Get the container element for the contact list
   const contactList = document.getElementById("contactList");
-
-  // For each saved contact, create and add it to the UI
   contacts.forEach(({ name, email, phone }) => {
     createContactElement(name, email, phone, contactList);
   });
@@ -122,14 +112,8 @@ function loadContactsFromLocalStorage() {
  * @param {string} newPhone - The updated phone number.
  */
 function updateContactInLocalStorage(
-  previousName,
-  newName,
-  newEmail,
-  newPhone
-) {
+  previousName, newName, newEmail, newPhone) {
   const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
-
-  // Find and update the contact by previous name
   const index = contacts.findIndex((contact) => contact.name === previousName);
   if (index !== -1) {
     contacts[index] = { name: newName, email: newEmail, phone: newPhone };
@@ -144,10 +128,7 @@ function updateContactInLocalStorage(
  */
 function deleteContactFromLocalStorage(nameToDelete) {
   let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
-
-  // Filter out the contact to be deleted
   contacts = contacts.filter((contact) => contact.name !== nameToDelete);
-
   localStorage.setItem("contacts", JSON.stringify(contacts));
 }
 
@@ -186,10 +167,6 @@ function createContactElement(name, email, phone, contactList) {
   bindContactClicks();
   sortContacts();
 }
-
-// function sendContactToLocalStorage(name, email, phone) {
-//     localStorage.setItem("tasks", JSON.stringify(object))
-// }
 
 /**
  * Extracts the first letter of each word in a name and returns the first two initials in uppercase.
@@ -252,13 +229,11 @@ function updateEditedContact(name, email, phone, list) {
  * and clears the contact details view.
  */
 function bindDeleteButton() {
-  document
-    .querySelector(".contacts-right-bottom")
+  document.querySelector(".contacts-right-bottom")
     ?.addEventListener("click", (e) => {
       const btn = e.target.closest("#deleteBtn");
       if (!btn) return;
       const name = document.querySelector(".details-name")?.textContent;
-
       document.querySelectorAll(".contact-item").forEach((item) => {
         if (item.dataset.name === name) item.remove();
       });
@@ -266,7 +241,6 @@ function bindDeleteButton() {
         if (!group.querySelector(".contact-item")) group.remove();
       });
       document.querySelector(".contacts-right-bottom").innerHTML = "";
-
       deleteContactFromLocalStorage(name);
     });
 }

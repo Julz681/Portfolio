@@ -463,7 +463,6 @@
 
 @media (max-width: 380px) {
   .modal-card-wrapper {
-    height: 95vh;
     width: 90%;
   }
 

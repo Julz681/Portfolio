@@ -21,7 +21,6 @@ async function uploadTemplateTasksOnce() {
   try {
     const snapshot = await get(tasksRef);
     const existingTasks = snapshot.exists() ? snapshot.val() : {};
-
     for (const task of tasks) {
       if (!existingTasks[task.id]) {
         await set(ref(database, `tasks/${task.id}`), task);
@@ -38,7 +37,6 @@ async function uploadTemplateTasksOnce() {
 function getTasksFromLocalStorage() {
   const saved = JSON.parse(localStorage.getItem("tasks"));
   if (!saved) return;
-
   const existingIds = new Set(tasks.map((t) => t.id));
   saved.forEach((task) => {
     if (!existingIds.has(task.id)) {
@@ -118,9 +116,7 @@ function getStatusFromColumnElement(taskElement) {
 function renderUsersToSelect() {
   const select = document.getElementById("assigned-select");
   if (!select || !Array.isArray(window.userNames)) return;
-
   select.innerHTML = `<option value="" disabled selected hidden></option>`;
-
   window.userNames.forEach((name, index) => {
     if (typeof name === "string") {
       const option = document.createElement("option");
@@ -138,7 +134,6 @@ function renderUsersToSelect() {
 function renderUsersToAssign(listId = "assigned-to-users-list") {
   let container = document.getElementById(listId);
   if (!container) return;
-
   clearUserList(container);
   addAllUsersToList(container);
   renderUsersToSelect();
@@ -176,7 +171,6 @@ function createUserTemplateHTML(name, index) {
   const initials = getInitials(name);
   const styling = checkIsAssigned(name);
   const bgColor = getIconBackgroundColor(initials);
-
   return getUsersToAssignTemplate(
     name,
     index,
