@@ -27,12 +27,12 @@ function hideFieldErrors() {
 }
 
 /**
- * Fills email and password fields with demo values for testing.
+* Fills email and password fields with demo values for testing.
  */
 function autoFillFields() {
   document.getElementById("email").value = "SofiaMueller@gmail.com";
   document.getElementById("password").value = "MyPassword12345";
-}
+ }
 
 /**
  * Toggles password visibility and updates the eye icon accordingly.

@@ -26,6 +26,7 @@ function hideAllFieldErrors() {
         }
     });
 }
+
 /**
  * Automatically fills in the sign-up fields for demo/testing purposes.
  */
