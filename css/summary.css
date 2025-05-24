@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Inter';
-  src: url('assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("assets/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
 }
 
 body {
@@ -8,7 +8,7 @@ body {
   padding-left: 340px;
   max-width: 100%;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   scroll-behavior: smooth;
@@ -509,8 +509,48 @@ hr {
 
 @media (max-height: 600px) {
   .container {
-    padding-top: 120px;
+    padding-top: 150px;
     overflow-y: auto;
     padding-bottom: 40px;
+  }
+
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-height: 550px) {
+  .container {
+    padding-top: 160px;
+    overflow-y: auto;
+    padding-bottom: 40px;
+  }
+
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-height: 500px) {
+  .container {
+    padding-top: 180px;
+    overflow-y: auto;
+    padding-bottom: 40px;
+  }
+
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-height: 450px) {
+  .container {
+    padding-top: 220px;
+    overflow-y: auto;
+    padding-bottom: 40px;
+  }
+
+  .container::-webkit-scrollbar {
+    display: none;
   }
 }
