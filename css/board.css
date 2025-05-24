@@ -3,11 +3,6 @@
   src: url(/assets/font/Figtree-Oxanium-Ubuntu/Figtree/Figtree-Italic-VariableFont_wght.ttf);
 }
 
-@font-face {
-  font-family: "Inter", sans-serif;
-  src: url(/assets/font/Inter/Inter-VariableFont_opsz\wght.ttf);
-}
-
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
