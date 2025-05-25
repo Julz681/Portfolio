@@ -1,5 +1,5 @@
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .error-message {
@@ -16,17 +16,28 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  position: relative;
+}
+
+.privacy-policy-wrapper {
+  position: relative;
 }
 
 .required-error-message {
+  position: absolute;
+  top: 110%;
+  left: 0;
   font-size: 12px;
   font-weight: 400;
   color: #ff8190;
   font-family: "Poppins", sans-serif;
+  display: block;
+  white-space: nowrap;
+  z-index: 111111;
 }
 
 .d_none {
-  display: none;
+  visibility: hidden;
 }
 
 #signup-form-container {
@@ -171,6 +182,7 @@ form {
   justify-content: center;
   color: #29abe2;
   gap: 4px;
+  position: relative;
 }
 
 .privacy-policy input[type="checkbox"] {
@@ -253,6 +265,7 @@ form {
   flex-direction: column;
   justify-content: center;
   gap: 32px;
+  position: relative;
 }
 
 .start {

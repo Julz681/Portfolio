@@ -71,18 +71,24 @@
         </div>
 
         <div class="wrapper">
-          <div class="privacy-policy">
-            <input type="checkbox" id="privacy-policy" />
-            <label for="privacy-policy">
-              I accept the <a href="/html/privacy_policy_logged_out.html">Privacy Policy</a>
-            </label>
+          <div class="privacy-policy-wrapper">
+            <div class="privacy-policy">
+              <input type="checkbox" id="privacy-policy" />
+              <label for="privacy-policy">
+                I accept the <a href="/html/privacy_policy_logged_out.html">Privacy Policy</a>
+              </label>
+            </div>
+            <span class="required-error-message d_none" id="privacy-error">
+              Please accept the privacy policy.
+            </span>
           </div>
-          <span class="required-error-message d_none" id="privacy-error">Please accept the privacy policy.</span>
-
+        
           <div class="btn_center">
             <button type="submit" class="signup-btn">Sign up</button>
           </div>
         </div>
+        
+        
       </form>
     </div>
   </div>
