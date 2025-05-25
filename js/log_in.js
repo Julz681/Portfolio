@@ -108,7 +108,7 @@ function handleUserValidation(userData, password) {
   return true;
 }
 
-function saveLoginSession(userData, rememberMe, email, password) {
+function saveLoginSession(userData, rememberMe, email) {
   localStorage.setItem("email", email);
   localStorage.setItem("userId", userData.userId);
   localStorage.setItem("loggedInUserName", userData.name);
@@ -116,13 +116,14 @@ function saveLoginSession(userData, rememberMe, email, password) {
   if (rememberMe) {
     localStorage.setItem("rememberMe", "true");
     localStorage.setItem("savedEmail", email);
-    localStorage.setItem("savedPassword", password);
   } else {
     localStorage.removeItem("rememberMe");
     localStorage.removeItem("savedEmail");
-    localStorage.removeItem("savedPassword");
   }
 }
+
+
+
 
 /**
  * Logs in as a guest with predefined credentials.
@@ -141,14 +142,22 @@ function guestLogin() {
  */
 function restoreLogin() {
   const remember = localStorage.getItem("rememberMe") === "true";
-  const email = localStorage.getItem("savedEmail");
-  const password = localStorage.getItem("savedPassword");
-  if (remember && email && password) {
-    document.getElementById("email").value = email;
-    document.getElementById("password").value = password;
+  const savedEmail = localStorage.getItem("savedEmail");
+  const tempEmail = sessionStorage.getItem("tempEmail");
+  const tempPassword = sessionStorage.getItem("tempPassword");
+  if (remember && savedEmail) {
+    document.getElementById("email").value = savedEmail;
     document.getElementById("rememberMe").checked = true;
+  } else if (tempEmail && tempPassword) {
+    document.getElementById("email").value = tempEmail;
+    document.getElementById("password").value = tempPassword;
+    sessionStorage.removeItem("tempEmail");
+    sessionStorage.removeItem("tempPassword");
   }
 }
+
+
+
 
 /**
  * Initializes all login-related event listeners once the DOM is ready.

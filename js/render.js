@@ -1,26 +1,46 @@
 /**
  * Renders the search results for users to assign in the designated list container.
- * For each search result, it checks if the user is already assigned and then
- * appends the HTML for the user item to the list.
- * @param {Array<string>} searchResults - An array of user names to display in the search results.
+ * Clears the container and appends HTML for each result with proper styling.
+ * @param {Array<string>} searchResults - An array of user names to display.
  */
 function renderUserSearchResult(searchResults) {
-  let usersListContainerRef = document.getElementById("assigned-to-users-list");
-  usersListContainerRef.innerHTML = "";
-  for (let index = 0; index < searchResults.length; index++) {
-    let stylingObject = checkIsAssigned(searchResults[index]);
-    let initials = getInitials(searchResults[index]);
-    let iconBackgroundColor = getIconBackgroundColor(initials);
-    usersListContainerRef.innerHTML += getUsersToAssignTemplate(
-      searchResults[index],
-      index,
-      stylingObject.wrapperClass,
-      stylingObject.checkboxClass,
-      initials,
-      iconBackgroundColor
-    );
-  }
+  const usersListContainerRef = document.getElementById("assigned-to-users-list");
+  clearUserListContainer(usersListContainerRef);
+  searchResults.forEach((userName, index) => {
+    const userHTML = createUserSearchResultHTML(userName, index);
+    usersListContainerRef.innerHTML += userHTML;
+  });
 }
+
+/**
+ * Clears the inner content of the user list container.
+ * @param {HTMLElement} container - The container to clear.
+ */
+function clearUserListContainer(container) {
+  container.innerHTML = "";
+}
+
+/**
+ * Creates the HTML string for a single user in the search results.
+ * Handles checking assignment state, initials, and background color.
+ * @param {string} userName - The user's full name.
+ * @param {number} index - The index of the user in the results array.
+ * @returns {string} - The HTML string representing the user item.
+ */
+function createUserSearchResultHTML(userName, index) {
+  const stylingObject = checkIsAssigned(userName);
+  const initials = getInitials(userName);
+  const iconBackgroundColor = getIconBackgroundColor(initials);
+  return getUsersToAssignTemplate(
+    userName,
+    index,
+    stylingObject.wrapperClass,
+    stylingObject.checkboxClass,
+    initials,
+    iconBackgroundColor
+  );
+}
+
 
 /**
  * Renders the list of subtasks based on the current `subtaskArray`.
@@ -45,39 +65,48 @@ function renderSubtaskList() {
 
 /**
  * Renders the avatars of the assigned users in the task form.
- * It checks if the dropdown for assignees is being toggled or if the category dropdown is open,
- * and if there are assignees, it displays their avatars. Otherwise, it hides the assignee container.
- * @param {string} containerId - The ID of the dropdown container that triggered the render.
- * @param {HTMLElement} container - The HTML element of the dropdown container.
+ * Determines whether to show or hide the assignees list based on dropdown state and data.
+ * @param {string} containerId - The ID of the dropdown triggering the render.
+ * @param {HTMLElement} container - The dropdown HTML element.
  */
 function renderAssignees(containerId, container) {
-  let assigneesContainerRef = document.getElementById(
-    "assignees-list-task-form"
-  );
-  let additionalAssignees = 0;
-  if (
-    ((containerId === "assigned-to-dropdown" ||
-      containerId === "assigned-to-dropdown-task-form") &&
-      assignees.length != 0 &&
-      container.classList.contains("d_none")) ||
-    (containerId === "category-dropdown" && assignees.length != 0)
-  ) {
-    showAssigneesContainer(assigneesContainerRef);
-    for (let index = 0; index < assignees.length; index++) {
-      addSingleAssignee(index, assignees[index], assigneesContainerRef);
-      additionalAssignees = checkForAdditionalAssignees(
-        index,
-        additionalAssignees
-      );
-    }
-    showAdditionalAssignees(additionalAssignees, assigneesContainerRef);
-  } else if (
-    !container.classList.contains("d_none") ||
-    assignees.length === 0
-  ) {
+  const assigneesContainerRef = document.getElementById("assignees-list-task-form");
+  if (shouldShowAssignees(containerId, container)) {
+    displayAssignees(assigneesContainerRef);
+  } else if (!container.classList.contains("d_none") || assignees.length === 0) {
     hideAssigneesContainer(assigneesContainerRef);
   }
 }
+
+/**
+ * Checks whether the assignees should be rendered.
+ * @param {string} containerId - The ID of the triggering dropdown.
+ * @param {HTMLElement} container - The dropdown element.
+ * @returns {boolean} - True if assignees should be shown.
+ */
+function shouldShowAssignees(containerId, container) {
+  const isAssignedDropdown = containerId === "assigned-to-dropdown" || containerId === "assigned-to-dropdown-task-form";
+  const isCategoryDropdown = containerId === "category-dropdown";
+  return (
+    (isAssignedDropdown && assignees.length !== 0 && container.classList.contains("d_none")) ||
+    (isCategoryDropdown && assignees.length !== 0)
+  );
+}
+
+/**
+ * Displays the list of assignee avatars with overflow handling.
+ * @param {HTMLElement} container - The container where avatars are rendered.
+ */
+function displayAssignees(container) {
+  showAssigneesContainer(container);
+  let additionalAssignees = 0;
+  for (let index = 0; index < assignees.length; index++) {
+    addSingleAssignee(index, assignees[index], container);
+    additionalAssignees = checkForAdditionalAssignees(index, additionalAssignees);
+  }
+  showAdditionalAssignees(additionalAssignees, container);
+}
+
 
 /**
  * Renders a single assignee's avatar within a specified container.

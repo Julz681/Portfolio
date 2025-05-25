@@ -7,7 +7,6 @@ window.addEventListener("DOMContentLoaded", () => {
   loadContactsFromLocalStorage();
   bindDeleteButton(); 
   bindEditButton(); 
-  enableAutofill(); 
   closeErrorOnInput(); 
   bindEditOverlayButtons();
 });
@@ -219,27 +218,71 @@ function updateEditedContact(name, email, phone, list) {
 }
 
 /**
- * Adds a click event listener to the contact details view to handle the deletion of a contact
- * when the delete button is clicked. It finds the name of the currently displayed contact,
- * removes all corresponding contact items from the list, removes any resulting empty groups,
- * and clears the contact details view.
+ * Sets up the delete button in the contact details view.
  */
 function bindDeleteButton() {
   document.querySelector(".contacts-right-bottom")
-    ?.addEventListener("click", (e) => {
-      const btn = e.target.closest("#deleteBtn");
-      if (!btn) return;
-      const name = document.querySelector(".details-name")?.textContent;
-      document.querySelectorAll(".contact-item").forEach((item) => {
-        if (item.dataset.name === name) item.remove();
-      });
-      document.querySelectorAll(".contact-group").forEach((group) => {
-        if (!group.querySelector(".contact-item")) group.remove();
-      });
-      document.querySelector(".contacts-right-bottom").innerHTML = "";
-      deleteContactFromLocalStorage(name);
-    });
+    ?.addEventListener("click", handleDeleteClick);
 }
+
+/**
+ * Handles the click event on the delete button.
+ * @param {MouseEvent} e - The click event.
+ */
+function handleDeleteClick(e) {
+  const btn = e.target.closest("#deleteBtn");
+  if (!btn) return;
+
+  const name = getSelectedContactName();
+  const firebaseId = getFirebaseIdByName(name);
+
+  if (firebaseId) deleteContactFromFirebase(firebaseId);
+  removeContactElementsByName(name);
+  clearContactDetails();
+  deleteContactFromLocalStorage(name);
+}
+
+/**
+ * Returns the name of the contact currently shown in the details view.
+ * @returns {string|null} - Contact name or null.
+ */
+function getSelectedContactName() {
+  return document.querySelector(".details-name")?.textContent || null;
+}
+
+/**
+ * Gets the Firebase ID for a contact by name.
+ * @param {string} name - The contact name.
+ * @returns {string|null} - Firebase ID or null.
+ */
+function getFirebaseIdByName(name) {
+  return document.querySelector(`.contact-item[data-name="${name}"]`)
+    ?.dataset.firebaseId || null;
+}
+
+/**
+ * Removes all DOM elements for a contact with the given name.
+ * @param {string} name - The contact name.
+ */
+function removeContactElementsByName(name) {
+  document.querySelectorAll(".contact-item").forEach((item) => {
+    if (item.dataset.name === name) item.remove();
+  });
+
+  document.querySelectorAll(".contact-group").forEach((group) => {
+    if (!group.querySelector(".contact-item")) group.remove();
+  });
+}
+
+/**
+ * Clears the contact detail view in the right panel.
+ */
+function clearContactDetails() {
+  const container = document.querySelector(".contacts-right-bottom");
+  if (container) container.innerHTML = "";
+}
+
+
 
 /**
  * Adds a click event listener to the document to detect clicks on the "Edit" button

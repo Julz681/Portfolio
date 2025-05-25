@@ -40,37 +40,57 @@ function clearForm() {
 }
 
 /**
- * Handles the creation of a new contact when the "Create Contact" button is clicked.
- * It prevents the default form submission, gets the values from the input fields,
- * shows an error if any field is empty, hides the error if all are filled,
- * creates a new contact element and adds it to the contact list, resets the overlay,
- * shows a success message on smaller screens, updates floating buttons, and re-binds edit overlay buttons.
+ * Binds the click event to the "Create Contact" button and handles contact creation.
  */
 function bindCreateButton() {
   document.getElementById("createContact")
-    .addEventListener("click", function (e) {
-      e.preventDefault();
-      const name = getValue("contactName");
-      const email = getValue("contactEmail");
-      const phone = getValue("contactPhone");
-      if (!name || !email || !phone) return showError();
-      hideError();
-      const list = document.getElementById("contactList");
-      if (validateEmail("contactEmail", "email-error-message")) return;
-      if (validatePhoneNumber("contactPhone", "phone-error-message")) return;
-      createContactElement(name, email, phone, list);
-      saveContactToLocalStorage(name, email, phone);
-      resetOverlay();
-      if (window.innerWidth < 900) {
-        document
-          .querySelector(".contacts-right")
-          ?.classList.add("show-contact-right");
-        showSuccessMessage();
-      }
-      updateFloatingButtons();
-      bindEditOverlayButtons();
-    });
+    .addEventListener("click", handleCreateContactClick);
 }
+
+/**
+ * Handles the click event for creating a new contact.
+ * @param {Event} e - The click event.
+ */
+function handleCreateContactClick(e) {
+  e.preventDefault();
+  const name = getValue("contactName");
+  const email = getValue("contactEmail");
+  const phone = getValue("contactPhone");
+  if (!name || !email || !phone) return showError();
+  hideError();
+  if (validateEmail("contactEmail", "email-error-message")) return;
+  if (validatePhoneNumber("contactPhone", "phone-error-message")) return;
+  processValidContact(name, email, phone);
+}
+
+/**
+ * Processes the creation of a valid contact and updates the UI.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ */
+function processValidContact(name, email, phone) {
+  const list = document.getElementById("contactList");
+  createContactElement(name, email, phone, list);
+  saveContactToLocalStorage(name, email, phone);
+  resetOverlay();
+  if (window.innerWidth < 900) {
+    showMobileSuccessUI();
+  }
+  updateFloatingButtons();
+  bindEditOverlayButtons();
+}
+
+/**
+ * Shows contact success feedback and contact section on smaller screens.
+ */
+function showMobileSuccessUI() {
+  document
+    .querySelector(".contacts-right")
+    ?.classList.add("show-contact-right");
+  showSuccessMessage();
+}
+
 
 /**
  * Adds a click event listener to the document to close the edit contact overlay
@@ -143,9 +163,8 @@ function bindEditOverlayButtons() {
 }
 
 /**
- * Handles the submission of the edit contact form. It prevents the default submission,
- * gets the updated values, validates them, and if valid, updates the contact in the UI
- * and closes the edit overlay.
+ * Handles the submission of the edit contact form.
+ * Prevents default behavior, validates inputs, and updates the contact.
  * @param {Event} e - The submit event.
  */
 function handleEditSubmit(e) {
@@ -153,27 +172,47 @@ function handleEditSubmit(e) {
   const name = getValue("editContactName");
   const email = getValue("editContactEmail");
   const phone = getValue("editContactPhone");
+
+  if (!validateEditInputs(name, email, phone)) return;
+  if (validateEmail("editContactEmail", "email-edit-error-message")) return;
+  if (validatePhoneNumber("editContactPhone", "phone-edit-error-message")) return;
+
+  handleContactUpdate(name, email, phone);
+}
+
+/**
+ * Validates edit form inputs and shows error if any field is empty.
+ * @param {string} name - The edited name.
+ * @param {string} email - The edited email.
+ * @param {string} phone - The edited phone number.
+ * @returns {boolean} True if all fields are filled, false otherwise.
+ */
+function validateEditInputs(name, email, phone) {
   if (!name || !email || !phone) {
     document.getElementById("edit-error-message").style.display = "block";
-    return;
+    return false;
   }
-  if (validateEmail("editContactEmail", "email-edit-error-message")) return;
-  if (validatePhoneNumber("editContactPhone", "phone-edit-error-message"))
-    return;
-  const list = document.getElementById("contactList");
-  const currentName =
-    document.getElementById("editContactOverlay").dataset.current;
+  return true;
+}
 
-  const selected = [...document.querySelectorAll(".contact-item")].find(
-    (i) => i.dataset.name === currentName
-  );
-  if (!selected) {
-    return;
-  }
+/**
+ * Handles updating the contact in the UI and local storage.
+ * @param {string} name - The new contact name.
+ * @param {string} email - The new contact email.
+ * @param {string} phone - The new contact phone number.
+ */
+function handleContactUpdate(name, email, phone) {
+  const list = document.getElementById("contactList");
+  const currentName = document.getElementById("editContactOverlay").dataset.current;
+  const selected = [...document.querySelectorAll(".contact-item")]
+    .find(item => item.dataset.name === currentName);
+  if (!selected) return;
+
   updateEditedContact(name, email, phone, list, selected);
   closeEditOverlay();
   updateContactInLocalStorage(currentName, name, email, phone);
 }
+
 
 /**
  * Handles the deletion of a contact from within the edit overlay.
@@ -206,26 +245,6 @@ function closeEditOverlay() {
   document.getElementById("phone-edit-error-message").classList.add("hidden");
 }
 
-/**
- * Activates an autofill feature for the add contact form. When all input fields
- * are empty and one of them receives focus, it automatically fills them with
- * example data for "Mark Zuckerberg". This action is performed only once.
- */
-function enableAutofill() {
-  const name = document.getElementById("contactName");
-  const email = document.getElementById("contactEmail");
-  const phone = document.getElementById("contactPhone");
-  if (!name || !email || !phone) return;
-  let used = false;
-  const fill = () => {
-    if (used || name.value || email.value || phone.value) return;
-    name.value = "Mark Zuckerberg";
-    email.value = "mark@facebook.com";
-    phone.value = "+1 650 550 450";
-    used = true;
-  };
-  [name, email, phone].forEach((f) => f.addEventListener("focus", fill));
-}
 
 /**
  * Hides the error message in the add contact overlay when all input fields

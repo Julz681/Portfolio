@@ -83,9 +83,8 @@ function validateForm(data) {
 function saveAccount(data) {
   const userId = data.email.replace(/[^a-zA-Z0-9]/g, "_");
   saveUserData(userId, data.name, data.email, data.password);
-  localStorage.setItem("savedEmail", data.email);
-  localStorage.setItem("savedPassword", data.password);
-  localStorage.setItem("rememberMe", "true");
+sessionStorage.setItem("tempEmail", data.email);
+sessionStorage.setItem("tempPassword", data.password);
   createContact(data.name, data.email);
 }
 

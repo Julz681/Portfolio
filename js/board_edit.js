@@ -1,6 +1,6 @@
 /**
- * Makes the assignee container visible.
- * @param {HTMLElement} container - The container to show.
+ * Shows the assignee container.
+ * @param {HTMLElement} container - Target container.
  */
 function showAssigneeContainer(container) {
   container.classList.remove("d_none");
@@ -8,224 +8,220 @@ function showAssigneeContainer(container) {
 
 /**
  * Hides the assignee container.
- * @param {HTMLElement} container - The container to hide.
+ * @param {HTMLElement} container - Target container.
  */
 function hideAssigneeContainer(container) {
   container.classList.add("d_none");
 }
 
 /**
- * Creates and appends avatar elements for each assigned user.
- * @param {HTMLElement} container - The element where avatars will be appended.
+ * Renders assigned user avatars in a container.
+ * @param {HTMLElement} container - Target element.
  */
 function renderAssigneeAvatars(container) {
   window.assignees.forEach((name) => {
     const initials = getInitials(name);
-    const bgColor = getIconBackgroundColor(initials);
-    const avatarHTML = getAvatarTemplate(initials, bgColor);
-    const wrapper = document.createElement("div");
-    wrapper.innerHTML = avatarHTML;
-    container.appendChild(wrapper.firstElementChild);
+    const color = getIconBackgroundColor(initials);
+    const html = getAvatarTemplate(initials, color);
+    const wrap = document.createElement("div");
+    wrap.innerHTML = html;
+    container.appendChild(wrap.firstElementChild);
   });
 }
 
 /**
- * Toggles a user's assignment in the edit overlay.
- * Updates the assignee list and re-renders UI.
- * @param {string} name - User name to toggle.
- * @param {string} containerId - ID of the assignee dropdown.
+ * Toggles user assignment in list.
+ * @param {string} name - Username.
+ * @param {string} containerId - Dropdown ID.
  */
 function toggleAssigned(name, containerId) {
-  const index = window.assignees.indexOf(name);
-  if (index > -1) {
-    window.assignees.splice(index, 1);
-  } else {
-    window.assignees.push(name);
-  }
+  const i = window.assignees.indexOf(name);
+  if (i > -1) window.assignees.splice(i, 1);
+  else window.assignees.push(name);
   const dropdown = document.getElementById(containerId);
   renderAssigneesEdit(containerId, dropdown);
   renderUsersToAssignEdit();
 }
 
 /**
- * Extracts the initials of a given name. If the name has multiple parts, it takes the first letter of the first two parts.
- * If the name has only one part or is empty, it returns the first letter or a question mark respectively.
- * @param {string} name - The full name of the user.
- * @returns {string} The initials of the user's name in uppercase.
+ * Returns initials from a full name.
+ * @param {string} name - Full name.
+ * @returns {string} Initials.
  */
 function getInitials(name) {
   if (!name) return "?";
   const parts = name.trim().split(" ");
-  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-  return (parts[0][0] + parts[1][0]).toUpperCase();
+  return (parts[0][0] + (parts[1]?.[0] || "")).toUpperCase();
 }
 
 /**
- * Toggles the visibility of a dropdown element in the edit overlay.
- * It also toggles the visibility of the associated closed and open arrow icons.
- * @param {string} dropdownId - The ID of the dropdown element to toggle.
- * @param {Event} event - The click event that triggered the toggle. It's stopped from propagating.
+ * Toggles dropdown visibility with arrows.
  */
-function toggleDropdownSelectionInEdit(dropdownId, event) {
-  event.stopPropagation();
-  const dropdown = document.getElementById(dropdownId);
-  const arrowClosed = document.getElementById(`${dropdownId}-closed`);
-  const arrowOpen = document.getElementById(`${dropdownId}-open`);
-  const isOpen = !dropdown.classList.contains("d_none");
-  if (isOpen) {
-    dropdown.classList.add("d_none");
-    arrowClosed.classList.remove("d_none");
-    arrowOpen.classList.add("d_none");
-  } else {
-    dropdown.classList.remove("d_none");
-    arrowClosed.classList.add("d_none");
-    arrowOpen.classList.remove("d_none");
-  }
+function toggleDropdownSelectionInEdit(id, e) {
+  e.stopPropagation();
+  const d = document.getElementById(id);
+  const aC = document.getElementById(`${id}-closed`);
+  const aO = document.getElementById(`${id}-open`);
+  toggleDropdownAndArrows(d, aC, aO);
 }
 
 /**
- * Retrieves a task object from the global `tasks` array based on its ID.
- * @param {string} id - The ID of the task to retrieve.
- * @returns {Object | undefined} The task object if found, otherwise undefined.
+ * Toggles dropdown and arrows state.
+ */
+function toggleDropdownAndArrows(drop, closed, open) {
+  const openNow = !drop.classList.contains("d_none");
+  openNow ? hideDropdown(drop, closed, open)
+          : showDropdown(drop, closed, open);
+}
+
+/**
+ * Hides dropdown and shows closed arrow.
+ */
+function hideDropdown(drop, closed, open) {
+  drop.classList.add("d_none");
+  closed.classList.remove("d_none");
+  open.classList.add("d_none");
+}
+
+/**
+ * Shows dropdown and shows open arrow.
+ */
+function showDropdown(drop, closed, open) {
+  drop.classList.remove("d_none");
+  closed.classList.add("d_none");
+  open.classList.remove("d_none");
+}
+
+/**
+ * Finds task by ID.
  */
 function getTaskById(id) {
   return tasks.find((t) => t.id === id);
 }
 
 /**
- * Sets up event listeners for all priority buttons (Urgent, Medium, Low) in the edit overlay.
- * When a button is clicked, it removes the 'selected' class and resets the styling of all other priority buttons,
- * and then adds the 'selected' class and activates the styling for the clicked button.
+ * Enables priority selection.
  */
 function setupPrioritySelection() {
-  const buttons = document.querySelectorAll("#urgent, #medium, #low");
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      buttons.forEach((btn) => {
-        btn.classList.remove("selected");
-        resetPriority(btn);
+  const btns = document.querySelectorAll("#urgent, #medium, #low");
+  btns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      btns.forEach(b => {
+        b.classList.remove("selected");
+        resetPriority(b);
       });
-      button.classList.add("selected");
-      activatePriority(button);
+      btn.classList.add("selected");
+      activatePriority(btn);
     });
   });
 }
 
 /**
- * Resets the visual styling of a priority button to its default state.
- * This includes setting the background color to white, text color to black,
- * font weight to normal, and resetting the fill color of the SVG path based on the button's ID.
- * @param {HTMLElement} button - The priority button element to reset.
+ * Resets visual style of priority button.
  */
 function resetPriority(button) {
-  button.style.backgroundColor = "#ffffff";
-  button.style.color = "#000000";
+  button.style.backgroundColor = "#fff";
+  button.style.color = "#000";
   button.style.fontWeight = "normal";
-  const paths = button.querySelectorAll("svg path");
-  paths.forEach((path) => setDefaultColor(path, button.id));
+  button.querySelectorAll("svg path").forEach(p =>
+    setDefaultColor(p, button.id)
+  );
 }
 
 /**
- * Sets the default fill color of an SVG path within a priority button based on the button's ID.
- * @param {SVGPathElement} path - The SVG path element to style.
- * @param {string} id - The ID of the priority button ("urgent", "medium", or "low").
- */
-function setDefaultColor(path, id) {
-  if (id === "urgent") path.setAttribute("fill", "#FF3D00");
-  if (id === "medium") path.setAttribute("fill", "#FFA800");
-  if (id === "low") path.setAttribute("fill", "#7AE229");
-}
-
-/**
- * Styles a priority button as active.
- * Sets color, weight, and SVG fill.
- * @param {HTMLElement} button - The button to style.
+ * Highlights active priority button.
  */
 function activatePriority(button) {
-  button.style.backgroundColor =
-    button.id === "urgent"
-      ? "#FF3D00"
-      : button.id === "medium"
-      ? "#FFA800"
-      : "#7AE229";
-  button.style.color = "#ffffff";
+  button.style.backgroundColor = getPriorityColor(button.id);
+  button.style.color = "#fff";
   button.style.fontWeight = "bold";
-  const paths = button.querySelectorAll("svg path");
-  paths.forEach((path) => path.setAttribute("fill", "#ffffff"));
+  button.querySelectorAll("svg path").forEach(p =>
+    p.setAttribute("fill", "#fff")
+  );
 }
 
 /**
- * Initializes the "Assigned to" dropdown in the edit overlay by ensuring the `window.userNames` array is populated
- * with at least some default values if no data has been loaded yet.
+ * Returns priority color for ID.
+ */
+function getPriorityColor(id) {
+  const colors = { urgent: "#FF3D00", medium: "#FFA800", low: "#7AE229" };
+  return colors[id] || "#ccc";
+}
+
+/**
+ * Sets default SVG color for priority.
+ */
+function setDefaultColor(path, id) {
+  const colors = { urgent: "#FF3D00", medium: "#FFA800", low: "#7AE229" };
+  path.setAttribute("fill", colors[id] || "#000");
+}
+
+/**
+ * Initializes default users if empty.
  */
 function setupAssignedToDropdown() {
-  if (!window.userNames || window.userNames.length === 0) {
+  if (!window.userNames?.length) {
     window.userNames = ["Max Mustermann", "Erika Musterfrau"];
   }
 }
 
 /**
- * Sets up the event listeners for the "Assigned to" dropdown in the edit overlay.
- * It handles the click event on the dropdown arrow to open and close the dropdown,
- * and a global click listener to close the dropdown if the user clicks outside of it.
+ * Sets up dropdown arrow and outside click.
  */
 function setupEditDropdownEvents() {
   const arrow = document.getElementById("select-arrow-edit");
-  const wrapper = document.querySelector(".dropdown-field-wrapper");
-  const dropdown = document.getElementById("assigned-to-dropdown-edit");
-  if (!arrow || !wrapper || !dropdown) return;
-  bindDropdownArrowClick(arrow, dropdown);
-  bindOutsideDropdownClose(wrapper, dropdown, arrow);
+  const wrap = document.querySelector(".dropdown-field-wrapper");
+  const drop = document.getElementById("assigned-to-dropdown-edit");
+  if (!arrow || !wrap || !drop) return;
+  bindDropdownArrowClick(arrow, drop);
+  bindOutsideDropdownClose(wrap, drop, arrow);
 }
 
-function bindDropdownArrowClick(arrow, dropdown) {
+/**
+ * Toggles dropdown open/close on click.
+ */
+function bindDropdownArrowClick(arrow, drop) {
   arrow.addEventListener("click", (e) => {
     e.stopPropagation();
-    const isOpen = !dropdown.classList.contains("d_none");
-    if (isOpen) {
-      closeEditDropdown(dropdown, arrow);
-    } else {
-      openEditDropdown(dropdown, arrow);
-    }
+    const open = !drop.classList.contains("d_none");
+    open ? closeEditDropdown(drop, arrow)
+         : openEditDropdown(drop, arrow);
   });
 }
 
-function bindOutsideDropdownClose(wrapper, dropdown, arrow) {
+/**
+ * Closes dropdown if clicking outside.
+ */
+function bindOutsideDropdownClose(wrapper, drop, arrow) {
   document.addEventListener("click", (e) => {
     if (!wrapper.contains(e.target)) {
-      closeEditDropdown(dropdown, arrow);
+      closeEditDropdown(drop, arrow);
     }
   });
 }
 
 /**
- * Binds event listeners to the add, clear, and confirm buttons for subtask input in the edit overlay.
- * Clicking the add button shows the confirm and clear icons.
- * Clicking the clear or confirm button resets the input field and hides the confirm/clear icons.
+ * Initializes subtask input behavior.
  */
 function setupSubtaskInput() {
   const input = document.getElementById("subtasks-edit");
   const addBtn = document.getElementById("edit-add-subtask-icon");
   const confirmWrap = document.getElementById("confirm-icons");
-  const confirmBtn = document.getElementById("confirm-icon");
-  const clearBtn = document.getElementById("clear-icon");
+  const confirm = document.getElementById("confirm-icon");
+  const clear = document.getElementById("clear-icon");
   addBtn.addEventListener("click", () =>
     showConfirm(input, confirmWrap, addBtn)
   );
-  clearBtn.addEventListener("click", () =>
+  clear.addEventListener("click", () =>
     resetInput(input, confirmWrap, addBtn)
   );
-  confirmBtn.addEventListener("click", () =>
+  confirm.addEventListener("click", () =>
     resetInput(input, confirmWrap, addBtn)
   );
 }
 
 /**
- * Shows the confirm (check mark) and cancel (X) icons next to the subtask input field
- * and hides the add icon, while also focusing on the input field.
- * @param {HTMLInputElement} input - The subtask input field.
- * @param {HTMLElement} confirm - The container for the confirm and clear icons.
- * @param {HTMLElement} add - The add subtask icon.
+ * Shows confirm/clear icons for input.
  */
 function showConfirm(input, confirm, add) {
   add.classList.add("d-none");
@@ -234,11 +230,7 @@ function showConfirm(input, confirm, add) {
 }
 
 /**
- * Resets the subtask input field by clearing its value and hiding the confirm/clear icons,
- * while making the add icon visible again.
- * @param {HTMLInputElement} input - The subtask input field.
- * @param {HTMLElement} confirm - The container for the confirm and clear icons.
- * @param {HTMLElement} add - The add subtask icon.
+ * Clears input and restores add icon.
  */
 function resetInput(input, confirm, add) {
   input.value = "";
@@ -247,39 +239,53 @@ function resetInput(input, confirm, add) {
 }
 
 /**
- * Renders the subtasks of a given task into the specified container element in the edit overlay.
- * For each subtask, it creates a list item with the subtask title and edit/delete icons.
- * @param {object} task - The task object containing the subtasks.
- * @param {HTMLElement} container - The HTML element to append the subtask list items to.
+ * Renders all subtasks of a task.
+ * @param {object} task - Task object.
+ * @param {HTMLElement} container - Target container.
  */
 function renderSubtasks(task, container) {
   container.innerHTML = "";
   if (!Array.isArray(task.subtasks)) return;
   task.subtasks.forEach((subtask, index) => {
-    const subtaskElement = createSubtaskElement(subtask, index);
-    container.appendChild(subtaskElement);
+    const element = createSubtaskElement(subtask, index);
+    container.appendChild(element);
   });
 }
 
+/**
+ * Creates one subtask element.
+ * @param {object} subtask - Subtask data.
+ * @param {number} index - Subtask index.
+ * @returns {HTMLElement} DOM element.
+ */
 function createSubtaskElement(subtask, index) {
   const [key, value] = Object.entries(subtask)[0];
-  const subtaskItem = document.createElement("div");
-  subtaskItem.classList.add("subtask-list-item");
-  applySubtaskStyles(subtaskItem);
-  subtaskItem.innerHTML = getSubtaskItemTemplate(value, index);
-  return subtaskItem;
+  const item = document.createElement("div");
+  item.classList.add("subtask-list-item");
+  applySubtaskStyles(item);
+  item.innerHTML = getSubtaskItemTemplate(value, index);
+  return item;
 }
 
-function applySubtaskStyles(element) {
-  element.style.listStyle = "none";
-  element.style.display = "flex";
-  element.style.justifyContent = "space-between";
-  element.style.alignItems = "center";
-  element.style.padding = "6px 16px";
+/**
+ * Applies list item styles.
+ * @param {HTMLElement} el - Target element.
+ */
+function applySubtaskStyles(el) {
+  Object.assign(el.style, {
+    listStyle: "none",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "6px 16px"
+  });
 }
 
-function updatePrioritySelection(priority, priorityButtons) {
-  priorityButtons.forEach((btn) => {
+/**
+ * Updates selected priority buttons.
+ */
+function updatePrioritySelection(priority, buttons) {
+  buttons.forEach((btn) => {
     resetPriority(btn);
     btn.classList.remove("selected");
     if (btn.id === priority) {
@@ -289,19 +295,19 @@ function updatePrioritySelection(priority, priorityButtons) {
   });
 }
 
-function finishOverlaySetup(task,subtaskInput,addSubtaskIcon,subtaskListContainer) {
-  renderSubtasks(task, subtaskListContainer);
-  subtaskInput.value = "";
+/**
+ * Prepares overlay and renders subtasks.
+ */
+function finishOverlaySetup(task, input, icon, list) {
+  renderSubtasks(task, list);
+  input.value = "";
   openEditOverlay(task);
-  setupSubtaskAdd(addSubtaskIcon, subtaskInput, task, subtaskListContainer);
-  setupSubtaskListEvents(subtaskListContainer, task);
+  setupSubtaskAdd(icon, input, task, list);
+  setupSubtaskListEvents(list, task);
 }
 
 /**
- * Sets up event listeners for the subtask list in the edit overlay to handle deleting and editing subtasks.
- * It listens for clicks on the delete and edit icons within each subtask list item.
- * @param {HTMLElement} container - The container for the subtask list.
- * @param {object} task - The task object whose subtasks are being displayed.
+ * Adds click handlers for subtask actions.
  */
 function setupSubtaskListEvents(container, task) {
   container.addEventListener("click", (e) => {
@@ -316,93 +322,91 @@ function setupSubtaskListEvents(container, task) {
 }
 
 /**
- * Starts editing a subtask in the edit overlay.
- * Replaces the subtask text with an input field and shows confirm/delete icons.
- * Binds save and cancel actions and focuses the input field.
- * @param {MouseEvent} e - The event from clicking the edit icon.
- * @param {object} task - The task containing the subtasks.
- * @param {number} index - Index of the subtask to edit.
- * @param {HTMLElement} container - Subtask list container element.
+ * Begins subtask editing.
  */
 function startEditingSubtask(e, task, index, container) {
   const item = e.target.closest(".subtask-list-item");
-  const input = createSubtaskEditInput(item);
-  if (!input) return; 
-  const iconWrapper = getIconWrapper(item);
-  if (!iconWrapper) return;
-  prepareIconsForEditing(iconWrapper);
-  const deleteIcon = ensureDeleteIconVisible(iconWrapper);
-  const confirmBtn = createConfirmButton();
-  replaceIcons(iconWrapper, deleteIcon, confirmBtn);
-  bindEditActions(input, confirmBtn, deleteIcon, task, index, container);
+  const input = replaceSubtaskTextWithInput(item);
+  const iconWrap = getIconWrapper(item);
+  if (!input || !iconWrap) return;
+  replaceIconsForEdit(iconWrap, input, task, index, container);
   input.focus();
   item.classList.add("subtask-list-item-active");
 }
 
 /**
- * Creates an input element for editing a subtask, populates it with the current subtask text,
- * and replaces the span containing the text with the new input element in the DOM.
- * @param {HTMLElement} item - The list item containing the subtask to be edited.
- * @returns {HTMLInputElement} The created input element for editing.
+ * Turns subtask text into input.
  */
-function createSubtaskEditInput(item) {
-  if (!item) return null;
-  const textWrapper = item.querySelector(".subtask-list-item-content-wrapper");
-  if (!textWrapper) return null;
-  const textEl = textWrapper.querySelector("span");
-  if (!textEl) return null;
-  const oldText = textEl.textContent.trim();
+function replaceSubtaskTextWithInput(item) {
+  const wrapper = item.querySelector(".subtask-list-item-content-wrapper");
+  const span = wrapper?.querySelector("span");
+  if (!wrapper || !span) return null;
   const input = document.createElement("input");
-  input.type = "text";
-  input.value = oldText;
   input.classList.add("subtask-item-input");
-  textWrapper.innerHTML = "";
-  textWrapper.appendChild(input);
+  input.value = span.textContent.trim();
+  wrapper.innerHTML = "";
+  wrapper.appendChild(input);
   return input;
 }
 
 /**
- * Retrieves the second child element of a given list item, which is expected to be the wrapper for the edit and delete icons.
- * @param {HTMLElement} item - The list item whose icon wrapper is to be retrieved.
- * @returns {HTMLElement | null} The icon wrapper element or null if not found.
+ * Returns the icon wrapper element.
  */
 function getIconWrapper(item) {
   return item.querySelector("div:nth-child(2)");
 }
 
 /**
- * Removes the edit icon from the icon wrapper of a subtask list item, preparing it for editing actions.
- * @param {HTMLElement} iconWrapper - The wrapper element containing the edit and delete icons.
+ * Replaces icons with confirm/delete.
  */
-function prepareIconsForEditing(iconWrapper) {
-  const editIcon = iconWrapper.querySelector(".edit-icon");
-  if (editIcon) editIcon.remove();
+function replaceIconsForEdit(wrapper, input, task, index, container) {
+  const del = wrapper.querySelector(".delete-icon");
+  del.style.display = "flex";
+  const confirm = createConfirmButton();
+  wrapper.innerHTML = "";
+  wrapper.appendChild(del);
+  wrapper.appendChild(confirm);
+  bindEditActions(input, confirm, del, task, index, container);
 }
 
 /**
- * Ensures that the delete icon in the icon wrapper is visible and interactive during subtask editing.
- * @param {HTMLElement} iconWrapper - The wrapper element containing the delete icon.
- * @returns {HTMLElement | null} The delete icon element or null if not found.
- */
-function ensureDeleteIconVisible(iconWrapper) {
-  const deleteIcon = iconWrapper.querySelector(".delete-icon");
-  if (deleteIcon) {
-    deleteIcon.style.display = "flex";
-    deleteIcon.style.visibility = "visible";
-    deleteIcon.style.opacity = "1";
-    deleteIcon.style.pointerEvents = "auto";
-  }
-  return deleteIcon;
-}
-
-/**
- * Creates a span element that serves as a confirm button (check mark icon) for saving edited subtasks.
- * The icon is initially hidden.
- * @returns {HTMLSpanElement} The created confirm button element.
+ * Creates a confirm (✓) icon.
+ * @returns {HTMLElement} Confirm element.
  */
 function createConfirmButton() {
   return createIcon(
     "confirm-icon",
-    `<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" width="16" style="cursor: pointer; display: none;">`
+    `<img src="/assets/img/icons/confirm_icon.png" alt="Confirm" width="16" style="cursor: pointer;">`
   );
+}
+
+/**
+ * Binds edit save and cancel logic.
+ */
+function bindEditActions(input, confirmBtn, deleteBtn, task, index, container) {
+  confirmBtn.addEventListener("click", () =>
+    saveEditedSubtask(input, task, index, container)
+  );
+  deleteBtn.addEventListener("click", () =>
+    cancelEditSubtask(task, container)
+  );
+  input.addEventListener("click", (e) => e.stopPropagation());
+}
+
+/**
+ * Saves edited subtask.
+ */
+function saveEditedSubtask(input, task, index, container) {
+  const newText = input.value.trim();
+  if (!newText) return;
+  const key = Object.keys(task.subtasks[index])[0];
+  task.subtasks[index] = { [key]: newText };
+  renderSubtasks(task, container);
+}
+
+/**
+ * Cancels subtask edit.
+ */
+function cancelEditSubtask(task, container) {
+  renderSubtasks(task, container);
 }

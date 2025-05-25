@@ -104,7 +104,6 @@ function deleteContact() {
   document.querySelectorAll(".contact-item").forEach((item) => {
     if (item.dataset.name === name) item.remove();
   });
-
   document.querySelectorAll(".contact-group").forEach((group) => {
     if (!group.querySelector(".contact-item")) group.remove();
   });

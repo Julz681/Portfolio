@@ -197,14 +197,12 @@ function toggleSubtaskCheckbox(taskId, subtaskIndex) {
   const newValue = isChecked ? label : `[x] ${label}`;
   task.subtasks[subtaskIndex][key] = newValue;
   renderSubtaskProgress(task);
-
   saveTasksToStorageOrFirebase();
 }
 
 /** handles searching tasks by title or description */
 let searchInput = document.getElementById("task-search");
 let noResults = document.getElementById("no-results");
-
 searchInput.addEventListener("input", function () {
   let searchText = searchInput.value.toLowerCase();
   handleSearch(searchText);
