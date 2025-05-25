@@ -29,17 +29,6 @@ function hideAllFieldErrors() {
 }
 
 /**
- * Fills the sign-up form with sample/demo data.
- */
-function autoFillFieldsSignUp() {
-  document.getElementById("name").value = "Sofia Müller";
-  document.getElementById("email").value = "SofiaMueller@gmail.com";
-  document.getElementById("password").value = "MyPassword12345";
-  document.getElementById("confirm-password").value = "MyPassword12345";
-  document.getElementById("privacy-policy").checked = true;
-}
-
-/**
  * Validates sign-up form and creates user + contact if valid.
  * @param {Event} event - Submit event from the form.
  */
@@ -236,7 +225,6 @@ function updatePasswordIcon(inputId, imgElement) {
 }
 
 /** Exported for inline usage */
-window.autoFillFieldsSignUp = autoFillFieldsSignUp;
 window.handleSignUpSubmission = handleSignUpSubmission;
 window.togglePasswordVisibility = togglePasswordVisibility;
 window.updatePasswordIcon = updatePasswordIcon;

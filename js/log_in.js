@@ -27,14 +27,6 @@ function hideFieldErrors() {
 }
 
 /**
-* Fills email and password fields with demo values for testing.
- */
-function autoFillFields() {
-  document.getElementById("email").value = "SofiaMueller@gmail.com";
-  document.getElementById("password").value = "MyPassword12345";
- }
-
-/**
  * Toggles password visibility and updates the eye icon accordingly.
  * @param {string} inputId - The ID of the password input field.
  * @param {HTMLImageElement} imgElement - The image element for the icon.
@@ -162,19 +154,11 @@ function restoreLogin() {
  * Initializes all login-related event listeners once the DOM is ready.
  */
 document.addEventListener("DOMContentLoaded", () => {
-  initEmailField();
   initPasswordField();
   initLoginButtons();
   initSignupLinks();
   restoreLogin();
 });
-
-/**
- * Sets up the email field to auto-fill stored credentials on click.
- */
-function initEmailField() {
-  document.getElementById("email")?.addEventListener("click", autoFillFields);
-}
 
 /**
  * Configures password field events (focus, input, blur, toggle).
