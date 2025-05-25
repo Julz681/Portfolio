@@ -507,3 +507,15 @@ body {
     gap: 24px;
   }
 }
+
+.edit-modal {
+  height: 95%;
+  max-height: 700px;
+}
+
+body.modal-open {
+  overflow: hidden;
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+}

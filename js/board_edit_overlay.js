@@ -15,6 +15,7 @@ async function openEditOverlay(task) {
   renderAssigneesEditUI();
   renderSubtaskSection(task);
   setupAllBehaviors();
+  document.body.classList.add("modal-open");
 }
 
 /**
@@ -107,6 +108,7 @@ function getAssigneesContainer(containerId) {
  */
 function closeEditOverlay() {
   document.getElementById("editTaskOverlay").classList.add("hidden");
+  document.body.classList.remove("modal-open");
 }
 
 /**
