@@ -25,7 +25,7 @@ body {
   padding-bottom: 60px;
   padding-left: 12px;
   flex-grow: 1;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 .main-content h1 {
@@ -62,6 +62,14 @@ body {
 .main-content a:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.header {
+  overflow-x: hidden !important;
+}
+
+.sidebar {
+  overflow-x: hidden !important;
 }
 
 @media (max-width: 1200px) {

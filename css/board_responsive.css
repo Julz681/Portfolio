@@ -116,6 +116,18 @@
   overflow-y: auto;
 }
 
+body.modal-open {
+  overflow: hidden;
+  width: 100vw;
+  position: fixed;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 @media (max-width: 1550px) {
   .pd-l-r-64 {
     padding: 0;
@@ -129,7 +141,6 @@
 
   body {
     height: auto !important;
-    overflow-x: auto;
   }
 
   .content-wrapper-board,
@@ -221,6 +232,24 @@
 }
 
 @media (max-width: 1200px) {
+  .header {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 999;
+    overflow-x: hidden;
+  }
+
+  .mobile-nav {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 999;
+    overflow-x: hidden;
+  }
+
   .content-wrapper-board {
     margin-left: -300px;
   }
@@ -261,7 +290,7 @@
   .flatpickr-calendar {
     z-index: 99999999 !important;
   }
-  
+
   .pd-l-r-64 {
     padding-left: 42px;
     padding-right: 12px;
