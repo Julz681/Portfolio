@@ -362,4 +362,21 @@
   .contact-avatar {
     margin-left: 8px;
   }
+
+  
+  .add-contact-modal {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100vh;
+  }
+
+  .add-contact-avatar img {
+    width: 80px;
+    height: 80px;
 }
+
+  .contact-details-card {
+    padding-bottom: 80px;
+}
+}
+

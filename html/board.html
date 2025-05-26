@@ -207,32 +207,12 @@
               <button id="add-user-button">Add</button>
             </div>
           </div>
-          <div class="subtask-section d-flex-column">
-            <span>Subtasks:</span>
-            <div class="subtasks-wrapper d-flex-column">
-              <div class="modal-card-subtask-wrapper d-flex-center">
-                <label class="modal-card-subtask gap-16">
-                  <input type="checkbox" id="subtask-1" />
-                  <span class="checkmark"></span>
-                  <span>Subtask 1</span>
-                </label>
-              </div>
-              <div class="modal-card-subtask-wrapper d-flex-center">
-                <label class="modal-card-subtask gap-16">
-                  <input type="checkbox" id="subtask-1" />
-                  <span class="checkmark"></span>
-                  <span>Subtask 1</span>
-                </label>
-              </div>
-              <div class="modal-card-subtask-wrapper d-flex-center">
-                <label class="modal-card-subtask gap-16">
-                  <input type="checkbox" id="subtask-1" />
-                  <span class="checkmark"></span>
-                  <span>Subtask 1</span>
-                </label>
-              </div>
-            </div>
-          </div>
+<div id="task-overlay-subtask-section-view" class="subtask-section d-flex-column">
+  <span id="task-overlay-subtasks-label-view">Subtasks:</span>
+  <div id="subtaskList-view" class="subtasks-wrapper d-flex-column"></div>
+</div>
+
+
           <div class="modal-card-footer">
             <div class="edit-area d-flex-space-between">
               <button id="delete-task-button" class="d-flex-space-between">

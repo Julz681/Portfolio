@@ -252,29 +252,70 @@ function setModalUsers(task) {
  * and generates the corresponding HTML for a checkbox and its label.
  * @param {object} task - A task object containing the `subtasks` array.
  */
+/**
+ * Renders the subtasks of a given task in the task details modal.
+ * If there are no subtasks, the entire section is hidden.
+ * @param {object} task - A task object containing the `subtasks` array.
+ */
 function setModalSubtasks(task) {
-  const box = document.querySelector(".subtasks-wrapper");
-  box.innerHTML = task.subtasks
-    .map((s, i) => {
-      const [key, value] = Object.entries(s)[0];
-      const isChecked = value.startsWith("[x]");
-      const label = isChecked ? value.replace("[x] ", "") : value;
-      return `
-                <div class="modal-card-subtask-wrapper d-flex-center">
-                    <label class="modal-card-subtask gap-16">
-                        <input 
-                            type="checkbox" 
-                            id="subtask-${key}" 
-                            ${isChecked ? "checked" : ""} 
-                            onchange="toggleSubtaskCheckbox('${task.id}', ${i})"
-                        />
-                        <span class="checkmark"></span>
-                        <span>${label}</span>
-                    </label>
-                </div>`;
-    })
-    .join("");
+  const wrapper = document.getElementById("task-overlay-subtask-section-view");
+  const list = document.getElementById("subtaskList-view");
+  if (!task.subtasks || task.subtasks.length === 0) {
+    hideSubtaskSection(wrapper);
+    return;
+  }
+  showSubtaskSection(wrapper);
+  renderModalSubtasks(task, list);
 }
+
+/**
+ * Hides the subtask section from the modal view.
+ * @param {HTMLElement} wrapper - The DOM element wrapping the subtask section.
+ */
+function hideSubtaskSection(wrapper) {
+  if (wrapper) wrapper.style.display = "none";
+}
+
+/**
+ * Displays the subtask section in the modal view.
+ * @param {HTMLElement} wrapper - The DOM element wrapping the subtask section.
+ */
+function showSubtaskSection(wrapper) {
+  if (wrapper) wrapper.style.display = "flex";
+}
+
+/**
+ * Clears and renders all subtasks as checkbox items into the container.
+ * @param {object} task - Task object containing the subtasks and task ID.
+ * @param {HTMLElement} list - The DOM element where subtasks are rendered.
+ */
+function renderModalSubtasks(task, list) {
+  list.innerHTML = "";
+  const subtaskHTML = task.subtasks.map((s, i) => getSubtaskCheckboxHTML(s, i, task.id));
+  list.innerHTML = subtaskHTML.join("");
+}
+
+/**
+ * Builds a checkbox item with label for a single subtask.
+ * @param {object} subtask - A subtask object like { key: "value" }.
+ * @param {number} index - Index of the subtask in the list.
+ * @param {string} taskId - The ID of the parent task.
+ * @returns {string} - HTML string for the checkbox line.
+ */
+function getSubtaskCheckboxHTML(subtask, index, taskId) {
+  const [key, value] = Object.entries(subtask)[0];
+  const isChecked = value.startsWith("[x]");
+  const labelText = isChecked ? value.replace("[x] ", "") : value;
+  return `
+    <div class="modal-card-subtask-wrapper d-flex-center">
+      <label class="modal-card-subtask gap-16">
+        <input type="checkbox" id="subtask-${key}" ${isChecked ? "checked" : ""} onchange="toggleSubtaskCheckbox('${taskId}', ${index})" />
+        <span class="checkmark"></span>
+        <span>${labelText}</span>
+      </label>
+    </div>`;
+}
+
 
 /**
  * Displays the details of a selected contact on the right side of the contacts page.
