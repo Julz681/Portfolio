@@ -1,3 +1,6 @@
+window.subtaskArray = [];
+
+
 /**
  * Asynchronously opens the task editing overlay, populating all input fields with the data
  * of the provided task object and updating the visual states of UI elements like priority buttons
@@ -7,16 +10,23 @@
  */
 async function openEditOverlay(task) {
   if (!task) return;
+
+  // hier wird subtaskArray aus der Task-Kopie erstellt
+  window.subtaskArray = Array.isArray(task.subtasks)
+    ? task.subtasks.map(s => ({ ...s }))
+    : [];
+
   await prepareAssignees(task);
   const overlay = getEditOverlay();
   if (!overlay) return;
   fillEditFormFields(task, overlay);
   updatePriorityButtons(task, overlay);
   renderAssigneesEditUI();
-  renderSubtaskSection(task);
+  renderSubtaskList(); // <--- wichtig!
   setupAllBehaviors();
   document.body.classList.add("modal-open");
 }
+
 
 /**
  * Loads user names from the database if not already available,
@@ -203,17 +213,21 @@ function updatePrioritySelection(priority, buttons) {
  * @param {object} task - The task object to which the subtask will be added.
  * @param {HTMLElement} container - The container for the subtask list.
  */
-function setupSubtaskAdd(addBtn, input, task, container) {
+function setupSubtaskAdd(addBtn, input) {
   addBtn.addEventListener("click", () => {
     const newTitle = input.value.trim();
     if (newTitle) {
-      if (!Array.isArray(task.subtasks)) task.subtasks = [];
-      task.subtasks.push({ [newTitle]: newTitle });
-      renderSubtasks(task, container);
+      window.subtaskArray.push({ [newTitle]: newTitle });
+
+      const container = document.getElementById("subtaskList");
+      renderSubtasks({ subtasks: window.subtaskArray }, container);
+
       input.value = "";
     }
   });
 }
+
+
 
 /**
  * Clears the content of the icon wrapper and appends the delete icon and the confirm button to it.
@@ -327,15 +341,15 @@ function buildUpdatedTask(overlay, oldTask) {
   return {
     ...oldTask,
     title: getOverlayValue(overlay, ".edit-input[placeholder='Enter a title']"),
-    description: getOverlayValue(
-      overlay,
-      ".edit-textarea[placeholder='Enter a Description']"),
+    description: getOverlayValue(overlay, ".edit-textarea[placeholder='Enter a Description']"),
     dueDate: overlay.querySelector("#due-date").value,
-    priority: overlay.querySelector(".priority-labels.selected")?.id || "",
+    priority: overlay.querySelector(".priority-labels.selected")?.id || oldTask.priority,
     assignedTo: [...window.assignees],
-    subtasks: extractSubtasksFromDOM(),
+    subtasks: [...window.subtaskArray], // ← übernimmt die aktuelle Subtask-Liste (inkl. gelöschter)
   };
 }
+
+
 
 /**
  * Retrieves the trimmed value of an element within a given overlay based on a CSS selector.
@@ -367,3 +381,16 @@ function extractSubtasksFromDOM() {
     })
     .filter((subtask) => Object.keys(subtask)[0] !== "");
 }
+
+/**
+ * Deletes a subtask from the edit overlay based on its element ID and re-renders the subtask list.
+ * @param {string} id - The ID of the subtask input element, formatted as "subtask-<index>".
+ */
+function deleteSubtaskInEdit(id) {
+  const index = parseInt(id.replace("subtask-", ""));
+  if (!isNaN(index) && index >= 0 && index < window.subtaskArray.length) {
+    window.subtaskArray.splice(index, 1);
+    renderSubtaskList();
+  }
+}
+

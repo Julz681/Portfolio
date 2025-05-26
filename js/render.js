@@ -48,20 +48,19 @@ function createUserSearchResultHTML(userName, index) {
  */
 function renderSubtaskList() {
   let subtaskListContainerRef = document.getElementById("subtask-list");
+  if (!subtaskListContainerRef) return; 
   subtaskListContainerRef.innerHTML = "";
-  for (
-    let subtaskArrayIndex = 0;
-    subtaskArrayIndex < subtaskArray.length;
-    subtaskArrayIndex++
-  ) {
-    let subtaskKey = Object.keys(subtaskArray[subtaskArrayIndex]);
+  for (let i = 0; i < subtaskArray.length; i++) {
+    let subtaskKey = Object.keys(subtaskArray[i])[0];
     subtaskListContainerRef.innerHTML += getSubtaskTemplate(
-      subtaskArrayIndex,
-      subtaskArray[subtaskArrayIndex][subtaskKey]
+      i,
+      subtaskArray[i][subtaskKey]
     );
   }
   subtaskListContainerRef.classList.remove("d_none");
 }
+
+
 
 /**
  * Renders the avatars of the assigned users in the task form.
@@ -225,8 +224,9 @@ function renderAssigneesEdit(containerId, container) {
 
 /**
  * Renders the list of users that can be assigned to the task in the edit overlay.
- * It retrieves the `window.userNames` array, sorts it to prioritize already assigned users,
- * and then generates HTML for each user item using the `getUsersToAssignTemplateForEditTaskForm` template.
+ * This function clears the current user list in the edit view, sorts all available users
+ * so that already assigned users appear first, and appends each user as an HTML element
+ * using the `getUsersToAssignTemplateForEditTaskForm` template function.
  */
 function renderUsersToAssignEdit() {
   const usersList = document.getElementById("assigned-to-users-list-edit");
@@ -239,6 +239,11 @@ function renderUsersToAssignEdit() {
   });
 }
 
+/**
+ * Sorts the global `window.userNames` array to prioritize already assigned users.
+ * Users who are already present in the `window.assignees` array are sorted to appear at the top of the list.
+ * @returns {string[]} A new sorted array of user names.
+ */
 function getSortedUsers() {
   return [...window.userNames].sort((a, b) => {
     const aAssigned = window.assignees?.includes(a) ? -1 : 1;
@@ -247,11 +252,18 @@ function getSortedUsers() {
   });
 }
 
+/**
+ * Generates the HTML string for a single user in the edit overlay's assignable users list.
+ * This includes the user's initials, background color, and selection state, which are passed
+ * to the `getUsersToAssignTemplateForEditTaskForm()` template function.
+ * @param {string} name - The full name of the user.
+ * @param {number} index - The index of the user in the sorted list.
+ * @returns {string} The HTML string for the user entry.
+ */
 function createUserHTML(name, index) {
   const initials = getInitials(name);
   const bgColor = getIconBackgroundColor(initials);
   const isSelected = window.assignees?.includes(name);
-
   return getUsersToAssignTemplateForEditTaskForm(
     name,
     index,
@@ -260,3 +272,4 @@ function createUserHTML(name, index) {
     bgColor
   );
 }
+

@@ -309,14 +309,16 @@ function finishOverlaySetup(task, input, icon, list) {
 /**
  * Adds click handlers for subtask actions.
  */
-function setupSubtaskListEvents(container, task) {
+function setupSubtaskListEvents(container) {
   container.addEventListener("click", (e) => {
     const index = parseInt(e.target.dataset.index);
+    if (isNaN(index)) return;
     if (e.target.classList.contains("delete-icon")) {
-      task.subtasks.splice(index, 1);
-      renderSubtasks(task, container);
+      window.subtaskArray.splice(index, 1); 
+      renderSubtasks({ subtasks: window.subtaskArray }, container); 
     } else if (e.target.classList.contains("edit-icon")) {
-      startEditingSubtask(e, task, index, container);
+      const dummyTask = { subtasks: window.subtaskArray }; 
+      startEditingSubtask(e, dummyTask, index, container);
     }
   });
 }

@@ -139,7 +139,6 @@ function getUserAvatarsHTML(assignedTo) {
         `.contact-item[data-name="${name}"]`
       );
       const avatarEl = contactEl?.querySelector(".contact-avatar");
-
       if (avatarEl) {
         return avatarEl.outerHTML;
       }
@@ -248,75 +247,34 @@ function setModalUsers(task) {
 }
 
 /**
- * Renders the subtasks of a given task in the task details modal.
- * Sets up the subtask array and updates the DOM with checkbox elements.
+ * Renders the subtasks of a given task in the task details modal as a list of checkboxes.
+ * It iterates through the `subtasks` array, determines if each subtask is marked as checked,
+ * and generates the corresponding HTML for a checkbox and its label.
  * @param {object} task - A task object containing the `subtasks` array.
  */
 function setModalSubtasks(task) {
   const box = document.querySelector(".subtasks-wrapper");
-  if (!task.subtasks || task.subtasks.length === 0) {
-    hideSubtaskContainer(box);
-    return;
-  }
-  const clonedSubtasks = task.subtasks.map(sub => ({ ...sub }));
-  showSubtaskContainer(box);
-  box.innerHTML = clonedSubtasks
-    .map((subtask, index) => createSubtaskCheckboxHTML(subtask, index, task.id))
+  box.innerHTML = task.subtasks
+    .map((s, i) => {
+      const [key, value] = Object.entries(s)[0];
+      const isChecked = value.startsWith("[x]");
+      const label = isChecked ? value.replace("[x] ", "") : value;
+      return `
+                <div class="modal-card-subtask-wrapper d-flex-center">
+                    <label class="modal-card-subtask gap-16">
+                        <input 
+                            type="checkbox" 
+                            id="subtask-${key}" 
+                            ${isChecked ? "checked" : ""} 
+                            onchange="toggleSubtaskCheckbox('${task.id}', ${i})"
+                        />
+                        <span class="checkmark"></span>
+                        <span>${label}</span>
+                    </label>
+                </div>`;
+    })
     .join("");
 }
-
-
-/**
- * Creates a deep clone of the subtasks array if it exists.
- * @param {Array<object>} subtasks - The original subtasks array.
- * @returns {Array<object>} - Cloned array or empty array.
- */
-function cloneSubtasks(subtasks) {
-  return subtasks ? subtasks.map(sub => ({ ...sub })) : [];
-}
-
-/**
- * Hides the subtask container element.
- * @param {HTMLElement} container - The DOM element to hide.
- */
-function hideSubtaskContainer(container) {
-  container.style.display = "none";
-}
-
-/**
- * Shows the subtask container element.
- * @param {HTMLElement} container - The DOM element to show.
- */
-function showSubtaskContainer(container) {
-  container.style.display = "block";
-}
-
-/**
- * Generates the HTML for a single subtask checkbox with label.
- * @param {object} subtask - A single subtask object (key-value).
- * @param {number} index - Index of the subtask in the array.
- * @param {string} taskId - The ID of the parent task.
- * @returns {string} - HTML string for the subtask checkbox.
- */
-function createSubtaskCheckboxHTML(subtask, index, taskId) {
-  const [key, value] = Object.entries(subtask)[0];
-  const isChecked = value.startsWith("[x]");
-  const label = isChecked ? value.replace("[x] ", "") : value;
-  return `
-    <div class="modal-card-subtask-wrapper d-flex-center">
-      <label class="modal-card-subtask gap-16">
-        <input 
-          type="checkbox" 
-          id="subtask-${key}" 
-          ${isChecked ? "checked" : ""} 
-          onchange="toggleSubtaskCheckbox('${taskId}', ${index})"
-        />
-        <span class="checkmark"></span>
-        <span>${label}</span>
-      </label>
-    </div>`;
-}
-
 
 /**
  * Displays the details of a selected contact on the right side of the contacts page.
@@ -361,63 +319,35 @@ function showContactDetails(name, email, phone) {
 }
 
 /**
- * Opens the "Add Contact" overlay and resets form and UI states.
+ * Opens the "Add Contact" overlay, resets the editing state (`isEditing` to false and
+ * `currentEditingContact` to null), sets the overlay title to "Add Contact", displays the
+ * overlay description, updates the "Create Contact" button text and icon, resets the overlay avatar,
+ * clears the contact form, and updates the floating action buttons. It also ensures the cancel
+ * button's transition and margin are reset.
  */
 function openOverlay() {
-  resetEditingState();
-  openOverlayUI();
-  updateOverlayTextAndIcon();
-  resetOverlayAvatar();
-  clearForm();
-  resetCancelButton();
-  updateFloatingButtons();
-}
-
-/**
- * Resets the editing state by setting flags and variables to their initial values.
- */
-function resetEditingState() {
   isEditing = false;
   currentEditingContact = null;
-}
-
-/**
- * Applies classes and shows overlay-specific elements for the add contact view.
- */
-function openOverlayUI() {
   document.getElementById("addContactOverlay").classList.add("open");
   document.getElementById("overlayTitle").textContent = "Add Contact";
   document.getElementById("overlayDescription").style.display = "block";
-}
-
-/**
- * Sets the "Create Contact" button's label and icon based on the editing state.
- */
-function updateOverlayTextAndIcon() {
   document.getElementById("createContact").innerHTML = `
-    <span>${isEditing ? "Save" : "Create Contact"}</span>
-    <span class="checkmark-icon"></span>
-  `;
-}
+        <span>${isEditing ? "Save" : "Create Contact"}</span>
+        <span class="checkmark-icon"></span>
+    `;
+  document.getElementById(
+    "overlayAvatar"
+  ).innerHTML = `<img class="vector" src="/assets/img/addnewcontact.png">`;
+  document.getElementById("overlayAvatar").style.backgroundColor =
+    "transparent";
+  clearForm();
 
-/**
- * Resets the overlay avatar image and background styling.
- */
-function resetOverlayAvatar() {
-  const avatar = document.getElementById("overlayAvatar");
-  avatar.innerHTML = `<img class="vector" src="/assets/img/addnewcontact.png">`;
-  avatar.style.backgroundColor = "transparent";
-}
-
-/**
- * Resets the cancel button's transition and margin styles if present.
- */
-function resetCancelButton() {
   const cancelBtn = document.getElementById("cancelAddContact");
   if (cancelBtn) {
     cancelBtn.style.transition = "none";
     cancelBtn.style.marginLeft = "0px";
   }
+  updateFloatingButtons();
 }
 
 /**
@@ -492,19 +422,38 @@ function getSubtaskItemTemplate(value, index) {
  */
 function getSubtaskTemplate(index, subtaskValue) {
   return `<li class="subtask-list-item br-10" ondblclick="enableSubtaskEdit('subtask-${index}')">
-                <span class="d-flex-center">•</span>
-                <div class="subtask-list-item-content-wrapper d-flex-space-between">
-                    <input class="subtask-item-input" id="subtask-${index}" value="${subtaskValue}" onkeydown="editSubtaskOnKeyPress('subtask-${index}', event)" disabled>
-                    <div class="d-flex-space-between edit-subtask-icons">
-                        <span class="edit-marker" onclick="enableSubtaskEdit('subtask-${index}')"></span>
-                        <span class="confirm-input-icons-separator-1">|</span>
-                        <span class="delete-marker" onclick="deleteSubtask('subtask-${index}')"></span>
-                        <span class="confirm-input-icons-separator-2">|</span>
-                        <span class="confirm-icon" onclick="confirmEditSubtask('subtask-${index}')"></span>
-                    </div>
-                </div>
-            </li>`;
+    <span class="d-flex-center">•</span>
+    <div class="subtask-list-item-content-wrapper d-flex-space-between">
+      <input 
+        class="subtask-item-input" 
+        id="subtask-${index}" 
+        value="${subtaskValue}" 
+        onkeydown="editSubtaskOnKeyPress('subtask-${index}', event)" 
+        disabled
+      >
+      <div class="d-flex-space-between edit-subtask-icons">
+        <span 
+          class="edit-marker" 
+          data-index="${index}" 
+          onclick="enableSubtaskEdit('subtask-${index}')"
+        ></span>
+        <span class="confirm-input-icons-separator-1">|</span>
+        <span 
+          class="delete-marker" 
+          data-index="${index}" 
+          onclick="deleteSubtaskInEdit('subtask-${index}')"
+        ></span>
+        <span class="confirm-input-icons-separator-2">|</span>
+        <span 
+          class="confirm-icon" 
+          data-index="${index}" 
+          onclick="confirmEditSubtask('subtask-${index}')"
+        ></span>
+      </div>
+    </div>
+  </li>`;
 }
+
 
 /**
  * Returns the HTML template for a single user to be listed in the "Assign to" dropdown.
@@ -555,11 +504,9 @@ function getUsersToAssignTemplateForTaskForm(userName,index,isSelected,initials,
   const wrapperClass = isSelected
     ? "single-contact-wrapper-checked d-flex-space-between br-10"
     : "single-contact-wrapper d-flex-space-between br-10";
-
   const checkboxClass = isSelected
     ? "single-contact-checkbox-checked"
     : "single-contact-checkbox-unchecked";
-
   return `
         <li id="TF-${index}" class="${wrapperClass}"
             onclick="assignContactToTaskForm('TF-${index}', event)">
@@ -587,11 +534,9 @@ function getUsersToAssignTemplateForEditTaskForm(userName,index,isSelected,initi
   const wrapperClass = isSelected
     ? "single-contact-wrapper-checked d-flex-space-between br-10"
     : "single-contact-wrapper d-flex-space-between br-10";
-
   const checkboxClass = isSelected
     ? "single-contact-checkbox-checked"
     : "single-contact-checkbox-unchecked";
-
   return `
         <li id="EDIT-${index}" class="${wrapperClass}"
             onclick="toggleAssigned('${userName}', 'assigned-to-dropdown-edit')">
@@ -642,67 +587,39 @@ function getSubtaskEditTemplate(index, subtaskValue) {
 
 /**
  * Generates HTML for displaying user avatars on a task card in the board view.
- * Shows up to 4 avatars and a "+x" badge for additional users.
  *
- * @param {Array<string>} assignedTo - List of assigned user names.
- * @returns {string} - HTML string containing user avatars and optional "+x" badge.
+ * - Shows up to 4 avatars based on the assigned users.
+ * - If more than 4 users are assigned, displays a "+x" element indicating additional users.
+ * - This function is intended for compact avatar display in board cards only,
+ *   not for full task detail modals.
+ *
+ * @param {Array<string>} assignedTo - An array of user names assigned to the task.
+ * @returns {string} HTML string containing up to 4 user avatars and a "+x" badge if needed.
+ *
+ * @example
+ * // assignedTo = ['Alice Smith', 'Bob Jones', 'Charlie', 'Dana', 'Eve']
+ * // returns: 4 avatar divs + one extra div with "+1"
  */
 function getUserAvatarsHTMLForBoard(assignedTo) {
   const maxVisible = 4;
+  const totalAssigned = assignedTo.length;
   const visibleUsers = assignedTo.slice(0, maxVisible);
-  const extraCount = getExtraUserCount(assignedTo.length, maxVisible);
+  const extraCount =totalAssigned > maxVisible ? totalAssigned - maxVisible : 0;
   const avatarsHTML = visibleUsers
-    .map((name) => createUserAvatarHTML(name))
+    .map((name) => {
+      const initials = name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase();
+      const firstLetter = initials.charAt(0);
+      const bgColor = letterColors[firstLetter] || "#888";
+      return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
+    })
     .join("");
-  const extraHTML = createExtraCountBadge(extraCount);
+  const extraHTML =
+    extraCount > 0
+      ? `<div class="contact-avatar extra-count" style="background-color: #ccc;">+${extraCount}</div>`
+      : "";
   return avatarsHTML + extraHTML;
 }
-
-/**
- * Calculates how many users exceed the max visible count.
- * @param {number} total - Total number of assigned users.
- * @param {number} max - Maximum number of visible avatars.
- * @returns {number} - Count of additional users.
- */
-function getExtraUserCount(total, max) {
-  return total > max ? total - max : 0;
-}
-
-/**
- * Creates the HTML string for a single user avatar with initials and background color.
- * @param {string} name - The user's full name.
- * @returns {string} - HTML for one avatar element.
- */
-function createUserAvatarHTML(name) {
-  const initials = getInitials(name);
-  const firstLetter = initials.charAt(0);
-  const bgColor = letterColors[firstLetter] || "#888";
-
-  return `<div class="contact-avatar" style="background-color: ${bgColor};">${initials}</div>`;
-}
-
-/**
- * Generates the HTML for the "+x" badge when more users are assigned than shown.
- * @param {number} extraCount - Number of additional users.
- * @returns {string} - HTML for the extra count avatar or empty string.
- */
-function createExtraCountBadge(extraCount) {
-  return extraCount > 0
-    ? `<div class="contact-avatar extra-count" style="background-color: #ccc;">+${extraCount}</div>`
-    : "";
-}
-
-/**
- * Extracts and formats up to two initials from a full name.
- * @param {string} name - The full name of the user.
- * @returns {string} - The initials in uppercase.
- */
-function getInitials(name) {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-}
-

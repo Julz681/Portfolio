@@ -341,11 +341,13 @@ function extractIndex(id) {
  * Deletes a subtask from the `subtaskArray` based on its ID and then re-renders the subtask list.
  * @param {string} id - The ID of the subtask to delete.
  */
-function deleteSubtask(id) {
-  let currentSubtaskIndex = extractIndex(id);
-  subtaskArray.splice(currentSubtaskIndex, 1);
-  renderSubtaskList();
+function deleteSubtask(index) {
+  if (index >= 0 && index < window.subtaskArray.length) {
+    window.subtaskArray.splice(index, 1); 
+    renderSubtaskList(); 
+  }
 }
+
 
 /**
  * Adds a new subtask when the 'Enter' key is pressed while focused on the subtask input field.
