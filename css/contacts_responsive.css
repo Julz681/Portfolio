@@ -294,28 +294,31 @@
   .add-contact-modal {
     height: 592px;
   }
+
   .contact-data {
     margin-top: -20px;
   }
 
   .add-contact-avatar img {
-    margin-top: 80px;
+    margin-top: 0px;
   }
 
   #createContact {
-    margin: 0;
+    margin-top: 60px;
   }
 
   .add-contact-drawer-left {
-    height: 252px;
+    height: 200px;
   }
 
   .contact-data {
     width: 300px;
+    gap: 10px;
   }
 
   .input-field {
     width: 300px;
+    padding: 5px 20px 5px 20px;
   }
 
   #contactList .contact-group:last-child .contact-item:last-child {
@@ -327,8 +330,43 @@
     width: 310px;
   }
 
-  #editOverlayAvatar {
+  .add-contact-avatar {
     margin-top: 80px;
+  }
+}
+
+@media (max-height: 760px) {
+  #editContactForm {
+    margin-top: 0px;
+  }
+
+  .add-contact-buttons-edit {
+    margin-top: 16px;
+  }
+
+  .cancel-btn,
+  .submit-btn {
+    padding: 8px 10px;
+  }
+
+  #createContact {
+    margin-top: 15px;
+  }
+}
+
+@media (max-height: 540px) {
+  .vector {
+    padding-top: 40px;
+  }
+
+  #editOverlayAvatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .avatar-initials {
+    width: 100px;
+    height: 100px;
   }
 }
 
@@ -363,20 +401,13 @@
     margin-left: 8px;
   }
 
-  
   .add-contact-modal {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 100vh;
   }
 
-  .add-contact-avatar img {
-    width: 80px;
-    height: 80px;
-}
-
   .contact-details-card {
     padding-bottom: 80px;
+  }
 }
-}
-
