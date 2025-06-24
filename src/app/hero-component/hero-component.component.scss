@@ -1,0 +1,24 @@
+.hero {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: radial-gradient(circle, #0f0f0f, #000000);
+  color: #fff;
+}
+.hero h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+}
+.hero .tags {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.hero .tag {
+  background: #00f5d4;
+  color: #000;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,30 @@
+<section class="testimonials-section">
+  <h2>What my colleagues say about <span>me</span></h2>
+
+  <div class="carousel">
+    <div
+      *ngFor="let t of testimonials; let i = index"
+      class="testimonial-card"
+      [ngClass]="getPosition(i)"
+    >
+      <div class="quote-icon">“</div>
+      <p>{{ t.text }}</p>
+      <div class="author-line">
+        <hr />
+        <span>{{ t.author }} – {{ t.role }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button (click)="prev()">←</button>
+    <div class="dots">
+      <span
+        *ngFor="let t of testimonials; let j = index"
+        [class.active]="j === current"
+        (click)="goTo(j)"
+      ></span>
+    </div>
+    <button (click)="next()">→</button>
+  </div>
+</section>
