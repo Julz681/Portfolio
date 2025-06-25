@@ -1,74 +1,158 @@
-.projects-section {
-  .project-list {
+.project-detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(to right, #0a0a0a, #003b36);
+  color: #fff;
+
+  .project-container {
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 2rem;
+    background: #0f2d2a;
+    border: 1px solid #00f5d4;
+    border-radius: 1rem;
+    padding: 3rem;
+    width: 100%;
+    max-width: 1400px;
     position: relative;
+    gap: 3rem;
   }
 
-  a.project-item {
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+      font-size: 6rem;
+      color: #00f5d4;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-top: -1.5rem;
+    }
+
+    h3 {
+      font-size: 1.75rem;
+      color: #00f5d4;
+      margin-top: 2.5rem;
+      font-family: monospace;
+    }
+
+    p {
+      margin: 1.25rem 0 2rem;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .tech-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        background: #003b36;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1.5rem;
+
+      a {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #00f5d4;
+        border-radius: 999px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s, color 0.3s;
+
+        &:hover {
+          background: #00f5d4;
+          color: #000;
+        }
+      }
+    }
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 1rem;
+      box-shadow: 0 0 30px rgba(0, 245, 212, 0.25);
+      object-fit: contain;
+    }
+  }
+
+  .navigation-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
-    padding: 1.5rem;
-    border-bottom: 1px solid #00f5d4;
-    background-color: transparent;
-    color: inherit;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
+    position: absolute;
+    bottom: 2rem;
+    left: 3rem;
+    right: 3rem;
 
-    .project-name {
-      font-weight: bold;
-      font-size: 1.75rem;
-      font-family: monospace;
+    .next-project {
+      margin-left: auto;
+      color: #00f5d4;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.25rem;
 
       .arrow {
-        opacity: 0;
-        transform: translateX(-5px);
-        transition: all 0.3s ease;
-        color: #00f5d4;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover .arrow {
+        transform: translateX(4px);
       }
     }
+  }
 
-    .project-tags {
-      font-size: 0.95rem;
-      color: #ccc;
-      font-family: monospace;
-    }
-
-    .project-image {
-      position: absolute;
-      right: -350px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 59, 54, 0.25);
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      border: 1px solid #00f5d4;
-      z-index: 10;
-      pointer-events: none;
-
-      img {
-        width: 300px;
-        height: auto;
-        border-radius: 0.5rem;
-        box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
-      }
-    }
+  .close-button {
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 50%;
+    line-height: 1;
+    transition: background-color 0.3s;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
 
     &:hover {
-      background-color: #174c47;
-
-      .arrow {
-        opacity: 1;
-        transform: translateX(0);
-      }
+      background-color: rgba(255, 255, 255, 0.1);
     }
   }
 }

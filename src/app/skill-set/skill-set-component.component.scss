@@ -1,0 +1,123 @@
+.skill-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4rem 2rem;
+  background-color: #121212;
+  color: #fff;
+
+  .text-box {
+    flex: 1 1 400px;
+    background: linear-gradient(145deg, #003b36, #001d1a);
+    border: 2px solid #00f5d4;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    font-family: "Inter", sans-serif;
+
+    .section-label {
+      font-size: 1.2rem;
+      color: #00f5d4;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    h2 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+
+      span {
+        color: #00f5d4;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #f0f0f0;
+      margin-bottom: 1.2rem;
+
+      &.highlight {
+        font-family: monospace;
+        font-size: 1.1rem;
+        margin-top: 2rem;
+
+        strong {
+          font-weight: 700;
+
+          span {
+            color: #00f5d4;
+          }
+        }
+      }
+    }
+
+    button.lets-talk {
+      margin-top: 2rem;
+      padding: 0.8rem 1.8rem;
+      border: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-weight: 500;
+      border-radius: 999px;
+      font-family: monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+
+      .text {
+        display: inline-block;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+      }
+
+      &:hover .text {
+        transform: translateX(-150%);
+        opacity: 0;
+      }
+    }
+
+    @keyframes slideOut {
+      to {
+        transform: translateY(-50%) translateX(-150%);
+        opacity: 0;
+      }
+    }
+  }
+
+  .icon-grid {
+    flex: 1 1 500px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 2.5rem;
+    justify-content: center;
+
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      font-family: monospace;
+
+      img {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 0.5rem;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+
+      span {
+        font-size: 0.85rem;
+        color: #ffffff;
+        white-space: nowrap;
+      }
+    }
+  }
+}

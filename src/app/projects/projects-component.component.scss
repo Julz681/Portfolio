@@ -1,4 +1,39 @@
 .projects-section {
+  padding: 4rem 1.5rem;
+
+  .section-label {
+    font-family: monospace;
+    color: #00f5d4;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  h2 {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-family: "Inter", sans-serif;
+
+    span {
+      color: #00f5d4;
+    }
+  }
+
+  p {
+    max-width: 600px;
+    color: #e0e0e0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    letter-spacing: 0.015em;
+    font-family: "Inter", sans-serif;
+    margin-bottom: 3rem;
+  }
+
   .project-list {
     display: flex;
     flex-direction: column;
@@ -20,7 +55,6 @@
     transition: background-color 0.3s ease;
     cursor: pointer;
 
-    // Active / Hovered item background and arrow effect
     &.active,
     &:hover {
       background-color: #174c47;

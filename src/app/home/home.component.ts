@@ -1,13 +1,13 @@
-import { Component } from '@angular/core'; // ✅ Das war der fehlende Import
+import { Component } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../header-component/header-component.component';
-import { HeroComponent } from '../hero-component/hero-component.component';
-import { AboutComponent } from '../about-component/about-component.component';
-import { SkillSetComponent } from '../skill-set-component/skill-set-component.component';
-import { ProjectsComponent } from '../projects-component/projects-component.component';
-import { TestimonialsComponent } from '../testimonials-component/testimonials-component.component';
-import { ContactComponent } from '../contact-component/contact-component.component';
-import { FooterComponent } from '../footer-component/footer-component.component';
+import { HeaderComponent } from '../header/header-component.component';
+import { HeroComponent } from '../hero/hero-component.component';
+import { AboutComponent } from '../about/about-component.component';
+import { SkillSetComponent } from '../skill-set/skill-set-component.component';
+import { ProjectsComponent } from '../projects/projects-component.component';
+import { TestimonialsComponent } from '../testimonials/testimonials-component.component';
+import { ContactComponent } from '../contact/contact-component.component';
+import { FooterComponent } from '../footer/footer-component.component';
 import { RouterModule } from '@angular/router';
 
 
@@ -16,7 +16,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule, // ✅ HIER
+    RouterModule, 
     HeaderComponent,
     HeroComponent,
     AboutComponent,

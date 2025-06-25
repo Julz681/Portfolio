@@ -62,19 +62,56 @@
     font-size: 1.2rem;
   }
 
-  .ribbon {
+.ribbon {
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.05); // leicht transparenter Hintergrund
+  transform: rotate(-2deg);
+  padding: 1rem 0;
+  border-top: 1px solid rgba(0, 245, 212, 0.2);
+
+  &::before {
+    content: '';
     position: absolute;
-    bottom: 0;
+    top: 0;
+    left: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.05);
-    padding: 1rem 0;
-    display: flex;
-    justify-content: space-around;
-    font-family: monospace;
-    font-size: 1rem;
-    color: #00f5d4;
-    transform: rotate(-2deg); // Optional, falls du leichte Neigung möchtest
+    height: 100%;
+    background: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.4) 90%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
   }
+
+  span {
+    font-size: 1.25rem;
+    color: #00f5d4;
+    white-space: nowrap;
+    margin-right: 3rem;
+    font-family: monospace;
+  }
+
+  // Laufband
+  display: flex;
+  align-items: center;
+
+  .ribbon-track {
+    display: inline-flex;
+    animation: scroll-left 20s linear infinite;
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 
   .socials {
     position: absolute;
@@ -90,7 +127,7 @@
       text-decoration: none;
       font-size: 0.9rem;
       writing-mode: vertical-rl;
-      transform: rotate(180deg); // Text von unten nach oben
+      transform: rotate(180deg);
 
       &:hover {
         color: #fff;

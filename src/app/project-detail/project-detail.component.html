@@ -1,21 +1,42 @@
 <div class="project-detail" *ngIf="project">
-  <div class="left">
-    <h1>{{ project.number }}</h1>
-    <h2>{{ project.name }}</h2>
-    <h3>What is this project about?</h3>
-    <p>{{ project.description }}</p>
+  <div class="project-container">
+    <!-- LEFT -->
+    <div class="left">
+      <h1>{{ project.number }}</h1>
+      <h2>{{ project.name }}</h2>
+      <h3>What is this project about?</h3>
+      <p>{{ project.description }}</p>
 
-    <div class="tech-icons">
-      <span *ngFor="let tech of project.tech">{{ tech }}</span>
+      <div class="tech-icons">
+        <span *ngFor="let tech of project.tech">
+          <img [src]="getTechIcon(tech)" [alt]="tech" />
+          {{ tech }}
+        </span>
+      </div>
+
+      <div class="buttons">
+        <a [href]="project.github" target="_blank">GitHub ↗</a>
+        <a [href]="project.live" target="_blank">Live Test ↗</a>
+      </div>
     </div>
 
-    <div class="buttons">
-      <a [href]="project.github" target="_blank">GitHub ↗</a>
-      <a [href]="project.live" target="_blank">Live Test ↗</a>
+    <!-- RIGHT -->
+    <div class="right">
+      <img [src]="project.image" [alt]="project.name" />
     </div>
-  </div>
 
-  <div class="right">
-    <img [src]="project.image" [alt]="project.name" />
+    <!-- CONTROLS -->
+    <div class="navigation-buttons">
+      <a
+        [routerLink]="['/projects', getNextProjectSlug()]"
+        class="next-project"
+      >
+        Next project <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <a [routerLink]="['/']" class="close-button" aria-label="Close project view"
+      >×</a
+    >
   </div>
 </div>
