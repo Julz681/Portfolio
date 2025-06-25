@@ -1,12 +1,36 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-projects-component',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './projects-component.component.html',
-  styleUrl: './projects-component.component.scss'
+  styleUrls: ['./projects-component.component.scss'],
 })
 export class ProjectsComponent {
+  hovered: any = null;
+
+projects = [
+  {
+    slug: 'join',
+    name: 'Join',
+    tags: 'Angular | TypeScript | HTML | CSS | Firebase',
+    image: 'assets/images/join-preview.png'
+  },
+  {
+    slug: 'el-pollo-loco',
+    name: 'El Pollo Loco',
+    tags: 'HTML | CSS | JavaScript',
+    image: 'assets/images/el-pollo-preview.png'
+  },
+  {
+    slug: 'da-bubble',
+    name: 'DA Bubble',
+    tags: 'Angular | Firebase | TypeScript',
+    image: 'assets/images/da-bubble-preview.png'
+  }
+];
 
 }

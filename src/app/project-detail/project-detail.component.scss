@@ -12,24 +12,13 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
     border-bottom: 1px solid #00f5d4;
     background-color: transparent;
     color: inherit;
     text-decoration: none;
     transition: background-color 0.3s ease;
     cursor: pointer;
-
-    // Active / Hovered item background and arrow effect
-    &.active,
-    &:hover {
-      background-color: #174c47;
-
-      .project-name .arrow {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
 
     .project-name {
       font-weight: bold;
@@ -43,21 +32,19 @@
         opacity: 0;
         transform: translateX(-5px);
         transition: all 0.3s ease;
-        color: #fff;
-        font-size: 1.25rem;
+        color: #00f5d4;
       }
     }
 
     .project-tags {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #ccc;
       font-family: monospace;
-      text-align: right;
     }
 
     .project-image {
       position: absolute;
-      right: -340px;
+      right: -350px;
       top: 50%;
       transform: translateY(-50%);
       background: rgba(0, 59, 54, 0.25);
@@ -72,7 +59,15 @@
         height: auto;
         border-radius: 0.5rem;
         box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
-        display: block;
+      }
+    }
+
+    &:hover {
+      background-color: #174c47;
+
+      .arrow {
+        opacity: 1;
+        transform: translateX(0);
       }
     }
   }

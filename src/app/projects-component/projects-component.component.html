@@ -6,19 +6,23 @@
   </p>
 
   <div class="project-list">
-    <div class="project-item">
-      <span class="project-name">Join</span>
-      <span class="project-tags">Angular | TypeScript | HTML | CSS | Firebase</span>
-    </div>
+    <a
+      class="project-item"
+      *ngFor="let project of projects"
+      [routerLink]="['/projects', project.slug]"
+      (mouseenter)="hovered = project"
+      (mouseleave)="hovered = null"
+      [class.active]="hovered === project"
+    >
+      <div class="project-name">
+        {{ project.name }}
+        <span class="arrow">↗</span>
+      </div>
+      <div class="project-tags">{{ project.tags }}</div>
 
-    <div class="project-item">
-      <span class="project-name">El Pollo Loco</span>
-      <span class="project-tags">HTML | CSS | JavaScript</span>
-    </div>
-
-    <div class="project-item">
-      <span class="project-name">DA Bubble</span>
-      <span class="project-tags">Angular | Firebase | TypeScript</span>
-    </div>
+      <div class="project-image" *ngIf="hovered === project">
+        <img [src]="project.image" [alt]="project.name + ' preview'" />
+      </div>
+    </a>
   </div>
 </section>
