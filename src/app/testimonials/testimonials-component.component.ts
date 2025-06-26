@@ -9,23 +9,24 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./testimonials-component.component.scss'],
 })
 export class TestimonialsComponent implements OnInit, OnDestroy {
-  testimonials = [
-    {
-      text: 'Lukas has proven to be a reliable group partner. His technical skills and proactive approach were crucial to the success of our project.',
-      author: 'H.Janisch',
-      role: 'Team Partner',
-    },
-    {
-      text: 'Our project benefited enormously from Simon efficient way of working.',
-      author: 'T.Schulz',
-      role: 'Frontend Developer',
-    },
-    {
-      text: "I had the good fortune of working with Lukas in a group project at the Developer Akademie that involved a lot of effort. He's super knowledgeable, easy to work with, and I'd happily work with him again given the chance.",
-      author: 'A. Fischer',
-      role: 'Team Partner',
-    },
-  ];
+testimonials = [
+  {
+    text: 'Judith was a dependable and thoughtful teammate. Her technical understanding and proactive mindset made a real difference in our collaboration.',
+    author: 'L. Bauer',
+    role: 'Project Collaborator',
+  },
+  {
+    text: 'Working with Judith was a pleasure — she delivered high-quality code, stayed focused, and kept communication clear throughout the project.',
+    author: 'M. Weber',
+    role: 'Frontend Engineer',
+  },
+  {
+    text: 'Judith brought structure and calm to a fast-paced group project. She’s reliable, solution-oriented, and great at balancing detail with progress.',
+    author: 'S. König',
+    role: 'Fullstack Developer',
+  }
+];
+
 
   currentIndex = 0;
   intervalId: any;

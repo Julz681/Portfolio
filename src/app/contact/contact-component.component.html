@@ -4,8 +4,11 @@
     <h1>Let's work <br />together</h1>
     <h4>Got a problem to solve?</h4>
     <p>
-      Encourage people to contact you and describe what role you are interested in.
-      Show that you will add value to their projects through your work.
+      Let’s build something great together. I’m excited to contribute to
+      meaningful, user-focused projects and bring ideas to life with clean code,
+      creativity, and a strong sense of collaboration. If you're looking for
+      someone reliable and detail-oriented, feel free to reach out — I’d love to
+      hear from you.
     </p>
     <p>
       Need a Frontend developer?
@@ -16,23 +19,41 @@
   <form class="right" (ngSubmit)="onSubmit()" #contactForm="ngForm">
     <label>
       <span>What's your name?</span>
-      <input type="text" name="name" ngModel placeholder="Your name goes here" required />
+      <input
+        type="text"
+        name="name"
+        ngModel
+        placeholder="Your name goes here"
+        required
+      />
     </label>
 
     <label>
       <span>What's your email?</span>
-      <input type="email" name="email" ngModel placeholder="youremail@email.com" required />
+      <input
+        type="email"
+        name="email"
+        ngModel
+        placeholder="youremail@email.com"
+        required
+      />
     </label>
 
     <label>
       <span>How can I help you?</span>
-      <textarea name="message" ngModel placeholder="Hello Judith, I am interested in..." required></textarea>
+      <textarea
+        name="message"
+        ngModel
+        placeholder="Hello Judith, I am interested in..."
+        required
+      ></textarea>
     </label>
 
     <div class="checkbox-line">
       <input type="checkbox" id="privacy" name="privacy" ngModel required />
       <label for="privacy">
-        I've read the <a href="#">privacy policy</a> and agree to the processing of my data as outlined.
+        I've read the <a href="#">privacy policy</a> and agree to the processing
+        of my data as outlined.
       </label>
     </div>
 
