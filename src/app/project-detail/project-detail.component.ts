@@ -20,8 +20,8 @@ export class ProjectDetailComponent implements OnInit {
       name: 'Join',
       description:
         'Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.',
-      tech: ['CSS', 'HTML', 'Angular', 'Firebase', 'TypeScript'],
-      image: 'assets/images/join-preview.png',
+      tech: ['CSS', 'HTML', 'Firebase'],
+      image: 'assets/join.png',
       github: 'https://github.com/example/join',
       live: 'https://join.example.com',
     },
@@ -30,13 +30,47 @@ export class ProjectDetailComponent implements OnInit {
       number: '02',
       name: 'El Pollo Loco',
       description:
-        'A jump-and-run game inspired by Super Mario, built with vanilla JavaScript and canvas rendering.',
-      tech: ['JavaScript', 'HTML'],
-      image: 'assets/images/el-pollo-preview.png',
+        'Jump-and-run game inspired by Super Mario, built with JavaScript and canvas rendering.',
+      tech: ['JavaScript', 'HTML', 'CSS'],
+      image: 'assets/pollo.png',
       github: 'https://github.com/example/el-pollo-loco',
       live: 'https://el-pollo.example.com',
     },
-    // Weitere Projekte hier...
+    {
+      slug: 'bestell-app',
+      number: '03',
+      name: 'Bestell-App',
+      description:
+        'Online food delivery platform that connects customers with restaurants for easy ordering and fast home delivery, built during a group-project with vanilla JavaScript.',
+      tech: ['JavaScript', 'HTML', 'CSS'],
+      image: 'assets/bestell_app.png',
+      github: 'https://github.com/example/el-pollo-loco',
+      live: 'https://el-pollo.example.com',
+    },
+    {
+      slug: 'pokedex',
+      number: '04',
+      name: 'Pokédex',
+      description:
+        'Pokédex-style trainer registry that fetches and displays Pokémon data using an external API – with a touch of nostalgic fun',
+      tech: ['JavaScript', 'HTML', 'CSS'],
+      image: 'assets/pokedex.png',
+      github: 'https://github.com/example/el-pollo-loco',
+      live: 'https://el-pollo.example.com',
+    },
+    {
+      slug: 'kochwelt',
+      number: '05',
+      name: 'Kochwelt',
+      description:
+        'Recipe platform that allows users to browse, discover, and share a variety of dishes in a clean, beginner-friendly interface.',
+      tech: ['JavaScript', 'HTML', 'CSS'],
+      image: 'assets/kochwelt.png',
+      github: 'https://github.com/example/el-pollo-loco',
+      live: 'https://el-pollo.example.com',
+    },
+
+    // Angular Projekt folgt dann mit DABubble
   ];
 
   ngOnInit(): void {

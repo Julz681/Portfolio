@@ -17,20 +17,32 @@ export class ProjectsComponent {
     {
       slug: 'join',
       name: 'Join',
-      tags: 'Angular | TypeScript | HTML | CSS | Firebase',
-      image: 'assets/images/join-preview.png',
+      tags: 'HTML | CSS | JavaScript',
+      image: 'assets/join.png',
     },
     {
       slug: 'el-pollo-loco',
       name: 'El Pollo Loco',
       tags: 'HTML | CSS | JavaScript',
-      image: 'assets/images/el-pollo-preview.png',
+      image: 'assets/pollo.png',
     },
     {
-      slug: 'da-bubble',
-      name: 'DA Bubble',
-      tags: 'Angular | Firebase | TypeScript',
+      slug: 'bestell-app',
+      name: 'Bestell-App',
+      tags: 'HTML | CSS | JavaScript',
       image: 'assets/images/da-bubble-preview.png',
+    },
+    {
+      slug: 'pokedex',
+      name: 'Pokédex',
+      tags: 'HTML | CSS | JavaScript',
+      image: 'assets/pokedex.png',
+    },
+    {
+      slug: 'kochwelt',
+      name: 'Kochwelt',
+      tags: 'HTML | CSS | JavaScript',
+      image: 'assets/kochwelt.png',
     },
   ];
 
