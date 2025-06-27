@@ -1,56 +1,54 @@
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  background: linear-gradient(90deg, #0a0a0a, #003b36);
-  color: #fff;
-  font-family: 'Fira Code', monospace;
+  justify-content: space-between;
+  padding: 0 64px;
+  background: linear-gradient(90deg, #1c1c1c, #08463b);
+  color: #d9d9d9;
+  font-family: "Fira Code", monospace;
+  height: 98px;
+  position: relative;
+}
 
-  .lang-toggle {
-    display: flex;
-    gap: 0.5rem;
+.lang-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
 
-    .lang {
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      background-color: transparent;
-      border: 1px solid transparent;
-      cursor: pointer;
-      color: #ccc;
+.lang-toggle .lang {
+  padding: 6px 12px;
+  border-radius: 100px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: #d9d9d9;
+  font-size: 14px;
+}
 
-      &.active {
-        background-color: #00f5d4;
-        color: #000;
-        font-weight: bold;
-      }
-    }
-  }
+.lang-toggle .lang.active {
+  background-color: #3dcfb6;
+  color: #000;
+  font-weight: bold;
+}
 
-  .nav-links {
-    display: flex;
-    gap: 2rem;
+.nav-links {
+  display: flex;
+  gap: 32px;
+  margin-left: 48px;
+  font-size: 22px;
+}
 
-    a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
 
-      &:hover {
-        color: #00f5d4;
-      }
-    }
-  }
+.nav-links a:hover {
+  color: #3dcfb6;
+}
 
-  .logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: white;
-
-    .logo-mark {
-      color: #00f5d4;
-      font-weight: bold;
-    }
-  }
+.logo img {
+  width: 120px;
 }

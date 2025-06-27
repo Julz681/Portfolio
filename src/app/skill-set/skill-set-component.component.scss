@@ -10,46 +10,50 @@
 
   .text-box {
     flex: 1 1 400px;
-    background: linear-gradient(145deg, #003b36, #001d1a);
-    border: 2px solid #00f5d4;
-    border-radius: 1.5rem;
+    background: #1f2e2e;
+    border-radius: 30px;
+    border: 1px solid #3dcfb6;
     padding: 2rem;
     font-family: "Inter", sans-serif;
+     text-align: justify;
+     width: 520px;
 
     .section-label {
-      font-size: 1.2rem;
-      color: #00f5d4;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      display: block;
+      font-size: 24px;
+      color: #3dcfb6;
     }
 
     h2 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin-bottom: 1.5rem;
+      font-size: 64px;
+      font-weight: 700;
+      margin: 0.5rem 0 1.5rem;
+      font-family: "Fira", monospace;
+      letter-spacing: -3%;
 
       span {
-        color: #00f5d4;
+      color: #3dcfb6;
       }
     }
 
     p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #f0f0f0;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
+      font-size: 18px;
+      line-height: 120%;
+      letter-spacing: 0%;
 
       &.highlight {
         font-family: monospace;
-        font-size: 1.1rem;
+        font-size: 24px;
         margin-top: 2rem;
+        font-family: "Fira", monospace;
+        line-height: 120%;
+        letter-spacing: 0%;
 
         strong {
           font-weight: 700;
 
           span {
-            color: #00f5d4;
+            color: #3dcfb6;
           }
         }
       }
@@ -100,11 +104,11 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      font-family: monospace;
+
 
       img {
-        width: 48px;
-        height: 48px;
+        width: 64px;
+        height: 64px;
         margin-bottom: 0.5rem;
         transition: transform 0.3s ease;
 
@@ -114,9 +118,12 @@
       }
 
       span {
-        font-size: 0.85rem;
         color: #ffffff;
         white-space: nowrap;
+        font-family: "Fira", monospace;
+        font-size: 18px;
+        line-height: 120%;
+        letter-spacing: -3%;
       }
     }
   }
