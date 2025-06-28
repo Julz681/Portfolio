@@ -37,15 +37,14 @@
 
     button {
       background: none;
-      border: 1px solid #ffff;
-      color: #ffff;
+      border: 1px solid #fff;
+      color: #fff;
       border-radius: 100px;
       cursor: pointer;
       transition: 0.3s ease;
       width: 172px;
       height: 48px;
-      padding-left: 24px;
-      padding-right: 24px;
+      padding: 0 24px;
       gap: 10px;
 
       &:hover {
@@ -70,6 +69,13 @@
     gap: 56px;
     box-shadow: 0 -1px 0 rgba(0, 245, 212, 0.5);
     z-index: 9999;
+    display: flex;
+    align-items: center;
+
+    .ribbon-track {
+      display: inline-flex;
+      animation: scroll-left 40s linear infinite;
+    }
 
     span {
       font-size: 32px;
@@ -80,25 +86,7 @@
       font-family: "Karla", monospace;
       line-height: 120%;
     }
-
-    display: flex;
-    align-items: center;
-
-    .ribbon-track {
-      display: inline-flex;
-      animation: scroll-left 40s linear infinite;
-    }
   }
-
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
 
   .socials {
     position: absolute;
@@ -114,15 +102,26 @@
     line-height: 120%;
 
     a {
-      color: #ffff;
+      color: #fff;
       text-decoration: none;
       font-size: 18px;
       writing-mode: vertical-rl;
       transform: rotate(180deg);
 
-      &:hover {
-        color: #fff;
+      &.email:hover {
+        color: #3dcfb6;
       }
+
+      &:hover img.icon {
+        filter: brightness(0) invert(1);
+      }
+    }
+
+    img.icon {
+      width: 32px;
+      height: 32px;
+      transform: rotate(180deg);
+      transition: filter 0.3s;
     }
 
     .border {
@@ -131,11 +130,14 @@
       display: inline-block;
       z-index: 1;
     }
+  }
+}
 
-    .icon {
-      width: 32px;
-      height: 32px;
-      transform: rotate(180deg);
-    }
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }

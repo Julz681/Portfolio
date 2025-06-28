@@ -1,37 +1,41 @@
 .projects-section {
   padding: 4rem 1.5rem;
+  max-width: 1020px;
 
   .section-label {
-    font-family: monospace;
-    color: #00f5d4;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
+    font-family: "Karla", monospace;
+    color: #3dcfb6;
+    font-size: 24px;
+    letter-spacing: 0%;
     display: block;
+    line-height: 100%;
+    margin-bottom: 24px;
+    font-weight: 700;
   }
 
   h2 {
-    font-size: 4rem;
-    font-weight: 800;
-    line-height: 1.1;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 100%;
     margin: 0;
     margin-bottom: 2rem;
-    font-family: "Inter", sans-serif;
+    font-family: "Fira", monospace;
+    letter-spacing: -3%;
 
     span {
-      color: #00f5d4;
+      color: #3dcfb6;
     }
   }
 
   p {
+    font-family: "Karla", monospace;
     max-width: 600px;
-    color: #e0e0e0;
-    font-size: 1.125rem;
-    line-height: 1.6;
-    letter-spacing: 0.015em;
-    font-family: "Inter", sans-serif;
+    color: #ffff;
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: 0%;
     margin-bottom: 3rem;
+    font-weight: 400;
   }
 
   .project-list {
@@ -91,7 +95,7 @@
 
     .project-image {
       position: absolute;
-      right: -340px;
+      right: -460px;
       top: 50%;
       transform: translateY(-50%);
       background: rgba(0, 59, 54, 0.25);
@@ -102,7 +106,7 @@
       pointer-events: none;
 
       img {
-        width: 300px;
+        width: 420px;
         height: auto;
         border-radius: 0.5rem;
         box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);

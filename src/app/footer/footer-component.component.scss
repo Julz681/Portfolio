@@ -4,8 +4,8 @@
   align-items: center;
   padding: 2rem;
   background-color: #111;
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
+  color: #fffd;
+  font-family: 'Fira', monospace;
   flex-wrap: wrap;
 
   .left,
@@ -22,13 +22,17 @@
 
   .info p {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 18px;
   }
 
   .center {
     text-align: center;
-    color: #00f5d4;
-    font-size: 0.9rem;
+    color: #3dcfb6;
+    font-size: 18px;
+    font-family: 'Fira', monospace;
+    font-weight: 400;
+    line-height: 120%;
+    letter-spacing: 0%;
   }
 
   .right ul {
@@ -38,31 +42,18 @@
 
     li {
       margin-bottom: 0.3rem;
+      font-size: 18px;
 
       a {
-        color: #fff;
+        color: #ffff;
         text-decoration: none;
-        font-size: 0.9rem;
 
         &:hover {
           text-decoration: underline;
-          color: #00f5d4;
+          color: #3dcfb6;
         }
       }
     }
   }
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-
-    .center {
-      text-align: left;
-      margin: 1rem 0;
-    }
-
-    .right ul {
-      text-align: left;
-    }
-  }
 }

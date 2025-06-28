@@ -30,7 +30,7 @@ export class ProjectsComponent {
       slug: 'bestell-app',
       name: 'Bestell-App',
       tags: 'HTML | CSS | JavaScript',
-      image: 'assets/images/da-bubble-preview.png',
+      image: 'assets/bestell_app.png',
     },
     {
       slug: 'pokedex',
