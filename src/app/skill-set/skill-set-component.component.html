@@ -1,5 +1,5 @@
 <section id="skills" class="skill-section">
-  <div class="text-box">
+  <div class="text-box" *ngIf="currentLang === 'en'">
     <span class="section-label">Technologies</span>
     <h2><span>Skill Set</span></h2>
     <p>
@@ -25,6 +25,28 @@
     </button>
   </div>
 
+  <div class="text-box" *ngIf="currentLang === 'de'">
+    <span class="section-label">Technologien</span>
+    <h2><span>Fähigkeiten</span></h2>
+    <p>
+      Ich entwickle moderne, responsive Webanwendungen mit HTML, CSS,
+      JavaScript, TypeScript, Angular und Material Design. Ich arbeite außerdem mit
+      Tools wie Firebase, Git und REST APIs und bin mit agilen Methoden wie Scrum vertraut.
+      Neue Technologien zu entdecken und meine Fähigkeiten weiterzuentwickeln, motiviert mich.
+    </p>
+
+    <p class="highlight">
+      <strong>Du brauchst <span>eine andere Fähigkeit?</span></strong>
+    </p>
+    <p>
+      Melde dich gern! Ich freue mich, mein Wissen auszubauen und neue Herausforderungen anzunehmen.
+    </p>
+
+    <button class="lets-talk" (click)="scrollToContact()">
+      <span class="text">Lass uns reden</span>
+    </button>
+  </div>
+
   <div class="icon-grid">
     <div class="icon-item">
       <img src="../../assets/icons/html.png" alt="HTML" /><span>HTML</span>
@@ -33,45 +55,31 @@
       <img src="../../assets/icons/css.png" alt="CSS" /><span>CSS</span>
     </div>
     <div class="icon-item">
-      <img src="../../assets/icons/js.png" alt="JavaScript" /><span
-        >JavaScript</span
-      >
+      <img src="../../assets/icons/js.png" alt="JavaScript" /><span>JavaScript</span>
     </div>
     <div class="icon-item">
-      <img src="../../assets/icons/md.png" alt="Material Design" /><span
-        >Material Design</span
-      >
+      <img src="../../assets/icons/md.png" alt="Material Design" /><span>Material Design</span>
     </div>
     <div class="icon-item">
-      <img src="../../assets/icons/ts.png" alt="TypeScript" /><span
-        >TypeScript</span
-      >
+      <img src="../../assets/icons/ts.png" alt="TypeScript" /><span>TypeScript</span>
     </div>
     <div class="icon-item">
-      <img src="../../assets/icons/angular.png" alt="Angular" /><span
-        >Angular</span
-      >
+      <img src="../../assets/icons/angular.png" alt="Angular" /><span>Angular</span>
     </div>
     <div class="icon-item">
-      <img src="../../assets/icons/firebase.png" alt="Firebase" /><span
-        >Firebase</span
-      >
+      <img src="../../assets/icons/firebase.png" alt="Firebase" /><span>Firebase</span>
     </div>
     <div class="icon-item">
-      <img src="../../assets/icons/git.png" alt="GIT" /><span>GIT</span>
+      <img src="../../assets/icons/git.png" alt="Git" /><span>Git</span>
     </div>
     <div class="icon-item">
-      <img src="../../assets/icons/api.png" alt="Rest API" /><span
-        >Rest-Api</span
-      >
+      <img src="../../assets/icons/api.png" alt="REST API" /><span>REST API</span>
     </div>
     <div class="icon-item">
       <img src="../../assets/icons/scrum.png" alt="Scrum" /><span>Scrum</span>
     </div>
     <div class="icon-item">
-      <img src="../../assets/icons/gm.png" alt="Growth Mindset" /><span
-        >Growth mindset</span
-      >
+      <img src="../../assets/icons/gm.png" alt="Growth Mindset" /><span>Growth mindset</span>
     </div>
   </div>
 </section>

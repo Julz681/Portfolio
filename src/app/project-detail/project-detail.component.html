@@ -4,8 +4,22 @@
     <div class="left">
       <h1>{{ project.number }}</h1>
       <h2>{{ project.name }}</h2>
-      <h3>What is this project about?</h3>
-      <p>{{ project.description }}</p>
+
+      <h3>
+        {{
+          currentLang === 'en'
+            ? 'What is this project about?'
+            : 'Worum geht es in diesem Projekt?'
+        }}
+      </h3>
+
+      <p>
+        {{
+          currentLang === 'de' && project.description_de
+            ? project.description_de
+            : project.description
+        }}
+      </p>
 
       <div class="tech-icons">
         <span *ngFor="let tech of project.tech">
@@ -16,7 +30,9 @@
 
       <div class="buttons">
         <a [href]="project.github" target="_blank">GitHub ↗</a>
-        <a [href]="project.live" target="_blank">Live Test ↗</a>
+        <a [href]="project.live" target="_blank">
+          {{ currentLang === 'en' ? 'Live Test ↗' : 'Live-Demo ↗' }}
+        </a>
       </div>
     </div>
 
@@ -31,12 +47,21 @@
         [routerLink]="['/projects', getNextProjectSlug()]"
         class="next-project"
       >
-        Next project <span class="arrow">→</span>
+        {{ currentLang === 'en' ? 'Next project' : 'Nächstes Projekt' }}
+        <span class="arrow">→</span>
       </a>
     </div>
 
-    <a [routerLink]="['/']" class="close-button" aria-label="Close project view"
-      >×</a
+    <a
+      [routerLink]="['/']"
+      class="close-button"
+      [attr.aria-label]="
+        currentLang === 'en'
+          ? 'Close project view'
+          : 'Projektansicht schließen'
+      "
     >
+      ×
+    </a>
   </div>
 </div>

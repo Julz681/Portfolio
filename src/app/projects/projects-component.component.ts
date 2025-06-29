@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-projects-component',
@@ -11,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./projects-component.component.scss'],
 })
 export class ProjectsComponent {
+  @Input() currentLang: 'en' | 'de' = 'en';
   hovered: any = null;
 
   projects = [

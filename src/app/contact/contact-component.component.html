@@ -1,5 +1,5 @@
 <section class="contact-section" id="contact">
-  <div class="left">
+  <div class="left" *ngIf="currentLang === 'en'">
     <h3>Contact me</h3>
     <h1>Let's work <br />together</h1>
     <h4>Got a problem to solve?</h4>
@@ -16,35 +16,56 @@
     </p>
   </div>
 
+  <div class="left" *ngIf="currentLang === 'de'">
+    <h3>Kontaktiere mich</h3>
+    <h1>Lasst uns <br />zusammenarbeiten</h1>
+    <h4>Ein Problem zu lösen?</h4>
+    <p>
+      Lass uns gemeinsam etwas Großartiges erschaffen! Ich freue mich darauf, an
+      sinnvollen, nutzerzentrierten Projekten mitzuwirken und Ideen mit sauberem Code,
+      Kreativität und Teamgeist zum Leben zu erwecken. Wenn du eine zuverlässige und
+      detailorientierte Frontend-Entwicklerin suchst – melde dich gerne!
+    </p>
+    <p>
+      Brauchst du eine Frontend-Entwicklerin?
+      <a href="#">Sprich mich an!</a>
+    </p>
+  </div>
+
   <form class="right" (ngSubmit)="onSubmit()" #contactForm="ngForm">
     <label>
-      <span>What's your name?</span>
+      <span *ngIf="currentLang === 'en'">What's your name?</span>
+      <span *ngIf="currentLang === 'de'">Wie heißt du?</span>
       <input
         type="text"
         name="name"
         ngModel
-        placeholder="Your name goes here"
+        [placeholder]="currentLang === 'en' ? 'Your name goes here' : 'Dein Name hier'"
         required
       />
     </label>
 
     <label>
-      <span>What's your email?</span>
+      <span *ngIf="currentLang === 'en'">What's your email?</span>
+      <span *ngIf="currentLang === 'de'">Wie lautet deine E-Mail?</span>
       <input
         type="email"
         name="email"
         ngModel
-        placeholder="youremail@email.com"
+        [placeholder]="currentLang === 'en' ? 'youremail@email.com' : 'dein@email.de'"
         required
       />
     </label>
 
     <label>
-      <span>How can I help you?</span>
+      <span *ngIf="currentLang === 'en'">How can I help you?</span>
+      <span *ngIf="currentLang === 'de'">Wie kann ich dir helfen?</span>
       <textarea
         name="message"
         ngModel
-        placeholder="Hello Judith, I am interested in..."
+        [placeholder]="currentLang === 'en'
+          ? 'Hello Judith, I am interested in...'
+          : 'Hallo Judith, ich interessiere mich für...'"
         required
       ></textarea>
     </label>
@@ -52,11 +73,19 @@
     <div class="checkbox-line">
       <input type="checkbox" id="privacy" name="privacy" ngModel required />
       <label for="privacy">
-        I've read the <a href="#">privacy policy</a> and agree to the processing
-        of my data as outlined.
+        <span *ngIf="currentLang === 'en'">
+          I've read the <a href="#">privacy policy</a> and agree to the processing
+          of my data as outlined.
+        </span>
+        <span *ngIf="currentLang === 'de'">
+          Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und stimme der
+          Verarbeitung meiner Daten zu.
+        </span>
       </label>
     </div>
 
-    <button type="submit">Say Hello ;)</button>
+    <button type="submit">
+      {{ currentLang === 'en' ? 'Say Hello ;)' : 'Sag Hallo ;)' }}
+    </button>
   </form>
 </section>

@@ -4,10 +4,11 @@
   </div>
 
   <div class="about-box">
-    <span class="section-label">Who I Am</span>
-    <h2><span>About me</span></h2>
-    <p>
-      Hey there, I'm Judith - also known as Julz - and I'm {{ age }} years old! <br />
+    <span class="section-label">{{ currentLang === 'de' ? 'Wer ich bin' : 'Who I Am' }}</span>
+    <h2><span>{{ currentLang === 'de' ? 'Über mich' : 'About me' }}</span></h2>
+
+    <p *ngIf="currentLang === 'en'">
+      Hey there, I'm Judith – also known as Julz – and I'm {{ age }} years old! <br />
       With a background in business administration and a Master’s degree in
       Business Management, I bring a strategic mindset to the world of software
       development. After completing my commercial training and gaining
@@ -16,26 +17,41 @@
       creating intuitive user interfaces and building solutions that make an
       impact.
     </p>
+    <p *ngIf="currentLang === 'de'">
+      Hallo, ich bin Judith – auch bekannt als Julz – und {{ age }} Jahre alt! <br />
+      Mit einem Hintergrund in Betriebswirtschaft und einem Masterabschluss in
+      Business Management bringe ich strategisches Denken in die Welt der
+      Softwareentwicklung. Nach einer kaufmännischen Ausbildung und Erfahrung in
+      leitender Position in einer Consulting-Firma habe ich mich entschieden, meine
+      Fähigkeiten nebenbei zu erweitern und meiner Leidenschaft für Webentwicklung zu
+      folgen. Es bereitet mir Freude, intuitive Benutzeroberflächen zu gestalten
+      und Lösungen zu schaffen, die Wirkung zeigen.
+    </p>
 
     <ul class="about-points">
       <li>
         <span class="icon"><img src="../../assets/standort.png" /></span>
-        Based in Cologne, Germany, I’m open to remote work and international
-        collaboration.
+        {{
+          currentLang === 'de'
+            ? 'Ich wohne in Köln und bin offen für Remote-Arbeit und internationale Zusammenarbeit.'
+            : 'Based in Cologne, Germany, I’m open to remote work and international collaboration.'
+        }}
       </li>
       <li>
         <span class="icon"><img src="../../assets/kopf.png" /></span>
-        I’m highly motivated to keep growing as a developer and am always
-        curious to explore new technologies. My passion for coding is driven by
-        a desire to build meaningful digital products and continuously challenge
-        myself intellectually.
+        {{
+          currentLang === 'de'
+            ? 'Ich bin hochmotiviert, mich als Entwicklerin weiterzuentwickeln, und immer neugierig auf neue Technologien. Meine Leidenschaft für das Programmieren wird durch den Wunsch angetrieben, bedeutungsvolle digitale Produkte zu schaffen.'
+            : 'I’m highly motivated to keep growing as a developer and am always curious to explore new technologies. My passion for coding is driven by a desire to build meaningful digital products.'
+        }}
       </li>
       <li>
         <span class="icon"><img src="../../assets/check.png" /></span>
-        I approach problem-solving with analytical thinking, creativity, and
-        persistence — and I believe that collaboration is key to developing
-        great software. Whether I’m working independently or in a team, I value
-        clean code, constructive feedback, and lifelong learning.
+        {{
+          currentLang === 'de'
+            ? 'Ich löse Probleme mit analytischem Denken, Kreativität und Ausdauer – und glaube daran, dass Zusammenarbeit der Schlüssel zu guter Software ist. Ob allein oder im Team – ich schätze sauberen Code, konstruktives Feedback und lebenslanges Lernen.'
+            : 'I approach problem-solving with analytical thinking, creativity, and persistence — and I believe that collaboration is key to developing great software. Whether I’m working independently or in a team, I value clean code, constructive feedback, and lifelong learning.'
+        }}
       </li>
     </ul>
   </div>

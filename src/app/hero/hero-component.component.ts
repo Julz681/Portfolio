@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hero-component',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './hero-component.component.html',
-  styleUrl: './hero-component.component.scss'
+  styleUrls: ['./hero-component.component.scss']
 })
 export class HeroComponent {
-
+  @Input() currentLang: 'en' | 'de' = 'en';
 }

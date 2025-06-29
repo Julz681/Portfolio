@@ -1,8 +1,9 @@
-<app-header-component></app-header-component>
-<app-hero-component></app-hero-component>
-<app-about-component></app-about-component>
-<app-skill-set-component></app-skill-set-component>
-<app-projects-component></app-projects-component>
-<app-testimonials-component></app-testimonials-component>
-<app-contact-component></app-contact-component>
+<app-header (languageChange)="updateLanguage($event)"></app-header>
+
+<app-hero-component [currentLang]="currentLang"></app-hero-component>
+<app-about-component [currentLang]="currentLang"></app-about-component>
+<app-skill-set-component [currentLang]="currentLang"></app-skill-set-component>
+<app-projects-component [currentLang]="currentLang"></app-projects-component>
+<app-testimonials-component [currentLang]="currentLang"></app-testimonials-component>
+<app-contact-component [currentLang]="currentLang"></app-contact-component>
 <app-footer-component></app-footer-component>

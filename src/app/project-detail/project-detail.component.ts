@@ -10,6 +10,7 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
   styleUrls: ['./project-detail.component.scss'],
 })
 export class ProjectDetailComponent implements OnInit {
+  currentLang: 'en' | 'de' = 'en';
   project: any;
   private route = inject(ActivatedRoute);
 
@@ -18,8 +19,8 @@ export class ProjectDetailComponent implements OnInit {
       slug: 'join',
       number: '01',
       name: 'Join',
-      description:
-        'Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.',
+      description: 'Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.',
+      description_de: 'Task-Manager inspiriert vom Kanban-System. Erstelle und organisiere Aufgaben per Drag & Drop, weise Benutzer und Kategorien zu.',
       tech: ['CSS', 'HTML', 'Firebase'],
       image: 'assets/join.png',
       github: 'https://github.com/Julz681/join',
@@ -29,8 +30,8 @@ export class ProjectDetailComponent implements OnInit {
       slug: 'el-pollo-loco',
       number: '02',
       name: 'El Pollo Loco',
-      description:
-        'Jump-and-run game inspired by Super Mario, built with JavaScript and canvas rendering.',
+      description: 'Jump-and-run game inspired by Super Mario, built with JavaScript and canvas rendering.',
+      description_de: 'Jump-and-Run-Spiel inspiriert von Super Mario, entwickelt mit JavaScript und Canvas-Rendering.',
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/pollo.png',
       github: 'https://github.com/Julz681/Pollo-Loco',
@@ -40,8 +41,8 @@ export class ProjectDetailComponent implements OnInit {
       slug: 'bestell-app',
       number: '03',
       name: 'Bestell-App',
-      description:
-        'Online food delivery platform that connects customers with restaurants for easy ordering and fast home delivery, built during a group-project with vanilla JavaScript.',
+      description: 'Online food delivery platform that connects customers with restaurants for easy ordering and fast home delivery.',
+      description_de: 'Online-Bestellplattform, die Kunden mit Restaurants verbindet – einfache Bestellung und schnelle Lieferung.',
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/bestell_app.png',
       github: 'https://github.com/Julz681/Bestell-App',
@@ -51,8 +52,8 @@ export class ProjectDetailComponent implements OnInit {
       slug: 'pokedex',
       number: '04',
       name: 'Pokédex',
-      description:
-        'Pokédex-style trainer registry that fetches and displays Pokémon data using an external API – with a touch of nostalgic fun',
+      description: 'Pokédex-style trainer registry that fetches and displays Pokémon data using an external API.',
+      description_de: 'Pokédex-ähnliches Trainerverzeichnis, das Pokémon-Daten über eine externe API lädt und anzeigt.',
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/pokedex.png',
       github: 'https://github.com/Julz681/Pokedex',
@@ -62,18 +63,21 @@ export class ProjectDetailComponent implements OnInit {
       slug: 'kochwelt',
       number: '05',
       name: 'Kochwelt',
-      description:
-        'Recipe platform that allows users to browse, discover, and share a variety of dishes in a clean, beginner-friendly interface.',
+      description: 'Recipe platform that allows users to browse, discover, and share a variety of dishes.',
+      description_de: 'Rezeptplattform, auf der Nutzer Gerichte durchsuchen, entdecken und teilen können.',
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/kochwelt.png',
       github: 'https://github.com/Julz681/Kochwelt',
       live: 'https://el-pollo.example.com',
     },
-
-    // Angular Projekt folgt dann mit DABubble
   ];
 
   ngOnInit(): void {
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang === 'de' || savedLang === 'en') {
+      this.currentLang = savedLang;
+    }
+
     this.route.paramMap.subscribe((params) => {
       const slug = params.get('slug');
       this.project = this.projects.find((p) => p.slug === slug);
@@ -101,8 +105,7 @@ export class ProjectDetailComponent implements OnInit {
       Group: 'group_small.png',
     };
 
-    const fileName =
-      iconMap[tech] || tech.toLowerCase().replace(/\s+/g, '-') + '.png';
+    const fileName = iconMap[tech] || tech.toLowerCase().replace(/\s+/g, '-') + '.png';
     return 'assets/icons/' + fileName;
   }
 

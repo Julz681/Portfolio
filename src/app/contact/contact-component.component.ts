@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./contact-component.component.scss']
 })
 export class ContactComponent {
+  @Input() currentLang: 'en' | 'de' = 'en';
+
   onSubmit() {
     console.log('Form submitted!');
   }

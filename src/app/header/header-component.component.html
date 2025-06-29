@@ -1,16 +1,38 @@
 <header class="header">
   <div class="lang-toggle">
-    <span class="lang active">EN</span>
-    <span class="lang">DE</span>
+    <span
+      class="lang"
+      [class.active]="currentLang === 'en'"
+      (click)="switchLanguage('en')"
+    >
+      EN
+    </span>
+    <span
+      class="lang"
+      [class.active]="currentLang === 'de'"
+      (click)="switchLanguage('de')"
+    >
+      DE
+    </span>
   </div>
 
-  <nav class="nav-links">
+  <nav class="nav-links" *ngIf="currentLang === 'en'">
     <a href="#about">About me</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
   </nav>
 
+  <nav class="nav-links" *ngIf="currentLang === 'de'">
+    <a href="#about">Über mich</a>
+    <a href="#skills">Fähigkeiten</a>
+    <a href="#projects">Projekte</a>
+  </nav>
+
   <div class="logo">
-    <img src="../../assets/Logo.png" alt="Judith Lütke Logo" class="logo" />
+    <img
+      src="../../assets/Logo.png"
+      alt="Judith Lütke Logo"
+      class="logo"
+    />
   </div>
 </header>

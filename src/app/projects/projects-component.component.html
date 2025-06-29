@@ -1,9 +1,18 @@
 <section id="projects" class="projects-section">
-  <span class="section-label">Portfolio</span>
-  <h2><span class="highlight">Featured Projects</span></h2>
+  <span class="section-label">
+    {{ currentLang === 'en' ? 'Portfolio' : 'Portfolio' }}
+  </span>
+
+  <h2>
+    <span class="highlight">
+      {{ currentLang === 'en' ? 'Featured Projects' : 'Ausgewählte Projekte' }}
+    </span>
+  </h2>
+
   <p>
-    Explore a selection of my work here – Interact with projects to see my
-    skills in action.
+    {{ currentLang === 'en'
+      ? 'Explore a selection of my work here – Interact with projects to see my skills in action.'
+      : 'Entdecke hier eine Auswahl meiner Arbeiten – Interagiere mit den Projekten, um meine Fähigkeiten in Aktion zu sehen.' }}
   </p>
 
   <div class="project-list">

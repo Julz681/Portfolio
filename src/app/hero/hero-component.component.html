@@ -1,39 +1,46 @@
 <section class="hero">
   <div class="hero-content">
-    <h2>Frontend Developer</h2>
+    <h2 *ngIf="currentLang === 'en'">Frontend Developer</h2>
+    <h2 *ngIf="currentLang === 'de'">Frontend Entwicklerin</h2>
+
     <h1>Judith Lütke</h1>
 
     <div class="hero-buttons">
-      <button>Check my work</button>
-      <button>Contact me</button>
+      <button *ngIf="currentLang === 'en'">Check my work</button>
+      <button *ngIf="currentLang === 'de'">Meine Projekte</button>
+
+      <button *ngIf="currentLang === 'en'">Contact me</button>
+      <button *ngIf="currentLang === 'de'">Kontakt</button>
     </div>
   </div>
 
   <div class="ribbon">
     <div class="ribbon-track">
-      <span>• &nbsp; Available for remote work</span>
-      <span>• &nbsp; Frontend Developer</span>
-      <span>• &nbsp; Based in Cologne</span>
-      <span>• &nbsp; Open to opportunities</span>
-
-      <span>• &nbsp; Available for remote work</span>
-      <span>• &nbsp; Frontend Developer</span>
-      <span>• &nbsp; Based in Cologne</span>
-      <span>• &nbsp; Open to opportunities</span>
+      <ng-container *ngIf="currentLang === 'en'">
+        <span>• &nbsp; Available for remote work</span>
+        <span>• &nbsp; Frontend Developer</span>
+        <span>• &nbsp; Based in Cologne</span>
+        <span>• &nbsp; Open to opportunities</span>
+      </ng-container>
+      <ng-container *ngIf="currentLang === 'de'">
+        <span>• &nbsp; Verfügbar für Remote-Arbeit</span>
+        <span>• &nbsp; Frontend Entwicklerin</span>
+        <span>• &nbsp; Standort Köln</span>
+        <span>• &nbsp; Offen für Neues</span>
+      </ng-container>
     </div>
   </div>
 
   <div class="socials">
-    <a href="mailto:judithluetke@yahoo.com" class="email"
-      >judithluetke&#64;yahoo.com</a
-    >
+    <a href="mailto:judithluetke@yahoo.com" class="email">
+      judithluetke&#64;yahoo.com
+    </a>
     <a href="https://github.com/Julz681" target="_blank">
       <img src="../../assets/Github.png" alt="GitHub" class="icon" />
     </a>
-
-    <a href="https://linkedin.com/in/judith-lütke-a98027372" target="_blank"
-      ><img src="../../assets/In.png" alt="LinkedIn" class="icon"
-    /></a>
+    <a href="https://linkedin.com/in/judith-lütke-a98027372" target="_blank">
+      <img src="../../assets/In.png" alt="LinkedIn" class="icon" />
+    </a>
     <div class="border"></div>
   </div>
 </section>
