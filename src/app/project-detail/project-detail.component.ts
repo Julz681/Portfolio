@@ -24,7 +24,7 @@ export class ProjectDetailComponent implements OnInit {
       tech: ['CSS', 'HTML', 'Firebase'],
       image: 'assets/join.png',
       github: 'https://github.com/Julz681/join',
-      live: 'https://join.example.com',
+      live: 'assets/projects/Join/index.html',
     },
     {
       slug: 'el-pollo-loco',
@@ -35,7 +35,8 @@ export class ProjectDetailComponent implements OnInit {
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/pollo.png',
       github: 'https://github.com/Julz681/Pollo-Loco',
-      live: 'https://el-pollo.example.com',
+      live: 'assets/projects/Pollo Loco/index.html',
+
     },
     {
       slug: 'bestell-app',
@@ -46,7 +47,8 @@ export class ProjectDetailComponent implements OnInit {
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/bestell_app.png',
       github: 'https://github.com/Julz681/Bestell-App',
-      live: 'https://el-pollo.example.com',
+      live: 'assets/projects/Bestell-App/index.html',
+
     },
     {
       slug: 'pokedex',
@@ -57,7 +59,8 @@ export class ProjectDetailComponent implements OnInit {
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/pokedex.png',
       github: 'https://github.com/Julz681/Pokedex',
-      live: 'https://el-pollo.example.com',
+      live: 'assets/projects/Pokedex/index.html',
+
     },
     {
       slug: 'kochwelt',
@@ -68,7 +71,8 @@ export class ProjectDetailComponent implements OnInit {
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/kochwelt.png',
       github: 'https://github.com/Julz681/Kochwelt',
-      live: 'https://el-pollo.example.com',
+      live: 'assets/projects/Kochwelt/index.html',
+
     },
   ];
 

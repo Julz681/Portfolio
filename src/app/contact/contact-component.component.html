@@ -1,14 +1,11 @@
 <section class="contact-section" id="contact">
+  <!-- LEFT TEXT CONTENT -->
   <div class="left" *ngIf="currentLang === 'en'">
     <h3>Contact me</h3>
     <h1>Let's work <br />together</h1>
     <h4>Got a problem to solve?</h4>
     <p>
-      Let’s build something great together. I’m excited to contribute to
-      meaningful, user-focused projects and bring ideas to life with clean code,
-      creativity, and a strong sense of collaboration. If you're looking for
-      someone reliable and detail-oriented, feel free to reach out — I’d love to
-      hear from you.
+      Let’s build something great together. I’m excited to contribute to meaningful, user-focused projects and bring ideas to life with clean code, creativity, and a strong sense of collaboration. If you're looking for someone reliable and detail-oriented, feel free to reach out — I’d love to hear from you.
     </p>
     <p>
       Need a Frontend developer?
@@ -21,10 +18,7 @@
     <h1>Lasst uns <br />zusammenarbeiten</h1>
     <h4>Ein Problem zu lösen?</h4>
     <p>
-      Lass uns gemeinsam etwas Großartiges erschaffen! Ich freue mich darauf, an
-      sinnvollen, nutzerzentrierten Projekten mitzuwirken und Ideen mit sauberem Code,
-      Kreativität und Teamgeist zum Leben zu erwecken. Wenn du eine zuverlässige und
-      detailorientierte Frontend-Entwicklerin suchst – melde dich gerne!
+      Lass uns gemeinsam etwas Großartiges erschaffen! Ich freue mich darauf, an sinnvollen, nutzerzentrierten Projekten mitzuwirken und Ideen mit sauberem Code, Kreativität und Teamgeist zum Leben zu erwecken. Wenn du eine zuverlässige und detailorientierte Frontend-Entwicklerin suchst – melde dich gerne!
     </p>
     <p>
       Brauchst du eine Frontend-Entwicklerin?
@@ -32,7 +26,14 @@
     </p>
   </div>
 
-  <form class="right" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+  <!-- FORM -->
+  <form
+    class="right"
+    (ngSubmit)="onSubmit(contactForm)"
+    #contactForm="ngForm"
+    novalidate
+  >
+    <!-- Name -->
     <label>
       <span *ngIf="currentLang === 'en'">What's your name?</span>
       <span *ngIf="currentLang === 'de'">Wie heißt du?</span>
@@ -40,11 +41,12 @@
         type="text"
         name="name"
         ngModel
-        [placeholder]="currentLang === 'en' ? 'Your name goes here' : 'Dein Name hier'"
         required
+        [placeholder]="currentLang === 'en' ? 'Your name goes here' : 'Dein Name hier'"
       />
     </label>
 
+    <!-- Email -->
     <label>
       <span *ngIf="currentLang === 'en'">What's your email?</span>
       <span *ngIf="currentLang === 'de'">Wie lautet deine E-Mail?</span>
@@ -52,40 +54,60 @@
         type="email"
         name="email"
         ngModel
-        [placeholder]="currentLang === 'en' ? 'youremail@email.com' : 'dein@email.de'"
         required
+        [placeholder]="currentLang === 'en' ? 'youremail@email.com' : 'dein@email.de'"
       />
     </label>
 
+    <!-- Message -->
     <label>
       <span *ngIf="currentLang === 'en'">How can I help you?</span>
       <span *ngIf="currentLang === 'de'">Wie kann ich dir helfen?</span>
       <textarea
         name="message"
         ngModel
-        [placeholder]="currentLang === 'en'
-          ? 'Hello Judith, I am interested in...'
-          : 'Hallo Judith, ich interessiere mich für...'"
         required
+        [placeholder]="currentLang === 'en' ? 'Hello Judith, I am interested in...' : 'Hallo Judith, ich interessiere mich für...'"
       ></textarea>
     </label>
 
+    <!-- Privacy Checkbox -->
     <div class="checkbox-line">
       <input type="checkbox" id="privacy" name="privacy" ngModel required />
       <label for="privacy">
         <span *ngIf="currentLang === 'en'">
-          I've read the <a href="#">privacy policy</a> and agree to the processing
-          of my data as outlined.
+          I've read the <a href="#">privacy policy</a> and agree to the processing of my data.
         </span>
         <span *ngIf="currentLang === 'de'">
-          Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und stimme der
-          Verarbeitung meiner Daten zu.
+          Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und stimme der Datenverarbeitung zu.
         </span>
       </label>
     </div>
 
+    <!-- Submit Button -->
     <button type="submit">
       {{ currentLang === 'en' ? 'Say Hello ;)' : 'Sag Hallo ;)' }}
     </button>
+
+    <!-- Validation Alert -->
+    <div class="alert" *ngIf="formInvalid">
+      {{ currentLang === 'en'
+        ? 'Please complete all fields and agree to the privacy policy.'
+        : 'Bitte fülle alle Felder aus und stimme der Datenschutzerklärung zu.' }}
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" *ngIf="formSubmitted && !error">
+      {{ currentLang === 'en'
+        ? 'Thank you! Your message was sent successfully.'
+        : 'Danke! Deine Nachricht wurde erfolgreich gesendet.' }}
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="formSubmitted && error">
+      {{ currentLang === 'en'
+        ? 'Oops! Something went wrong. Please try again later.'
+        : 'Ups! Etwas ist schiefgelaufen. Bitte versuche es später noch einmal.' }}
+    </div>
   </form>
 </section>
