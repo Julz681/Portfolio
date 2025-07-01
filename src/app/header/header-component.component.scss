@@ -5,50 +5,125 @@
   padding: 0 64px;
   background: linear-gradient(90deg, #1c1c1c, #08463b);
   color: #d9d9d9;
-  font-family: "Fira Code", monospace;
+  font-family: 'Fira Code', monospace;
   height: 98px;
   position: relative;
+  z-index: 1000;
+
+  .logo img {
+    width: 120px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    font-size: 22px;
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #3dcfb6;
+      }
+    }
+  }
+
+  .lang-toggle {
+    display: flex;
+    gap: 0.5rem;
+
+    .lang {
+      padding: 6px 12px;
+      border-radius: 100px;
+      background-color: transparent;
+      border: 1px solid #3dcfb6;
+      color: #d9d9d9;
+      cursor: pointer;
+      font-size: 14px;
+
+      &.active {
+        background-color: #3dcfb6;
+        color: #000;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+
+    span {
+      width: 28px;
+      height: 2px;
+      background-color: white;
+    }
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: linear-gradient(135deg, #1c1c1c, #08463b);
+    padding: 1rem 2rem;
+    border-radius: 0 0 0 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 999;
+
+    a {
+      color: white;
+      text-decoration: none;
+      margin-bottom: 1rem;
+      font-size: 18px;
+
+      &:hover {
+        color: #3dcfb6;
+      }
+    }
+
+    .lang-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+
+      .lang {
+        padding: 6px 12px;
+        border-radius: 100px;
+        background-color: transparent;
+        border: 1px solid #3dcfb6;
+        color: #d9d9d9;
+        cursor: pointer;
+        font-size: 14px;
+
+        &.active {
+          background-color: #3dcfb6;
+          color: #000;
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }
 
-.lang-toggle {
-  display: flex;
-  gap: 0.5rem;
-}
+@media screen and (max-width: 719px) {
+  .header {
+    padding: 0 24px;
 
-.lang-toggle .lang {
-  padding: 6px 12px;
-  border-radius: 100px;
-  background-color: transparent;
-  border: 1px solid transparent;
-  cursor: pointer;
-  color: #d9d9d9;
-  font-size: 14px;
-}
+    .nav-links {
+      display: none;
+    }
 
-.lang-toggle .lang.active {
-  background-color: #3dcfb6;
-  color: #000;
-  font-weight: bold;
-}
-
-.nav-links {
-  display: flex;
-  gap: 32px;
-  margin-left: 48px;
-  font-size: 22px;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover {
-  color: #3dcfb6;
-}
-
-.logo img {
-  width: 120px;
+    .hamburger {
+      display: flex;
+    }
+  }
 }

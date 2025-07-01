@@ -8,16 +8,18 @@
   color: #fff;
   background-color: #121212;
   font-family: "Karla", monospace;
+  box-sizing: border-box;
 
   .image-wrapper {
     flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
 
     img {
       width: 100%;
       max-width: 480px;
       border-radius: 1rem;
       object-fit: cover;
-      padding-left: 100px;
     }
   }
 
@@ -29,7 +31,9 @@
     padding: 32px;
     gap: 40px;
     text-align: justify;
-    width: 568px;
+    width: 100%;
+    max-width: 568px;
+    box-sizing: border-box;
 
     .section-label {
       font-size: 24px;
@@ -72,5 +76,62 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .about-section {
+    flex-direction: column;
+
+    .image-wrapper {
+      order: -1;
+      padding-bottom: 2rem;
+
+      img {
+        max-width: 320px;
+        width: 100%;
+      }
+    }
+
+    .about-box {
+      max-width: 90vw;
+      padding: 24px;
+      font-size: 46px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about-box {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .about-box h2 {
+    font-size: 42px !important;
+  }
+
+  .about-box p,
+  .about-box li {
+    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .about-box .icon {
+    padding-left: 0px !important;
+    width: 20px;
+  }
+
+  .about-box .about-points li {
+    font-size: 16px;
+    gap: 12px;
+    margin-bottom: 0.5rem;
+  }
+  .section-label {
+    font-size: 20px !important;
+  }
+
+  h2 {
+    font-size: 38px !important;
   }
 }
