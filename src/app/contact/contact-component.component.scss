@@ -8,7 +8,7 @@
 
   .left {
     flex: 1;
-    min-width: 300px;
+    //min-width: 300px;
 
     h3 {
       color: #3dcfb6;
@@ -169,4 +169,32 @@
   background-color: #d4f9e5;
   color: #146c43;
   border: 1px solid #146c43;
+}
+
+@media screen and (max-width: 480px) {
+  h3 {
+    font-size: 18px !important;
+  }
+
+  h1 {
+    font-size: 56px !important;
+  }
+
+  h4 {
+    font-size: 20px !important;
+  }
+
+  .contact-section {
+    padding-right: 2rem; 
+  }
+
+  form.right {
+    padding-right: 0.5rem; 
+  }
+
+form.right .checkbox-line {
+  margin-left: -16px;
+}
+
+
 }

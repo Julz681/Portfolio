@@ -1,19 +1,24 @@
 <header class="header">
-  <!-- Language Switch zuerst -->
-  <div class="lang-toggle desktop-lang-toggle" *ngIf="!isMobile">
+  <!-- Mobile Logo (links) -->
+  <div class="logo mobile-only" *ngIf="isMobile">
+    <img src="../../assets/Logo.png" alt="Logo" />
+  </div>
+
+  <!-- Language Switch -->
+  <div class="lang-toggle desktop-only" *ngIf="!isMobile">
     <button class="lang" [class.active]="currentLang === 'en'" (click)="switchLanguage('en')">EN</button>
     <button class="lang" [class.active]="currentLang === 'de'" (click)="switchLanguage('de')">DE</button>
   </div>
 
   <!-- Navigation -->
-  <nav class="nav-links" *ngIf="!isMobile">
+  <nav class="nav-links desktop-only" *ngIf="!isMobile">
     <a href="#about">About me</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
   </nav>
 
-  <!-- Logo jetzt rechts -->
-  <div class="logo" *ngIf="!isMobile">
+  <!-- Desktop Logo (rechts) -->
+  <div class="logo desktop-only" *ngIf="!isMobile">
     <img src="../../assets/Logo.png" alt="Logo" />
   </div>
 
@@ -24,7 +29,7 @@
     <span></span>
   </div>
 
-  <!-- Mobile Menu -->
+  <!-- Mobile Dropdown Menu -->
   <div class="mobile-menu" *ngIf="isMobile && menuOpen">
     <a href="#about" (click)="closeMenu()">About me</a>
     <a href="#skills" (click)="closeMenu()">Skills</a>

@@ -9,7 +9,9 @@
     </span>
   </h2>
 
-  <div class="carousel">
+  <div class="carousel" #carousel (scroll)="onScroll()">
+
+
     <div
       class="testimonial"
       *ngFor="let t of testimonials; let i = index"

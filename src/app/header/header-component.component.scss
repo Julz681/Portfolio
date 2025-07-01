@@ -10,29 +10,8 @@
   position: relative;
   z-index: 1000;
 
-  .logo img {
-    width: 120px;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-    font-size: 22px;
-
-    a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-
-      &:hover {
-        color: #3dcfb6;
-      }
-    }
-  }
-
-  .lang-toggle {
+  // Desktop: Sprache links
+  .lang-toggle.desktop-only {
     display: flex;
     gap: 0.5rem;
 
@@ -53,6 +32,37 @@
     }
   }
 
+  // Desktop: Navigation in der Mitte
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    font-size: 22px;
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #3dcfb6;
+      }
+    }
+  }
+
+  // Desktop: Logo rechts
+  .logo {
+    img {
+      width: 120px;
+    }
+
+    &.mobile-only {
+      display: none;
+    }
+  }
+
+  // Hamburger Menü (nur mobil sichtbar)
   .hamburger {
     display: none;
     flex-direction: column;
@@ -66,6 +76,7 @@
     }
   }
 
+  // Mobiles Menü
   .mobile-menu {
     position: absolute;
     top: 100%;
@@ -112,18 +123,43 @@
       }
     }
   }
+
+  // Sichtbarkeitssteuerung
+  .desktop-only {
+    display: flex;
+  }
+
+  .mobile-only {
+    display: none;
+  }
 }
 
+// Responsive Styles
 @media screen and (max-width: 719px) {
   .header {
     padding: 0 24px;
+    justify-content: space-between;
 
-    .nav-links {
+    .nav-links,
+    .lang-toggle.desktop-only,
+    .desktop-only {
       display: none;
+    }
+
+    .logo.mobile-only {
+      display: block;
+
+      img {
+        width: 100px;
+      }
     }
 
     .hamburger {
       display: flex;
+    }
+
+    .mobile-only {
+      display: block;
     }
   }
 }
