@@ -36,8 +36,8 @@ function togglePasswordVisibility(inputId, imgElement) {
   const isVisible = input.type === "text";
   input.type = isVisible ? "password" : "text";
   imgElement.src = isVisible
-    ? "/assets/img/eye_closed.png"
-    : "/assets/img/eye.png";
+    ? "/../assets/img/eye_closed.png"
+    : "/../assets/img/eye.png";
 }
 
 /**
@@ -48,11 +48,11 @@ function togglePasswordVisibility(inputId, imgElement) {
 function updatePasswordIcon(inputId, imgElement) {
   const input = document.getElementById(inputId);
   if (input.type === "text") {
-    imgElement.src = "/assets/img/eye.png";
+    imgElement.src = "/../assets/img/eye.png";
   } else if (input.value.length === 0) {
-    imgElement.src = "/assets/img/lock.png";
+    imgElement.src = "/../assets/img/lock.png";
   } else {
-    imgElement.src = "/assets/img/eye_closed.png";
+    imgElement.src = "/../assets/img/eye_closed.png";
   }
 }
 
@@ -69,7 +69,7 @@ async function normalLogin(event = null) {
     const userData = await getUserDataByEmail(email);
     if (!handleUserValidation(userData, password)) return;
     saveLoginSession(userData, rememberMe, email, password);
-    window.location.href = "/html/summary.html";
+    window.location.href = "../../projects/Join/html/summary.html";
   } catch (err) {
     showFieldError("email", "Login failed. Please try again.");
   }
@@ -134,7 +134,8 @@ function guestLogin() {
   localStorage.setItem("userId", "guest_user");
   localStorage.setItem("loggedInUserName", "Guest");
   localStorage.setItem("isGuest", "true");
-  window.location.href = "/html/summary.html";
+  window.location.href = "../../projects/Join/html/summary.html"; 
+
 }
 
 /**
@@ -178,7 +179,7 @@ function initPasswordField() {
   let firstFocus = true;
   input?.addEventListener("focus", () => {
     if (firstFocus) {
-      icon.src = "/assets/img/eye_closed.png";
+      icon.src = "/../assets/img/eye_closed.png";
       firstFocus = false;
     }
   });
@@ -206,7 +207,7 @@ function initLoginButtons() {
 function initSignupLinks() {
   const signupBtn = document.querySelector(".signup-btn");
   const signupBtn1 = document.querySelector(".signup-btn1");
-  const goToSignup = () => (window.location.href = "/html/sign_up.html");
+  const goToSignup = () => (window.location.href = "../../projects/Join/html/sign_up.html");
   signupBtn?.addEventListener("click", goToSignup);
   signupBtn1?.addEventListener("click", goToSignup);
 }

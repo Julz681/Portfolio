@@ -11,12 +11,20 @@
   }
 
   .carousel {
-    position: relative;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
     height: 300px;
+
+    // hides scrollbar globally
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .testimonial {
@@ -114,65 +122,16 @@
     }
   }
 }
-@media screen and (max-width: 480px) {
-  .testimonials {
-    padding: 3rem 1rem;
 
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .carousel {
-      height: auto;
-    }
-
-    .testimonial {
-      padding: 1.5rem 1rem;
-      border-radius: 20px;
-
-      .quote {
-        font-size: 3rem;
-      }
-
-      p {
-        font-size: 1rem;
-        line-height: 1.5;
-      }
-
-      hr {
-        margin: 1rem 0;
-      }
-
-      .author {
-        font-size: 0.875rem;
-      }
-    }
-
-    .controls {
-      gap: 1rem;
-      margin-top: 1.5rem;
-
-      button {
-        font-size: 1.25rem;
-      }
-
-      .dots span {
-        width: 6px;
-        height: 6px;
-      }
-    }
-  }
-}
+// ---------- Mobile optimiert ----------
 @media screen and (max-width: 900px) {
   .testimonials {
-    padding: 3rem 0;
-    overflow-x: hidden;
+    padding: 2rem 0;
 
     h2 {
-      font-size: 36px;
-      margin-bottom: 2rem;
+      font-size: 1.75rem;
       padding: 0 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .carousel {
@@ -181,27 +140,34 @@
       align-items: stretch;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      padding-left: 1rem;
+      padding: 0 1rem;
       gap: 1rem;
       height: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     .testimonial {
-      flex: 0 0 85%;
+      flex: 0 0 90%;
+      max-width: 90%;
       scroll-snap-align: center;
-      border-radius: 30px;
-      padding: 2rem;
-      background: #1f2e2e;
-      border: 1px solid #3dcfb6;
-      box-shadow: 0 0 12px rgba(0, 245, 212, 0.1);
+      position: relative;
       opacity: 1 !important;
       transform: none !important;
-      position: relative;
+      padding: 1.5rem;
+      background: #1f2e2e;
+      border-radius: 24px;
+      border: 1px solid #3dcfb6;
 
       .quote {
-        font-size: 3rem;
-        color: #3dcfb6;
+        font-size: 2.5rem;
         margin-bottom: 0.5rem;
+        color: #3dcfb6;
+        text-align: left;
       }
 
       p {
@@ -213,7 +179,6 @@
 
       hr {
         margin: 1rem 0;
-        border: none;
         border-top: 2px solid #3dcfb6;
       }
 
@@ -237,41 +202,4 @@
       }
     }
   }
-
-  .carousel {
-    scroll-behavior: smooth;
-  }
-}
-
-
-.carousel {
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
-
-  &::-webkit-scrollbar {
-    display: none; 
-  }
-}
-
-
-
-.testimonial {
-      flex: 0 0 85%;
-      scroll-snap-align: center;
-      border-radius: 30px;
-      padding: 2rem;
-      background: #1f2e2e;
-      border: 1px solid #3dcfb6;
-      box-shadow: 0 0 12px rgba(0, 245, 212, 0.1);
-      opacity: 1 !important;
-      transform: none !important;
-      position: relative;
-}
-
-@media screen and (max-width: 480px) {
-    h2 {
-      font-size: 24px!important;
-      margin-bottom: 2rem;
-      padding: 0 1.5rem;
-    }
 }

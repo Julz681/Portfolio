@@ -1,0 +1,23 @@
+<div class="legal-overlay">
+  <div class="overlay-content">
+    <button class="close-btn" (click)="closeOverlay()">×</button>
+
+    <section class="legal-notice">
+      <h1 *ngIf="currentLang === 'en'">Legal Notice</h1>
+      <h1 *ngIf="currentLang === 'de'">Impressum</h1>
+
+      <div class="notice-text">
+        <p><strong>Judith Lütke</strong></p>
+        <p>Cologne, Germany</p>
+        <p>Email: <a href="mailto:judithluetke@yahoo.com">judithluetke&#64;yahoo.com</a></p>
+
+        <p *ngIf="currentLang === 'en'" style="margin-top: 2rem;">
+          This website is a personal portfolio and does not pursue commercial purposes.
+        </p>
+        <p *ngIf="currentLang === 'de'" style="margin-top: 2rem;">
+          Diese Website dient ausschließlich der Darstellung meiner Person und ist nicht kommerziell.
+        </p>
+      </div>
+    </section>
+  </div>
+</div>

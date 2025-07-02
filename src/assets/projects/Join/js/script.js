@@ -145,10 +145,10 @@ function setupGuestPolicyLinkRedirects() {
       const href = link.getAttribute("href");
       if (href.includes("privacy_policy.html")) {
         event.preventDefault();
-        window.location.href = "/html/privacy_policy_logged_out.html";
+        window.location.href = "../html/privacy_policy_logged_out.html";
       } else if (href.includes("legal_notice.html")) {
         event.preventDefault();
-        window.location.href = "/html/legal_notice_logged_out.html";
+        window.location.href = "../html/legal_notice_logged_out.html";
       }
     });
   });

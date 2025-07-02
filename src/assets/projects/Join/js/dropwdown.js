@@ -95,7 +95,7 @@ function toggleDropdownContainerVisibility(dropdownContainerRef) {
 function closeAllDropdowns(event) {
     let assignedToDropdownContainerId;
     let dropdownContainers = [];
-    if (window.location.pathname === "/html/board.html") {
+    if (window.location.pathname === "../html/board.html") {
         assignedToDropdownContainerId = "assigned-to-dropdown-task-form";
         dropdownContainers = [createContainerObject("category-dropdown"), createContainerObject("assigned-to-dropdown-task-form"),];
         closeAllMenus(current = null);

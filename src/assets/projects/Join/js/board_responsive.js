@@ -1,4 +1,4 @@
-import { database, ref, set } from "/js/firebase.js";
+import { database, ref, set } from "../js/firebase.js";
 
 /**
  * Handles the display of a "no results" message based on the search text length,

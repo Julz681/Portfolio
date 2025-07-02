@@ -1,0 +1,53 @@
+.legal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-content {
+  background: #111;
+  color: white;
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 8px;
+  position: relative;
+  font-family: 'Karla', sans-serif;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #3dcfb6;
+  }
+}
+
+.notice-text {
+  p {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+
+  a {
+    color: #3dcfb6;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

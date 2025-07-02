@@ -1,4 +1,4 @@
-import { database, ref, onValue } from '/js/firebase.js';
+import { database, ref, onValue } from '../firebase.js';
     /**
      * DOM elements for updating task counts and deadlines.
      */

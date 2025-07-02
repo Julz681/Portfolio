@@ -10,7 +10,6 @@
   position: relative;
   z-index: 1000;
 
-  // Desktop: Sprache links
   .lang-toggle.desktop-only {
     display: flex;
     gap: 0.5rem;
@@ -32,7 +31,7 @@
     }
   }
 
-  // Desktop: Navigation in der Mitte
+
   .nav-links {
     display: flex;
     gap: 32px;
@@ -51,10 +50,10 @@
     }
   }
 
-  // Desktop: Logo rechts
   .logo {
     img {
       width: 120px;
+      padding-top: 12px;
     }
 
     &.mobile-only {
@@ -62,7 +61,6 @@
     }
   }
 
-  // Hamburger Menü (nur mobil sichtbar)
   .hamburger {
     display: none;
     flex-direction: column;
@@ -76,7 +74,7 @@
     }
   }
 
-  // Mobiles Menü
+
   .mobile-menu {
     position: absolute;
     top: 100%;
@@ -124,7 +122,7 @@
     }
   }
 
-  // Sichtbarkeitssteuerung
+
   .desktop-only {
     display: flex;
   }
@@ -134,7 +132,7 @@
   }
 }
 
-// Responsive Styles
+
 @media screen and (max-width: 719px) {
   .header {
     padding: 0 24px;

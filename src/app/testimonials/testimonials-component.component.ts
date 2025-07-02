@@ -49,45 +49,59 @@ export class TestimonialsComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   currentIndex = 0;
-  intervalId: any;
+  intervalId: ReturnType<typeof setInterval> | null = null;
   isMobile = false;
 
   ngOnInit(): void {
-    this.checkMobile();
-    this.startAutoSlide();
+    this.updateDeviceMode();
   }
 
   ngAfterViewInit(): void {
-    if (this.carousel && this.isMobile) {
-      this.carousel.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
+    if (this.isMobile && this.carousel) {
+      this.carousel.nativeElement.addEventListener('scroll', this.onScroll);
     }
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.intervalId);
+    this.clearAutoSlide();
     if (this.carousel && this.isMobile) {
-      this.carousel.nativeElement.removeEventListener('scroll', this.onScroll.bind(this));
+      this.carousel.nativeElement.removeEventListener('scroll', this.onScroll);
     }
   }
 
   @HostListener('window:resize')
-  checkMobile() {
+  updateDeviceMode(): void {
+    const wasMobile = this.isMobile;
     this.isMobile = window.innerWidth <= 900;
+
+    if (wasMobile !== this.isMobile) {
+      if (this.isMobile) {
+        this.clearAutoSlide();
+      } else {
+        this.startAutoSlide();
+      }
+    }
   }
 
-startAutoSlide() {
-  if (!this.isMobile) {
-    this.intervalId = setInterval(() => this.nextTestimonial(), 7000);
+  startAutoSlide(): void {
+    this.clearAutoSlide();
+    if (!this.isMobile) {
+      this.intervalId = setInterval(() => this.nextTestimonial(), 7000);
+    }
   }
-}
+
+  clearAutoSlide(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
 
   nextTestimonial(): void {
     if (this.isMobile && this.carousel) {
       const container = this.carousel.nativeElement;
-      const cards = container.children;
       const nextIndex = (this.currentIndex + 1) % this.testimonials.length;
-      const nextCard = cards[nextIndex] as HTMLElement;
-
+      const nextCard = container.children[nextIndex] as HTMLElement;
       nextCard.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       this.currentIndex = nextIndex;
     } else {
@@ -98,16 +112,12 @@ startAutoSlide() {
   prevTestimonial(): void {
     if (this.isMobile && this.carousel) {
       const container = this.carousel.nativeElement;
-      const cards = container.children;
-      const prevIndex =
-        (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length;
-      const prevCard = cards[prevIndex] as HTMLElement;
-
+      const prevIndex = (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length;
+      const prevCard = container.children[prevIndex] as HTMLElement;
       prevCard.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       this.currentIndex = prevIndex;
     } else {
-      this.currentIndex =
-        (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length;
+      this.currentIndex = (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length;
     }
   }
 
@@ -119,7 +129,7 @@ startAutoSlide() {
     }
   }
 
-  onScroll(): void {
+  onScroll = (): void => {
     if (!this.carousel || !this.isMobile) return;
 
     const container = this.carousel.nativeElement;
@@ -142,5 +152,5 @@ startAutoSlide() {
     });
 
     this.currentIndex = closestIndex;
-  }
+  };
 }

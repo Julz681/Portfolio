@@ -26,7 +26,7 @@ function createTask(dateFieldId) {
  * @param {Object} taskObject - The newly created task object.
  */
 function checkWindowLocation(taskObject) {
-    if (window.location.pathname === "/html/board.html") {
+    if (window.location.pathname === "/../html/board.html") {
         if (!window.tasks) window.tasks = [];
         window.tasks.push(taskObject);
         if (typeof renderAllColumns === "function") {
@@ -205,8 +205,8 @@ function showTaskSuccessMessage() {
  */
 function redirectToBoard() {
     const currentPath = window.location.pathname.replace(/\\/g, '/');
-    if (currentPath !== '/html/board.html' && currentPath !== '/board.html') {
-        window.location.href = '/html/board.html';
+    if (currentPath !== '/../html/board.html' && currentPath !== '/board.html') {
+        window.location.href = '/../html/board.html';
     }
 }
 

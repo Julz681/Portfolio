@@ -1,0 +1,80 @@
+.privacy-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 9999;
+
+  .overlay-content {
+    position: relative;
+    max-width: 700px;
+    background: #1f1f1f;
+    padding: 2rem;
+    border-radius: 16px;
+    overflow-y: auto;
+    max-height: 90vh;
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #3dcfb6;
+      }
+    }
+
+    .privacy-policy {
+      color: #fff;
+      font-family: 'Karla', monospace;
+
+      h1 {
+        font-size: 2rem;
+        color: #3dcfb6;
+        margin-bottom: 1.5rem;
+      }
+
+      .policy-text p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        font-size: 1rem;
+
+        a {
+          color: #3dcfb6;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .overlay-content {
+      padding: 1.5rem;
+    }
+
+    .privacy-policy h1 {
+      font-size: 1.5rem;
+    }
+
+    .policy-text p {
+      font-size: 0.95rem;
+    }
+  }
+}

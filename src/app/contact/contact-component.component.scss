@@ -98,38 +98,43 @@
       }
     }
 
-    .checkbox-line {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      font-size: 0.95rem;
-      color: #fff;
-      flex-wrap: nowrap;
+.checkbox-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #fff;
+  flex-wrap: nowrap;
 
-      input[type="checkbox"] {
-        margin-top: 0.2rem;
-        flex-shrink: 0;
-        accent-color: #3dcfb6;
-      }
+  input[type="checkbox"] {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    accent-color: #3dcfb6;
+  }
 
-      label {
-        display: inline;
-        font-weight: 400;
-        line-height: 1.4;
-        color: #fff;
-        margin: 0;
-        padding: 0;
+  label {
+    display: inline;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    color: #fff;
 
-        a {
-          color: #3dcfb6;
-          text-decoration: none;
+    span {
+      color: #fff; 
 
-          &:hover {
-            text-decoration: underline;
-          }
+      a {
+        color: #3dcfb6;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
         }
       }
     }
+  }
+}
+
 
     button {
       width: 139px;
@@ -196,5 +201,14 @@ form.right .checkbox-line {
   margin-left: -16px;
 }
 
-
+  .success-message,
+  .error-message,
+  .alert {
+    max-width: 90vw;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 2rem auto 0 auto;
+    padding: 1rem;
+    text-align: center;
+  }
 }
