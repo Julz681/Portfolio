@@ -12,7 +12,7 @@
     background: #1f2e2e;
     border-radius: 30px;
     border: 1px solid #3dcfb6;
-    padding: 2rem;
+    padding: 4rem 1.5rem;
     font-family: "Inter", sans-serif;
     text-align: justify;
     width: 520px;
@@ -42,6 +42,7 @@
       font-size: 18px;
       line-height: 120%;
       font-family: "Karla", monospace;
+      font-size: 18px;
 
       &.highlight {
         font-family: monospace;
@@ -98,8 +99,9 @@
     flex: 1 1 500px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 1rem;
+    gap: 2rem;
     justify-content: center;
+    padding-right: 24px;
 
     .icon-item {
       display: flex;
@@ -143,7 +145,7 @@
   .icon-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    padding-right: 0px !important;
     justify-items: center;
 
     .icon-item {
@@ -158,6 +160,18 @@
     }
   }
   .text-box {
-    margin-left: 0!important;
+    margin-left: 0 !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .skill-section {
+    padding: 3rem 1rem;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .text-box {
+    margin-left: 0 !important;
   }
 }

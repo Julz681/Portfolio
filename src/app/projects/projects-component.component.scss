@@ -1,26 +1,23 @@
 .projects-section {
   padding: 4rem 1.5rem;
-  max-width: 1020px;
+  position: relative;
 
   .section-label {
     font-family: "Karla", monospace;
     color: #3dcfb6;
     font-size: 24px;
-    letter-spacing: 0%;
     display: block;
     line-height: 100%;
     margin-bottom: 24px;
-
   }
 
   h2 {
     font-size: 64px;
     font-weight: 700;
     line-height: 100%;
-    margin: 0;
-    margin-bottom: 2rem;
+    margin: 0 0 2rem;
     font-family: "Fira", monospace;
-    letter-spacing: -3%;
+    letter-spacing: -0.03em;
 
     span {
       color: #3dcfb6;
@@ -28,12 +25,11 @@
   }
 
   p {
-      margin: 1rem 0;
-      color: #ffff;
-      max-width: 500px;
-      font-family: "Karla", monospace;
-      line-height: 120%;
-      letter-spacing: 0%;
+    margin: 1rem 0;
+    color: #ffff;
+    max-width: 500px;
+    font-family: "Karla", monospace;
+    line-height: 120%;
   }
 
   .project-list {
@@ -42,6 +38,7 @@
     gap: 2rem;
     margin-top: 2rem;
     position: relative;
+    max-width: calc(100vw - 500px);
   }
 
   a.project-item {
@@ -64,6 +61,10 @@
       .project-name .arrow {
         opacity: 1;
         transform: translateX(0);
+      }
+
+      .project-image {
+        display: block;
       }
     }
 
@@ -102,6 +103,7 @@
       border: 1px solid #00f5d4;
       z-index: 10;
       pointer-events: none;
+      display: none;
 
       img {
         width: 420px;
@@ -114,15 +116,13 @@
   }
 }
 
-@media screen and (max-width: 480px) {
-  p {
-    font-size: 16px !important;
+@media screen and (max-width: 1060px) {
+  .project-list {
+    max-width: 100% !important;
   }
-    h2 {
-    font-size: 38px !important;
-  }
-  .section-label {
-    font-size: 20px !important;
+
+  .project-image {
+    display: none !important;
   }
 }
 
@@ -164,10 +164,20 @@
         font-family: "Karla", monospace;
         text-align: left;
       }
-
-      .project-image {
-        display: none !important;
-      }
     }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  p {
+    font-size: 16px !important;
+  }
+
+  h2 {
+    font-size: 38px !important;
+  }
+
+  .section-label {
+    font-size: 20px !important;
   }
 }
