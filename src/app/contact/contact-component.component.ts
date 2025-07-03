@@ -8,7 +8,7 @@ import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.compone
   standalone: true,
   imports: [CommonModule, FormsModule, PrivacyPolicyComponent],
   templateUrl: './contact-component.component.html',
-  styleUrls: ['./contact-component.component.scss']
+  styleUrls: ['./contact-component.component.scss'],
 })
 export class ContactComponent {
   @Input() currentLang: 'en' | 'de' = 'en';
@@ -18,14 +18,15 @@ export class ContactComponent {
   error = false;
   formInvalid = false;
 
+  success = false;
+
   onSubmit(form: NgForm) {
+    this.formSubmitted = true;
+    this.success = false;
+
     if (form.invalid || !form.value.privacy) {
-      this.formInvalid = true;
-      this.formSubmitted = false;
       return;
     }
-
-    this.formInvalid = false;
 
     const formData = {
       name: form.value.name,
@@ -42,14 +43,15 @@ export class ContactComponent {
       body: JSON.stringify(formData),
     })
       .then((response) => {
-        this.formSubmitted = true;
         this.error = !response.ok;
+        this.success = response.ok;
+
         if (response.ok) {
-          form.reset();
+          form.resetForm();
+          this.formSubmitted = false;
         }
       })
       .catch(() => {
-        this.formSubmitted = true;
         this.error = true;
       });
   }

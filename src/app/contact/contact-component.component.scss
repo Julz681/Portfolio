@@ -5,6 +5,7 @@
   padding: 4rem 2rem;
   color: white;
   background-color: #121212;
+  max-width: 2100px;
 
   .left {
     flex: 1;
@@ -153,6 +154,14 @@
     }
   }
 }
+.no-underline {
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
 
 .success-message,
 .error-message,
@@ -173,6 +182,12 @@
   color: #146c43;
   border: 1px solid #146c43;
 }
+.input-error {
+  color: #ffff;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
 
 @media screen and (max-width: 480px) {
   h3 {

@@ -6,6 +6,7 @@
   align-items: flex-start;
   background-color: #121212;
   color: #fff;
+  max-width: 2100px;
 
   .text-box {
     flex: 1 1 400px;
@@ -98,7 +99,7 @@
   .icon-grid {
     flex: 1 1 500px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, max(22%, 100px)));
     gap: 2rem;
     justify-content: center;
     padding-right: 24px;
@@ -144,9 +145,10 @@
 @media screen and (max-width: 510px) {
   .icon-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr) !important;
     padding-right: 0px !important;
     justify-items: center;
+    gap: 0.2rem !important;
 
     .icon-item {
       img {
@@ -155,7 +157,7 @@
       }
 
       span {
-        font-size: 16px;
+        font-size: 14px !important;
       }
     }
   }

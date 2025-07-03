@@ -6,15 +6,24 @@
     <h1>Judith Lütke</h1>
 
     <div class="hero-buttons">
-      <button *ngIf="currentLang === 'en'">Check my work</button>
-      <button *ngIf="currentLang === 'de'">Meine Projekte</button>
+      <!-- Projekt-Button -->
+      <a *ngIf="currentLang === 'en'" href="#projects">
+        <button><span class="text">Check my work</span></button>
+      </a>
+      <a *ngIf="currentLang === 'de'" href="#projects">
+        <button><span class="text">Meine Projekte</span></button>
+      </a>
 
-      <button *ngIf="currentLang === 'en'">Contact me</button>
-      <button *ngIf="currentLang === 'de'">Kontakt</button>
+      <!-- Kontakt-Button -->
+      <a *ngIf="currentLang === 'en'" href="#contact">
+        <button><span class="text">Contact me</span></button>
+      </a>
+      <a *ngIf="currentLang === 'de'" href="#contact">
+        <button><span class="text">Kontakt</span></button>
+      </a>
     </div>
   </div>
 
-  
   <div class="ribbon">
     <div class="ribbon-track">
       <ng-container *ngIf="currentLang === 'en'">
@@ -32,21 +41,19 @@
     </div>
   </div>
 
-<div class="socials">
-  <a href="mailto:judithluetke@yahoo.com" class="email email-text">
-    judithluetke&#64;yahoo.com
-  </a>
-  <a href="mailto:judithluetke@yahoo.com" class="email email-icon">
-    <img src="../../assets/mail.png" alt="Mail Icon" class="icon"/>
-  </a>
-  <a href="https://github.com/Julz681" target="_blank">
-    <img src="../../assets/Github.png" alt="GitHub" class="icon" />
-  </a>
-  <a href="https://linkedin.com/in/judith-lütke-a98027372" target="_blank">
-    <img src="../../assets/In.png" alt="LinkedIn" class="icon" />
-  </a>
-  <div class="border"></div>
-</div>
-
-
+  <div class="socials">
+    <a href="mailto:judithluetke@yahoo.com" class="email email-text">
+      judithluetke&#64;yahoo.com
+    </a>
+    <a href="mailto:judithluetke@yahoo.com" class="email email-icon">
+      <img src="../../assets/mail.png" alt="Mail Icon" class="icon" />
+    </a>
+    <a href="https://github.com/Julz681" target="_blank">
+      <img src="../../assets/Github.png" alt="GitHub" class="icon" />
+    </a>
+    <a href="https://linkedin.com/in/judith-lütke-a98027372" target="_blank">
+      <img src="../../assets/In.png" alt="LinkedIn" class="icon" />
+    </a>
+    <div class="border"></div>
+  </div>
 </section>

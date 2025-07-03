@@ -9,7 +9,7 @@
     </p>
     <p>
       Need a Frontend developer?
-      <a href="#">Let’s talk!</a>
+      <a class="no-underline">Let’s talk!</a>
     </p>
   </div>
 
@@ -22,7 +22,7 @@
     </p>
     <p>
       Brauchst du eine Frontend-Entwicklerin?
-      <a href="#">Sprich mich an!</a>
+      <a class="no-underline">Sprich mich an!</a>
     </p>
   </div>
 
@@ -34,55 +34,83 @@
     novalidate
   >
     <!-- Name -->
-    <label>
-      <span *ngIf="currentLang === 'en'">What's your name?</span>
-      <span *ngIf="currentLang === 'de'">Wie heißt du?</span>
-      <input
-        type="text"
-        name="name"
-        ngModel
-        required
-        [placeholder]="currentLang === 'en' ? 'Your name goes here' : 'Dein Name hier'"
-      />
-    </label>
+    <!-- Name -->
+<label>
+  <span *ngIf="currentLang === 'en'">What's your name?</span>
+  <span *ngIf="currentLang === 'de'">Wie heißt du?</span>
+  <input
+    type="text"
+    name="name"
+    ngModel
+    required
+    #name="ngModel"
+    [placeholder]="currentLang === 'en' ? 'Your name goes here' : 'Dein Name hier'"
+  />
+  <div class="input-error" *ngIf="formSubmitted && name.invalid">
+    {{ currentLang === 'en' ? 'Name is required.' : 'Name ist erforderlich.' }}
+  </div>
+</label>
 
-    <!-- Email -->
-    <label>
-      <span *ngIf="currentLang === 'en'">What's your email?</span>
-      <span *ngIf="currentLang === 'de'">Wie lautet deine E-Mail?</span>
-      <input
-        type="email"
-        name="email"
-        ngModel
-        required
-        [placeholder]="currentLang === 'en' ? 'youremail@email.com' : 'dein@email.de'"
-      />
-    </label>
+<!-- Email -->
+<label>
+  <span *ngIf="currentLang === 'en'">What's your email?</span>
+  <span *ngIf="currentLang === 'de'">Wie lautet deine E-Mail?</span>
+  <input
+    type="email"
+    name="email"
+    ngModel
+    required
+    #email="ngModel"
+    [placeholder]="currentLang === 'en' ? 'youremail@email.com' : 'dein@email.de'"
+    pattern="^[a-zA-Z0-9._%+~\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
 
-    <!-- Message -->
-    <label>
-      <span *ngIf="currentLang === 'en'">How can I help you?</span>
-      <span *ngIf="currentLang === 'de'">Wie kann ich dir helfen?</span>
-      <textarea
-        name="message"
-        ngModel
-        required
-        [placeholder]="currentLang === 'en' ? 'Hello Judith, I am interested in...' : 'Hallo Judith, ich interessiere mich für...'"
-      ></textarea>
-    </label>
 
-    <!-- Privacy Checkbox -->
-    <div class="checkbox-line">
-      <input type="checkbox" id="privacy" name="privacy" ngModel required />
-      <label for="privacy">
-        <span *ngIf="currentLang === 'en'">
-          I've read the <a href="#" (click)="showPolicy = true; $event.preventDefault()">privacy policy</a> and agree to the processing of my data.
-        </span>
-        <span *ngIf="currentLang === 'de'">
-          Ich habe die <a href="#" (click)="showPolicy = true; $event.preventDefault()">Datenschutzerklärung</a> gelesen und stimme der Datenverarbeitung zu.
-        </span>
-      </label>
-    </div>
+  />
+  <div class="input-error" *ngIf="formSubmitted && email.invalid">
+    <ng-container *ngIf="email.errors?.['required']">
+      {{ currentLang === 'en' ? 'Email is required.' : 'E-Mail ist erforderlich.' }}
+    </ng-container>
+    <ng-container *ngIf="email.errors?.['pattern']">
+      {{ currentLang === 'en' ? 'Please enter a valid email address.' : 'Bitte gib eine gültige E-Mail-Adresse ein.' }}
+    </ng-container>
+  </div>
+</label>
+
+<!-- Message -->
+<label>
+  <span *ngIf="currentLang === 'en'">How can I help you?</span>
+  <span *ngIf="currentLang === 'de'">Wie kann ich dir helfen?</span>
+  <textarea
+    name="message"
+    ngModel
+    required
+    #message="ngModel"
+    [placeholder]="currentLang === 'en' ? 'Hello Judith, I am interested in...' : 'Hallo Judith, ich interessiere mich für...'"
+  ></textarea>
+  <div class="input-error" *ngIf="formSubmitted && message.invalid">
+    {{ currentLang === 'en' ? 'Message is required.' : 'Nachricht ist erforderlich.' }}
+  </div>
+</label>
+
+<!-- Privacy Checkbox -->
+<div class="checkbox-line">
+  <input type="checkbox" id="privacy" name="privacy" ngModel required #privacy="ngModel" />
+  <label for="privacy">
+    <span *ngIf="currentLang === 'en'">
+      I've read the <a href="#" (click)="showPolicy = true; $event.preventDefault()">privacy policy</a> and agree to the processing of my data.
+    </span>
+    <span *ngIf="currentLang === 'de'">
+      Ich habe die <a href="#" (click)="showPolicy = true; $event.preventDefault()">Datenschutzerklärung</a> gelesen und stimme der Datenverarbeitung zu.
+    </span>
+  </label>
+  <div class="input-error" *ngIf="formSubmitted && privacy.invalid">
+    {{ currentLang === 'en'
+      ? 'Please agree to the privacy policy.'
+      : 'Bitte stimme der Datenschutzerklärung zu.' }}
+  </div>
+</div>
+
+
 
     <!-- Submit Button -->
     <button type="submit">
@@ -97,11 +125,12 @@
     </div>
 
     <!-- Success Message -->
-    <div class="success-message" *ngIf="formSubmitted && !error">
-      {{ currentLang === 'en'
-        ? 'Thank you! Your message was sent successfully.'
-        : 'Danke! Deine Nachricht wurde erfolgreich gesendet.' }}
-    </div>
+<div class="success-message" *ngIf="success">
+  {{ currentLang === 'en'
+    ? 'Thank you! Your message was sent successfully.'
+    : 'Danke! Deine Nachricht wurde erfolgreich gesendet.' }}
+</div>
+
 
     <!-- Error Message -->
     <div class="error-message" *ngIf="formSubmitted && error">
