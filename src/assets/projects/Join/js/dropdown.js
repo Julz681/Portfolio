@@ -166,3 +166,4 @@ function handleDropdownContainerIds(dropdownContainerId) {
         checkCategoryInputPlaceholder("category-error");
     }
 }
+window.toggleDropdown = toggleDropdown;

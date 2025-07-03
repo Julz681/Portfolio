@@ -606,7 +606,7 @@ header {
 }
 
 .cancel-icon {
-  background-image: url(/assets/img/icons/cancel.png);
+  background-image: url(/assets/projects/Join/assets/img/icons/cancel.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -621,7 +621,7 @@ header {
 }
 
 .cancel-btn:hover .cancel-icon {
-  background-image: url(/assets/img/icons/cancel_hover.png);
+  background-image: url(/assets/projects/Join/assets/img/icons/cancel_hover.png);
 }
 
 .cancel-btn:hover {
@@ -648,7 +648,7 @@ header {
 }
 
 .checkmark-icon {
-  background: url(/assets/img/icons/check-mark-icon.png) no-repeat center center;
+  background: url(/assets/projects/Join/assets/img/icons/check-mark-icon.png) no-repeat center center;
   width: 24px;
   height: 24px;
 }

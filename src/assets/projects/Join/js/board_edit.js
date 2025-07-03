@@ -378,7 +378,7 @@ function replaceIconsForEdit(wrapper, input, task, index, container) {
 function createConfirmButton() {
   return createIcon(
     "confirm-icon",
-    `<img src="../assets/img/icons/confirm_icon.png" alt="Confirm" width="16" style="cursor: pointer;">`
+    `<img src="../assets/img/confirm_icon.png" alt="Confirm" width="16" style="cursor: pointer;">`
   );
 }
 

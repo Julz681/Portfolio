@@ -180,7 +180,7 @@ function createTaskHTML(task) {
         <div class="board-card d-flex-center" data-task-id="${task.id}">
             <div class="board-card-content d-flex-column">
                 <button class="card-action-btn" onclick="toggleMoveMenu(this, event)">
-                    <img src="/../assets/img/responsive_frame.png" alt="Aktion" />
+                    <img src="../assets/img/responsive_frame.png" alt="Aktion" />
                 </button>
 
                 <div class="move-menu d-none">
@@ -210,7 +210,11 @@ function createTaskHTML(task) {
 
                 <div class="d-flex-space-between board-card-footer">
                     <div class="user-icons-wrapper d-flex-center">${users}</div>
-                    <img src="/../assets/img/icons/${task.priority}-icon.png" class="priority" />
+                    <img src="/assets/projects/Join/assets/img/icons/${task.priority}-icon.png" />
+
+
+
+
                 </div>
             </div>
         </div>`;
@@ -338,10 +342,10 @@ function showContactDetails(name, email, phone) {
                     <h3 class="details-name">${name}</h3>
                     <div class="contact-details-actions-containter">
                         <div class="contact-details-actions-1">
-                            <button id="edit"><img class="actions-img" src="/../assets/img/edit.png"> Edit</button>
+                            <button id="edit"><img class="actions-img" src="../assets/img/edit.png"> Edit</button>
                         </div>
                         <div class="contact-details-actions-2">
-                            <button id="deleteBtn"><img class="actions-img" src="/../assets/img/delete.png"> Delete</button>
+                            <button id="deleteBtn"><img class="actions-img" src="../assets/img/delete.png"> Delete</button>
                         </div>
                     </div>
                 </div>
@@ -378,7 +382,7 @@ function openOverlay() {
     `;
   document.getElementById(
     "overlayAvatar"
-  ).innerHTML = `<img class="vector" src="/../assets/img/addnewcontact.png">`;
+  ).innerHTML = `<img class="vector" src="../assets/img/addnewcontact.png">`;
   document.getElementById("overlayAvatar").style.backgroundColor =
     "transparent";
   clearForm();

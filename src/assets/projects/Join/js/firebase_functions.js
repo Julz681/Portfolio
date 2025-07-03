@@ -1,4 +1,4 @@
-import { database, ref, push, set, get, update } from "/js/firebase.js";
+import { database, ref, push, set, get, update } from "/assets/projects/Join/js/firebase.js";
 
 window.users = [];
 window.userNames = [];
@@ -214,7 +214,7 @@ function syncDOMTaskStatusesWithFirebase() {
 }
 window.syncDOMTaskStatusesWithFirebase = syncDOMTaskStatusesWithFirebase;
 
-import { remove } from "/js/firebase.js";
+import { remove } from "/assets/projects/Join/js/firebase.js";
 
 /**
  * This function deletes a task from firebase when it is deleted on board.

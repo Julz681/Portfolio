@@ -150,7 +150,7 @@
   right: 6px;
   width: 18px;
   height: 18px;
-  background: url(/assets/img/icons/resizer.png) no-repeat 100% 100%;
+  background: url(/assets/projects/Join/assets/img/icons/resizer.png) no-repeat 100% 100%;
   background-size: cover;
   pointer-events: none;
 }
@@ -158,7 +158,7 @@
 /* date picker styling*/
 
 .date-picker {
-  background: url(/assets/img/icons/date-picker.png) no-repeat 95% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/date-picker.png) no-repeat 95% 50%;
   background-size: 20px;
   background-color: #ffff;
   color: #000000;
@@ -251,7 +251,7 @@
 }
 
 .dropdown-icon-closed {
-  background: url(/assets/img/icons/arrow_drop_down.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/arrow_drop_down.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   background-color: #ffffff;
@@ -261,14 +261,14 @@
 }
 
 .dropdown-icon-closed:hover {
-  background: url(/assets/img/icons/arrow_drop_down_hover.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/arrow_drop_down_hover.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   cursor: pointer;
 }
 
 .dropdown-icon-open {
-  background: url(/assets/img/icons/arrow_drop_down_reverse.png) no-repeat 50%
+  background: url(/assets/projects/Join/assets/img/icons/arrow_drop_down_reverse.png) no-repeat 50%
     50%;
   width: 24px;
   height: 24px;
@@ -279,7 +279,7 @@
 }
 
 .dropdown-icon-open:hover {
-  background: url(/assets/img/icons/arrow_drop_down_reverse_hover.png) no-repeat
+  background: url(/assets/projects/Join/assets/img/icons/arrow_drop_down_reverse_hover.png) no-repeat
     50% 50%;
   width: 24px;
   height: 24px;
@@ -341,7 +341,7 @@
 /* checkbox unchecked styling */
 
 .single-contact-checkbox-unchecked {
-  background: url(/assets/img/icons/checkbox_unchecked.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/checkbox_unchecked.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
 }
@@ -356,7 +356,7 @@
 }
 
 .single-contact-checkbox-checked {
-  background: url(/assets/img/icons/check-button-checked.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/check-button-checked.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
 }
@@ -373,7 +373,7 @@
 }
 
 .dropdown::-webkit-scrollbar-thumb {
-  background: url(/assets/img/icons/thumb.png) no-repeat center;
+  background: url(/assets/projects/Join/assets/img/icons/thumb.png) no-repeat center;
 }
 
 .dropdown::-webkit-scrollbar-track {
@@ -388,13 +388,13 @@
 }
 
 .dropdown::-webkit-scrollbar-button:vertical:start {
-  background: url(/assets/img/icons/scroll_up_arrow.png) no-repeat center;
+  background: url(/assets/projects/Join/assets/img/icons/scroll_up_arrow.png) no-repeat center;
   background-size: contain;
   margin-top: 256px;
 }
 
 .dropdown::-webkit-scrollbar-button:vertical:end {
-  background: url(/assets/img/icons/scroll_down_arrow.png) no-repeat center;
+  background: url(/assets/projects/Join/assets/img/icons/scroll_down_arrow.png) no-repeat center;
   background-size: contain;
 }
 
@@ -451,14 +451,14 @@
 }
 
 .add-subtask-icon {
-  background: url(/assets/img/icons/add_subtask_icon.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/add_subtask_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   border-radius: 0px 10px 10px 0px;
 }
 
 .add-subtask-icon:hover {
-  background: url(/assets/img/icons/add_subtask_icon_hover.png) no-repeat 50%
+  background: url(/assets/projects/Join/assets/img/icons/add_subtask_icon_hover.png) no-repeat 50%
     50%;
   cursor: pointer;
 }
@@ -468,14 +468,14 @@
 }
 
 .clear-icon {
-  background: url(/assets/img/icons/clear_icon.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/clear_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   display: none;
 }
 
 .clear-icon:hover {
-  background: url(/assets/img/icons/clear_icon_hover.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/clear_icon_hover.png) no-repeat 50% 50%;
   cursor: pointer;
   transform: scale(1.05);
 }
@@ -499,14 +499,14 @@
 }
 
 .confirm-icon {
-  background: url(/assets/img/icons/confirm_icon.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/confirm_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   display: none;
 }
 
 .confirm-icon:hover {
-  background: url(/assets/img/icons/confirm_icon_hover.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/confirm_icon_hover.png) no-repeat 50% 50%;
   cursor: pointer;
   transform: scale(1.05);
 }
@@ -580,14 +580,14 @@
 }
 
 .edit-marker {
-  background: url(/assets/img/icons/edit.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/edit.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   display: none;
 }
 
 .edit-marker:hover {
-  background: url(/assets/img/icons/subtask_edit_hover.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/subtask_edit_hover.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -595,7 +595,7 @@
 }
 
 .delete-marker {
-  background: url(/assets/img/icons/delete_icon.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/delete_icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -603,7 +603,7 @@
 }
 
 .delete-marker:hover {
-  background: url(/assets/img/icons/delete_icon_hover.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/delete_icon_hover.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -643,13 +643,13 @@
 }
 
 .cancel-icon {
-  background: url(/assets/img/icons/cancel.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/cancel.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
 }
 
 .clearBtn:hover .cancel-icon {
-  background: url(/assets/img/icons/cancel_hover.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/cancel_hover.png) no-repeat 50% 50%;
   height: 24px;
   width: 24px;
 }
@@ -671,7 +671,7 @@
 }
 
 .checkmark-icon {
-  background: url(/assets/img/icons/check-mark-icon.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/check-mark-icon.png) no-repeat 50% 50%;
   width: 24px;
   height: 24px;
 }
@@ -683,7 +683,7 @@
 }
 
 .clearBtn:active .cancel-icon {
-  background: url(/assets/img/icons/cancel_click.png) no-repeat 50% 50%;
+  background: url(/assets/projects/Join/assets/img/icons/cancel_click.png) no-repeat 50% 50%;
   height: 24px;
   width: 24px;
 }

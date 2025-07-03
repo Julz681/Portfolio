@@ -1,4 +1,4 @@
-import { getUserDataByEmail } from "./firebase.js";
+import { getUserDataByEmail } from "/assets/projects/Join/js/firebase.js";
 
 /**
  * Displays a field-specific error message below the input field.
@@ -36,8 +36,8 @@ function togglePasswordVisibility(inputId, imgElement) {
   const isVisible = input.type === "text";
   input.type = isVisible ? "password" : "text";
   imgElement.src = isVisible
-    ? "/../assets/img/eye_closed.png"
-    : "/../assets/img/eye.png";
+    ? "assets/img/eye_closed.png"
+    : "assets/img/eye.png";
 }
 
 /**
@@ -48,11 +48,11 @@ function togglePasswordVisibility(inputId, imgElement) {
 function updatePasswordIcon(inputId, imgElement) {
   const input = document.getElementById(inputId);
   if (input.type === "text") {
-    imgElement.src = "/../assets/img/eye.png";
+    imgElement.src = "assets/img/eye.png";
   } else if (input.value.length === 0) {
-    imgElement.src = "/../assets/img/lock.png";
+    imgElement.src = "assets/img/lock.png";
   } else {
-    imgElement.src = "/../assets/img/eye_closed.png";
+    imgElement.src = "assets/img/eye_closed.png";
   }
 }
 
@@ -179,7 +179,7 @@ function initPasswordField() {
   let firstFocus = true;
   input?.addEventListener("focus", () => {
     if (firstFocus) {
-      icon.src = "/../assets/img/eye_closed.png";
+      icon.src = "assets/img/eye_closed.png";
       firstFocus = false;
     }
   });

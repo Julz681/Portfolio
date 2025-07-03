@@ -1,5 +1,5 @@
 /** Import Firebase database functions */
-import { saveUserData, database, ref, push, get } from "./firebase.js";
+import { saveUserData, database, ref, push, get } from "/assets/projects/Join/js/firebase.js";
 
 /**
  * Displays an error message below a specific input field.
@@ -102,7 +102,7 @@ function showSuccessAndRedirect() {
   successMessage.classList.add("show");
   setTimeout(() => {
     successMessage.classList.remove("show");
-    window.location.href = "/index.html";
+    window.location.href = "/assets/projects/Join/index.html";
   }, 1000);
 }
 
@@ -170,7 +170,7 @@ function createContactElement(name, email, phone = "") {
       <div class="contact-email">${email}</div>
     </div>
     <button id="delete" class="delete-btn-contact">
-      <img class="actions-img" src="/../assets/img/delete.png" alt="delete">
+      <img class="actions-img" src="../assets/img/delete.png" alt="delete">
       Delete
     </button>`;
   return div;
@@ -207,8 +207,8 @@ function togglePasswordVisibility(inputId, imgElement) {
   const input = document.getElementById(inputId);
   input.type = input.type === "text" ? "password" : "text";
   imgElement.src = input.type === "password"
-    ? "/../assets/img/eye_closed.png"
-    : "/../assets/img/eye.png";
+    ? "../assets/img/eye_closed.png"
+    : "../assets/img/eye.png";
 }
 
 /**
@@ -219,8 +219,8 @@ function togglePasswordVisibility(inputId, imgElement) {
 function updatePasswordIcon(inputId, imgElement) {
   const input = document.getElementById(inputId);
   imgElement.src = input.value.length > 0
-    ? "/../assets/img/eye_closed.png"
-    : "/../assets/img/lock.png";
+    ? "../assets/img/eye_closed.png"
+    : "../assets/img/lock.png";
 }
 
 /** Exported for inline usage */
@@ -239,9 +239,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const eye1 = document.getElementById("eye-icon-password");
   const eye2 = document.getElementById("eye-icon-confirm-password");
   if (pw && eye1) {
-    pw.addEventListener("focus", () => eye1.src = "/../assets/img/eye_closed.png");
+    pw.addEventListener("focus", () => eye1.src = "../assets/img/eye_closed.png");
   }
   if (pwConfirm && eye2) {
-    pwConfirm.addEventListener("focus", () => eye2.src = "/../assets/img/eye_closed.png");
+    pwConfirm.addEventListener("focus", () => eye2.src = "../assets/img/eye_closed.png");
   }
 });

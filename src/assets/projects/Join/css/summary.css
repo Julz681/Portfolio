@@ -233,11 +233,11 @@ body {
 }
 
 .metric-box:hover img[alt="Pen"] {
-  content: url("/assets/img/pen_white.png");
+  content: url("../assets/img/pen_white.png");
 }
 
 .metric-box:hover img[alt="Check"] {
-  content: url("/assets/img/check_white.png");
+  content: url("../assets/img/check_white.png");
 }
 
 .metric-box-urgent:hover img {
