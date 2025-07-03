@@ -24,22 +24,28 @@
     </div>
   </div>
 
-  <div class="ribbon">
-    <div class="ribbon-track">
-      <ng-container *ngIf="currentLang === 'en'">
+<div class="ribbon">
+  <div class="ribbon-track">
+    <ng-container *ngIf="currentLang === 'en'">
+      <ng-container *ngFor="let i of [1,2]"> 
         <span>• &nbsp; Available for remote work</span>
         <span>• &nbsp; Frontend Developer</span>
         <span>• &nbsp; Based in Cologne</span>
         <span>• &nbsp; Open to opportunities</span>
       </ng-container>
-      <ng-container *ngIf="currentLang === 'de'">
+    </ng-container>
+
+    <ng-container *ngIf="currentLang === 'de'">
+      <ng-container *ngFor="let i of [1,2]"> 
         <span>• &nbsp; Verfügbar für Remote-Arbeit</span>
         <span>• &nbsp; Frontend Entwicklerin</span>
         <span>• &nbsp; Standort Köln</span>
         <span>• &nbsp; Offen für Neues</span>
       </ng-container>
-    </div>
+    </ng-container>
   </div>
+</div>
+
 
   <div class="socials">
     <a href="mailto:judithluetke@yahoo.com" class="email email-text">

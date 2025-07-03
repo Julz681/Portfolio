@@ -48,14 +48,17 @@
       padding: 0 24px;
       gap: 10px;
       font-size: 16px;
+      overflow: hidden;
 
       .text {
         display: inline-block;
+        width: 100%;
+        white-space: nowrap;
         transition: transform 0.4s ease, opacity 0.4s ease;
       }
 
       &:hover .text {
-        transform: translateX(-150%);
+        transform: translateX(-100%);
         opacity: 0;
       }
     }
@@ -81,16 +84,25 @@
     .ribbon-track {
       display: inline-flex;
       animation: scroll-left 40s linear infinite;
+      white-space: nowrap;
     }
 
     span {
       font-size: 32px;
       font-weight: 400;
       color: #3dcfb6;
-      white-space: nowrap;
       margin-right: 3rem;
       font-family: "Karla", monospace;
       line-height: 120%;
+    }
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
     }
   }
 
