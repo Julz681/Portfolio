@@ -1,6 +1,7 @@
 <section class="contact-section" id="contact">
   <!-- LEFT TEXT CONTENT -->
-  <div class="left" *ngIf="currentLang === 'en'">
+  <div class="left en" *ngIf="currentLang === 'en'">
+
     <h3>Contact me</h3>
     <h1>Let's work <br />together</h1>
     <h4>Got a problem to solve?</h4>
@@ -13,7 +14,8 @@
     </p>
   </div>
 
-  <div class="left" *ngIf="currentLang === 'de'">
+  <div class="left de" *ngIf="currentLang === 'de'">
+
     <h3>Kontaktiere mich</h3>
     <h1>Lasst uns <br />zusammenarbeiten</h1>
     <h4>Ein Problem zu lösen?</h4>
@@ -121,15 +123,13 @@
     <label for="privacy">
       <span *ngIf="currentLang === 'en'">
         I've read the
-        <a href="#" (click)="showPolicy = true; $event.preventDefault()"
-          >privacy policy</a
+        <a [routerLink]="['/privacy']">privacy policy</a
         >
         and agree to the processing of my data.
       </span>
       <span *ngIf="currentLang === 'de'">
         Ich habe die
-        <a href="#" (click)="showPolicy = true; $event.preventDefault()"
-          >Datenschutzerklärung</a
+        <a [routerLink]="['/privacy']">Datenschutzerklärung</a
         >
         gelesen und stimme der Datenverarbeitung zu.
       </span>
@@ -173,7 +173,6 @@
   </div>
 </form>
 
-  <app-privacy-policy *ngIf="showPolicy" (closed)="closePolicy()"></app-privacy-policy>
 
 
 

@@ -1,31 +1,38 @@
-<div class="privacy-overlay">
-  <div class="overlay-content">
-    <button class="close-btn" (click)="closeOverlay()">×</button>
+<section class="privacy-policy-section">
+  <div class="container">
+    <h1>
+      {{
+        currentLang === 'en'
+          ? 'Privacy Policy'
+          : 'Datenschutzerklärung'
+      }}
+    </h1>
 
-    <section class="privacy-policy">
-      <h1 *ngIf="currentLang === 'en'">Privacy Policy</h1>
-      <h1 *ngIf="currentLang === 'de'">Datenschutzerklärung</h1>
+    <div class="policy-text">
+      <p *ngIf="currentLang === 'en'">
+        I take data protection seriously. If you contact me via the form, your message will be sent directly to my personal email inbox.
+        Your data will be used solely to process your request and will not be stored or shared with third parties.
+      </p>
+      <p *ngIf="currentLang === 'de'">
+        Ich nehme den Datenschutz ernst. Wenn du mich über das Formular kontaktierst, wird deine Nachricht direkt an mein persönliches E-Mail-Postfach gesendet.
+        Deine Daten werden ausschließlich zur Bearbeitung deiner Anfrage verwendet und weder gespeichert noch an Dritte weitergegeben.
+      </p>
 
-      <div class="policy-text">
-        <p *ngIf="currentLang === 'en'">
-          I take data protection seriously. If you contact me via the form, your message will be sent directly to my personal email inbox. Your data will be used solely to process your request and will not be stored or shared with third parties.
-        </p>
-        <p *ngIf="currentLang === 'de'">
-          Ich nehme den Datenschutz ernst. Wenn du mich über das Formular kontaktierst, wird deine Nachricht direkt an mein persönliches E-Mail-Postfach gesendet...
-        </p>
+      <p *ngIf="currentLang === 'en'">
+        You have the right to request access, correction, or deletion of your data at any time.
+        Simply email me at <a href="mailto:info@hello-julz.com">info&#64;hello-julz.com</a>.
+      </p>
+      <p *ngIf="currentLang === 'de'">
+        Du hast jederzeit das Recht, Auskunft über deine Daten zu verlangen oder deren Berichtigung oder Löschung zu beantragen.
+        Schreib mir einfach an <a href="mailto:info@hello-julz.com">info&#64;hello-julz.com</a>.
+      </p>
 
-        <p *ngIf="currentLang === 'en'">
-          You have the right to request access, correction, or deletion of your data at any time.
-          Simply email me at <a href="mailto:info@hello-julz.com">info&#64;hello-julz.com</a>.
-        </p>
-        <p *ngIf="currentLang === 'de'">
-          Du hast jederzeit das Recht, Auskunft über deine Daten zu verlangen oder deren Berichtigung oder Löschung zu beantragen.
-          Schreib mir einfach an <a href="mailto:info@hello-julz.com">info&#64;hello-julz.com</a>.
-        </p>
+      <p class="closing" *ngIf="currentLang === 'en'">Thank you for your trust.</p>
+      <p class="closing" *ngIf="currentLang === 'de'">Vielen Dank für dein Vertrauen.</p>
+    </div>
 
-        <p style="margin-top: 2rem;" *ngIf="currentLang === 'en'">Thank you for your trust.</p>
-        <p style="margin-top: 2rem;" *ngIf="currentLang === 'de'">Vielen Dank für dein Vertrauen.</p>
-      </div>
-    </section>
+    <a class="back-button" routerLink="/">
+      {{ currentLang === 'en' ? '← Back to Home' : '← Zurück zur Startseite' }}
+    </a>
   </div>
-</div>
+</section>

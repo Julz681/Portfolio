@@ -1,5 +1,12 @@
-import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LanguageService } from '../services/language.service'; 
 
 @Component({
   selector: 'app-header',
@@ -15,12 +22,12 @@ export class HeaderComponent implements OnInit {
   isMobile = false;
   menuOpen = false;
 
+  constructor(private languageService: LanguageService) {} 
+
   ngOnInit(): void {
-    const storedLang = localStorage.getItem('lang') as 'en' | 'de' | null;
-    if (storedLang === 'en' || storedLang === 'de') {
-      this.currentLang = storedLang;
-      this.languageChange.emit(this.currentLang);
-    }
+    const storedLang = this.languageService.getLanguage(); 
+    this.currentLang = storedLang;
+    this.languageChange.emit(this.currentLang);
     this.checkIfMobile();
   }
 
@@ -38,8 +45,8 @@ export class HeaderComponent implements OnInit {
 
   switchLanguage(lang: 'en' | 'de') {
     this.currentLang = lang;
-    localStorage.setItem('lang', lang);
-    this.languageChange.emit(lang);
+    this.languageService.setLanguage(lang); 
+    this.languageChange.emit(lang); 
   }
 
   toggleMenu() {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LegalNoticeComponent } from '../legal-notice/legal-notice.component';
 
 @Component({
-  selector: 'app-footer-component',
+  selector: 'app-footer',
   standalone: true,
   imports: [CommonModule, LegalNoticeComponent],
   templateUrl: './footer-component.component.html',
@@ -14,7 +14,6 @@ export class FooterComponent implements OnInit {
   showLegalNotice = false;
 
   ngOnInit(): void {
-    // Falls nicht mit @Output verbunden: Fallback über EventListener
     document.addEventListener('closed', () => {
       this.showLegalNotice = false;
     });

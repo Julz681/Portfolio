@@ -1,19 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
-import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'; 
+import { Input } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-contact-component',
   standalone: true,
-  imports: [CommonModule, FormsModule, PrivacyPolicyComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule 
+  ],
   templateUrl: './contact-component.component.html',
-  styleUrls: ['./contact-component.component.scss'],
+  styleUrls: ['./contact-component.component.scss']
 })
 export class ContactComponent {
   @Input() currentLang: 'en' | 'de' = 'en';
 
-  showPolicy = false;
+
   formSubmitted = false;
   error = false;
   formInvalid = false;
@@ -56,7 +63,4 @@ export class ContactComponent {
       });
   }
 
-  closePolicy() {
-    this.showPolicy = false;
-  }
 }
