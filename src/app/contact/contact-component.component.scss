@@ -6,6 +6,7 @@
   color: white;
   background-color: #121212;
   max-width: 2100px;
+  margin: 0 auto;
 
   .left {
     flex: 1;
@@ -87,9 +88,22 @@
         color: white;
         font-size: 1rem;
         outline: none;
+        transition: color 0.3s ease;
 
         &::placeholder {
           color: #888;
+          transition: color 0.3s ease;
+        }
+
+        // rot bei Fehlern – Placeholder UND Inhalt
+        &.ng-invalid.ng-touched,
+        &.ng-invalid.ng-dirty {
+          color: #ff6666;
+
+          &::placeholder {
+            color: #ff6666;
+            font-style: italic;
+          }
         }
       }
 
@@ -136,6 +150,21 @@
       }
     }
 
+    .checkbox-error {
+      min-height: 1.25rem; 
+      font-size: 0.85rem;
+      margin-top: -1rem;
+      margin-bottom: 1.5rem;
+      font-family: "Karla", monospace;
+      color: #ff6666;
+      line-height: 1.2;
+      transition: opacity 0.3s ease;
+
+      &:empty {
+        opacity: 0;
+      }
+    }
+
     button {
       width: 139px;
       background: transparent;
@@ -155,6 +184,7 @@
     }
   }
 }
+
 .no-underline {
   text-decoration: none !important;
 
@@ -162,7 +192,6 @@
     text-decoration: none !important;
   }
 }
-
 
 .success-message,
 .error-message,
@@ -183,12 +212,11 @@
   color: #146c43;
   border: 1px solid #146c43;
 }
-.input-error {
-  color: #ffff;
-  font-size: 14px;
-  margin-top: 4px;
-}
 
+// input-error ist entfernt (nicht mehr genutzt)
+.input-error {
+  display: none;
+}
 
 @media screen and (max-width: 480px) {
   h3 {
@@ -224,5 +252,11 @@
     margin: 2rem auto 0 auto;
     padding: 1rem;
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+font-size: 36px !important;
   }
 }
