@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LanguageService } from '../services/language.service';
 import { Subscription } from 'rxjs';
 import { RouterModule } from '@angular/router';
-import { FooterComponent } from '../footer/footer-component.component';
+
 
 @Component({
   selector: 'app-privacy-policy',
   standalone: true,
-  imports: [CommonModule, RouterModule, FooterComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './privacy-policy.component.html',
   styleUrls: ['./privacy-policy.component.scss'],
 })

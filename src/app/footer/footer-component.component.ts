@@ -1,6 +1,6 @@
 // src/app/footer/footer-component.component.ts
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LanguageService } from '../services/language.service'; 
 
@@ -13,9 +13,19 @@ import { LanguageService } from '../services/language.service';
 })
 export class FooterComponent {
   currentYear: number = new Date().getFullYear();
-  currentLang: 'en' | 'de'; // <-- hinzufügen
+  currentLang: 'en' | 'de';
 
-  constructor(private languageService: LanguageService) {
+  constructor(
+    private languageService: LanguageService,
+    private viewportScroller: ViewportScroller
+  ) {
     this.currentLang = this.languageService.getLanguage();
   }
+
+scrollToTop(): void {
+  document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+  document.body.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
 }

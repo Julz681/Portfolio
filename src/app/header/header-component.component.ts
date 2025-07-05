@@ -3,17 +3,19 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  HostListener
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LanguageService } from '../services/language.service'; 
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './header-component.component.html',
-  styleUrls: ['./header-component.component.scss']
+  styleUrls: ['./header-component.component.scss'],
 })
 export class HeaderComponent implements OnInit {
   @Output() languageChange = new EventEmitter<'en' | 'de'>();
@@ -21,14 +23,30 @@ export class HeaderComponent implements OnInit {
   currentLang: 'en' | 'de' = 'en';
   isMobile = false;
   menuOpen = false;
+  pendingFragment: string | null = null;
 
-  constructor(private languageService: LanguageService) {} 
+  constructor(
+    private languageService: LanguageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    const storedLang = this.languageService.getLanguage(); 
-    this.currentLang = storedLang;
+    this.currentLang = this.languageService.getLanguage();
     this.languageChange.emit(this.currentLang);
     this.checkIfMobile();
+
+    // Fragment scroll nach Navigation
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (this.pendingFragment) {
+          const el = document.getElementById(this.pendingFragment);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+          this.pendingFragment = null;
+        }
+      });
   }
 
   @HostListener('window:resize')
@@ -45,8 +63,8 @@ export class HeaderComponent implements OnInit {
 
   switchLanguage(lang: 'en' | 'de') {
     this.currentLang = lang;
-    this.languageService.setLanguage(lang); 
-    this.languageChange.emit(lang); 
+    this.languageService.setLanguage(lang);
+    this.languageChange.emit(lang);
   }
 
   toggleMenu() {
@@ -55,5 +73,15 @@ export class HeaderComponent implements OnInit {
 
   closeMenu() {
     this.menuOpen = false;
+  }
+
+  scrollToFragment(fragment: string) {
+    this.pendingFragment = fragment;
+    this.router.navigate(['/'], { fragment });
+  }
+
+  onMobileLinkClick(fragment: string) {
+    this.scrollToFragment(fragment);
+    this.closeMenu();
   }
 }

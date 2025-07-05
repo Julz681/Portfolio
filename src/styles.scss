@@ -13,14 +13,12 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: #111;
   color: #fff;
-  padding: 0 2rem;
-
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Sorgt dafür, dass die Body-Höhe mindestens 100vh beträgt */
+  min-height: 100vh; 
 }
 
-/* Wrapper für Layout mit maximaler Breite und zentrierter Ausrichtung */
+
 .page-wrapper {
   display: flex;
   flex-direction: column;
@@ -30,14 +28,14 @@ body {
   width: 100%;
 }
 
-/* Dieser Block nimmt den Rest des Platzes ein, sodass der Footer immer unten bleibt */
+
 .page-body {
-  flex: 1; /* Sorgt dafür, dass der Body den maximal verfügbaren Platz einnimmt */
+  flex: 1; 
   display: flex;
   flex-direction: column;
 }
 
-/* Scrollbar Styling */
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -62,7 +60,7 @@ body {
   scrollbar-color: #3dcfb6 #121212;
 }
 
-/* Stil für :host, wenn du es in einer Angular-Komponente verwendest */
+
 :host {
   display: block;
   height: 100%;
