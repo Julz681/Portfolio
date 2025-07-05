@@ -64,37 +64,55 @@
       }
     }
 
-    button.lets-talk {
-      margin-top: 2rem;
-      padding: 0.8rem 1.8rem;
-      border: 2px solid #fff;
-      background: transparent;
-      color: #fff;
-      font-weight: 500;
-      border-radius: 999px;
-      font-family: monospace;
-      font-size: 1rem;
-      cursor: pointer;
-      overflow: hidden;
-      position: relative;
+button.lets-talk {
+  position: relative;
+    width: 172px;
+    height: 48px;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 16px;
 
-      .text {
-        display: inline-block;
-        transition: transform 0.4s ease, opacity 0.4s ease;
-      }
-
-      &:hover .text {
-        transform: translateX(-150%);
-        opacity: 0;
-      }
+    .text-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transform: translateX(0%);
+      transition: transform 0.5s ease;
     }
 
-    @keyframes slideOut {
-      to {
-        transform: translateY(-50%) translateX(-150%);
-        opacity: 0;
-      }
+    .text {
+      flex: 0 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      white-space: nowrap;
     }
+
+    &:hover .text-wrapper {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+
+@keyframes slide-loop {
+  0% {
+    transform: translateX(0%);
+  }
+  49% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
   }
 
   .icon-grid {
@@ -132,7 +150,6 @@
       }
     }
   }
-}
 
 @media screen and (max-width: 480px) {
   h2 {

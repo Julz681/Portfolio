@@ -1,21 +1,43 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   background-color: #111;
   color: #fff;
   padding: 0 2rem;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Sorgt dafür, dass die Body-Höhe mindestens 100vh beträgt */
 }
 
-html, body {
-  overflow-x: hidden;
+/* Wrapper für Layout mit maximaler Breite und zentrierter Ausrichtung */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 2100px;
   margin: 0 auto;
-  padding: 0;
   width: 100%;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
 }
 
+/* Dieser Block nimmt den Rest des Platzes ein, sodass der Footer immer unten bleibt */
+.page-body {
+  flex: 1; /* Sorgt dafür, dass der Body den maximal verfügbaren Platz einnimmt */
+  display: flex;
+  flex-direction: column;
+}
 
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -35,14 +57,13 @@ html, body {
 }
 
 * {
+  box-sizing: border-box;
   scrollbar-width: thin;
   scrollbar-color: #3dcfb6 #121212;
 }
+
+/* Stil für :host, wenn du es in einer Angular-Komponente verwendest */
 :host {
   display: block;
   height: 100%;
-}
-
-* {
-  box-sizing: border-box;
 }

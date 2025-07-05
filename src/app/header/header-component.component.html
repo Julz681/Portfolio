@@ -1,44 +1,42 @@
 <header class="header">
-  <!-- Mobile Logo (links) -->
-  <div class="logo mobile-only" *ngIf="isMobile">
-    <img src="../../assets/logo.png" alt="Logo" />
+  <div class="header-content">
+    <!-- ALLES hier rein -->
+    <div class="logo mobile-only" *ngIf="isMobile">
+      <img src="../../assets/logo.png" alt="Logo" />
+    </div>
+
+    <div class="lang-toggle desktop-only" *ngIf="!isMobile">
+      <button class="lang" [class.active]="currentLang === 'en'" (click)="switchLanguage('en')">EN</button>
+      <button class="lang" [class.active]="currentLang === 'de'" (click)="switchLanguage('de')">DE</button>
+    </div>
+
+    <nav class="nav-links desktop-only" *ngIf="!isMobile">
+      <a href="#about">
+        <span *ngIf="currentLang === 'en'">About me</span>
+        <span *ngIf="currentLang === 'de'">Über mich</span>
+      </a>
+      <a href="#skills">
+        <span *ngIf="currentLang === 'en'">Skills</span>
+        <span *ngIf="currentLang === 'de'">Fähigkeiten</span>
+      </a>
+      <a href="#projects">
+        <span *ngIf="currentLang === 'en'">Projects</span>
+        <span *ngIf="currentLang === 'de'">Projekte</span>
+      </a>
+    </nav>
+
+    <div class="logo desktop-only" *ngIf="!isMobile">
+      <img src="../../assets/logo.png" alt="Logo" />
+    </div>
+
+    <div class="hamburger" *ngIf="isMobile" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 
-  <!-- Language Switch (Desktop) -->
-  <div class="lang-toggle desktop-only" *ngIf="!isMobile">
-    <button class="lang" [class.active]="currentLang === 'en'" (click)="switchLanguage('en')">EN</button>
-    <button class="lang" [class.active]="currentLang === 'de'" (click)="switchLanguage('de')">DE</button>
-  </div>
-
-  <!-- Navigation (Desktop) -->
-  <nav class="nav-links desktop-only" *ngIf="!isMobile">
-    <a href="#about">
-      <span *ngIf="currentLang === 'en'">About me</span>
-      <span *ngIf="currentLang === 'de'">Über mich</span>
-    </a>
-    <a href="#skills">
-      <span *ngIf="currentLang === 'en'">Skills</span>
-      <span *ngIf="currentLang === 'de'">Fähigkeiten</span>
-    </a>
-    <a href="#projects">
-      <span *ngIf="currentLang === 'en'">Projects</span>
-      <span *ngIf="currentLang === 'de'">Projekte</span>
-    </a>
-  </nav>
-
-  <!-- Desktop Logo (rechts) -->
-  <div class="logo desktop-only" *ngIf="!isMobile">
-    <img src="../../assets/logo.png" alt="Logo" />
-  </div>
-
-  <!-- Mobile Hamburger -->
-  <div class="hamburger" *ngIf="isMobile" (click)="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
-  <!-- Mobile Dropdown Menu -->
+  <!-- Mobile Menu bleibt außerhalb -->
   <div class="mobile-menu" *ngIf="isMobile && menuOpen">
     <a href="#about" (click)="closeMenu()">
       <span *ngIf="currentLang === 'en'">About me</span>
@@ -53,7 +51,6 @@
       <span *ngIf="currentLang === 'de'">Projekte</span>
     </a>
 
-    <!-- Language Switch (Mobile) -->
     <div class="lang-toggle">
       <button class="lang" [class.active]="currentLang === 'en'" (click)="switchLanguage('en')">EN</button>
       <button class="lang" [class.active]="currentLang === 'de'" (click)="switchLanguage('de')">DE</button>

@@ -21,9 +21,14 @@
       knowledge.
     </p>
 
-    <button class="lets-talk" (click)="scrollToContact()">
-      <span class="text">Let’s Talk</span>
-    </button>
+<button class="lets-talk" (click)="scrollToContact()">
+  <span class="text-wrapper">
+    <span class="text">Let’s Talk</span>
+    <span class="text">Let’s Talk</span>
+  </span>
+</button>
+
+
   </div>
 
   <div class="text-box" *ngIf="currentLang === 'de'">
@@ -45,9 +50,12 @@
       Herausforderungen anzunehmen.
     </p>
 
-    <button class="lets-talk" (click)="scrollToContact()">
-      <span class="text">Lass uns reden</span>
-    </button>
+<button class="lets-talk" (click)="scrollToContact()">
+  <span class="text-wrapper">
+    <span class="text">Sprich mich an</span>
+    <span class="text">Sprich mich an</span>
+  </span>
+</button>
   </div>
 
   <div class="icon-grid">

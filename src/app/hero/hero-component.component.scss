@@ -1,83 +1,124 @@
 .hero {
+  width: 100%;
   height: 100vh;
   background: linear-gradient(to right, #0d0d0d, #004f47);
   color: #fff;
+  position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  text-align: center;
-  padding: 2rem;
-  max-width: 2100px;
-  margin: 0 auto;
+  overflow: hidden;
 
-  h2 {
-    font-family: "Fira Code", monospace;
-    font-weight: 400;
-    font-size: 40px;
-    color: #d9d9d9;
-    margin-bottom: -36px;
-    letter-spacing: 0%;
-    margin-top: -60px;
-  }
-
-  h1 {
-    font-family: "Karla", monospace;
-    font-size: 128px;
-    font-weight: 700;
-    letter-spacing: -2%;
-    color: #d9d9d9;
-    margin-bottom: 40px;
-  }
-
-  .hero-buttons {
+  .hero-inner {
+    max-width: 2100px;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    margin: 0 auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 48px;
-    height: 48px;
+    position: relative;
+    box-sizing: border-box;
+  }
 
-    button {
-      background: none;
-      border: 1px solid #fff;
-      color: #fff;
-      border-radius: 100px;
-      cursor: pointer;
-      transition: 0.3s ease;
-      width: 172px;
-      height: 48px;
-      padding: 0 24px;
-      gap: 10px;
-      font-size: 16px;
-      overflow: hidden;
+  .hero-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-      .text {
-        display: inline-block;
-        width: 100%;
-        white-space: nowrap;
-        transition: transform 0.4s ease, opacity 0.4s ease;
-      }
-
-      &:hover .text {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
+    h2 {
+      font-family: "Fira Code", monospace;
+      font-weight: 400;
+      font-size: 40px;
+      color: #d9d9d9;
+      margin-top: -60px;
+      margin-bottom: -36px;
     }
+
+    h1 {
+      font-family: "Karla", monospace;
+      font-size: 128px;
+      font-weight: 700;
+      letter-spacing: -2%;
+      color: #d9d9d9;
+      margin-bottom: 40px;
+    }
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  height: 48px;
+
+  button {
+    position: relative;
+    width: 172px;
+    height: 48px;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 16px;
+
+    .text-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transform: translateX(0%);
+      transition: transform 0.5s ease;
+    }
+
+    .text {
+      flex: 0 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    &:hover .text-wrapper {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+
+@keyframes slide-loop {
+  0% {
+    transform: translateX(0%);
+  }
+  49% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
   }
 
   .ribbon {
-    overflow: hidden;
     position: absolute;
     bottom: 44px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
     width: 100%;
+    max-width: 2100px;
     height: 38px;
     background: rgba(255, 255, 255, 0.05);
-    transform: rotate(-3deg);
     padding: 1rem 0;
     border-top: 1px solid rgba(0, 245, 212, 0.2);
     box-shadow: 0 -1px 0 rgba(0, 245, 212, 0.5);
-    z-index: 9999;
+    z-index: 10;
+    overflow: hidden;
     display: flex;
     align-items: center;
 
@@ -85,15 +126,15 @@
       display: inline-flex;
       animation: scroll-ribbon 40s linear infinite;
       white-space: nowrap;
-    }
 
-    span {
-      font-size: 32px;
-      font-weight: 400;
-      color: #3dcfb6;
-      margin-right: 3rem;
-      font-family: "Karla", monospace;
-      line-height: 120%;
+      span {
+        font-size: 32px;
+        font-weight: 400;
+        color: #3dcfb6;
+        margin-right: 3rem;
+        font-family: "Karla", monospace;
+        line-height: 120%;
+      }
     }
   }
 
@@ -118,6 +159,7 @@
     letter-spacing: 0%;
     font-weight: 400;
     line-height: 120%;
+    z-index: 11;
 
     a {
       color: #fff;
@@ -151,90 +193,76 @@
       border-left: 3px solid #fff;
       height: 120px;
       display: inline-block;
-      z-index: 1;
     }
   }
 
   @media (max-width: 1199px) {
-    .socials {
-      .email-text {
-        display: none;
-      }
+    .socials .email-text {
+      display: none;
+    }
 
-      .email-icon {
-        display: inline;
-      }
+    .socials .email-icon {
+      display: inline;
     }
   }
-}
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-@media (max-width: 910px) {
-  h1 {
-    font-size: 96px !important;
-  }
-}
-@media (max-width: 720px) {
-  h1 {
-    font-size: 72px !important;
-  }
-}
-@media (max-width: 550px) {
-  h1 {
-    font-size: 62px !important;
-  }
-  h2 {
-    font-size: 24px !important;
-  }
-
-  button {
-    width: fill 153px;
-    height: 48px;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 52px !important;
-  }
-  .hero-buttons {
-    gap: 10px !important;
-  }
-}
-
-@media (max-width: 380px) {
-  h1 {
-    font-size: 42px !important;
-  }
-
-  .hero-buttons {
-    flex-direction: row;
-    justify-content: center;
-    gap: 12px !important;
-    flex-wrap: wrap;
-    width: 100%;
-    padding: 0;
-
-    button {
-      width: 130px;
-      height: 42px;
-      font-size: 14px;
-      padding: 0 12px;
+  @media (max-width: 910px) {
+    .hero-content h1 {
+      font-size: 96px !important;
     }
   }
-}
 
-@media (max-width: 380px) {
-  h1 {
-    font-size: 36px !important;
-    padding-top: 18px;
+  @media (max-width: 720px) {
+    .hero-content h1 {
+      font-size: 72px !important;
+    }
+  }
+
+  @media (max-width: 550px) {
+    .hero-content h1 {
+      font-size: 62px !important;
+    }
+
+    .hero-content h2 {
+      font-size: 24px !important;
+    }
+
+    .hero-buttons button {
+      width: 153px;
+      height: 48px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-content h1 {
+      font-size: 52px !important;
+    }
+
+    .hero-buttons {
+      gap: 10px !important;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .hero-content h1 {
+      font-size: 36px !important;
+      padding-top: 18px;
+    }
+
+    .hero-buttons {
+      flex-direction: row;
+      justify-content: center;
+      gap: 12px !important;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 0;
+
+      button {
+        width: 130px;
+        height: 42px;
+        font-size: 14px;
+        padding: 0 12px;
+      }
+    }
   }
 }

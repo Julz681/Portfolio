@@ -1,9 +1,14 @@
-<app-header (languageChange)="updateLanguage($event)"></app-header>
+<div class="home-wrapper">
+  <div class="home-body">
+    <app-header (languageChange)="updateLanguage($event)"></app-header>
 
-<app-hero-component [currentLang]="currentLang"></app-hero-component>
-<app-about-component [currentLang]="currentLang"></app-about-component>
-<app-skill-set-component [currentLang]="currentLang"></app-skill-set-component>
-<app-projects-component [currentLang]="currentLang"></app-projects-component>
-<app-testimonials-component [currentLang]="currentLang"></app-testimonials-component>
-<app-contact-component [currentLang]="currentLang"></app-contact-component>
-<app-footer></app-footer>
+    <app-hero-component [currentLang]="currentLang"></app-hero-component>
+    <app-about-component [currentLang]="currentLang"></app-about-component>
+    <app-skill-set-component [currentLang]="currentLang"></app-skill-set-component>
+    <app-projects-component [currentLang]="currentLang"></app-projects-component>
+    <app-testimonials-component [currentLang]="currentLang"></app-testimonials-component>
+    <app-contact-component [currentLang]="currentLang"></app-contact-component>
+  </div>
+
+  <app-footer></app-footer>
+</div>
