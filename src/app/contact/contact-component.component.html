@@ -62,20 +62,17 @@
   <span *ngIf="currentLang === 'en'">What's your email?</span>
   <span *ngIf="currentLang === 'de'">Wie lautet deine E-Mail?</span>
 
-  <span
-    class="inline-error"
-    *ngIf="formSubmitted && email.invalid"
-  >
-    {{
-      email.errors?.['required']
-        ? currentLang === 'en'
-          ? 'Email is required'
-          : 'E-Mail ist erforderlich'
-        : currentLang === 'en'
-        ? 'Please enter a valid email address'
-        : 'Bitte gib eine gültige E-Mail-Adresse ein'
-    }}
-  </span>
+<span
+  class="inline-error"
+  *ngIf="formSubmitted && email.invalid && !email.errors?.['required']"
+>
+  {{
+    currentLang === 'en'
+      ? 'Please enter a valid email address'
+      : 'Bitte gib eine gültige E-Mail-Adresse ein'
+  }}
+</span>
+
 
   <!-- Input -->
   <input
