@@ -1,25 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/footer/footer-component.component.ts
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LegalNoticeComponent } from '../legal-notice/legal-notice.component';
+import { RouterModule } from '@angular/router';
+import { LanguageService } from '../services/language.service'; 
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, LegalNoticeComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './footer-component.component.html',
   styleUrls: ['./footer-component.component.scss']
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
   currentYear: number = new Date().getFullYear();
-  showLegalNotice = false;
+  currentLang: 'en' | 'de'; // <-- hinzufügen
 
-  ngOnInit(): void {
-    document.addEventListener('closed', () => {
-      this.showLegalNotice = false;
-    });
-  }
-
-  toggleLegalNotice(): void {
-    this.showLegalNotice = true;
+  constructor(private languageService: LanguageService) {
+    this.currentLang = this.languageService.getLanguage();
   }
 }

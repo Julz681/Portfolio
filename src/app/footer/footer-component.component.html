@@ -2,7 +2,6 @@
   <div class="footer-wrapper">
     <div class="footer-left">
       <img src="../../assets/logo.png" alt="Logo" class="logo" />
-
     </div>
 
     <div class="footer-center">
@@ -14,10 +13,12 @@
         <li><a href="https://github.com/Julz681">Github</a></li>
         <li><a href="https://linkedin.com/in/judith-lütke-a98027372">LinkedIn</a></li>
         <li><a href="mailto:info@hello-julz.com">Email</a></li>
-        <li><a href="#" (click)="toggleLegalNotice(); $event.preventDefault()">Legal Notice</a></li>
+        <li>
+          <a [routerLink]="['/legal']">
+            {{ currentLang === 'en' ? 'Legal Notice' : 'Impressum' }}
+          </a>
+        </li>
       </ul>
     </div>
   </div>
-
-  <app-legal-notice *ngIf="showLegalNotice" (closed)="showLegalNotice = false"></app-legal-notice>
 </footer>

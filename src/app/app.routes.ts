@@ -34,6 +34,17 @@ export const routes: Routes = [
     }
   ]
 },
+{
+  path: 'legal',
+  component: FullLayoutComponent,
+  children: [
+    {
+      path: '',
+      loadComponent: () =>
+        import('./legal-notice/legal-notice.component').then(m => m.LegalNoticeComponent)
+    }
+  ]
+},
 
 
 

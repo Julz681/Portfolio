@@ -12,14 +12,15 @@
     margin-bottom: 2rem;
   }
 
-  .carousel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: auto;
-    min-height: 300px;
-  }
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 300px;
+  height: auto;
+
+}
 
   .testimonial {
     position: absolute;
@@ -177,4 +178,13 @@
       }
     }
   }
+}
+
+@media screen and (min-width: 2100px) {
+  .carousel {
+    overflow-x: hidden;
+    overflow-y: visible;
+    height: 500px !important;
+  }
+
 }

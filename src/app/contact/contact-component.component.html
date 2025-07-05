@@ -62,23 +62,39 @@
   <span *ngIf="currentLang === 'en'">What's your email?</span>
   <span *ngIf="currentLang === 'de'">Wie lautet deine E-Mail?</span>
 
+  <span
+    class="inline-error"
+    *ngIf="formSubmitted && email.invalid"
+  >
+    {{
+      email.errors?.['required']
+        ? currentLang === 'en'
+          ? 'Email is required'
+          : 'E-Mail ist erforderlich'
+        : currentLang === 'en'
+        ? 'Please enter a valid email address'
+        : 'Bitte gib eine gültige E-Mail-Adresse ein'
+    }}
+  </span>
+
+  <!-- Input -->
   <input
     type="email"
     name="email"
     ngModel
     required
     #email="ngModel"
-    pattern="^[a-zA-Z0-9._%+~\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     [ngClass]="{
       'invalid-field': formSubmitted && email.invalid
     }"
     [placeholder]="
       formSubmitted && email.invalid
-        ? email.errors?.['required']
-          ? (currentLang === 'en'
-              ? 'Email is required'
-              : 'E-Mail ist erforderlich')
-          : (currentLang === 'en'
+        ? (email.errors?.['required']
+            ? (currentLang === 'en'
+                ? 'Email is required'
+                : 'E-Mail ist erforderlich')
+            : currentLang === 'en'
               ? 'Please enter a valid email address'
               : 'Bitte gib eine gültige E-Mail-Adresse ein')
         : (currentLang === 'en'
@@ -87,6 +103,8 @@
     "
   />
 </label>
+
+
 
 
   <!-- Message -->
@@ -136,7 +154,6 @@
     </label>
   </div>
 
-  <!-- Error below checkbox (optional separate placement) -->
 <div class="checkbox-error">
   <ng-container *ngIf="formSubmitted && privacy.invalid">
     {{ currentLang === 'en'
