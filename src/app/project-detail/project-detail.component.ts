@@ -21,7 +21,7 @@ export class ProjectDetailComponent implements OnInit {
       name: 'Join',
       description: 'Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.',
       description_de: 'Task-Manager inspiriert vom Kanban-System. Erstelle und organisiere Aufgaben per Drag & Drop, weise Benutzer und Kategorien zu.',
-      tech: ['CSS', 'HTML', 'Firebase', 'Group',],
+      tech: ['JS', 'CSS', 'HTML', 'Firebase', 'Group',],
       image: 'assets/join.png',
       github: 'https://github.com/Julz681/join',
       live: 'assets/projects/Join/index.html',

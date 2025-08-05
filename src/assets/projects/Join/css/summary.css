@@ -8,7 +8,6 @@ body {
   font-style: normal;
   scroll-behavior: smooth;
   background-color: #f6f7f8;
-  overflow: hidden;
   height: 100vh;
 }
 

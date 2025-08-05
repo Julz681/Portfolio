@@ -17,7 +17,7 @@ export class ProjectsComponent {
     {
       slug: 'join',
       name: 'Join',
-      tags: 'HTML | CSS | JavaScript',
+      tags: 'HTML | CSS | JavaScript | Firebase',
       image: 'assets/join.png',
     },
     {
@@ -35,8 +35,8 @@ export class ProjectsComponent {
     {
       slug: 'dabubble',
       name: 'DABubble',
-      tags: 'HTML | SCSS | TypeScript | Material Design',
-      image: 'assets/pokedex.png',
+      tags: 'HTML | SCSS | TypeScript | Material Design | Firebase',
+      image: 'assets/dabubble.png',
     },
     {
       slug: 'kochwelt',
