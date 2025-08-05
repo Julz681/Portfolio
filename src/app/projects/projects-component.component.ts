@@ -33,9 +33,9 @@ export class ProjectsComponent {
       image: 'assets/bestell_app.png',
     },
     {
-      slug: 'pokedex',
-      name: 'Pokédex',
-      tags: 'HTML | CSS | JavaScript',
+      slug: 'dabubble',
+      name: 'DABubble',
+      tags: 'HTML | SCSS | TypeScript | Material Design',
       image: 'assets/pokedex.png',
     },
     {

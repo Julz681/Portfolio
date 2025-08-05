@@ -21,7 +21,7 @@ export class ProjectDetailComponent implements OnInit {
       name: 'Join',
       description: 'Task manager inspired by the Kanban System. Create and organize tasks using drag and drop functions, assign users and categories.',
       description_de: 'Task-Manager inspiriert vom Kanban-System. Erstelle und organisiere Aufgaben per Drag & Drop, weise Benutzer und Kategorien zu.',
-      tech: ['CSS', 'HTML', 'Firebase'],
+      tech: ['CSS', 'HTML', 'Firebase', 'Group',],
       image: 'assets/join.png',
       github: 'https://github.com/Julz681/join',
       live: 'assets/projects/Join/index.html',
@@ -38,9 +38,21 @@ export class ProjectDetailComponent implements OnInit {
       live: 'assets/projects/Pollo Loco/index.html',
 
     },
+
+        {
+      slug: 'dabubble',
+      number: '03',
+      name: 'DABubble',
+      description: 'Collaboration platform similar to Microsoft Teams, featuring real-time communication, user management, and chat functionality – powered by Firebase and built with Angular.',
+      description_de: 'Kollaborationsplattform im Stil von Microsoft Teams zur Kommunikation, Nutzerverwaltung und Chatfunktionalität – mit Echtzeitdaten über Firebase und moderner UI in Angular.',
+      tech: ['Angular', 'Firebase', 'TypeScript', 'HTML', 'MD'],
+      image: 'assets/dabubble.png',
+      github: 'https://github.com/Julz681/DABubble',
+      live: 'assets/projects/DABubble/index.html'
+    },
     {
       slug: 'bestell-app',
-      number: '03',
+      number: '04',
       name: 'Bestell-App',
       description: 'Online food delivery platform that connects customers with restaurants for easy ordering and fast home delivery.',
       description_de: 'Online-Bestellplattform, die Kunden mit Restaurants verbindet – einfache Bestellung und schnelle Lieferung.',
@@ -50,29 +62,17 @@ export class ProjectDetailComponent implements OnInit {
       live: 'assets/projects/Bestell-App/index.html',
 
     },
-    {
-      slug: 'pokedex',
-      number: '04',
-      name: 'Pokédex',
-      description: 'Pokédex-style trainer registry that fetches and displays Pokémon data using an external API.',
-      description_de: 'Pokédex-ähnliches Trainerverzeichnis, das Pokémon-Daten über eine externe API lädt und anzeigt.',
-      tech: ['JavaScript', 'HTML', 'CSS'],
-      image: 'assets/pokedex.png',
-      github: 'https://github.com/Julz681/Pokedex',
-      live: 'assets/projects/Pokedex/index.html',
-
-    },
+  
     {
       slug: 'kochwelt',
       number: '05',
       name: 'Kochwelt',
-      description: 'Recipe platform that allows users to browse, discover, and share a variety of dishes.',
-      description_de: 'Rezeptplattform, auf der Nutzer Gerichte durchsuchen, entdecken und teilen können.',
+      description: 'A clean and straightforward recipe platform – showcasing how appealing and functional websites can be built without heavy frameworks.',
+      description_de: 'Eine übersichtliche Rezeptplattform als Beispiel für moderne, einfache Webentwicklung – zeigt, dass auch funktionale und ansprechende Websites ohne komplexe Frameworks realisierbar sind.',
       tech: ['JavaScript', 'HTML', 'CSS'],
       image: 'assets/kochwelt.png',
       github: 'https://github.com/Julz681/Kochwelt',
       live: 'assets/projects/Kochwelt/index.html',
-
     },
   ];
 
@@ -107,6 +107,7 @@ export class ProjectDetailComponent implements OnInit {
       Git: 'git.png',
       Scrum: 'scrum.png',
       Group: 'group_small.png',
+      MD: 'md.png',
     };
 
     const fileName = iconMap[tech] || tech.toLowerCase().replace(/\s+/g, '-') + '.png';
