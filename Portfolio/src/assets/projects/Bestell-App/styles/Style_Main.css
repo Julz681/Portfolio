@@ -1,0 +1,345 @@
+.mainContent {
+    background-color: #fcfcfc;
+    position: relative;
+    width: 100%;
+  }
+  
+  .restaurantLogoDiv {
+    width: 80%;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mainContentWrapper {
+    margin: 42px;
+    ;
+  }
+  
+  .restaurantLogoDiv {
+    width: 100%;
+  }
+  
+  .buffet {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    z-index: 0;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+  }
+  
+  .restaurantLogo {
+    border-radius: 100px;
+    border: 1px solid #237e67;
+    width: 120px;
+    height: 120px;
+    top: 400px;
+    left: 45%;
+    z-index: 1;
+  }
+  
+  .restaurantName {
+    padding-bottom: 16px;
+  }
+  
+  .rating,
+  .ratings,
+  .minDeliveryValue,
+  .deliveryFee,
+  .pickupLocation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    color: #3c4c6b;
+  }
+  
+  .rate_star {
+    color: #6ee0c4;
+  }
+  
+  .redHearth {
+    color: red;
+  }
+  
+  .ratings {
+    text-decoration: underline;
+  }
+  
+  .deliveryFeeAndValue {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+  
+  .restaurantInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+  
+  .foodSections {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    width: 100%;
+    font-weight: 600;
+
+
+  }
+  
+  .foodSections > a {
+    padding: 10px;
+    border-radius: 12px;
+  }
+  
+  .foodSections > a:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color: #237e67;
+  }
+  
+  .itemsHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    padding: 32px 0px;
+  }
+  
+  h3 {
+    font-size: 24px;
+  }
+  
+  .itemBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+  }
+  
+  .item {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 18px;
+    border: 1px solid lightgray;
+    padding: 12px;
+    width: 95%;
+    
+  }
+
+  .dish_wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    height: 180px;
+;
+  }
+  
+  .itemName,
+  .itemPrice {
+    font-weight: bold;
+  }
+  
+  .itemDescription {
+    width: 100%;
+  }
+  
+  .itemPicture {
+    width: 150px;
+    height: 150px;
+    border-radius: 18px;
+    object-fit: cover;
+  }
+  
+  .sectionDivider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .sectionPictureDivider {
+    width: 100%;
+    height: 180px;
+    border-radius: 18px;
+    object-fit: cover;
+    border: 1px solid lightgray;
+    margin: 32px 0px 0px 0px;
+  }
+  
+  @media (max-width: 880px) {
+    .itemDescription {
+      font-size: 17px;
+    }
+  
+    .itemPicture {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .mainContentWrapper {
+      margin: 38px;
+    }
+  }
+  
+  @media (max-width: 690px) {
+    .itemDescription {
+      font-size: 15px;
+    }
+  
+    .sectionPictureDivider {
+      height: 120px;
+    }
+  
+    .item {
+      gap: 12px;
+    }
+
+    .Warenkorb {
+    text-align: center;
+    font-size: 16px;
+    }
+
+    .itemName {
+      font-size: 18px;
+    }
+  
+    .itemPicture {
+      width: 100px;
+      height: 100px;
+    }
+  
+    h3 {
+      font-size: 22px;
+    }
+  
+    .mainContentWrapper {
+      margin: 34px;
+    }
+  }
+  
+  @media (max-width: 525px) {
+    .foodSections > a {
+      padding: 6px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .itemDescription {
+      font-size: 14px;
+    }
+  
+    .foodSections > a {
+      padding: 4px;
+      font-size: 12px;
+    }
+  
+    .deliveryFeeAndValue {
+      gap: 8px;
+    }
+  
+    .restaurantInfo {
+      gap: 8px;
+      font-size: 14px;
+    }
+  
+    .restaurantLogo {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .buffet {
+      height: 250px;
+    }
+  
+    .item {
+      gap: 8px;
+      padding: 10px;
+    }
+  
+    .itemPicture {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .sectionPictureDivider {
+      height: 80px;
+    }
+  
+    .mainContentWrapper {
+      margin: 32px;
+    }
+  }
+  
+  @media (max-width: 390px) {
+    .foodSections > a {
+      padding: 2px;
+      font-size: 11px;
+    }
+  
+    .deliveryFeeAndValue {
+      gap: 4px;
+    }
+  
+    .restaurantInfo {
+      gap: 4px;
+      font-size: 14px;
+    }
+  
+    .material-symbols-outlined {
+      font-size: 16px !important;
+    }
+  
+    .buffet {
+      height: 180px;
+    }
+  
+    .restaurantName {
+      font-size: 22px;
+    }
+  
+    .restaurantLogo {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .rating,
+    .ratings,
+    .minDeliveryValue,
+    .deliveryFee,
+    .pickupLocation {
+      gap: 6px;
+    }
+  
+    h3 {
+      font-size: 18px;
+    }
+  
+    .item {
+      gap: 4px;
+      padding: 8px;
+    }
+  
+    .itemDescription {
+      font-size: 14px;
+    }
+  
+    .mainContentWrapper {
+      margin: 30px;
+    }
+  }
+  

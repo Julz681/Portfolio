@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kochwelt</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="./img/logo_small.png" type="image/x-icon" />
+    <script>
+      function toggleMenu() {
+        document.getElementById("menu_mobile").classList.toggle("hide");
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Header Container -->
+    <div id="div-header" class="container">
+      <div class="wrapper">
+        <div class="header">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="index.html">
+              <img src="img/logo.png" alt="Logo" height="80" />
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <nav class="nav">
+            <a href="index.html">Start</a>
+            <a href="recipe_today.html">Rezept des Tages</a>
+            <a href="kontakt.html">Kontakt</a>
+            <a href="impressum.html" class="active_page">Impressum</a>
+          </nav>
+
+          <button class="menu_button_mobile" onclick="toggleMenu()">
+            Menü
+          </button>
+
+          <div id="menu_mobile" class="menu_mobile hide">
+            <div class="nav-wrapper">
+              <button onclick="toggleMenu()">Menü schliessen</button>
+              <nav class="nav-mobile">
+                <a href="index.html">Start</a>
+                <a href="recipe_today.html">Rezept des Tages</a>
+                <a href="kontakt.html">Kontakt</a>
+                <a href="impressum.html" class="mobile_active_page"
+                  >Impressum</a
+                >
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="div-content" class="container">
+      <div class="wrapper">
+        <div class="impressum">
+          <h1>Impressum</h1>
+          Angaben gemäß § 5 DDG
+
+          <h2>Anbieter:</h2>
+          Judith Lütke<br />
+          Postfach 12345<br />
+          09577 Niederwiesa<br />
+          <br />
+          Vladislav Krämer<br />
+          Developer Str. 1<br />
+          25421 Pinneberg<br />
+          <br />
+          Riccardo Schöpf<br />
+          Kranebitter Allee 94 <br />
+          6020 Innsbruck<br />
+
+          <h2>Kontakt:</h2>
+          Telefon: 0176-12345678<br />
+          Telefax: 0176-12345678<br />
+          E-Mail: info@kochwelt.com<br />
+          Website: www.kochwelt.com<br />
+          <br />
+
+          Created my free logo at
+          <a href="https://logomakr.com" target="_blank">LogoMakr.com</a> <br />
+          The icons are provided by
+          <a href="https://fontawesome.com/" rel="nofollow" target="_blank"
+            >FontAwesome</a
+          >
+          unter the
+          <a
+            href="https://fontawesome.com/license"
+            target="_blank"
+            rel="nofollow"
+            >Creative Commons Attribution 4.0 International license</a
+          >. <br />
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="div-footer" class="container">
+      <div class="wrapper">
+        <footer class="footer">
+          <!-- Logo -->
+          <div class="logo-footer">
+            <img
+              class="weisses-logo"
+              src="img/logo.png"
+              alt="Logo"
+              height="80"
+            />
+          </div>
+
+          <!-- Footer Links -->
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/?_rdr" target="_blank"
+              ><img class="footer-social" src="./img/facebook_white.png" alt=""
+            /></a>
+            <a href="https://www.instagram.com/" target="_blank"
+              ><img
+                class="footer-social"
+                src="./img/instagram_white.png"
+                alt=""
+            /></a>
+            <a href="https://x.com/?lang=en" target="_blank"
+              ><img class="footer-social" src="./img/twitter_white.png" alt=""
+            /></a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

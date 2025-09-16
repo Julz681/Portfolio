@@ -1,0 +1,87 @@
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h2 *ngIf="currentLang === 'en'">Frontend Developer</h2>
+      <h2 *ngIf="currentLang === 'de'">Frontend Entwicklerin</h2>
+
+      <h1>Judith Lütke</h1>
+
+<div class="hero-buttons">
+  <!-- Projekt-Button -->
+  <a *ngIf="currentLang === 'en'" href="#projects">
+    <button>
+      <span class="text-wrapper">
+        <span class="text">Check my work</span>
+        <span class="text">Check my work</span>
+      </span>
+    </button>
+  </a>
+  <a *ngIf="currentLang === 'de'" href="#projects">
+    <button>
+      <span class="text-wrapper">
+        <span class="text">Meine Projekte</span>
+        <span class="text">Meine Projekte</span>
+      </span>
+    </button>
+  </a>
+
+  <!-- Kontakt-Button -->
+  <a *ngIf="currentLang === 'en'" href="#contact">
+    <button>
+      <span class="text-wrapper">
+        <span class="text">Contact me</span>
+        <span class="text">Contact me</span>
+      </span>
+    </button>
+  </a>
+  <a *ngIf="currentLang === 'de'" href="#contact">
+    <button>
+      <span class="text-wrapper">
+        <span class="text">Kontakt</span>
+        <span class="text">Kontakt</span>
+      </span>
+    </button>
+  </a>
+</div>
+
+
+      <div class="ribbon">
+        <div class="ribbon-track">
+          <ng-container *ngIf="currentLang === 'en'">
+            <ng-container *ngFor="let i of [1,2]">
+              <span>• &nbsp; Available for remote work</span>
+              <span>• &nbsp; Frontend Developer</span>
+              <span>• &nbsp; Based in Cologne</span>
+              <span>• &nbsp; Open to opportunities</span>
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="currentLang === 'de'">
+            <ng-container *ngFor="let i of [1,2]">
+              <span>• &nbsp; Verfügbar für Remote-Arbeit</span>
+              <span>• &nbsp; Frontend Entwicklerin</span>
+              <span>• &nbsp; Standort Köln</span>
+              <span>• &nbsp; Offen für Neues</span>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="socials">
+        <a href="mailto:info@hello-julz.com" class="email email-text">
+          info&#64;hello-julz.com
+        </a>
+        <a href="mailto:info@hello-julz.com" class="email email-icon">
+          <img src="../../assets/mail.png" alt="Mail Icon" class="icon" />
+        </a>
+        <a href="https://github.com/Julz681" target="_blank">
+          <img src="../../assets/Github.png" alt="GitHub" class="icon" />
+        </a>
+        <a href="https://linkedin.com/in/judith-lütke-a98027372" target="_blank">
+          <img src="../../assets/In.png" alt="LinkedIn" class="icon" />
+        </a>
+        <div class="border"></div>
+      </div>
+    </div>
+  </div>
+</section>

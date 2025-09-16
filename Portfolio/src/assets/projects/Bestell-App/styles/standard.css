@@ -1,0 +1,149 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 0 solid transparent;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  .d_none {
+    display: none !important;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  header {
+    display: flex;
+    width: 100%;
+    background-color: #237e67;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo {
+    height: 100px;
+    width: auto;
+    padding: 16px;
+  }
+  
+  main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+  }
+  
+  footer {
+    width: 100%;
+    height: 100px;
+    background-color: #efedea;
+  
+  }
+  
+  .footerContent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .footerLinks {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    text-align: center;
+  }
+  
+  .copyright > p {
+    text-align: center;
+  }
+
+
+.testSite {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 40px;
+  height: 50vh;
+}
+
+.testSite a {
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+
+.testSite a:hover {
+  text-decoration: none;
+  color: #237e67;
+}
+
+.footer_test {
+  position: fixed;
+  bottom: 0;
+}
+
+  
+  @media (max-width: 1280px) {
+    main {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 690px) {
+    header {
+      max-height: 80px;
+    }
+  
+    .logo {
+      height: 65px;
+    }
+  
+    footer {
+      max-height: 80px;
+    }
+  }
+  
+  @media (max-width: 390px) {
+    header {
+      max-height: 70px;
+    }
+  
+    .logo {
+      height: 60px;
+    }
+  
+    footer {
+      max-height: 70px;
+    }
+  
+    .footerContent {
+      font-size: 14px;
+    }
+  }
+  

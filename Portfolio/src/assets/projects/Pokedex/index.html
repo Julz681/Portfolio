@@ -1,0 +1,92 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <link rel="icon" href="./img/favicon-32x32.png">
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./color_style.css">
+    <link rel="stylesheet" href="./style_media.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+<body onload="pkm()">
+    <div id="loading-container" class="loading-container" style="display: none;">
+        <div id="loading-spinner" class="loading-spinner">
+          <div class="spinner"></div>
+        </div>
+        <p class="loading-text">Wir fangen alle Pokémons für dich ein...</p>
+      </div>
+      
+      <header class="pkm-header" id="indexSite"> 
+        <div class="logo">
+          <img class="header_pic" src="./img/pokeball-logo.png">
+          <img class="header_pic" src="./img/pokedex-logo.png">
+        </div>
+
+      <div class="search-pkm">
+        <button class="pkm-btn" onclick="resetSearch()" id="reset-button"><a href="#indexSite"><p>Suche zurücksetzen</p></a></button>
+        <div class="d-none">
+          <span id="allert-box">Bitte gib mindestens 3 Zeichen ein!</span>
+        </div>
+
+        <div class="d-none">
+          <span id="allert-box-2">Leider keine Pokémon gefunden!</span>
+        </div>
+
+        <div style="display: flex">
+          <input type="text" placeholder="Suche ein Pokémon..." class="search-input" id="search"/>
+          <button class="pkm-btn" id="search-button" onclick="searchAllPkm()">🔍</button>
+        </div>
+
+      </div>
+
+    </header>
+
+    <main id="content"></main>
+
+    <div id="overlay" class="overlay d-none"></div>
+
+    
+
+    <section class="button">
+
+      
+
+      <button class="pkm-btn" onclick="addMore()"><p>Mehr laden</p></button>
+
+      <button class="pkm-btn" onclick="resetSearch()" id="reset-button"><a href="#indexSite"><p>Zurücksetzen</p></a></button>
+
+      
+
+    </section>
+
+    <footer>
+        
+            <div class="logo_text">
+              <div class="logo">
+                <img class="header_pic_footer" src="./img/pokeball-logo.png">
+                <p>Pokédex by Judith Lütke</p>
+              </div>
+        </div>
+            <div class="data">
+                <a href="impressum.html" class="footer-link hide-mobile" target="_blank"
+                  >Impressum</a
+                >
+                |
+                <a
+                  href="datenschutz.html"
+                  class="footer-link hide-mobile"
+                  target="_blank"
+                  >Datenschutz</a
+                >
+              </div>
+        
+
+    </footer>
+
+  </body>
+</html>

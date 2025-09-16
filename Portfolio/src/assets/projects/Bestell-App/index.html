@@ -1,0 +1,293 @@
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bestell-App</title>
+    <link
+      rel="icon"
+      type="icon"
+      href="./assets/Favicon/favicon.ico"
+    />
+    <link rel="stylesheet" href="styles/standard.css" />
+    <link rel="stylesheet" href="styles/assets.css" />
+    <link rel="stylesheet" href="styles/Style_Main.css" />
+    <link rel="stylesheet" href="styles/Style_Shopping.css" />
+    <script src="scripts/script.js"></script>
+    <script src="scripts/templates.js"></script>
+    <script src="scripts/food.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+
+
+  </head>
+
+  <body onload="init()">
+    <header>
+      <a href="index.html">
+        <img
+          class="logo"
+          src="./assets/Favicon/Logo.png"
+          alt="Bestell-App-Logo"
+        />
+      </a>
+    </header>
+
+    <div class="wrap">
+    <main>
+      <div class="mainContent">
+        <div>
+          <img
+            class="buffet"
+            src="./assets/Images/Main.jpg"
+            alt="Buffet-Bild"
+          />
+        </div>
+
+        <div class="restaurantLogoDiv">
+          <img
+            class="restaurantLogo"
+            src="./assets/Images/Logo.jpg"
+            alt="Restaurant-Logo"
+          />
+        </div>
+
+        <div class="mainContentWrapper">
+          <div class="restaurantInfoDiv">
+            <h1 class="restaurantName">Jules Kitchen</h1>
+            <div class="restaurantInfo">
+              <div class="rating">
+                <span class="material-symbols-outlined rate_star"> star </span>
+                <a class="ratings"
+                  ><p><b>4.7</b> (300+)</p></a
+                >
+              </div>
+
+              <div class="deliveryFeeAndValue d_none" id="deliveryFeeAndValue">
+                <div class="minDeliveryValue">
+                  <span class="material-symbols-outlined"> shopping_bag </span>
+                  <p>Min. 15,00 €</p>
+                </div>
+
+                <div class="deliveryFee">
+                  <span class="material-symbols-outlined"> pedal_bike </span>
+                  <p id="deliveryFeeAmount">2.00</p>
+                  €
+                </div>
+              </div>
+
+              <div class="pickupLocation" id="deliveryPickup">
+                <span class="material-symbols-outlined"> location_on </span>
+                <p>Hauptstraße 12, 50667 Köln</p>
+              </div>
+            </div>
+          </div>
+          <div class="foodSections">
+            <a href="#popular"><p>Beliebt</p></a>
+            <a href="#salad"><p>Salate</p></a>
+            <a href="#pizza"><p>Pizza</p></a>
+            <a href="#pasta"><p>Nudeln</p></a>
+            <a href="#drinks"><p>Getränke</p></a>
+            <a href="#dessert"><p>Desserts</p></a>
+            
+            
+          </div>
+
+          <div class="popular" id="popular">
+            <div class="itemsHeader">
+              <h3>Beliebt</h3>
+              <span class="material-symbols-outlined redHearth">
+                favorite
+              </span>
+            </div>
+
+            <div class="itemBox" id="favorite"></div>
+
+            <div class="sectionDivider" id="divider-0"></div>
+          </div>
+
+          <div class="salad" id="salad">
+            <div class="itemsHeader">
+              <h3>Salate</h3>
+            </div>
+
+            <div class="itemBox" id="saladBox"></div>
+
+            <div class="sectionDivider" id="divider-1"></div>
+          </div>
+
+          <div class="pizza" id="pizza">
+            <div class="itemsHeader">
+              <h3>Pizza</h3>
+            </div>
+
+            <div class="itemBox" id="pizzaBox"></div>
+
+            <div class="sectionDivider" id="divider-2"></div>
+          </div>
+
+          <div class="pasta" id="pasta">
+            <div class="itemsHeader">
+              <h3>Nudeln</h3>
+            </div>
+
+            <div class="itemBox" id="pastaBox"></div>
+
+            <div class="sectionDivider" id="divider-3"></div>
+          </div>
+
+          <div class="drinks" id="drinks">
+            <div class="itemsHeader">
+              <h3>Getränke</h3>
+            </div>
+
+            <div class="itemBox" id="drinkBox"></div>
+
+            <div class="sectionDivider" id="divider-4"></div>
+          </div>
+
+          <div class="dessert" id="dessert">
+            <div class="itemsHeader">
+              <h3>Desserts</h3>
+            </div>
+
+            <div class="itemBox" id="dessertBox"></div>
+
+            <div class="sectionDivider" id="divider-5"></div>
+          </div>
+          
+        </div>
+      </div>
+
+
+      <div class="shoppingCartWrapper" id="shoppingBasket">
+        <section class="sticky_basket">
+        <div class="shoppingCart">
+          <div class="closeBasket">
+            <a onclick="showBasket()">
+              <span class="material-symbols-outlined"> cancel </span>
+            </a>
+          </div>
+          <h2>Warenkorb</h2>
+          <div class="deliveryOptions">
+            <div class="delivery">
+              <input
+                type="radio"
+                name="shippingType"
+                id="optionDelivery"
+                onclick="toggleDeliveryInformation()"
+                value="delivery"
+                checked
+              />
+              <div class="deliveryInfos">
+                <label for="delivery">Lieferung</label>
+                <p>30-45 min</p>
+              </div>
+            </div>
+
+            <div class="pickup">
+              <input
+                type="radio"
+                name="shippingType"
+                onclick="toggleDeliveryInformation()"
+                value="pickup"
+              />
+              <div class="deliveryInfos">
+                <label for="pickup">Abholung</label>
+                <p>15 min</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart">
+          <div class="emptyCard" id="emptyBasket">
+            <img
+              class="shoppingCartLogo"
+              src="./assets/Favicon/Warenkorb.jpg"
+              alt="shoppingCartIcon"
+            />
+            <h2>Dein Warenkorb</h2>
+            <p>
+              Füge Gerichte von der Speisekarte zu Deinem Warenkorb hinzu.
+            </p>
+          </div>
+
+
+
+
+          <div class="cartContent" id="basketContent"></div>
+
+          <div class="finishOrderSection" id="finishOrder">
+            <div>
+              <div class="currentOrderSum">
+                <p>Zwischensumme in EUR</p>
+                <p id="currentOrderSum"></p>
+              </div>
+              <div class="deliveryFeeStatus" id="finalDeliveryFeeStatus">
+                <p>Lieferkosten in EUR</p>
+                <p>1.90</p>
+              </div>
+              <div class="divider"></div>
+              <div class="orderSum">
+                <p>Gesamt in EUR</p>
+                <p id="totalOrderSum"></p>
+              </div>
+              <div class="completeOrderButton1" onclick="sendOrder()">
+                <a>Bezahlen </a>
+                
+                </div>
+              
+              
+              <div class="Mindestbestellwert" id="mbw">
+                <span>Mindestbestellwert i.H.v. von 15,00 € noch nicht erreicht. <br> Füge weitere Gerichte hinzu.</span>
+              </div>
+
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mobileShoppingCart"
+        id="showBasketButton"
+        onclick="showBasket()"
+      >
+        <div class="completeOrderButton">
+          
+          <a>Zum Warenkorb</a> 
+          <div class="line">
+          <p>Summe in EUR: &nbsp; <p id="totalOrderSum1"> </p> </div>
+          
+        </div>
+      </div>
+
+
+    </section>
+  </div>
+
+    </main>
+</div>
+
+
+    <footer>
+        <div class="footerContent">
+          <div class="footerLinks">
+            <a href="./agb.html"><p>AGB</p></a>
+            <a href="./datenschutz.html"><p>Datenschutzerklärung</p></a>
+            <a href="./impressum.html"><p>Impressum</p></a>
+          </div>
+          <div class="copyright">
+            <p>© 2025 Judith Lütke</p>
+          </div>
+        </div>
+      </footer>
+
+  </body>
+</html>

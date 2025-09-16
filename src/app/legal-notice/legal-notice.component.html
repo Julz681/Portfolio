@@ -1,0 +1,31 @@
+<section class="legal-notice-section">
+  <div class="container">
+    <h1>
+      {{ currentLang === "en" ? "Legal Notice" : "Impressum" }}
+    </h1>
+
+    <div class="notice-text">
+      <p><strong>Judith Lütke</strong></p>
+      <p>Cologne, Germany</p>
+      <p>
+        Email: <a href="mailto:info@hello-julz.com">info&#64;hello-julz.com</a>
+      </p>
+
+      <p *ngIf="currentLang === 'en'" style="margin-top: 2rem">
+        This website is a personal portfolio and does not pursue commercial
+        purposes.
+      </p>
+      <p *ngIf="currentLang === 'de'" style="margin-top: 2rem">
+        Diese Website dient ausschließlich der Darstellung meiner Person und ist
+        nicht kommerziell.
+      </p>
+
+      <a class="back-btn" routerLink="/">
+        ←
+        {{
+          currentLang === "en" ? "Back to Homepage" : "Zurück zur Startseite"
+        }}
+      </a>
+    </div>
+  </div>
+</section>

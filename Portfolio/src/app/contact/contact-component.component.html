@@ -1,0 +1,193 @@
+<section class="contact-section" id="contact">
+  <!-- LEFT TEXT CONTENT -->
+  <div class="left en" *ngIf="currentLang === 'en'">
+
+    <h3>Contact me</h3>
+    <h1>Let's work <br />together</h1>
+    <h4>Got a problem to solve?</h4>
+    <p>
+      Let’s build something great together. I’m excited to contribute to meaningful, user-focused projects and bring ideas to life with clean code, creativity, and a strong sense of collaboration. If you're looking for someone reliable and detail-oriented, feel free to reach out — I’d love to hear from you.
+    </p>
+    <p>
+      Need a Frontend developer?
+      <a class="no-underline">Let’s talk!</a>
+    </p>
+  </div>
+
+  <div class="left de" *ngIf="currentLang === 'de'">
+
+    <h3>Kontaktiere mich</h3>
+    <h1>Lasst uns <br />zusammenarbeiten</h1>
+    <h4>Ein Problem zu lösen?</h4>
+    <p>
+      Lass uns gemeinsam etwas Großartiges erschaffen! Ich freue mich darauf, an sinnvollen, nutzerzentrierten Projekten mitzuwirken und Ideen mit sauberem Code, Kreativität und Teamgeist zum Leben zu erwecken. Wenn du eine zuverlässige und detailorientierte Frontend-Entwicklerin suchst – melde dich gerne!
+    </p>
+    <p>
+      Brauchst du eine Frontend-Entwicklerin?
+      <a class="no-underline">Sprich mich an!</a>
+    </p>
+  </div>
+
+  <!-- FORM -->
+  <form
+  class="right"
+  (ngSubmit)="onSubmit(contactForm)"
+  #contactForm="ngForm"
+  novalidate
+>
+  <!-- Name -->
+  <label>
+    <span *ngIf="currentLang === 'en'">What's your name?</span>
+    <span *ngIf="currentLang === 'de'">Wie heißt du?</span>
+    <input
+      type="text"
+      name="name"
+      ngModel
+      required
+      #name="ngModel"
+      [placeholder]="
+        formSubmitted && name.invalid
+          ? (currentLang === 'en'
+              ? 'Oops! it seems your name is missing'
+              : 'Ups! Name fehlt')
+          : (currentLang === 'en'
+              ? 'Your name goes here'
+              : 'Dein Name hier')
+      "
+    />
+  </label>
+
+  <!-- Email -->
+<label>
+  <span *ngIf="currentLang === 'en'">What's your email?</span>
+  <span *ngIf="currentLang === 'de'">Wie lautet deine E-Mail?</span>
+
+<span
+  class="inline-error"
+  *ngIf="formSubmitted && email.invalid && !email.errors?.['required']"
+>
+  {{
+    currentLang === 'en'
+      ? 'Please enter a valid email address'
+      : 'Bitte gib eine gültige E-Mail-Adresse ein'
+  }}
+</span>
+
+
+  <!-- Input -->
+  <input
+    type="email"
+    name="email"
+    ngModel
+    required
+    #email="ngModel"
+    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    [ngClass]="{
+      'invalid-field': formSubmitted && email.invalid
+    }"
+    [placeholder]="
+      formSubmitted && email.invalid
+        ? (email.errors?.['required']
+            ? (currentLang === 'en'
+                ? 'Email is required'
+                : 'E-Mail ist erforderlich')
+            : currentLang === 'en'
+              ? 'Please enter a valid email address'
+              : 'Bitte gib eine gültige E-Mail-Adresse ein')
+        : (currentLang === 'en'
+            ? 'youremail@email.com'
+            : 'dein@email.de')
+    "
+  />
+</label>
+
+
+
+
+  <!-- Message -->
+  <label>
+    <span *ngIf="currentLang === 'en'">How can I help you?</span>
+    <span *ngIf="currentLang === 'de'">Wie kann ich dir helfen?</span>
+    <textarea
+      name="message"
+      ngModel
+      required
+      #message="ngModel"
+      [placeholder]="
+        formSubmitted && message.invalid
+          ? (currentLang === 'en'
+              ? 'What do you need to develop?'
+              : 'Womit kann ich helfen?')
+          : (currentLang === 'en'
+              ? 'Hello Judith, I am interested in...'
+              : 'Hallo Judith, ich interessiere mich für...')
+      "
+    ></textarea>
+  </label>
+
+  <!-- Privacy -->
+  <div class="checkbox-line">
+    <input
+      type="checkbox"
+      id="privacy"
+      name="privacy"
+      ngModel
+      required
+      #privacy="ngModel"
+    />
+    <label for="privacy">
+      <span *ngIf="currentLang === 'en'">
+        I've read the
+        <a [routerLink]="['/privacy']">privacy policy</a
+        >
+        and agree to the processing of my data.
+      </span>
+      <span *ngIf="currentLang === 'de'">
+        Ich habe die
+        <a [routerLink]="['/privacy']">Datenschutzerklärung</a
+        >
+        gelesen und stimme der Datenverarbeitung zu.
+      </span>
+    </label>
+  </div>
+
+<div class="checkbox-error">
+  <ng-container *ngIf="formSubmitted && privacy.invalid">
+    {{ currentLang === 'en'
+      ? 'Please accept the privacy policy.'
+      : 'Bitte akzeptiere die Datenschutzerklärung.' }}
+  </ng-container>
+</div>
+
+
+  <!-- Submit -->
+  <button type="submit">
+    {{ currentLang === 'en' ? 'Say Hello ;)' : 'Sag Hallo ;)' }}
+  </button>
+
+  <!-- Validation Summary -->
+  <div class="alert" *ngIf="formInvalid">
+    {{ currentLang === 'en'
+      ? 'Please complete all fields and agree to the privacy policy.'
+      : 'Bitte fülle alle Felder aus und stimme der Datenschutzerklärung zu.' }}
+  </div>
+
+  <!-- Success -->
+  <div class="success-message" *ngIf="success">
+    {{ currentLang === 'en'
+      ? 'Thank you! Your message was sent successfully.'
+      : 'Danke! Deine Nachricht wurde erfolgreich gesendet.' }}
+  </div>
+
+  <!-- Error -->
+  <div class="error-message" *ngIf="formSubmitted && error">
+    {{ currentLang === 'en'
+      ? 'Oops! Something went wrong. Please try again later.'
+      : 'Ups! Etwas ist schiefgelaufen. Bitte versuche es später noch einmal.' }}
+  </div>
+</form>
+
+
+
+
+</section>

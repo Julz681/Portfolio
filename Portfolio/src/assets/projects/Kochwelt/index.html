@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kochwelt</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="./img/logo_small.png" type="image/x-icon" />
+    <script>
+      function toggleMenu() {
+        document.getElementById("menu_mobile").classList.toggle("hide");
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- Header Container -->
+    <div id="div-header" class="container">
+      <div class="wrapper">
+        <div class="header">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="index.html">
+              <img src="./img/logo.png" alt="Logo" height="80" />
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <nav class="nav">
+            <a href="index.html" class="active_page">Start</a>
+            <a href="recipe_today.html">Rezept des Tages</a>
+            <a href="kontakt.html">Kontakt</a>
+            <a href="impressum.html">Impressum</a>
+          </nav>
+
+          <button class="menu_button_mobile" onclick="toggleMenu()">
+            Menü
+          </button>
+
+          <div id="menu_mobile" class="menu_mobile hide">
+            <div class="nav-wrapper">
+              <button onclick="toggleMenu()">Menü schliessen</button>
+              <nav class="nav-mobile">
+                <a href="index.html" class="mobile_active_page">Start</a>
+                <a href="recipe_today.html">Rezept des Tages</a>
+                <a href="kontakt.html">Kontakt</a>
+                <a href="impressum.html">Impressum</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Inhalt Container -->
+    <div id="div-content" class="container">
+      <div class="wrapper">
+        <div class="rezept-hero">
+          <!-- Foto -->
+          <div class="hero_img_container">
+            <a href="recipe_today.html">
+              <img
+                class="hero_img"
+                src="./img/carbonara.jpg"
+                alt="Spaghetti Carbonara"
+              />
+            </a>
+          </div>
+
+          <!-- Text und Link-Button -->
+          <div class="hero_inhalt">
+            <h1>Spaghetti Carbonara</h1>
+            <p>
+              Carbonara ist ein Nudelgericht aus Pasta mit Guanciale , Ei,
+              Pfeffer und Hartkäse. <br />
+              Es gehört zu den Klassikern der römischen Küche.
+            </p>
+            <div class="hero_link">
+              <a href="recipe_today.html" class="linkbutton">Rezept öffnen</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lust auf was Neues? -->
+        <div class="neue_rezepte">
+          <h1>Lust auf was Neues?</h1>
+          <div class="croissants">
+            <a class="quick_links" href="pancakes.html">
+              <img src="./img/pancakes.png" alt="" />
+              <span>Amerikanische Pancakes</span>
+            </a>
+            <a class="quick_links" href="chicken.html">
+              <img src="./img/chicken.jpg" alt="" />
+              <span>Mozzarella-Hähnchen</span>
+            </a>
+            <a class="quick_links" href="salat.html">
+              <img src="./img/salad.jpg" alt="" />
+              <span>Griechischer Bauernsalat</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Pfanne vs. Wok - Was ist besser? -->
+        <div class="pfanne">
+          <h1>Pfanne vs. Wok - Was ist besser?</h1>
+          <div class="pfanne_inhalt">
+            <div class="pfanne_text">
+              <p>
+                Die Pfanne ist ein Allrounder in der Küche. Mit ihrer flachen,
+                breiten Form eignet sie sich hervorragend zum Braten, Rösten und
+                Schmoren von Fleisch, Gemüse oder Fisch. Dank der gleichmäßigen
+                Wärmeverteilung gelingen klassische Gerichte wie Schnitzel oder
+                Omeletts besonders gut.
+              </p>
+              <p>
+                Der Wok hingegen punktet mit seiner tiefen, gewölbten Form. Er
+                ist optimal für schnelles Anbraten bei hoher Hitze, typisch für
+                asiatische Gerichte. Durch das ständige Rühren wird alles
+                gleichmäßig gegart. Zudem eignet sich der Wok auch für das
+                Frittieren oder Dämpfen. Während die Pfanne eher vielseitig im
+                westlichen Stil genutzt wird, ist der Wok ein Muss für die
+                asiatische Küche.
+              </p>
+            </div>
+            <div class="quick_links">
+              <img src="./img/wok.jpg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="div-footer" class="container">
+      <div class="wrapper">
+        <footer class="footer">
+          <!-- Logo -->
+          <div class="logo-footer">
+            <img
+              class="weisses-logo"
+              src="./img/logo.png"
+              alt="Logo"
+              height="80"
+            />
+          </div>
+
+          <!-- Footer Links -->
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/?_rdr" target="_blank"
+              ><img class="footer-social" src="./img/facebook_white.png" alt=""
+            /></a>
+            <a href="https://www.instagram.com/" target="_blank"
+              ><img
+                class="footer-social"
+                src="./img/instagram_white.png"
+                alt=""
+            /></a>
+            <a href="https://x.com/?lang=en" target="_blank"
+              ><img class="footer-social" src="./img/twitter_white.png" alt=""
+            /></a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

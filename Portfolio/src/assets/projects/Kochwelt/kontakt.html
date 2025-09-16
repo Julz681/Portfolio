@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kochwelt</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="kontakt.css" />
+    <link rel="icon" href="./img/logo_small.png" type="image/x-icon" />
+    <script>
+      function toggleMenu() {
+        document.getElementById("menu_mobile").classList.toggle("hide");
+      }
+    </script>
+  </head>
+  <body>
+    <div style="min-height: 100vh; display: flex; flex-direction: column">
+      <!-- Header Container -->
+      <div id="div-header" class="container">
+        <div class="wrapper">
+          <div class="header">
+            <!-- Logo -->
+            <div class="logo">
+              <a href="index.html">
+                <img src="img/logo.png" alt="Logo" height="80" />
+              </a>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="nav">
+              <a href="index.html">Start</a>
+              <a href="recipe_today.html">Rezept des Tages</a>
+              <a href="kontakt.html" class="active_page">Kontakt</a>
+              <a href="impressum.html">Impressum</a>
+            </nav>
+
+            <button class="menu_button_mobile" onclick="toggleMenu()">
+              Menü
+            </button>
+
+            <div id="menu_mobile" class="menu_mobile hide">
+              <div class="nav-wrapper">
+                <button onclick="toggleMenu()">Menü schliessen</button>
+                <nav class="nav-mobile">
+                  <a href="index.html">Start</a>
+                  <a href="recipe_today.html">Rezept des Tages</a>
+                  <a href="kontakt.html" class="mobile_active_page">Kontakt</a>
+                  <a href="impressum.html">Impressum</a>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inhalt Container -->
+      <div id="div-content" class="container" style="flex: 1">
+        <div class="wrapper">
+          <div class="form-container">
+            <h1 class="title">Kontakt</h1>
+            <!-- https://formspree.io/ -->
+            <form action="https://formspree.io/f/mnnnlaoj" method="POST">
+              <div class="form-group">
+                <label for="name" class="form-label">Name:</label>
+                <input
+                  required
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-input"
+                  placeholder="Dein Vor- und Nachname"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">E-Mail:</label>
+                <input
+                  required
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-input"
+                  placeholder="Deine E-Mail-Adresse"
+                />
+              </div>
+              <div class="form-group">
+                <label for="message" class="form-label">Nachricht:</label>
+                <textarea
+                  required
+                  id="message"
+                  name="message"
+                  class="form-textarea"
+                  rows="5"
+                  placeholder="Deine Nachricht"
+                ></textarea>
+              </div>
+              <button type="submit" class="form-button">Absenden</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Container -->
+      <div id="div-footer" class="container">
+        <div class="wrapper">
+          <footer class="footer">
+            <!-- Logo -->
+            <div class="logo-footer">
+              <img
+                class="weisses-logo"
+                src="./img/logo.png"
+                alt="Logo"
+                height="80"
+              />
+            </div>
+
+            <!-- Footer Links -->
+            <div class="footer-socials">
+              <a href="https://www.facebook.com/?_rdr" target="_blank"
+                ><img
+                  class="footer-social"
+                  src="./img/facebook_white.png"
+                  alt=""
+              /></a>
+              <a href="https://www.instagram.com/" target="_blank"
+                ><img
+                  class="footer-social"
+                  src="./img/instagram_white.png"
+                  alt=""
+              /></a>
+              <a href="https://x.com/?lang=en" target="_blank"
+                ><img
+                  class="footer-social"
+                  src="./img/twitter_white.png"
+                  alt=""
+              /></a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

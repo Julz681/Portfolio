@@ -1,0 +1,44 @@
+<footer class="footer">
+  <div class="footer-wrapper">
+<div class="footer-left">
+<img
+  src="../../assets/logo.png"
+  alt="Logo"
+  class="logo"
+  style="cursor: pointer;"
+  (click)="scrollToTop()"
+/>
+
+</div>
+
+
+    <div class="footer-center">
+      <p>© Judith Lütke {{ currentYear }}</p>
+    </div>
+
+    <div class="footer-right">
+      <ul>
+        <li>
+          <a href="https://github.com/Julz681" target="_blank" rel="noopener noreferrer">
+            Github
+          </a>
+        </li>
+        <li>
+          <a href="https://linkedin.com/in/judith-lütke-a98027372" target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href="mailto:info@hello-julz.com">
+            Email
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/legal']">
+            {{ currentLang === 'en' ? 'Legal Notice' : 'Impressum' }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>

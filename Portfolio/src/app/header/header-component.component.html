@@ -1,0 +1,105 @@
+<header class="header">
+  <div class="header-content">
+    <div class="logo mobile-only" *ngIf="isMobile">
+      <img src="../../assets/logo.png" alt="Logo" />
+    </div>
+
+    <div class="lang-toggle desktop-only" *ngIf="!isMobile">
+      <button
+        class="lang"
+        [class.active]="currentLang === 'en'"
+        (click)="switchLanguage('en')"
+      >
+        EN
+      </button>
+      <button
+        class="lang"
+        [class.active]="currentLang === 'de'"
+        (click)="switchLanguage('de')"
+      >
+        DE
+      </button>
+    </div>
+
+    <nav class="nav-links desktop-only" *ngIf="!isMobile">
+      <a
+        [routerLink]="['/']"
+        [fragment]="'about'"
+        (click)="scrollToFragment('about')"
+      >
+        <span *ngIf="currentLang === 'en'">About me</span>
+        <span *ngIf="currentLang === 'de'">Über mich</span>
+      </a>
+      <a
+        [routerLink]="['/']"
+        [fragment]="'skills'"
+        (click)="scrollToFragment('skills')"
+      >
+        <span *ngIf="currentLang === 'en'">Skills</span>
+        <span *ngIf="currentLang === 'de'">Fähigkeiten</span>
+      </a>
+      <a
+        [routerLink]="['/']"
+        [fragment]="'projects'"
+        (click)="scrollToFragment('projects')"
+      >
+        <span *ngIf="currentLang === 'en'">Projects</span>
+        <span *ngIf="currentLang === 'de'">Projekte</span>
+      </a>
+    </nav>
+
+    <div class="logo desktop-only" *ngIf="!isMobile">
+      <img src="../../assets/logo.png" alt="Logo" />
+    </div>
+
+    <div class="hamburger" *ngIf="isMobile" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="mobile-menu" *ngIf="isMobile && menuOpen">
+    <a
+      [routerLink]="['/']"
+      [fragment]="'about'"
+      (click)="onMobileLinkClick('about')"
+    >
+      <span *ngIf="currentLang === 'en'">About me</span>
+      <span *ngIf="currentLang === 'de'">Über mich</span>
+    </a>
+    <a
+      [routerLink]="['/']"
+      [fragment]="'skills'"
+      (click)="onMobileLinkClick('skills')"
+    >
+      <span *ngIf="currentLang === 'en'">Skills</span>
+      <span *ngIf="currentLang === 'de'">Fähigkeiten</span>
+    </a>
+    <a
+      [routerLink]="['/']"
+      [fragment]="'projects'"
+      (click)="onMobileLinkClick('projects')"
+    >
+      <span *ngIf="currentLang === 'en'">Projects</span>
+      <span *ngIf="currentLang === 'de'">Projekte</span>
+    </a>
+
+    <div class="lang-toggle">
+      <button
+        class="lang"
+        [class.active]="currentLang === 'en'"
+        (click)="switchLanguage('en')"
+      >
+        EN
+      </button>
+      <button
+        class="lang"
+        [class.active]="currentLang === 'de'"
+        (click)="switchLanguage('de')"
+      >
+        DE
+      </button>
+    </div>
+  </div>
+</header>

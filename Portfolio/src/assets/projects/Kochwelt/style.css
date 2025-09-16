@@ -1,0 +1,720 @@
+@font-face {
+  font-family: "Raleway";
+  src: url("./fonts/Raleway-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Webkit Browser (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #efefef; /* Nutzt die gleiche helle Farbe wie Ihre "neue_rezepte" Sektion */
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #008000; /* Ihre Hauptfarbe Grün */
+  border-radius: 6px;
+  border: 3px solid #efefef; /* Schafft einen schönen Abstand zum Track */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #006700; /* Etwas dunkleres Grün beim Hover */
+}
+
+body {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#div-content {
+  flex: 1;
+}
+
+#div-header {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+#div-footer {
+  background-color: #403b3b;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  padding: 8px;
+}
+
+.nav {
+  display: flex;
+  align-items: flex-end;
+}
+
+.weisses-logo {
+  filter: invert(100%);
+}
+
+.border-right {
+  border-right: 2px solid white;
+}
+
+.nav a {
+  margin-left: 24px;
+  font-size: 18px;
+  padding-bottom: 6px;
+  border-bottom: 4px solid transparent;
+  font-weight: bold;
+  color: #403b3b;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  border-bottom: 4px solid #008000;
+  color: #008000;
+}
+
+.active_page {
+  border-bottom: 4px solid #008000 !important;
+  color: #008000 !important;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 1440px;
+}
+
+.platzhalter {
+  background-color: rgb(218, 247, 177);
+  height: 500px;
+}
+
+.footer {
+  min-height: 80px;
+  padding: 16px;
+}
+
+.footer-socials img {
+  padding-right: 50px;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.footer a {
+  justify-content: space-around;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  object-fit: cover;
+}
+
+.footer a:hover {
+  filter: drop-shadow(0 0 0.75rem green);
+}
+
+.hero_img {
+  object-fit: cover;
+  width: 500px;
+  height: 350px;
+  border-radius: 15px;
+}
+
+.rezept-hero {
+  gap: 40px;
+  display: flex;
+  padding: 70px 0;
+  justify-content: center;
+}
+
+.linkbutton {
+  padding: 10px 40px;
+  color: white;
+  background-color: #008000;
+  text-decoration: none;
+}
+
+.linkbutton:hover {
+  text-decoration: underline;
+}
+
+.hero_link {
+  display: flex;
+  justify-content: start;
+
+  margin-top: 20px;
+  padding: 10px 40px;
+}
+.croissants {
+  margin-top: 40px;
+  display: flex;
+  gap: 24px;
+  justify-content: space-around;
+}
+
+.quick_links {
+  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  gap: 8px;
+}
+
+.quick_links img {
+  width: 260px;
+  border-radius: 15px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.quick_links span {
+  text-align: center;
+}
+
+.neue_rezepte h1 {
+  text-align: center;
+}
+.neue_rezepte {
+  background-color: #efefef;
+  padding-top: 50px;
+  padding-bottom: 60px;
+}
+
+.pfanne {
+  padding-top: 50px;
+  padding-bottom: 60px;
+}
+
+.pfanne h1 {
+  text-align: center;
+}
+
+.pfanne_inhalt {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.pfanne_text {
+  width: 50%;
+}
+
+.rezept_img {
+  object-fit: cover;
+  width: 100%;
+  height: 250px;
+  border-radius: 15px;
+}
+
+.img_titel {
+  font-size: 10px;
+}
+
+.info_icon {
+  height: 16px;
+}
+
+.rezept_info {
+  display: flex;
+  margin-top: 30px;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.info_panel {
+  padding: 10px;
+  display: flex;
+  gap: 16px;
+  border-radius: 10px;
+  background: #efefef;
+}
+
+.trennlinie {
+  margin-top: 65px;
+  border: 1px solid #efefef;
+}
+
+.zutaten_eingabe {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+
+.zutaten_tabelle tr:nth-child(odd) {
+  background-color: #efefef;
+}
+
+.menge {
+  text-align: right;
+  width: 130px;
+}
+
+.zutaten_tabelle {
+  border-spacing: 0px;
+  width: 100%;
+}
+.zutaten_tabelle td {
+  padding: 16px 10px;
+}
+
+.zutatenliste {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.profilbild {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.rezept_von {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.profilname {
+  font-size: 24px;
+}
+
+#portionen {
+  padding: 10px;
+  border: 1px solid #efefef;
+  border-radius: 10px 0px 0px 10px;
+  text-align: center;
+}
+
+.zutaten_eingabe button {
+  padding: 10px 35px;
+  cursor: pointer;
+  background-color: #008000;
+  border: 0;
+  color: white;
+  font-size: 16px;
+}
+button {
+  cursor: pointer;
+}
+
+.hero_inhalt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero_inhalt h1 {
+  margin: 0;
+}
+
+.hide {
+  display: none;
+}
+
+.nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu_mobile {
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  height: 100%;
+  background-color: red;
+  width: 220px;
+  background-color: white;
+  box-shadow: -5px 4px 9px 0px rgba(0, 0, 0, 0.2);
+}
+
+.menu_mobile button {
+  margin: 15px 15px 0px 15px;
+  padding: 10px;
+  border: #008000 2px solid;
+  color: #008000;
+  font-weight: bold;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.menu_button_mobile {
+  margin: 15px 15px 0px 15px;
+  padding: 10px;
+  border: #008000 2px solid;
+  color: #008000;
+  font-weight: bold;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+  display: none;
+}
+
+.menu_mobile button:active {
+  color: white;
+  background-color: #008000;
+}
+
+.nav-mobile {
+  display: flex;
+  flex-direction: column;
+}
+.nav-mobile a {
+  padding-left: 10px;
+  padding: 10px;
+  text-decoration: none;
+  color: #403b3b;
+  font-weight: bold;
+  font-size: 18px;
+  border-left: solid 4px transparent;
+}
+
+.nav-mobile .mobile_active_page {
+  border-bottom: 0px;
+  border-left: 4px solid #008000;
+  color: #008000;
+}
+
+.nav-mobile a:hover {
+  border-left: 4px solid #008000;
+}
+
+.impressum {
+  text-align: justify;
+}
+
+@media (max-width: 1440px) {
+  .header {
+    justify-content: space-around;
+  }
+  .footer {
+    display: flex;
+    justify-content: space-around;
+  }
+  .hero_img {
+    width: 450px;
+    height: 315px;
+  }
+  .impressum {
+    padding: 0 70px;
+  }
+
+  .rezept-wrapper {
+    padding: 0 70px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .header {
+    justify-content: space-around;
+  }
+  .footer {
+    display: flex;
+    justify-content: space-around;
+  }
+  .hero_img {
+    width: 450px;
+  }
+  .rezept-hero {
+    padding: 70px;
+  }
+}
+
+@media (max-width: 990px) {
+  .hero_img {
+    width: 350px;
+    height: 245px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .croissants .quick_links img {
+    width: 200px;
+  }
+  .croissants .quick_links span {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 840px) {
+  .rezept-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero_img_container {
+    display: flex;
+    justify-content: center;
+  }
+  #div-content {
+    min-height: calc(100vh - 150px);
+  }
+  .hero_img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 11;
+  }
+
+  .croissants {
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  .croissants .quick_links {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 70px;
+  }
+
+  .croissants .quick_links img {
+    width: 100%;
+    aspect-ratio: 2/1;
+  }
+
+  .pfanne_inhalt {
+    flex-direction: column-reverse;
+    padding: 0 70px;
+  }
+  .pfanne_inhalt .quick_links img {
+    width: 100%;
+    aspect-ratio: 3/2;
+  }
+
+  .pfanne_text {
+    width: 100%;
+  }
+
+  .logo a img {
+    height: 50px;
+  }
+
+  .logo-footer img {
+    height: 50px;
+  }
+
+  .footer {
+    padding: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .nav {
+    display: none;
+  }
+
+  .header {
+    align-items: center;
+  }
+
+  .menu_button_mobile {
+    margin: 0;
+    padding: 10px 20px;
+    display: block;
+  }
+
+  .info_panel {
+    font-size: 12px;
+  }
+
+  .zutaten_eingabe,
+  .zutatenliste {
+    font-size: 12px;
+  }
+
+  .zutaten_eingabe input {
+    font-size: 12px;
+  }
+  .zutaten_eingabe button {
+    font-size: 12px;
+  }
+  .rezept-wrapper h1 {
+    font-size: 24px;
+  }
+  .rezept-wrapper h2 {
+    font-size: 18px;
+  }
+
+  .trennlinie {
+    margin-top: 32px;
+  }
+
+  .zubereitung_text {
+    font-size: 12px;
+  }
+
+  .profilbild {
+    height: 80px;
+    width: 80px;
+  }
+
+  .profilname {
+    font-size: 18px;
+  }
+
+  .zutaten_eingabe {
+    display: flex;
+  }
+  #portionen {
+    flex: 1;
+  }
+
+  .menge {
+    width: 100px;
+  }
+
+  .footer-socials img {
+    padding: 0px;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 56px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    gap: 10px;
+    padding: 30px;
+  }
+
+  .impressum {
+    padding: 0 36px;
+  }
+
+  .rezept-wrapper {
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 12px;
+  }
+
+  .croissants .quick_links span {
+    font-size: 14px;
+  }
+
+  .linkbutton {
+    font-size: 12px;
+  }
+  .hero_link {
+    margin-top: 0;
+  }
+  .rezept-hero {
+    padding: 36px;
+  }
+
+  .croissants .quick_links {
+    padding: 0 36px;
+  }
+
+  .pfanne_inhalt {
+    padding: 0 36px;
+  }
+
+  #portionen {
+    width: 50px;
+  }
+
+  .zutaten_eingabe button {
+    padding: 10px 16px;
+  }
+
+  .rezept_info {
+    flex-wrap: wrap;
+  }
+
+  .rezept-wrapper h1 {
+    font-size: 18px;
+  }
+  .rezept-wrapper h2 {
+    font-size: 14px;
+  }
+  .profilname {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .rezept-hero {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    gap: 16px;
+  }
+  .hero_img {
+    border-radius: 0px;
+  }
+
+  .hero_inhalt {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .croissants .quick_links {
+    padding: 0;
+  }
+
+  .quick_links img {
+    border-radius: 0;
+  }
+
+  .menge {
+    width: 70px;
+  }
+
+  .rezept_img {
+    height: 150px;
+  }
+
+  .zutatenliste {
+    font-size: 10px;
+  }
+
+  .pfanne_inhalt {
+    padding: 0;
+  }
+
+  .pfanne_text p {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .pfanne {
+    padding-bottom: 30px;
+  }
+}

@@ -1,0 +1,41 @@
+<section class="testimonials">
+  <h2>
+    <span>
+      {{
+        currentLang === 'en'
+          ? 'What my colleagues say about me'
+          : 'Was Kolleg:innen über mich sagen'
+      }}
+    </span>
+  </h2>
+
+  <div class="carousel" #carousel>
+
+
+
+    <div
+      class="testimonial"
+      *ngFor="let t of testimonials; let i = index"
+      [class.active]="i === currentIndex"
+      [class.prev]="i === (currentIndex - 1 + testimonials.length) % testimonials.length"
+      [class.next]="i === (currentIndex + 1) % testimonials.length"
+    >
+      <div class="quote">“</div>
+      <p>{{ currentLang === 'en' ? t.text_en : t.text_de }}</p>
+      <hr />
+      <div class="author">{{ t.author }} - {{ t.role }}</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button (click)="prevTestimonial()">←</button>
+    <div class="dots">
+      <span
+        *ngFor="let t of testimonials; let idx = index"
+        (click)="goTo(idx)"
+        [class.active]="idx === currentIndex"
+      ></span>
+    </div>
+    <button (click)="nextTestimonial()">→</button>
+  </div>
+</section>

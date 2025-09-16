@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kochwelt</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="./img/logo_small.png" type="image/x-icon" />
+    <script src="rechner.js"></script>
+    <script>
+      function toggleMenu() {
+        document.getElementById("menu_mobile").classList.toggle("hide");
+      }
+    </script>
+  </head>
+  <body onload="rechne_positionen(spaghetti, true)">
+    <!-- Header Container -->
+    <div id="div-header" class="container">
+      <div class="wrapper">
+        <div class="header">
+          <!-- Logo -->
+          <div class="logo">
+            <a href="index.html">
+              <img src="img/logo.png" alt="Logo" height="80" />
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <nav class="nav">
+            <a href="index.html">Start</a>
+            <a href="recipe_today.html">Rezept des Tages</a>
+            <a href="kontakt.html">Kontakt</a>
+            <a href="impressum.html">Impressum</a>
+          </nav>
+
+          <button class="menu_button_mobile" onclick="toggleMenu()">
+            Menü
+          </button>
+
+          <div id="menu_mobile" class="menu_mobile hide">
+            <div class="nav-wrapper">
+              <button onclick="toggleMenu()">Menü schliessen</button>
+              <nav class="nav-mobile">
+                <a href="index.html">Start</a>
+                <a href="recipe_today.html">Rezept des Tages</a>
+                <a href="kontakt.html">Kontakt</a>
+                <a href="impressum.html">Impressum</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inhalt Container -->
+    <div id="div-content" class="container">
+      <div class="wrapper">
+        <div class="rezept-wrapper">
+          <h1>Spaghetti Carbonara</h1>
+          <div>
+            <img
+              class="rezept_img"
+              style="object-position: 100% 48%"
+              src="./img/carbonara.jpg"
+              alt="Spaghetti Carbonara"
+            />
+          </div>
+          <div class="rezept_info">
+            <div class="info_panel dauer">
+              <img class="info_icon" src="img/icons/clock-regular.svg" />20 min
+            </div>
+            <div class="info_panel schwierigkeit">
+              <img class="info_icon" src="img/icons/brain-solid.svg" />simpel
+            </div>
+            <div class="info_panel datum">
+              <img
+                class="info_icon"
+                src="img/icons/calendar-alt-regular.svg"
+              />14.09.2011
+            </div>
+          </div>
+
+          <hr class="trennlinie" />
+
+          <div class="zutaten">
+            <div class="zutaten_eingabe">
+              <span style="margin-right: 12px">Zutaten für:</span>
+              <input
+                id="portionen"
+                type="number"
+                min="0.01"
+                value="1"
+                max="1000"
+                step="any"
+              />
+              <button onclick="rechne_positionen(spaghetti, false)">
+                Portionen
+              </button>
+            </div>
+
+            <div class="zutatenliste">
+              <table class="zutaten_tabelle">
+                <tr>
+                  <td class="menge"><span id="pos-1"></span> g</td>
+                  <td class="dish">Spaghetti</td>
+                </tr>
+                <tr>
+                  <td class="menge"><span id="pos-2"></span> g</td>
+                  <td class="dish">Schinken, roh</td>
+                </tr>
+                <tr>
+                  <td class="menge"><span id="pos-3"></span></td>
+                  <td class="dish">Eigelb</td>
+                </tr>
+                <tr>
+                  <td class="menge"><span id="pos-4"></span> g</td>
+                  <td class="dish">Butter</td>
+                </tr>
+                <tr>
+                  <td class="menge"><span id="pos-5"></span> Prise(n)</td>
+                  <td class="dish">Muskat</td>
+                </tr>
+                <tr>
+                  <td class="menge"><span id="pos-6"></span></td>
+                  <td class="dish">Salz und Pfeffer</td>
+                </tr>
+                <tr>
+                  <td class="menge"><span id="pos-7"></span></td>
+                  <td class="dish">Parmesan, frisch gerieben</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="zubereitung">
+              <h1>Zubereitung</h1>
+
+              <div class="zubereitung_infos">
+                <div class="rezept_info">
+                  <div class="info_panel dauer">
+                    <img
+                      class="info_icon"
+                      src="img/icons/clock-regular.svg"
+                    />Arbeitszeit ca. 5 min
+                  </div>
+                  <div class="info_panel dauer">
+                    <img
+                      class="info_icon"
+                      src="img/icons/clock-regular.svg"
+                    />Koch-/Backzeit ca. 15 min
+                  </div>
+                  <div class="info_panel dauer">
+                    <img
+                      class="info_icon"
+                      src="img/icons/clock-regular.svg"
+                    />Gesamtzeit ca. 20 min
+                  </div>
+                </div>
+              </div>
+
+              <div class="zubereitung_text">
+                <p>
+                  Die Pasta in reichlich Salzwasser bissfest kochen. Den
+                  Schinken in Würfel schneiden und in wenig Butter anbraten.<br />
+                  Eigelb in einer großen Schüssel mit Salz, Pfeffer und Muskat
+                  verquirlen. Die Butter schaumig rühren und gut unter das
+                  Eigelb mischen.<br />
+                  Die Schinkenwürfel und den geriebenen Käse gründlich
+                  unterrühren. Wenn die Nudeln gar sind, abgießen, sofort zu der
+                  Mischung in die Schüssel geben, nochmal alles gründlich
+                  durchmischen, dann sogleich servieren.
+                </p>
+              </div>
+
+              <h2 style="margin-top: 40px">Rezept erstellt von</h2>
+              <div class="rezept_von">
+                <img class="profilbild" src="./img/Profil.PNG" />
+                <div class="profilname">Judith</div>
+              </div>
+
+              <!-- Platzhalter unten -->
+              <div style="height: 80px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="div-footer" class="container">
+      <div class="wrapper">
+        <footer class="footer">
+          <!-- Logo -->
+          <div class="logo-footer">
+            <img
+              class="weisses-logo"
+              src="img/logo.png"
+              alt="Logo"
+              height="80"
+            />
+          </div>
+
+          <!-- Footer Links -->
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/?_rdr" target="_blank"
+              ><img class="footer-social" src="./img/facebook_white.png" alt=""
+            /></a>
+            <a href="https://www.instagram.com/" target="_blank"
+              ><img
+                class="footer-social"
+                src="./img/instagram_white.png"
+                alt=""
+            /></a>
+            <a href="https://x.com/?lang=en" target="_blank"
+              ><img class="footer-social" src="./img/twitter_white.png" alt=""
+            /></a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

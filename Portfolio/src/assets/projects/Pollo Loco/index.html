@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html translate="no" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>El Pollo Loco</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+
+    <script src="models/drawable-object.class.js"></script>
+    <script src="models/movable-object.class.js"></script>
+    <script src="models/character.class.js"></script>
+    <script src="models/chicken.class.js"></script>
+    <script src="models/small-chicken.class.js"></script>
+    <script src="models/cloud.class.js"></script>
+    <script src="models/status-bar.class.js"></script>
+    <script src="models/collisionManager.js"></script>
+    <script src="models/soundManager.js"></script>
+    <script src="models/world.class.js"></script>
+    <script src="models/background-object.class.js"></script>
+    <script src="models/keyboard.class.js"></script>
+    <script src="models/level.class.js"></script>
+    <script src="models/throwable.object.class.js"></script>
+    <script src="models/bottles.class.js"></script>
+    <script src="models/collectable-heart.class.js"></script>
+    <script src="models/endboss.class.js"></script>
+    <script src="models/coin.class.js"></script>
+    <script src="levels.js/level1.js"></script>
+    <script src="levels.js/level2.js"></script>
+    <script src="levels.js/level3.js"></script>
+    <script src="levels.js/level4.js"></script>
+    <script src="levels.js/level5.js"></script>
+    <script src="levels.js/level6.js"></script>
+    <script src="levels.js/level7.js"></script>
+    <script src="levels.js/level8.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+
+    <style>
+      @font-face {
+        font-family: "zabras";
+        src: url("fonts/zabars.ttf") format("truetype");
+      }
+    </style>
+  </head>
+  <body>
+    <div id="rotateScreenOverlay" class="rotate-screen-overlay hidden">
+      <div class="rotate-message">Please turn your device to play!</div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startscreen" class="overlay">
+      <img
+        src="img/9_intro_outro_screens/start/startscreen_1.png"
+        alt="Startscreen"
+      />
+      <button class="btn btn-yellow" onclick="showLevelMenu()">Start</button>
+    </div>
+
+    <!-- Level Menu -->
+    <div id="levelmenu" class="overlay hidden">
+      <h2>Choose a Level</h2>
+
+      <div class="info-buttons">
+          <button class="btn btn-yellow" onclick="openOverlay('what_to_do.html')">
+          What to do
+        </button>
+        <button class="btn btn-yellow" onclick="openOverlay('how_to.html')">
+          How to Play
+        </button>
+        <button
+          class="btn btn-yellow"
+          onclick="openOverlay('legal_notice.html')"
+        >
+          Legal Notice
+        </button>
+      </div>
+
+      <div class="level-buttons">
+        <div>
+          <span>Level 1</span>
+          <span id="coinsLevel1Display" class="coins-display"></span>
+          <button class="btn btn-yellow" onclick="startGame(1)">
+            Start Game
+          </button>
+        </div>
+        <div>
+          <span>Level 2</span>
+          <span id="coinsLevel2Display" class="coins-display"></span>
+          <button class="btn btn-yellow" onclick="startGame(2)">
+            Start Game
+          </button>
+        </div>
+        <div>
+          <span>Level 3</span>
+          <span id="coinsLevel3Display" class="coins-display"></span>
+          <button class="btn btn-yellow" onclick="startGame(3)">
+            Start Game
+          </button>
+        </div>
+        <div>
+          <span>Level 4</span>
+          <span id="coinsLevel4Display" class="coins-display"></span>
+          <button class="btn btn-yellow" onclick="startGame(4)">
+            Start Game
+          </button>
+        </div>
+        <div>
+          <span>Level 5</span>
+          <span id="coinsLevel5Display" class="coins-display"></span>
+          <button class="btn btn-yellow" onclick="startGame(5)">
+            Start Game
+          </button>
+        </div>
+        <div>
+          <span>Level 6</span>
+          <span id="coinsLevel6Display" class="coins-display"></span>
+          <button class="btn btn-yellow" onclick="startGame(6)">
+            Start Game
+          </button>
+        </div>
+        <div>
+          <span>Level 7</span>
+          <span id="coinsLevel7Display" class="coins-display"></span>
+          <button class="btn btn-yellow" onclick="startGame(7)">
+            Start Game
+          </button>
+        </div>
+        <div>
+          <span>Level 8</span>
+          <span id="coinsLevel8Display" class="coins-display"></span>
+          <button class="btn btn-yellow" onclick="startGame(8)">
+            Start Game
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Title -->
+    <h1>El Pollo Loco</h1>
+
+    <!-- Canvas -->
+    <div class="canvas-wrapper">
+      <canvas id="canvas" width="720" height="480"></canvas>
+
+      <div class="mobile-controls">
+        <div class="left-controls">
+          <button id="btn-left" class="control-btn">←</button>
+          <button id="btn-right" class="control-btn">→</button>
+        </div>
+        <div class="right-controls">
+          <button id="btn-jump" class="control-btn">↑</button>
+          <button id="btn-throw" class="control-btn">⚡</button>
+        </div>
+        <div class="top-right-controls">
+          <button id="btn-pause" class="control-btn">⏸</button>
+          <button id="btn-mute" class="control-btn">🔈</button>
+        </div>
+      </div>
+
+      <div id="finalLevelOverlay" class="overlay hidden">
+        <canvas id="confettiCanvas"></canvas>
+        <div class="finalLevelContent hidden">
+          <h2 id="finalMessage">
+            Congratulations!<br />You finished the game!
+          </h2>
+          <div class="finalButtons">
+            <button class="btn btn-green" id="playAgainBtnFinal">
+              Play Again from Level 1
+            </button>
+            <button class="btn btn-yellow" id="backToMenuBtnFinal">
+              Back to Level Menu
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <img class="speaker" id="muteIcon" src="img/mute.png" />
+    </div>
+
+    <!-- End Screen -->
+    <div id="endScreenOverlay" class="overlay hidden">
+      <img id="endScreenImage" src="" alt="End Screen" />
+      <div class="endScreenButtons">
+        <button class="btn btn-yellow" id="playAgainBtn">Play Again</button>
+        <button class="btn btn-green" id="nextLevelBtn">Next Level</button>
+        <button class="btn btn-yellow" id="backToMenuBtnEndScreen">
+          Back to Level Menu
+        </button>
+      </div>
+    </div>
+
+    <!-- Game Over -->
+    <div id="gameOverOverlay" class="overlay hidden">
+      <img
+        id="gameOverImage"
+        src="img/You won, you lost/Game Over.png"
+        alt="Game Over"
+      />
+      <div class="gameOverButtons">
+        <button class="btn btn-red" id="tryAgainBtn">Try Again</button>
+        <button class="btn btn-yellow" id="backToMenuBtnGameOver">
+          Back to Level Menu
+        </button>
+      </div>
+    </div>
+
+    <!-- Info Modal Overlay -->
+    <div id="infoOverlay" class="modal-overlay hidden">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeOverlay()">×</button>
+        <iframe id="infoFrame" src=""></iframe>
+      </div>
+    </div>
+
+    <!-- Overlay Script -->
+    <script>
+      function openOverlay(src) {
+        document.getElementById("infoFrame").src = src;
+        document.getElementById("infoOverlay").classList.remove("hidden");
+      }
+
+      function closeOverlay() {
+        document.getElementById("infoOverlay").classList.add("hidden");
+        document.getElementById("infoFrame").src = "";
+      }
+    </script>
+
+    <script>
+      document
+        .querySelectorAll(".mobile-controls, .mobile-controls *")
+        .forEach((el) => {
+          el.addEventListener("contextmenu", (e) => e.preventDefault());
+        });
+    </script>
+  </body>
+</html>

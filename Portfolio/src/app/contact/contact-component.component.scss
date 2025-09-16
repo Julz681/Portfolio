@@ -1,0 +1,273 @@
+.contact-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  padding: 4rem 2rem;
+  color: white;
+  background-color: #121212;
+  max-width: 2100px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  width: 100%;
+
+  .left {
+    flex: 1;
+
+    h3, h1, h4 {
+      color: #3dcfb6;
+      line-height: 100%;
+    }
+
+    h3 {
+      font-weight: 500;
+      font-size: 24px;
+    }
+
+    h1 {
+      font-size: 64px;
+      font-weight: 700;
+      margin: 1rem 0;
+    }
+
+    h4 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 120%;
+    }
+
+    p {
+      margin: 1rem 0;
+      color: #fff;
+      max-width: 500px;
+      font-family: "Karla", monospace;
+      font-size: 18px;
+      line-height: 120%;
+
+      a {
+        color: #00f5d4;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  form.right {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-family: "Fira", monospace;
+    font-size: 24px;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+
+      span {
+        color: #00f5d4;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .inline-error {
+        font-size: 0.85rem;
+        font-family: "Karla", monospace;
+        color: #ff6666;
+        font-style: italic;
+        margin-bottom: 0.25rem;
+        margin-top: 0.25rem;
+        line-height: 1.3;
+      }
+
+      input,
+      textarea {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #00f5d4;
+        padding: 0.5rem 0;
+        color: white;
+        font-size: 1rem;
+        font-family: "Karla", monospace;
+        outline: none;
+        transition: color 0.3s ease;
+
+        &::placeholder {
+          color: #888;
+          transition: color 0.3s ease;
+        }
+
+        &.ng-invalid.ng-touched,
+        &.ng-invalid.ng-dirty {
+          color: #ff6666;
+
+          &::placeholder {
+            color: #ff6666;
+            font-style: italic;
+          }
+        }
+
+        &.invalid-field {
+          border-color: #ff6666;
+          color: #ff6666;
+        }
+      }
+
+      textarea {
+        resize: none;
+        height: 60px;
+      }
+    }
+
+    .checkbox-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      color: #fff;
+      flex-wrap: nowrap;
+
+      input[type="checkbox"] {
+        margin-top: 0.2rem;
+        flex-shrink: 0;
+        accent-color: #3dcfb6;
+      }
+
+      label {
+        display: inline;
+        font-weight: 400;
+        line-height: 1.4;
+        color: #fff;
+
+        span {
+          color: #fff;
+
+          a {
+            color: #3dcfb6;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .checkbox-error {
+      min-height: 1.25rem;
+      font-size: 0.85rem;
+      margin-top: -1rem;
+      margin-bottom: 1.5rem;
+      font-family: "Karla", monospace;
+      color: #ff6666;
+      line-height: 1.2;
+
+      &:empty {
+        opacity: 0;
+      }
+    }
+
+    button {
+      width: 139px;
+      background: transparent;
+      color: white;
+      border: 1px solid #3dcfb6;
+      padding: 0.6rem 1.5rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      font-size: 1rem;
+      align-self: center;
+
+      &:hover {
+        background-color: #3dcfb6;
+        color: black;
+      }
+    }
+  }
+}
+
+.no-underline {
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+.success-message,
+.error-message,
+.alert {
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Karla", monospace;
+}
+
+.success-message {
+  background-color: #d4f9e5;
+  color: #146c43;
+  border: 1px solid #146c43;
+}
+
+@media screen and (max-width: 480px) {
+  h3 {
+    font-size: 18px !important;
+  }
+
+  h1 {
+    font-size: 56px !important;
+  }
+
+  h4 {
+    font-size: 20px !important;
+  }
+
+  .contact-section {
+    padding-right: 2rem;
+    margin-left: -12px;
+  }
+
+  form.right {
+    padding-right: 0.5rem;
+  }
+
+  form.right .checkbox-line {
+    margin-left: -16px;
+  }
+
+  .success-message,
+  .error-message,
+  .alert {
+    max-width: 90vw;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 2rem auto 0 auto;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .contact-section .left.de h1 {
+    font-size: 30px !important;
+  }
+
+  .contact-section .left.en h1 {
+    font-size: 36px !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 36px !important;
+  }
+}

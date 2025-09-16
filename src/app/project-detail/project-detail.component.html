@@ -1,0 +1,67 @@
+<div class="project-detail" *ngIf="project">
+  <div class="project-container">
+    <!-- LEFT -->
+    <div class="left">
+      <h1>{{ project.number }}</h1>
+      <h2>{{ project.name }}</h2>
+
+      <h3>
+        {{
+          currentLang === 'en'
+            ? 'What is this project about?'
+            : 'Worum geht es in diesem Projekt?'
+        }}
+      </h3>
+
+      <p>
+        {{
+          currentLang === 'de' && project.description_de
+            ? project.description_de
+            : project.description
+        }}
+      </p>
+
+      <div class="tech-icons">
+        <span *ngFor="let tech of project.tech">
+          <img [src]="getTechIcon(tech)" [alt]="tech" />
+          {{ tech }}
+        </span>
+      </div>
+
+      <div class="buttons">
+        <a [href]="project.github" target="_blank">GitHub ↗</a>
+        <a [href]="project.live" target="_blank">
+          {{ currentLang === 'en' ? 'Live Test ↗' : 'Live-Demo ↗' }}
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+      <img [src]="project.image" [alt]="project.name" />
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="navigation-buttons">
+      <a
+        [routerLink]="['/projects', getNextProjectSlug()]"
+        class="next-project"
+      >
+        {{ currentLang === 'en' ? 'Next project' : 'Nächstes Projekt' }}
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <a
+      [routerLink]="['/']"
+      class="close-button"
+      [attr.aria-label]="
+        currentLang === 'en'
+          ? 'Close project view'
+          : 'Projektansicht schließen'
+      "
+    >
+      ×
+    </a>
+  </div>
+</div>
